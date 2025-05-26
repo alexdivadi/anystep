@@ -1,0 +1,38 @@
+import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:anystep/core/features/auth/data/auth_repository.dart';
+part 'sign_up_screen_controller.g.dart';
+
+@riverpod
+class SignUpScreenController extends _$SignUpScreenController {
+  @override
+  SignUpScreenState build() => const SignUpScreenState();
+
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String zipCode,
+    required String firstName,
+    required String lastName,
+    required DateTime birthdate,
+    String? phoneNumber,
+  }) async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final repo = ref.read(authRepositoryProvider);
+      final result = await repo.signup(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
+      if (result) {
+        state = state.copyWith(isLoading: false, success: true);
+      } else {
+        state = state.copyWith(isLoading: false, error: 'Sign up failed');
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+}
