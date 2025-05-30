@@ -1,6 +1,9 @@
-import 'package:anystep/core/widgets/any_step_loading_indicator.dart';
+import 'package:anystep/core/constants/spacing.dart';
+import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
 import 'login_screen_controller.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -18,11 +21,10 @@ class LoginScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(AnyStepSpacing.md16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const AnyStepLoadingIndicator(),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(labelText: 'Email'),
@@ -32,11 +34,11 @@ class LoginScreen extends ConsumerWidget {
               decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AnyStepSpacing.md16),
             if (state.isLoading) const CircularProgressIndicator(),
             if (state.error != null) ...[
-              Text(state.error!, style: const TextStyle(color: Colors.red)),
-              const SizedBox(height: 8),
+              Text(state.error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              const SizedBox(height: AnyStepSpacing.sm8),
             ],
             ElevatedButton(
               onPressed:
@@ -49,6 +51,13 @@ class LoginScreen extends ConsumerWidget {
                         );
                       },
               child: const Text('Login'),
+            ),
+            const SizedBox(height: AnyStepSpacing.md16),
+            TextButton(
+              onPressed: () {
+                context.push(SignUpScreen.path);
+              },
+              child: const Text('Don\'t have an account? Sign Up'),
             ),
           ],
         ),

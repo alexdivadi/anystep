@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void bootstrap(FutureOr<Widget> Function() builder) async {
   // Ensure that Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  await dotenv.load(fileName: ".env");
 
   // Initialize the app
   runApp(ProviderScope(child: await builder()));
