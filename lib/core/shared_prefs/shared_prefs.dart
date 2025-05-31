@@ -9,11 +9,17 @@ class AppPreferences {
 
   AppPreferences(this._prefs);
 
-  static const String userTokenKey = 'user_token';
+  static const String sessionIdKey = 'session_id';
+  static const String onboardingKey = 'onboarded';
 
-  String? getUserToken() => _prefs.getString(userTokenKey);
-  Future<void> setUserToken(String token) async => await _prefs.setString(userTokenKey, token);
-  Future<void> clearUserToken() async => await _prefs.remove(userTokenKey);
+  String? getUserToken() => _prefs.getString(sessionIdKey);
+  Future<void> setSessionId(String token) async => await _prefs.setString(sessionIdKey, token);
+  Future<void> clearSessionId() async => await _prefs.remove(sessionIdKey);
+
+  bool isOnboarded() => _prefs.getBool(onboardingKey) ?? false;
+  Future<void> setIsOnboarded({bool isOnboarded = true}) async =>
+      await _prefs.setBool(onboardingKey, isOnboarded);
+  Future<void> clearIsOnboarded() async => await _prefs.remove(onboardingKey);
 }
 
 @Riverpod(keepAlive: true)

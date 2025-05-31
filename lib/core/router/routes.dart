@@ -1,5 +1,5 @@
-import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
-import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.dart';
+import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
+import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +7,11 @@ import 'package:go_router/go_router.dart';
 final routes = [
   GoRoute(path: LoginScreen.path, builder: (context, state) => const LoginScreen()),
   GoRoute(path: SignUpScreen.path, builder: (context, state) => const SignUpScreen()),
+  GoRoute(path: OnboardingScreen.path, builder: (context, state) => const OnboardingScreen()),
+  GoRoute(
+    path: AppStartupLoadingWidget.path,
+    builder: (context, state) => const AppStartupLoadingWidget(),
+  ),
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       return Scaffold(

@@ -1,27 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_repository.dart';
+part of 'onboarding_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authRepositoryHash() => r'0fadaec5d007331125fdc7dce32eff917ab9b064';
+String _$onboardingRepositoryHash() =>
+    r'468e98ea2ea85fe5f568e776fa7f87dc8468d134';
 
-/// See also [AuthRepository].
-@ProviderFor(AuthRepository)
-final authRepositoryProvider =
-    AsyncNotifierProvider<AuthRepository, String?>.internal(
-      AuthRepository.new,
-      name: r'authRepositoryProvider',
+/// See also [OnboardingRepository].
+@ProviderFor(OnboardingRepository)
+final onboardingRepositoryProvider =
+    AsyncNotifierProvider<OnboardingRepository, bool>.internal(
+      OnboardingRepository.new,
+      name: r'onboardingRepositoryProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$authRepositoryHash,
+              : _$onboardingRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$AuthRepository = AsyncNotifier<String?>;
+typedef _$OnboardingRepository = AsyncNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get email; String get zipCode; String get firstName; String get lastName; DateTime get birthdate; String? get phoneNumber;
+ String get id; String get email; AddressModel get address; String get firstName; String get lastName; DateTime get birthdate; String? get phoneNumber;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.zipCode, zipCode) || other.zipCode == zipCode)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email,zipCode,firstName,lastName,birthdate,phoneNumber);
+int get hashCode => Object.hash(runtimeType,id,email,address,firstName,lastName,birthdate,phoneNumber);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, email: $email, zipCode: $zipCode, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber)';
+  return 'UserModel(id: $id, email: $email, address: $address, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber)';
 }
 
 
@@ -49,11 +49,11 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String email, String zipCode, String firstName, String lastName, DateTime birthdate, String? phoneNumber
+ String id, String email, AddressModel address, String firstName, String lastName, DateTime birthdate, String? phoneNumber
 });
 
 
-
+$AddressModelCopyWith<$Res> get address;
 
 }
 /// @nodoc
@@ -66,19 +66,28 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? zipCode = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? phoneNumber = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? phoneNumber = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,zipCode: null == zipCode ? _self.zipCode : zipCode // ignore: cast_nullable_to_non_nullable
-as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,birthdate: null == birthdate ? _self.birthdate : birthdate // ignore: cast_nullable_to_non_nullable
 as DateTime,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
-
+/// Create a copy of UserModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AddressModelCopyWith<$Res> get address {
+  
+  return $AddressModelCopyWith<$Res>(_self.address, (value) {
+    return _then(_self.copyWith(address: value));
+  });
+}
 }
 
 
@@ -86,12 +95,12 @@ as String?,
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.email, required this.zipCode, required this.firstName, required this.lastName, required this.birthdate, this.phoneNumber});
+  const _UserModel({required this.id, required this.email, required this.address, required this.firstName, required this.lastName, required this.birthdate, this.phoneNumber});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
 @override final  String email;
-@override final  String zipCode;
+@override final  AddressModel address;
 @override final  String firstName;
 @override final  String lastName;
 @override final  DateTime birthdate;
@@ -110,16 +119,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.zipCode, zipCode) || other.zipCode == zipCode)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email,zipCode,firstName,lastName,birthdate,phoneNumber);
+int get hashCode => Object.hash(runtimeType,id,email,address,firstName,lastName,birthdate,phoneNumber);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, email: $email, zipCode: $zipCode, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber)';
+  return 'UserModel(id: $id, email: $email, address: $address, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, phoneNumber: $phoneNumber)';
 }
 
 
@@ -130,11 +139,11 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email, String zipCode, String firstName, String lastName, DateTime birthdate, String? phoneNumber
+ String id, String email, AddressModel address, String firstName, String lastName, DateTime birthdate, String? phoneNumber
 });
 
 
-
+@override $AddressModelCopyWith<$Res> get address;
 
 }
 /// @nodoc
@@ -147,12 +156,12 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? zipCode = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? phoneNumber = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? phoneNumber = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,zipCode: null == zipCode ? _self.zipCode : zipCode // ignore: cast_nullable_to_non_nullable
-as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,birthdate: null == birthdate ? _self.birthdate : birthdate // ignore: cast_nullable_to_non_nullable
 as DateTime,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -160,7 +169,16 @@ as String?,
   ));
 }
 
-
+/// Create a copy of UserModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AddressModelCopyWith<$Res> get address {
+  
+  return $AddressModelCopyWith<$Res>(_self.address, (value) {
+    return _then(_self.copyWith(address: value));
+  });
+}
 }
 
 // dart format on
