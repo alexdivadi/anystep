@@ -1,3 +1,4 @@
+import 'package:anystep/core/widgets/any_step_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'sign_up_screen_controller.dart';
@@ -13,13 +14,10 @@ class SignUpScreen extends ConsumerWidget {
     final state = ref.watch(signUpScreenControllerProvider);
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    final zipController = TextEditingController();
     final firstNameController = TextEditingController();
     final lastNameController = TextEditingController();
-    final birthdateController = TextEditingController();
-    final phoneController = TextEditingController();
 
-    return Scaffold(
+    return AnyStepScaffold(
       appBar: AppBar(title: const Text('Sign Up')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,24 +35,12 @@ class SignUpScreen extends ConsumerWidget {
                 obscureText: true,
               ),
               TextField(
-                controller: zipController,
-                decoration: const InputDecoration(labelText: 'Zip Code'),
-              ),
-              TextField(
                 controller: firstNameController,
                 decoration: const InputDecoration(labelText: 'First Name'),
               ),
               TextField(
                 controller: lastNameController,
                 decoration: const InputDecoration(labelText: 'Last Name'),
-              ),
-              TextField(
-                controller: birthdateController,
-                decoration: const InputDecoration(labelText: 'Birthdate (YYYY-MM-DD)'),
-              ),
-              TextField(
-                controller: phoneController,
-                decoration: const InputDecoration(labelText: 'Phone Number (optional)'),
               ),
               const SizedBox(height: 16),
               if (state.isLoading) const CircularProgressIndicator(),
@@ -70,12 +56,8 @@ class SignUpScreen extends ConsumerWidget {
                           controller.signUp(
                             email: emailController.text,
                             password: passwordController.text,
-                            zipCode: zipController.text,
                             firstName: firstNameController.text,
-                            lastName: firstNameController.text,
-                            birthdate:
-                                DateTime.tryParse(birthdateController.text) ?? DateTime.now(),
-                            phoneNumber: phoneController.text.isEmpty ? null : phoneController.text,
+                            lastName: lastNameController.text,
                           );
                         },
                 child: const Text('Sign Up'),

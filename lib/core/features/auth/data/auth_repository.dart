@@ -22,15 +22,34 @@ class AuthRepository extends _$AuthRepository {
   Future<String?> build() async {
     _appPreferences = ref.watch(appPreferencesProvider).requireValue;
     _account = Account(ref.watch(appwriteClientProvider));
+
+    return getUserId()
+        .listen(
+          (userId) => state = AsyncValue.data(userId),
+          onError: (error) => Log.e('Error fetching user ID', error),
+        )
+        .asFuture();
+  }
+
+  Stream<String?> getUserId() async* {
+    final userId = _appPreferences.getUserId();
+
+    if (userId != null) {
+      Log.i('Using locally stored session: $userId');
+      yield userId;
+    }
+
+    // Fetch the user profile from the API
     try {
       _user = await _account.get();
       _session = await _account.getSession(sessionId: 'current');
-      _appPreferences.setSessionId(_session!.$id);
-      return _user!.$id;
+      _appPreferences.setUserId(_session!.userId);
+      Log.i('User session found: ${_session!.userId}');
+      yield _session!.userId;
     } catch (e) {
       Log.i('User session not found');
-      _appPreferences.clearSessionId();
-      return null;
+      _appPreferences.clearUserId();
+      yield null;
     }
   }
 
@@ -38,10 +57,15 @@ class AuthRepository extends _$AuthRepository {
     state = await AsyncValue.guard(() async {
       _session = await _account.createEmailPasswordSession(email: email, password: password);
       _user = await _account.get();
-      _appPreferences.setSessionId(_session!.$id);
+      _appPreferences.setUserId(_session!.userId);
       return _session!.userId;
     });
-    return true;
+
+    if (state.hasError) {
+      Log.e('Login failed', state.error, state.stackTrace);
+    }
+
+    return state.hasValue && state.value != null;
   }
 
   Future<bool> signup({
@@ -58,10 +82,15 @@ class AuthRepository extends _$AuthRepository {
         name: '$firstName $lastName',
       );
       _session = await _account.createEmailPasswordSession(email: email, password: password);
-      _appPreferences.setSessionId(_session!.$id);
+      _appPreferences.setUserId(_session!.$id);
       return _session!.userId;
     });
-    return true;
+
+    if (state.hasError) {
+      Log.e('Signup failed', state.error, state.stackTrace);
+    }
+
+    return state.hasValue && state.value != null;
   }
 
   Future<void> logout() async {
@@ -70,7 +99,7 @@ class AuthRepository extends _$AuthRepository {
     } catch (e, st) {
       Log.e('Logout failed', e, st);
     } finally {
-      _appPreferences.clearSessionId();
+      _appPreferences.clearUserId();
       _session = null;
       _user = null;
       state = AsyncValue.data(null);

@@ -1,5 +1,6 @@
 import 'package:anystep/core/constants/spacing.dart';
 import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.dart';
+import 'package:anystep/core/widgets/any_step_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +19,7 @@ class LoginScreen extends ConsumerWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
 
-    return Scaffold(
+    return AnyStepScaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(AnyStepSpacing.md16),

@@ -9,12 +9,12 @@ class AppPreferences {
 
   AppPreferences(this._prefs);
 
-  static const String sessionIdKey = 'session_id';
+  static const String userIdKey = 'user_id';
   static const String onboardingKey = 'onboarded';
 
-  String? getUserToken() => _prefs.getString(sessionIdKey);
-  Future<void> setSessionId(String token) async => await _prefs.setString(sessionIdKey, token);
-  Future<void> clearSessionId() async => await _prefs.remove(sessionIdKey);
+  String? getUserId() => _prefs.getString(userIdKey);
+  Future<void> setUserId(String token) async => await _prefs.setString(userIdKey, token);
+  Future<void> clearUserId() async => await _prefs.remove(userIdKey);
 
   bool isOnboarded() => _prefs.getBool(onboardingKey) ?? false;
   Future<void> setIsOnboarded({bool isOnboarded = true}) async =>

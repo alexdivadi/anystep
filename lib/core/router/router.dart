@@ -1,3 +1,4 @@
+import 'package:anystep/core/app_startup/app_startup.dart';
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
@@ -14,12 +15,14 @@ part 'router.g.dart';
 
 @riverpod
 GoRouter router(Ref ref) {
-  final authState = ref.watch(authRepositoryProvider);
+  ref.watch(appStartupProvider);
   final isOnboarded = ref.watch(onboardingRepositoryProvider);
   return GoRouter(
     initialLocation: LoginScreen.path,
     routes: routes,
     redirect: (context, state) {
+      final authState = ref.read(authRepositoryProvider);
+
       if (!isOnboarded.hasValue) {
         // Onboarding state is still loading, do not redirect yet
         return AppStartupLoadingWidget.path;
@@ -31,7 +34,7 @@ GoRouter router(Ref ref) {
         return OnboardingScreen.path;
       }
 
-      final path = state.path;
+      final path = state.matchedLocation;
       if (RouterUtils.unauthenticatedRoutes.contains(path)) {
         return null;
       }

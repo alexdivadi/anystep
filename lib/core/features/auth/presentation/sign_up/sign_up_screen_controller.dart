@@ -12,11 +12,8 @@ class SignUpScreenController extends _$SignUpScreenController {
   Future<void> signUp({
     required String email,
     required String password,
-    required String zipCode,
     required String firstName,
     required String lastName,
-    required DateTime birthdate,
-    String? phoneNumber,
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
@@ -29,6 +26,7 @@ class SignUpScreenController extends _$SignUpScreenController {
       );
       if (result) {
         state = state.copyWith(isLoading: false, success: true);
+        Log.d('Sign up successful, user created');
       } else {
         state = state.copyWith(isLoading: false, error: 'Sign up failed');
       }

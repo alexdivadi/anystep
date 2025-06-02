@@ -16,6 +16,7 @@ class LoginScreenController extends _$LoginScreenController {
       final result = await authRepository.login(email: email, password: password);
       if (result) {
         state = state.copyWith(isLoading: false, success: true);
+        Log.d("Login successful");
       } else {
         state = state.copyWith(isLoading: false, error: 'Login failed');
       }
