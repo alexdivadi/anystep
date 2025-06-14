@@ -12,7 +12,7 @@ class AnyStepNavBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onTap,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.event_rounded), label: 'Events'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );

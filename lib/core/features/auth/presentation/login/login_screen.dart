@@ -1,6 +1,6 @@
-import 'package:anystep/core/constants/spacing.dart';
+import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.dart';
-import 'package:anystep/core/widgets/any_step_scaffold.dart';
+import 'package:anystep/core/common/widgets/any_step_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

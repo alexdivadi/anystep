@@ -1,6 +1,6 @@
 import 'package:anystep/core/app_startup/app_startup_widget.dart';
-import 'package:anystep/core/router/router.dart';
-import 'package:anystep/core/theme/theme.dart';
+import 'package:anystep/core/config/router/router.dart';
+import 'package:anystep/core/config/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

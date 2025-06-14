@@ -7,5 +7,6 @@ class RouterUtils {
     SignUpScreen.path,
     OnboardingScreen.path,
     AppStartupLoadingWidget.path,
+    EventFeedScreen.path,
   };
 }

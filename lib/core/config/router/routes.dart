@@ -1,6 +1,6 @@
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
 import 'package:anystep/core/features/screens.dart';
-import 'package:anystep/core/widgets/bottom_nav_bar.dart';
+import 'package:anystep/core/common/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,8 +26,9 @@ final routes = [
       StatefulShellBranch(
         routes: [
           GoRoute(
-            path: '/home',
-            builder: (context, state) => const Placeholder(), // Replace with actual HomePage
+            path: EventFeedScreen.path,
+            name: EventFeedScreen.name,
+            builder: (context, state) => const EventFeedScreen(), // Replace with actual HomePage
           ),
         ],
       ),

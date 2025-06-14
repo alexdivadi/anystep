@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:anystep/core/theme/colors.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class AnyStepLoadingIndicator extends StatefulWidget {
   const AnyStepLoadingIndicator({
     super.key,
     this.size = 36.0,
-    this.color = AnyStepColors.brightBlue,
+    this.color = AnyStepColors.blueBright,
     this.duration = const Duration(seconds: 3),
     this.fadeInDurationPercentage = 0.15,
     this.count = 3,

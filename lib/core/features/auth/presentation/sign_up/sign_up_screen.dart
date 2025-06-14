@@ -1,4 +1,4 @@
-import 'package:anystep/core/widgets/any_step_scaffold.dart';
+import 'package:anystep/core/common/widgets/any_step_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'sign_up_screen_controller.dart';
