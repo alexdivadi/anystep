@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:anystep/core/features/onboarding/presentation/onboarding_screen_controller.dart';
+import 'package:anystep/core/features/onboarding/presentation/onboarding/onboarding_screen_controller.dart';
 
 class OnboardingScreen extends ConsumerWidget {
   const OnboardingScreen({super.key});

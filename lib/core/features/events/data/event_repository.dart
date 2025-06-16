@@ -14,13 +14,10 @@ class EventRepository implements IRepository<EventModel> {
   final String collectionId;
 
   @override
-  Future<EventModel> createOrUpdate({
-    required Map<String, dynamic> data,
-    String? documentId,
-  }) async {
+  Future<EventModel> createOrUpdate({required EventModel obj, String? documentId}) async {
     final document = await database.createOrUpdate(
       collectionId: collectionId,
-      data: data,
+      data: obj.toJson(),
       documentId: documentId,
     );
     return EventModel.fromJson(document.data);

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- int get volunteerId; String get uid; String get email; AddressModel get address; String get firstName; String get lastName; AgeGroup get ageGroup; List<String> get permissions; String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get updatedAt;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get createdAt;
+ int get volunteerId; String get email; AddressModel get address; String get firstName; String get lastName; AgeGroup get ageGroup; List<String> get permissions; String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get updatedAt;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get createdAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other.permissions, permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other.permissions, permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,volunteerId,uid,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(permissions),phoneNumber,updatedAt,createdAt);
+int get hashCode => Object.hash(runtimeType,volunteerId,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(permissions),phoneNumber,updatedAt,createdAt);
 
 @override
 String toString() {
-  return 'UserModel(volunteerId: $volunteerId, uid: $uid, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
+  return 'UserModel(volunteerId: $volunteerId, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int volunteerId, String uid, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
+ int volunteerId, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
 });
 
 
@@ -66,11 +66,10 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? volunteerId = null,Object? uid = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? volunteerId = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 volunteerId: null == volunteerId ? _self.volunteerId : volunteerId // ignore: cast_nullable_to_non_nullable
-as int,uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -99,11 +98,10 @@ $AddressModelCopyWith<$Res> get address {
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.volunteerId, required this.uid, required this.email, required this.address, required this.firstName, required this.lastName, required this.ageGroup, required final  List<String> permissions, this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true) this.updatedAt, @JsonKey(includeToJson: false, includeFromJson: true) this.createdAt}): _permissions = permissions;
+  const _UserModel({required this.volunteerId, required this.email, required this.address, required this.firstName, required this.lastName, required this.ageGroup, required final  List<String> permissions, this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true) this.updatedAt, @JsonKey(includeToJson: false, includeFromJson: true) this.createdAt}): _permissions = permissions;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  int volunteerId;
-@override final  String uid;
 @override final  String email;
 @override final  AddressModel address;
 @override final  String firstName;
@@ -133,16 +131,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other._permissions, _permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other._permissions, _permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,volunteerId,uid,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(_permissions),phoneNumber,updatedAt,createdAt);
+int get hashCode => Object.hash(runtimeType,volunteerId,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(_permissions),phoneNumber,updatedAt,createdAt);
 
 @override
 String toString() {
-  return 'UserModel(volunteerId: $volunteerId, uid: $uid, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
+  return 'UserModel(volunteerId: $volunteerId, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
 }
 
 
@@ -153,7 +151,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int volunteerId, String uid, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
+ int volunteerId, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
 });
 
 
@@ -170,11 +168,10 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? volunteerId = null,Object? uid = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? volunteerId = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
   return _then(_UserModel(
 volunteerId: null == volunteerId ? _self.volunteerId : volunteerId // ignore: cast_nullable_to_non_nullable
-as int,uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable

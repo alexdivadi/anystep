@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'package:anystep/core/common/domain/address_model.dart';
+import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/events/domain/event_template.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

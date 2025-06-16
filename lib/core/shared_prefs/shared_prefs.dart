@@ -11,6 +11,7 @@ class AppPreferences {
 
   static const String userIdKey = 'user_id';
   static const String onboardingKey = 'onboarded';
+  static const String currentUserKey = 'current_user';
 
   String? getUserId() => _prefs.getString(userIdKey);
   Future<void> setUserId(String token) async => await _prefs.setString(userIdKey, token);
@@ -20,6 +21,11 @@ class AppPreferences {
   Future<void> setIsOnboarded({bool isOnboarded = true}) async =>
       await _prefs.setBool(onboardingKey, isOnboarded);
   Future<void> clearIsOnboarded() async => await _prefs.remove(onboardingKey);
+
+  String? getCurrentUser() => _prefs.getString(currentUserKey);
+  Future<void> setCurrentUser(String userJson) async =>
+      await _prefs.setString(currentUserKey, userJson);
+  Future<void> clearCurrentUser() async => await _prefs.remove(currentUserKey);
 }
 
 @Riverpod(keepAlive: true)
