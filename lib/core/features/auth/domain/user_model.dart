@@ -1,45 +1,27 @@
+// ignore_for_file: invalid_annotation_target
+
+import 'package:anystep/core/common/domain/address_model.dart';
+import 'package:anystep/core/features/auth/domain/age_group.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'address_model.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
-@JsonSerializable()
 @freezed
-class UserModel with _$UserModel {
-  const UserModel({
-    required this.id,
-    required this.email,
-    required this.address,
-    required this.firstName,
-    required this.lastName,
-    required this.updatedOn,
-    required this.createdOn,
-    this.phoneNumber,
-    this.isOver55 = false,
-    this.isUnder18 = false,
-  });
-
-  @override
-  final String id;
-  @override
-  final String email;
-  @override
-  final AddressModel address;
-  @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
-  final String? phoneNumber;
-  @override
-  final DateTime updatedOn;
-  @override
-  final DateTime createdOn;
-  @override
-  final bool isOver55;
-  @override
-  final bool isUnder18;
+abstract class UserModel with _$UserModel {
+  const factory UserModel({
+    required int volunteerId,
+    required String uid,
+    required String email,
+    required AddressModel address,
+    required String firstName,
+    required String lastName,
+    required AgeGroup ageGroup,
+    required List<String> permissions,
+    String? phoneNumber,
+    @JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,
+    @JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt,
+  }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 }

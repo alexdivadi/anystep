@@ -6,36 +6,40 @@ part of 'event.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EventModel _$EventModelFromJson(Map<String, dynamic> json) => EventModel(
+_EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
   id: json['id'] as String,
   name: json['name'] as String,
-  startTime: DateTime.parse(json['start_time'] as String),
-  endTime: DateTime.parse(json['end_time'] as String),
-  address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
-  updatedOn: DateTime.parse(json['updatedOn'] as String),
-  createdOn: DateTime.parse(json['createdOn'] as String),
   template:
       json['template'] == null
           ? null
           : EventTemplateModel.fromJson(
             json['template'] as Map<String, dynamic>,
           ),
+  startTime: DateTime.parse(json['startTime'] as String),
+  endTime: DateTime.parse(json['endTime'] as String),
+  address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
+  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   description: json['description'] as String?,
-  tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  imageUrl: json['image_url'] as String?,
+  imageUrl: json['imageUrl'] as String?,
+  updatedAt:
+      json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+  createdAt:
+      json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
 );
 
-Map<String, dynamic> _$EventModelToJson(EventModel instance) =>
+Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'template': instance.template,
-      'start_time': instance.startTime.toIso8601String(),
-      'end_time': instance.endTime.toIso8601String(),
+      'startTime': instance.startTime.toIso8601String(),
+      'endTime': instance.endTime.toIso8601String(),
       'address': instance.address,
-      'updatedOn': instance.updatedOn.toIso8601String(),
-      'createdOn': instance.createdOn.toIso8601String(),
-      'description': instance.description,
       'tags': instance.tags,
-      'image_url': instance.imageUrl,
+      'description': instance.description,
+      'imageUrl': instance.imageUrl,
     };

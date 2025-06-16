@@ -6,28 +6,42 @@ part of 'user_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
-  id: json['id'] as String,
+_UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
+  volunteerId: (json['volunteerId'] as num).toInt(),
+  uid: json['uid'] as String,
   email: json['email'] as String,
   address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
   firstName: json['firstName'] as String,
   lastName: json['lastName'] as String,
-  updatedOn: DateTime.parse(json['updatedOn'] as String),
-  createdOn: DateTime.parse(json['createdOn'] as String),
+  ageGroup: $enumDecode(_$AgeGroupEnumMap, json['ageGroup']),
+  permissions:
+      (json['permissions'] as List<dynamic>).map((e) => e as String).toList(),
   phoneNumber: json['phoneNumber'] as String?,
-  isOver55: json['isOver55'] as bool? ?? false,
-  isUnder18: json['isUnder18'] as bool? ?? false,
+  updatedAt:
+      json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+  createdAt:
+      json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
 );
 
-Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
-  'id': instance.id,
-  'email': instance.email,
-  'address': instance.address,
-  'firstName': instance.firstName,
-  'lastName': instance.lastName,
-  'phoneNumber': instance.phoneNumber,
-  'updatedOn': instance.updatedOn.toIso8601String(),
-  'createdOn': instance.createdOn.toIso8601String(),
-  'isOver55': instance.isOver55,
-  'isUnder18': instance.isUnder18,
+Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
+    <String, dynamic>{
+      'volunteerId': instance.volunteerId,
+      'uid': instance.uid,
+      'email': instance.email,
+      'address': instance.address,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'ageGroup': _$AgeGroupEnumMap[instance.ageGroup]!,
+      'permissions': instance.permissions,
+      'phoneNumber': instance.phoneNumber,
+    };
+
+const _$AgeGroupEnumMap = {
+  AgeGroup.over55: 'over55',
+  AgeGroup.under18: 'under18',
+  AgeGroup.other: 'other',
 };
