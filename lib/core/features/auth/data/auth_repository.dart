@@ -73,6 +73,20 @@ class AuthRepository {
       _authStateController.add(AuthState(uid: _session!.userId, email: _user!.email));
       return null;
     } on AppwriteException catch (e) {
+      if (e.type == "user_session_already_exists") {
+        Log.w("User session already exists, attempting to refresh session");
+        try {
+          _session = await _account.getSession(sessionId: 'current');
+          _user = await _account.get();
+          _appPreferences.setUserId(_session!.userId);
+          _authStateController.add(AuthState(uid: _session!.userId, email: _user!.email));
+          return null;
+        } catch (e, st) {
+          Log.e("Error refreshing user session", e, st);
+          _authStateController.add(null);
+          return 'An error occurred';
+        }
+      }
       Log.e("AppwriteException during login", e);
       _authStateController.add(null);
       return e.message ?? 'An error occurred';

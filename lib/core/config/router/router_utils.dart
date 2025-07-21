@@ -11,4 +11,6 @@ class RouterUtils {
     UserOnboardedGate.path,
     OnboardingScreen.path,
   };
+
+  static const loginRoutes = {LoginScreen.path, SignUpScreen.path};
 }

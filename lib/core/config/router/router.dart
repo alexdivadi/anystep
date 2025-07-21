@@ -54,6 +54,11 @@ GoRouter router(Ref ref) {
       if (path == AppStartupLoadingWidget.path) return EventFeedScreen.path;
 
       if (RouterUtils.unauthenticatedRoutes.contains(path)) {
+        if (RouterUtils.loginRoutes.contains(path)) {
+          // Replace with dashboard screen
+          return authStateAsync.hasValue ? EventFeedScreen.path : null;
+        }
+
         return null;
       }
 
