@@ -31,6 +31,7 @@ class EventRepository implements IRepository<EventModel> {
 
   @override
   Future<List<EventModel>> list({List<String>? queries}) async {
+    //TODO: offline-first structure; stream output; don't throw on Network Exception
     final documents = await database.list(collectionId: collectionId, queries: queries);
     return documents.map((doc) => EventModel.fromJson(doc.data)).toList();
   }

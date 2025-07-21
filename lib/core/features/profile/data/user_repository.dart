@@ -14,21 +14,25 @@ class UserRepository implements IRepository<UserModel> {
   final String collectionId;
 
   @override
-  Future<UserModel> createOrUpdate({required UserModel obj, String? documentId}) {
-    // TODO: implement createOrUpdate
-    throw UnimplementedError();
+  Future<UserModel> createOrUpdate({required UserModel obj, String? documentId}) async {
+    final document = await database.createOrUpdate(
+      collectionId: collectionId,
+      data: obj.toJson(),
+      documentId: documentId,
+    );
+    return UserModel.fromJson(document.data);
   }
 
   @override
-  Future<UserModel> get({required String documentId}) {
-    // TODO: implement get
-    throw UnimplementedError();
+  Future<UserModel> get({required String documentId}) async {
+    final document = await database.get(collectionId: collectionId, documentId: documentId);
+    return UserModel.fromJson(document.data);
   }
 
   @override
-  Future<List<UserModel>> list({List<String>? queries}) {
-    // TODO: implement list
-    throw UnimplementedError();
+  Future<List<UserModel>> list({List<String>? queries}) async {
+    final documents = await database.list(collectionId: collectionId, queries: queries);
+    return documents.map((doc) => UserModel.fromJson(doc.data)).toList();
   }
 }
 

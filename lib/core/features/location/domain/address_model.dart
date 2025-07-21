@@ -8,6 +8,7 @@ part 'address_model.g.dart';
 abstract class AddressModel with _$AddressModel {
   const factory AddressModel({
     required String street,
+    String? streetSecondary,
     required String city,
     required String state,
     required String country,
@@ -24,6 +25,7 @@ abstract class AddressModel with _$AddressModel {
 
   factory AddressModel.withGeohash({
     required String street,
+    String? streetSecondary,
     required String city,
     required String state,
     required String country,
@@ -37,6 +39,7 @@ abstract class AddressModel with _$AddressModel {
     final geohash = calculateGeohash(latitude, longitude);
     return AddressModel(
       street: street,
+      streetSecondary: streetSecondary,
       city: city,
       state: state,
       country: country,

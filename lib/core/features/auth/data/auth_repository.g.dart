@@ -24,11 +24,11 @@ final authRepositoryProvider = Provider<AuthRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AuthRepositoryRef = ProviderRef<AuthRepository>;
-String _$authStateStreamHash() => r'703925283cef2a9a512015a44ab51de4ad72e837';
+String _$authStateStreamHash() => r'e4884613c35417d980aee2417cbf8c8f03703f5b';
 
 /// See also [authStateStream].
 @ProviderFor(authStateStream)
-final authStateStreamProvider = StreamProvider<String?>.internal(
+final authStateStreamProvider = StreamProvider<AuthState?>.internal(
   authStateStream,
   name: r'authStateStreamProvider',
   debugGetCreateSourceHash:
@@ -41,6 +41,6 @@ final authStateStreamProvider = StreamProvider<String?>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AuthStateStreamRef = StreamProviderRef<String?>;
+typedef AuthStateStreamRef = StreamProviderRef<AuthState?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

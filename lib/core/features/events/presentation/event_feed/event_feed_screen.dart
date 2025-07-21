@@ -1,25 +1,37 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/common/utils/log_utils.dart';
-import 'package:anystep/core/common/widgets/any_step_error_widget.dart';
-import 'package:anystep/core/common/widgets/scrollable_centered_content.dart';
+import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
 import 'package:anystep/core/features/events/presentation/widgets/no_events_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../widgets/event_card.dart';
-import '../widgets/event_card_shimmer.dart';
+import 'package:go_router/go_router.dart';
+import 'package:anystep/core/features/events/presentation/widgets/event_card.dart';
+import 'package:anystep/core/features/events/presentation/widgets/event_card_shimmer.dart';
 import 'event_feed_screen_controller.dart';
 
 class EventFeedScreen extends ConsumerWidget {
   const EventFeedScreen({super.key});
 
   static const path = '/events';
-  static const name = 'events';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final eventsAsync = ref.watch(eventFeedScreenControllerProvider);
-    return Scaffold(
-      appBar: AppBar(title: const Text('Event Feed')),
+    final uid = ref.watch(authStateStreamProvider);
+    return AnyStepScaffold(
+      appBar: AnyStepAppBar(
+        title: const Text('Event Feed'),
+        actions:
+            uid.hasValue
+                ? null
+                : [
+                  IconButton(
+                    icon: const Icon(Icons.login),
+                    onPressed: () => context.go(LoginScreen.path),
+                  ),
+                ],
+      ),
       body: eventsAsync.when(
         loading:
             () => ListView.separated(

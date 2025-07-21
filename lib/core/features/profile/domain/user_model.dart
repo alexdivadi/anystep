@@ -2,6 +2,7 @@
 
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_model.freezed.dart';
@@ -10,16 +11,16 @@ part 'user_model.g.dart';
 @freezed
 abstract class UserModel with _$UserModel {
   const factory UserModel({
-    required int volunteerId,
     required String email,
     required AddressModel address,
     required String firstName,
     required String lastName,
     required AgeGroup ageGroup,
-    required List<String> permissions,
+    required UserRole role,
     String? phoneNumber,
     @JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,
     @JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt,
+    @JsonKey(includeToJson: false, includeFromJson: false) @Default(false) bool isCachedValue,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

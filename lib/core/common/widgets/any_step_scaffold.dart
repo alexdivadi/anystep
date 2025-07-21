@@ -10,7 +10,7 @@ class AnyStepScaffold extends StatelessWidget {
     this.backgroundColor,
   });
 
-  final AppBar? appBar;
+  final PreferredSizeWidget? appBar;
   final Widget? body;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;

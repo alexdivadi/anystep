@@ -7,7 +7,15 @@ import 'package:go_router/go_router.dart';
 final routes = [
   GoRoute(path: LoginScreen.path, builder: (context, state) => const LoginScreen()),
   GoRoute(path: SignUpScreen.path, builder: (context, state) => const SignUpScreen()),
+  GoRoute(path: WelcomeScreen.path, builder: (context, state) => const WelcomeScreen()),
   GoRoute(path: OnboardingScreen.path, builder: (context, state) => const OnboardingScreen()),
+  GoRoute(
+    path: UserOnboardedGate.path,
+    pageBuilder: (context, state) {
+      final redirectParam = state.uri.queryParameters['redirect'] ?? EventFeedScreen.path;
+      return NoTransitionPage(child: UserOnboardedGate(redirect: redirectParam));
+    },
+  ),
   GoRoute(
     path: AppStartupLoadingWidget.path,
     builder: (context, state) => const AppStartupLoadingWidget(),
@@ -27,16 +35,15 @@ final routes = [
         routes: [
           GoRoute(
             path: EventFeedScreen.path,
-            name: EventFeedScreen.name,
-            builder: (context, state) => const EventFeedScreen(), // Replace with actual HomePage
+            pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
           ),
         ],
       ),
       StatefulShellBranch(
         routes: [
           GoRoute(
-            path: '/profile',
-            builder: (context, state) => const Placeholder(), // Replace with actual ProfilePage
+            path: ProfileScreen.path,
+            pageBuilder: (context, state) => NoTransitionPage(child: const ProfileScreen()),
           ),
         ],
       ),

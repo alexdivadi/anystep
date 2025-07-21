@@ -11,6 +11,7 @@ class AnyStepNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
+      useLegacyColorScheme: false,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.event_rounded), label: 'Events'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),

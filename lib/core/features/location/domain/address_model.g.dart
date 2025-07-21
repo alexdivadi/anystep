@@ -9,6 +9,7 @@ part of 'address_model.dart';
 _AddressModel _$AddressModelFromJson(Map<String, dynamic> json) =>
     _AddressModel(
       street: json['street'] as String,
+      streetSecondary: json['streetSecondary'] as String?,
       city: json['city'] as String,
       state: json['state'] as String,
       country: json['country'] as String,
@@ -24,6 +25,7 @@ _AddressModel _$AddressModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AddressModelToJson(_AddressModel instance) =>
     <String, dynamic>{
       'street': instance.street,
+      'streetSecondary': instance.streetSecondary,
       'city': instance.city,
       'state': instance.state,
       'country': instance.country,

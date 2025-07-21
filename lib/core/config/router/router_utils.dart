@@ -5,8 +5,10 @@ class RouterUtils {
   static const unauthenticatedRoutes = {
     LoginScreen.path,
     SignUpScreen.path,
-    OnboardingScreen.path,
+    WelcomeScreen.path,
     AppStartupLoadingWidget.path,
     EventFeedScreen.path,
+    UserOnboardedGate.path,
+    OnboardingScreen.path,
   };
 }

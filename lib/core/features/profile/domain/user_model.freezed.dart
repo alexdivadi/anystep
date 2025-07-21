@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- int get volunteerId; String get email; AddressModel get address; String get firstName; String get lastName; AgeGroup get ageGroup; List<String> get permissions; String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get updatedAt;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get createdAt;
+ String get email; AddressModel get address; String get firstName; String get lastName; AgeGroup get ageGroup; UserRole get role; String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get updatedAt;@JsonKey(includeToJson: false, includeFromJson: true) DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other.permissions, permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,volunteerId,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(permissions),phoneNumber,updatedAt,createdAt);
+int get hashCode => Object.hash(runtimeType,email,address,firstName,lastName,ageGroup,role,phoneNumber,updatedAt,createdAt,isCachedValue);
 
 @override
 String toString() {
-  return 'UserModel(volunteerId: $volunteerId, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
+  return 'UserModel(email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt, isCachedValue: $isCachedValue)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int volunteerId, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
+ String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, UserRole role, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
 });
 
 
@@ -66,19 +66,19 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? volunteerId = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,Object? isCachedValue = null,}) {
   return _then(_self.copyWith(
-volunteerId: null == volunteerId ? _self.volunteerId : volunteerId // ignore: cast_nullable_to_non_nullable
-as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,ageGroup: null == ageGroup ? _self.ageGroup : ageGroup // ignore: cast_nullable_to_non_nullable
-as AgeGroup,permissions: null == permissions ? _self.permissions : permissions // ignore: cast_nullable_to_non_nullable
-as List<String>,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as AgeGroup,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+as UserRole,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,isCachedValue: null == isCachedValue ? _self.isCachedValue : isCachedValue // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of UserModel
@@ -98,25 +98,19 @@ $AddressModelCopyWith<$Res> get address {
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.volunteerId, required this.email, required this.address, required this.firstName, required this.lastName, required this.ageGroup, required final  List<String> permissions, this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true) this.updatedAt, @JsonKey(includeToJson: false, includeFromJson: true) this.createdAt}): _permissions = permissions;
+  const _UserModel({required this.email, required this.address, required this.firstName, required this.lastName, required this.ageGroup, required this.role, this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true) this.updatedAt, @JsonKey(includeToJson: false, includeFromJson: true) this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-@override final  int volunteerId;
 @override final  String email;
 @override final  AddressModel address;
 @override final  String firstName;
 @override final  String lastName;
 @override final  AgeGroup ageGroup;
- final  List<String> _permissions;
-@override List<String> get permissions {
-  if (_permissions is EqualUnmodifiableListView) return _permissions;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_permissions);
-}
-
+@override final  UserRole role;
 @override final  String? phoneNumber;
 @override@JsonKey(includeToJson: false, includeFromJson: true) final  DateTime? updatedAt;
 @override@JsonKey(includeToJson: false, includeFromJson: true) final  DateTime? createdAt;
+@override@JsonKey(includeToJson: false, includeFromJson: false) final  bool isCachedValue;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -131,16 +125,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.volunteerId, volunteerId) || other.volunteerId == volunteerId)&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&const DeepCollectionEquality().equals(other._permissions, _permissions)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.email, email) || other.email == email)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,volunteerId,email,address,firstName,lastName,ageGroup,const DeepCollectionEquality().hash(_permissions),phoneNumber,updatedAt,createdAt);
+int get hashCode => Object.hash(runtimeType,email,address,firstName,lastName,ageGroup,role,phoneNumber,updatedAt,createdAt,isCachedValue);
 
 @override
 String toString() {
-  return 'UserModel(volunteerId: $volunteerId, email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, permissions: $permissions, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt)';
+  return 'UserModel(email: $email, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, updatedAt: $updatedAt, createdAt: $createdAt, isCachedValue: $isCachedValue)';
 }
 
 
@@ -151,7 +145,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int volunteerId, String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, List<String> permissions, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt
+ String email, AddressModel address, String firstName, String lastName, AgeGroup ageGroup, UserRole role, String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,@JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
 });
 
 
@@ -168,19 +162,19 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? volunteerId = null,Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? permissions = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? address = null,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? updatedAt = freezed,Object? createdAt = freezed,Object? isCachedValue = null,}) {
   return _then(_UserModel(
-volunteerId: null == volunteerId ? _self.volunteerId : volunteerId // ignore: cast_nullable_to_non_nullable
-as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as AddressModel,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,ageGroup: null == ageGroup ? _self.ageGroup : ageGroup // ignore: cast_nullable_to_non_nullable
-as AgeGroup,permissions: null == permissions ? _self._permissions : permissions // ignore: cast_nullable_to_non_nullable
-as List<String>,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as AgeGroup,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+as UserRole,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,isCachedValue: null == isCachedValue ? _self.isCachedValue : isCachedValue // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

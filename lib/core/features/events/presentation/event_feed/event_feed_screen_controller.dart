@@ -15,7 +15,7 @@ class EventFeedScreenController extends _$EventFeedScreenController {
     final repo = ref.read(eventRepositoryProvider);
     final page = await repo.list(
       queries: [
-        Query.orderDesc('start_time'),
+        Query.orderDesc('startTime'),
         Query.limit(limit),
         if (lastId != null) Query.cursorAfter(lastId),
       ],

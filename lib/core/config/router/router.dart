@@ -1,7 +1,9 @@
 import 'package:anystep/core/app_startup/app_startup.dart';
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/features/onboarding/data/onboarding_repository.dart';
+import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/config/router/router_utils.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
@@ -18,7 +20,7 @@ part 'router.g.dart';
 GoRouter router(Ref ref) {
   ref.watch(appStartupProvider);
   final isOnboarded = ref.watch(onboardingRepositoryProvider);
-  final isAuth = ValueNotifier<AsyncValue<String?>>(const AsyncLoading());
+  final isAuth = ValueNotifier<AsyncValue<AuthState?>>(const AsyncLoading());
   ref
     ..onDispose(isAuth.dispose)
     ..listen(authStateStreamProvider, (_, next) {
@@ -36,27 +38,34 @@ GoRouter router(Ref ref) {
     routes: routes,
     refreshListenable: isAuth,
     redirect: (context, state) {
-      final userIdAsync = isAuth.value;
-      if (!isOnboarded.hasValue || userIdAsync.isLoading) {
+      final authStateAsync = isAuth.value;
+      if (!isOnboarded.hasValue || authStateAsync.isLoading) {
         // Onboarding state is still loading, do not redirect yet
         return AppStartupLoadingWidget.path;
       }
 
       if (!isOnboarded.requireValue) {
         // User has not completed onboarding, redirect to onboarding screen
-        Log.d('User has not completed onboarding, redirecting to onboarding screen');
-        return OnboardingScreen.path;
+        Log.d('User has not done welcome, redirecting to welcome screen');
+        return WelcomeScreen.path;
       }
 
       final path = state.matchedLocation;
+      if (path == AppStartupLoadingWidget.path) return EventFeedScreen.path;
+
       if (RouterUtils.unauthenticatedRoutes.contains(path)) {
         return null;
       }
 
-      // Check if user has submitted profile information
-
-      if (userIdAsync.valueOrNull != null) {
+      if (authStateAsync.valueOrNull != null) {
         // User is authenticated, allow access to the requested route
+        // Check if user has submitted profile information
+        final user = ref.read(currentUserStreamProvider);
+        if (!user.hasValue || user.requireValue == null) {
+          // User is not onboarded, redirecting to onboarding screen
+          Log.d('Going to UserGate with redirect to $path');
+          return '${UserOnboardedGate.path}?redirect=$path';
+        }
         return null;
       }
 

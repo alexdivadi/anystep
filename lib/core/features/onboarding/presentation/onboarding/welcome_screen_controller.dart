@@ -1,15 +1,15 @@
 import 'package:anystep/core/features/onboarding/data/onboarding_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'onboarding_screen_state.dart';
+import 'welcome_screen_state.dart';
 
-part 'onboarding_screen_controller.g.dart';
+part 'welcome_screen_controller.g.dart';
 
 @riverpod
-class OnboardingScreenController extends _$OnboardingScreenController {
+class WelcomeScreenController extends _$WelcomeScreenController {
   @override
-  OnboardingScreenState build() {
+  WelcomeScreenState build() {
     final isOnboarded = ref.watch(onboardingRepositoryProvider);
-    return OnboardingScreenState(isOnboarded: isOnboarded.requireValue);
+    return WelcomeScreenState(isOnboarded: isOnboarded.requireValue);
   }
 
   Future<void> completeOnboarding() async {

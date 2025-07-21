@@ -7,14 +7,12 @@ part of 'user_model.dart';
 // **************************************************************************
 
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
-  volunteerId: (json['volunteerId'] as num).toInt(),
   email: json['email'] as String,
   address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
   firstName: json['firstName'] as String,
   lastName: json['lastName'] as String,
   ageGroup: $enumDecode(_$AgeGroupEnumMap, json['ageGroup']),
-  permissions:
-      (json['permissions'] as List<dynamic>).map((e) => e as String).toList(),
+  role: $enumDecode(_$UserRoleEnumMap, json['role']),
   phoneNumber: json['phoneNumber'] as String?,
   updatedAt:
       json['updatedAt'] == null
@@ -28,18 +26,22 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
-      'volunteerId': instance.volunteerId,
       'email': instance.email,
       'address': instance.address,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'ageGroup': _$AgeGroupEnumMap[instance.ageGroup]!,
-      'permissions': instance.permissions,
+      'role': _$UserRoleEnumMap[instance.role]!,
       'phoneNumber': instance.phoneNumber,
     };
 
 const _$AgeGroupEnumMap = {
-  AgeGroup.over55: 'over55',
   AgeGroup.under18: 'under18',
+  AgeGroup.over55: 'over55',
   AgeGroup.other: 'other',
+};
+
+const _$UserRoleEnumMap = {
+  UserRole.admin: 'admin',
+  UserRole.volunteer: 'volunteer',
 };

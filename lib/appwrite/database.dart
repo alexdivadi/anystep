@@ -22,7 +22,7 @@ class Database {
     String? documentId,
   }) async {
     try {
-      return await _databases.createDocument(
+      return await _databases.upsertDocument(
         databaseId: _databaseId,
         collectionId: collectionId,
         documentId: documentId ?? ID.unique(),

@@ -10,20 +10,21 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'current_user.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<UserModel?> currentUserStream(Ref ref) async* {
   final pref = await ref.watch(appPreferencesProvider.future);
 
   final cachedUser = pref.getCurrentUser();
   if (cachedUser != null) {
-    yield UserModel.fromJson(jsonDecode(cachedUser));
+    Log.d('Using cached user data');
+    yield UserModel.fromJson(jsonDecode(cachedUser)).copyWith(isCachedValue: true);
   }
 
   try {
-    final uid = await ref.watch(authStateStreamProvider.future);
-    if (uid == null) throw Exception('No user logged in');
+    final authState = await ref.watch(authStateStreamProvider.future);
+    if (authState == null) throw Exception('No user logged in');
 
-    final user = await ref.watch(userRepositoryProvider).get(documentId: uid);
+    final user = await ref.read(userRepositoryProvider).get(documentId: authState.uid);
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;
   } catch (e) {
