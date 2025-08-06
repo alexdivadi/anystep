@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddressModel {
 
- String get street; String? get streetSecondary; String get city; String get state; String get country; String get postalCode; bool get isUserAddress; double? get latitude; double? get longitude; String? get placeId; String? get name; String? get geohash;
+@JsonKey(includeIfNull: false) int? get id; String get street;@JsonKey(name: "street_secondary") String? get streetSecondary; String get city; String get state; String? get country;@JsonKey(name: "postal_code") String get postalCode;@JsonKey(name: "is_user_address") bool get isUserAddress; double? get latitude; double? get longitude;@JsonKey(name: "place_id") String? get placeId; String? get name; String? get geohash;
 /// Create a copy of AddressModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $AddressModelCopyWith<AddressModel> get copyWith => _$AddressModelCopyWithImpl<A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddressModel&&(identical(other.street, street) || other.street == street)&&(identical(other.streetSecondary, streetSecondary) || other.streetSecondary == streetSecondary)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.isUserAddress, isUserAddress) || other.isUserAddress == isUserAddress)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.placeId, placeId) || other.placeId == placeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.geohash, geohash) || other.geohash == geohash));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddressModel&&(identical(other.id, id) || other.id == id)&&(identical(other.street, street) || other.street == street)&&(identical(other.streetSecondary, streetSecondary) || other.streetSecondary == streetSecondary)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.isUserAddress, isUserAddress) || other.isUserAddress == isUserAddress)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.placeId, placeId) || other.placeId == placeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.geohash, geohash) || other.geohash == geohash));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,street,streetSecondary,city,state,country,postalCode,isUserAddress,latitude,longitude,placeId,name,geohash);
+int get hashCode => Object.hash(runtimeType,id,street,streetSecondary,city,state,country,postalCode,isUserAddress,latitude,longitude,placeId,name,geohash);
 
 @override
 String toString() {
-  return 'AddressModel(street: $street, streetSecondary: $streetSecondary, city: $city, state: $state, country: $country, postalCode: $postalCode, isUserAddress: $isUserAddress, latitude: $latitude, longitude: $longitude, placeId: $placeId, name: $name, geohash: $geohash)';
+  return 'AddressModel(id: $id, street: $street, streetSecondary: $streetSecondary, city: $city, state: $state, country: $country, postalCode: $postalCode, isUserAddress: $isUserAddress, latitude: $latitude, longitude: $longitude, placeId: $placeId, name: $name, geohash: $geohash)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $AddressModelCopyWith<$Res>  {
   factory $AddressModelCopyWith(AddressModel value, $Res Function(AddressModel) _then) = _$AddressModelCopyWithImpl;
 @useResult
 $Res call({
- String street, String? streetSecondary, String city, String state, String country, String postalCode, bool isUserAddress, double? latitude, double? longitude, String? placeId, String? name, String? geohash
+@JsonKey(includeIfNull: false) int? id, String street,@JsonKey(name: "street_secondary") String? streetSecondary, String city, String state, String? country,@JsonKey(name: "postal_code") String postalCode,@JsonKey(name: "is_user_address") bool isUserAddress, double? latitude, double? longitude,@JsonKey(name: "place_id") String? placeId, String? name, String? geohash
 });
 
 
@@ -66,14 +66,15 @@ class _$AddressModelCopyWithImpl<$Res>
 
 /// Create a copy of AddressModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? street = null,Object? streetSecondary = freezed,Object? city = null,Object? state = null,Object? country = null,Object? postalCode = null,Object? isUserAddress = null,Object? latitude = freezed,Object? longitude = freezed,Object? placeId = freezed,Object? name = freezed,Object? geohash = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? street = null,Object? streetSecondary = freezed,Object? city = null,Object? state = null,Object? country = freezed,Object? postalCode = null,Object? isUserAddress = null,Object? latitude = freezed,Object? longitude = freezed,Object? placeId = freezed,Object? name = freezed,Object? geohash = freezed,}) {
   return _then(_self.copyWith(
-street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
 as String,streetSecondary: freezed == streetSecondary ? _self.streetSecondary : streetSecondary // ignore: cast_nullable_to_non_nullable
 as String?,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
-as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
-as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
+as String,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String?,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String,isUserAddress: null == isUserAddress ? _self.isUserAddress : isUserAddress // ignore: cast_nullable_to_non_nullable
 as bool,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
@@ -91,19 +92,20 @@ as String?,
 @JsonSerializable()
 
 class _AddressModel implements AddressModel {
-  const _AddressModel({required this.street, this.streetSecondary, required this.city, required this.state, required this.country, required this.postalCode, required this.isUserAddress, this.latitude, this.longitude, this.placeId, this.name, this.geohash});
+  const _AddressModel({@JsonKey(includeIfNull: false) this.id, required this.street, @JsonKey(name: "street_secondary") this.streetSecondary, required this.city, required this.state, this.country, @JsonKey(name: "postal_code") required this.postalCode, @JsonKey(name: "is_user_address") required this.isUserAddress, this.latitude, this.longitude, @JsonKey(name: "place_id") this.placeId, this.name, this.geohash});
   factory _AddressModel.fromJson(Map<String, dynamic> json) => _$AddressModelFromJson(json);
 
+@override@JsonKey(includeIfNull: false) final  int? id;
 @override final  String street;
-@override final  String? streetSecondary;
+@override@JsonKey(name: "street_secondary") final  String? streetSecondary;
 @override final  String city;
 @override final  String state;
-@override final  String country;
-@override final  String postalCode;
-@override final  bool isUserAddress;
+@override final  String? country;
+@override@JsonKey(name: "postal_code") final  String postalCode;
+@override@JsonKey(name: "is_user_address") final  bool isUserAddress;
 @override final  double? latitude;
 @override final  double? longitude;
-@override final  String? placeId;
+@override@JsonKey(name: "place_id") final  String? placeId;
 @override final  String? name;
 @override final  String? geohash;
 
@@ -120,16 +122,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddressModel&&(identical(other.street, street) || other.street == street)&&(identical(other.streetSecondary, streetSecondary) || other.streetSecondary == streetSecondary)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.isUserAddress, isUserAddress) || other.isUserAddress == isUserAddress)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.placeId, placeId) || other.placeId == placeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.geohash, geohash) || other.geohash == geohash));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddressModel&&(identical(other.id, id) || other.id == id)&&(identical(other.street, street) || other.street == street)&&(identical(other.streetSecondary, streetSecondary) || other.streetSecondary == streetSecondary)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.isUserAddress, isUserAddress) || other.isUserAddress == isUserAddress)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.placeId, placeId) || other.placeId == placeId)&&(identical(other.name, name) || other.name == name)&&(identical(other.geohash, geohash) || other.geohash == geohash));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,street,streetSecondary,city,state,country,postalCode,isUserAddress,latitude,longitude,placeId,name,geohash);
+int get hashCode => Object.hash(runtimeType,id,street,streetSecondary,city,state,country,postalCode,isUserAddress,latitude,longitude,placeId,name,geohash);
 
 @override
 String toString() {
-  return 'AddressModel(street: $street, streetSecondary: $streetSecondary, city: $city, state: $state, country: $country, postalCode: $postalCode, isUserAddress: $isUserAddress, latitude: $latitude, longitude: $longitude, placeId: $placeId, name: $name, geohash: $geohash)';
+  return 'AddressModel(id: $id, street: $street, streetSecondary: $streetSecondary, city: $city, state: $state, country: $country, postalCode: $postalCode, isUserAddress: $isUserAddress, latitude: $latitude, longitude: $longitude, placeId: $placeId, name: $name, geohash: $geohash)';
 }
 
 
@@ -140,7 +142,7 @@ abstract mixin class _$AddressModelCopyWith<$Res> implements $AddressModelCopyWi
   factory _$AddressModelCopyWith(_AddressModel value, $Res Function(_AddressModel) _then) = __$AddressModelCopyWithImpl;
 @override @useResult
 $Res call({
- String street, String? streetSecondary, String city, String state, String country, String postalCode, bool isUserAddress, double? latitude, double? longitude, String? placeId, String? name, String? geohash
+@JsonKey(includeIfNull: false) int? id, String street,@JsonKey(name: "street_secondary") String? streetSecondary, String city, String state, String? country,@JsonKey(name: "postal_code") String postalCode,@JsonKey(name: "is_user_address") bool isUserAddress, double? latitude, double? longitude,@JsonKey(name: "place_id") String? placeId, String? name, String? geohash
 });
 
 
@@ -157,14 +159,15 @@ class __$AddressModelCopyWithImpl<$Res>
 
 /// Create a copy of AddressModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? street = null,Object? streetSecondary = freezed,Object? city = null,Object? state = null,Object? country = null,Object? postalCode = null,Object? isUserAddress = null,Object? latitude = freezed,Object? longitude = freezed,Object? placeId = freezed,Object? name = freezed,Object? geohash = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? street = null,Object? streetSecondary = freezed,Object? city = null,Object? state = null,Object? country = freezed,Object? postalCode = null,Object? isUserAddress = null,Object? latitude = freezed,Object? longitude = freezed,Object? placeId = freezed,Object? name = freezed,Object? geohash = freezed,}) {
   return _then(_AddressModel(
-street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
 as String,streetSecondary: freezed == streetSecondary ? _self.streetSecondary : streetSecondary // ignore: cast_nullable_to_non_nullable
 as String?,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
-as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
-as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
+as String,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String?,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String,isUserAddress: null == isUserAddress ? _self.isUserAddress : isUserAddress // ignore: cast_nullable_to_non_nullable
 as bool,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable

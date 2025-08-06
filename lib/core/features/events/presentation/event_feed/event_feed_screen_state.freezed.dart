@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EventFeedScreenState {
 
- List<EventModel> get items; List<EventModel> get page; String? get lastId;
+ List<EventModel> get items; List<EventModel> get page; int? get pageNum;
 /// Create a copy of EventFeedScreenState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $EventFeedScreenStateCopyWith<EventFeedScreenState> get copyWith => _$EventFeedS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventFeedScreenState&&const DeepCollectionEquality().equals(other.items, items)&&const DeepCollectionEquality().equals(other.page, page)&&(identical(other.lastId, lastId) || other.lastId == lastId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventFeedScreenState&&const DeepCollectionEquality().equals(other.items, items)&&const DeepCollectionEquality().equals(other.page, page)&&(identical(other.pageNum, pageNum) || other.pageNum == pageNum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(items),const DeepCollectionEquality().hash(page),lastId);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(items),const DeepCollectionEquality().hash(page),pageNum);
 
 @override
 String toString() {
-  return 'EventFeedScreenState(items: $items, page: $page, lastId: $lastId)';
+  return 'EventFeedScreenState(items: $items, page: $page, pageNum: $pageNum)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $EventFeedScreenStateCopyWith<$Res>  {
   factory $EventFeedScreenStateCopyWith(EventFeedScreenState value, $Res Function(EventFeedScreenState) _then) = _$EventFeedScreenStateCopyWithImpl;
 @useResult
 $Res call({
- List<EventModel> items, List<EventModel> page, String? lastId
+ List<EventModel> items, List<EventModel> page, int? pageNum
 });
 
 
@@ -63,12 +63,12 @@ class _$EventFeedScreenStateCopyWithImpl<$Res>
 
 /// Create a copy of EventFeedScreenState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? items = null,Object? page = null,Object? lastId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? items = null,Object? page = null,Object? pageNum = freezed,}) {
   return _then(_self.copyWith(
 items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as List<EventModel>,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as List<EventModel>,lastId: freezed == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
-as String?,
+as List<EventModel>,pageNum: freezed == pageNum ? _self.pageNum : pageNum // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -79,7 +79,7 @@ as String?,
 
 
 class _EventFeedScreenState implements EventFeedScreenState {
-  const _EventFeedScreenState({final  List<EventModel> items = const [], final  List<EventModel> page = const [], this.lastId}): _items = items,_page = page;
+  const _EventFeedScreenState({final  List<EventModel> items = const [], final  List<EventModel> page = const [], this.pageNum}): _items = items,_page = page;
   
 
  final  List<EventModel> _items;
@@ -96,7 +96,7 @@ class _EventFeedScreenState implements EventFeedScreenState {
   return EqualUnmodifiableListView(_page);
 }
 
-@override final  String? lastId;
+@override final  int? pageNum;
 
 /// Create a copy of EventFeedScreenState
 /// with the given fields replaced by the non-null parameter values.
@@ -108,16 +108,16 @@ _$EventFeedScreenStateCopyWith<_EventFeedScreenState> get copyWith => __$EventFe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventFeedScreenState&&const DeepCollectionEquality().equals(other._items, _items)&&const DeepCollectionEquality().equals(other._page, _page)&&(identical(other.lastId, lastId) || other.lastId == lastId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventFeedScreenState&&const DeepCollectionEquality().equals(other._items, _items)&&const DeepCollectionEquality().equals(other._page, _page)&&(identical(other.pageNum, pageNum) || other.pageNum == pageNum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_page),lastId);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_page),pageNum);
 
 @override
 String toString() {
-  return 'EventFeedScreenState(items: $items, page: $page, lastId: $lastId)';
+  return 'EventFeedScreenState(items: $items, page: $page, pageNum: $pageNum)';
 }
 
 
@@ -128,7 +128,7 @@ abstract mixin class _$EventFeedScreenStateCopyWith<$Res> implements $EventFeedS
   factory _$EventFeedScreenStateCopyWith(_EventFeedScreenState value, $Res Function(_EventFeedScreenState) _then) = __$EventFeedScreenStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<EventModel> items, List<EventModel> page, String? lastId
+ List<EventModel> items, List<EventModel> page, int? pageNum
 });
 
 
@@ -145,12 +145,12 @@ class __$EventFeedScreenStateCopyWithImpl<$Res>
 
 /// Create a copy of EventFeedScreenState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? page = null,Object? lastId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? page = null,Object? pageNum = freezed,}) {
   return _then(_EventFeedScreenState(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<EventModel>,page: null == page ? _self._page : page // ignore: cast_nullable_to_non_nullable
-as List<EventModel>,lastId: freezed == lastId ? _self.lastId : lastId // ignore: cast_nullable_to_non_nullable
-as String?,
+as List<EventModel>,pageNum: freezed == pageNum ? _self.pageNum : pageNum // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

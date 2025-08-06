@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 final routes = [
   GoRoute(path: LoginScreen.path, builder: (context, state) => const LoginScreen()),
   GoRoute(path: SignUpScreen.path, builder: (context, state) => const SignUpScreen()),
+  GoRoute(path: ConfirmEmailScreen.path, builder: (context, state) => const ConfirmEmailScreen()),
   GoRoute(path: WelcomeScreen.path, builder: (context, state) => const WelcomeScreen()),
   GoRoute(path: OnboardingScreen.path, builder: (context, state) => const OnboardingScreen()),
   GoRoute(
@@ -20,6 +21,39 @@ final routes = [
     path: AppStartupLoadingWidget.path,
     builder: (context, state) => const AppStartupLoadingWidget(),
   ),
+
+  // Unauthenticated Shell
+  StatefulShellRoute.indexedStack(
+    builder: (context, state, navigationShell) {
+      return Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: AnyStepNavBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: navigationShell.goBranch,
+        ),
+      );
+    },
+    branches: [
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: EventFeedScreen.pathAnonymous,
+            pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: SettingsScreen.pathAnonymous,
+            pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
+          ),
+        ],
+      ),
+    ],
+  ),
+
+  // Authenticated Shell
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       return Scaffold(
@@ -42,11 +76,12 @@ final routes = [
       StatefulShellBranch(
         routes: [
           GoRoute(
-            path: ProfileScreen.path,
-            pageBuilder: (context, state) => NoTransitionPage(child: const ProfileScreen()),
+            path: SettingsScreen.path,
+            pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
           ),
         ],
       ),
     ],
   ),
+  GoRoute(path: ProfileScreen.path, builder: (context, state) => const ProfileScreen()),
 ];

@@ -34,7 +34,7 @@ GoRouter router(Ref ref) {
       isAuth.value = next;
     }, fireImmediately: true);
   return GoRouter(
-    initialLocation: EventFeedScreen.path,
+    initialLocation: EventFeedScreen.pathAnonymous,
     routes: routes,
     refreshListenable: isAuth,
     redirect: (context, state) {
@@ -51,12 +51,14 @@ GoRouter router(Ref ref) {
       }
 
       final path = state.matchedLocation;
-      if (path == AppStartupLoadingWidget.path) return EventFeedScreen.path;
+      if (path == AppStartupLoadingWidget.path) return EventFeedScreen.pathAnonymous;
 
       if (RouterUtils.unauthenticatedRoutes.contains(path)) {
         if (RouterUtils.loginRoutes.contains(path)) {
           // Replace with dashboard screen
-          return authStateAsync.hasValue ? EventFeedScreen.path : null;
+          return authStateAsync.hasValue && authStateAsync.valueOrNull != null
+              ? EventFeedScreen.path
+              : null;
         }
 
         return null;

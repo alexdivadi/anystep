@@ -7,32 +7,30 @@ part of 'user_model.dart';
 // **************************************************************************
 
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
+  id: json['id'] as String,
   email: json['email'] as String,
-  address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
-  firstName: json['firstName'] as String,
-  lastName: json['lastName'] as String,
-  ageGroup: $enumDecode(_$AgeGroupEnumMap, json['ageGroup']),
+  addressId: (json['address'] as num?)?.toInt(),
+  firstName: json['first_name'] as String,
+  lastName: json['last_name'] as String,
+  ageGroup: $enumDecode(_$AgeGroupEnumMap, json['age_group']),
   role: $enumDecode(_$UserRoleEnumMap, json['role']),
-  phoneNumber: json['phoneNumber'] as String?,
-  updatedAt:
-      json['updatedAt'] == null
-          ? null
-          : DateTime.parse(json['updatedAt'] as String),
+  phoneNumber: json['phone_number'] as String?,
   createdAt:
-      json['createdAt'] == null
+      json['created_at'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
+          : DateTime.parse(json['created_at'] as String),
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'email': instance.email,
-      'address': instance.address,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'ageGroup': _$AgeGroupEnumMap[instance.ageGroup]!,
+      'address': instance.addressId,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'age_group': _$AgeGroupEnumMap[instance.ageGroup]!,
       'role': _$UserRoleEnumMap[instance.role]!,
-      'phoneNumber': instance.phoneNumber,
+      'phone_number': instance.phoneNumber,
     };
 
 const _$AgeGroupEnumMap = {

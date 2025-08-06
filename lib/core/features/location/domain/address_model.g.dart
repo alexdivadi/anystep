@@ -8,32 +8,34 @@ part of 'address_model.dart';
 
 _AddressModel _$AddressModelFromJson(Map<String, dynamic> json) =>
     _AddressModel(
+      id: (json['id'] as num?)?.toInt(),
       street: json['street'] as String,
-      streetSecondary: json['streetSecondary'] as String?,
+      streetSecondary: json['street_secondary'] as String?,
       city: json['city'] as String,
       state: json['state'] as String,
-      country: json['country'] as String,
-      postalCode: json['postalCode'] as String,
-      isUserAddress: json['isUserAddress'] as bool,
+      country: json['country'] as String?,
+      postalCode: json['postal_code'] as String,
+      isUserAddress: json['is_user_address'] as bool,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      placeId: json['placeId'] as String?,
+      placeId: json['place_id'] as String?,
       name: json['name'] as String?,
       geohash: json['geohash'] as String?,
     );
 
 Map<String, dynamic> _$AddressModelToJson(_AddressModel instance) =>
     <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
       'street': instance.street,
-      'streetSecondary': instance.streetSecondary,
+      'street_secondary': instance.streetSecondary,
       'city': instance.city,
       'state': instance.state,
       'country': instance.country,
-      'postalCode': instance.postalCode,
-      'isUserAddress': instance.isUserAddress,
+      'postal_code': instance.postalCode,
+      'is_user_address': instance.isUserAddress,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'placeId': instance.placeId,
+      'place_id': instance.placeId,
       'name': instance.name,
       'geohash': instance.geohash,
     };

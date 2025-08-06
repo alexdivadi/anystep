@@ -41,17 +41,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: AnyStepSpacing.md16),
-                FormBuilderTextField(
+                AnyStepTextField(
                   name: 'email',
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  labelText: 'Email',
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.email(),
                   ]),
                 ),
-                FormBuilderTextField(
+                AnyStepTextField(
                   name: 'password',
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  labelText: 'Password',
                   obscureText: true,
                   validator: FormBuilderValidators.required(),
                 ),

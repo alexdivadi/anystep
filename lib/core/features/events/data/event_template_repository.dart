@@ -1,4 +1,5 @@
-import 'package:anystep/appwrite/database.dart';
+import 'package:anystep/database/database.dart';
+import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/features/events/domain/event_template.dart';
 import 'package:anystep/env/env.dart';
@@ -13,7 +14,11 @@ class EventTemplateRepository implements IRepository<EventTemplateModel> {
   final String collectionId;
 
   @override
-  Future<EventTemplateModel> createOrUpdate({required EventTemplateModel obj, String? documentId}) {
+  Future<EventTemplateModel> createOrUpdate({
+    required EventTemplateModel obj,
+    String? documentId,
+    String? userId,
+  }) async {
     // TODO: implement createOrUpdate
     throw UnimplementedError();
   }
@@ -25,7 +30,12 @@ class EventTemplateRepository implements IRepository<EventTemplateModel> {
   }
 
   @override
-  Future<List<EventTemplateModel>> list({List<String>? queries}) {
+  Future<List<EventTemplateModel>> list({
+    List<AnyStepFilter>? filters,
+    AnyStepOrder? order,
+    int? limit,
+    int? page,
+  }) async {
     // TODO: implement list
     throw UnimplementedError();
   }

@@ -7,6 +7,7 @@ import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'current_user.g.dart';
 
@@ -17,7 +18,12 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
   final cachedUser = pref.getCurrentUser();
   if (cachedUser != null) {
     Log.d('Using cached user data');
-    yield UserModel.fromJson(jsonDecode(cachedUser)).copyWith(isCachedValue: true);
+    try {
+      yield UserModel.fromJson(jsonDecode(cachedUser)).copyWith(isCachedValue: true);
+    } catch (e) {
+      Log.e('Error parsing cached user data', e);
+      pref.clearCurrentUser();
+    }
   }
 
   try {
@@ -27,6 +33,9 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     final user = await ref.read(userRepositoryProvider).get(documentId: authState.uid);
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;
+  } on AuthApiException catch (_) {
+    pref.clearCurrentUser();
+    yield null;
   } catch (e) {
     Log.e('Error fetching current user', e);
     pref.clearCurrentUser();

@@ -19,13 +19,13 @@ class AnyStepScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surfaceContainer,
         appBar: appBar,
         body: body ?? const SizedBox.shrink(),
         floatingActionButton: floatingActionButton,
-        bottomNavigationBar: bottomNavigationBar ?? const SizedBox.shrink(),
+        bottomNavigationBar: bottomNavigationBar,
         resizeToAvoidBottomInset: false,
       ),
     );

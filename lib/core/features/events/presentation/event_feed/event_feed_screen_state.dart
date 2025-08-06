@@ -8,6 +8,6 @@ abstract class EventFeedScreenState with _$EventFeedScreenState {
   const factory EventFeedScreenState({
     @Default([]) List<EventModel> items,
     @Default([]) List<EventModel> page,
-    String? lastId,
+    int? pageNum,
   }) = _EventFeedScreenState;
 }

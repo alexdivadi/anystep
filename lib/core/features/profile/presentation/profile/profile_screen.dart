@@ -1,65 +1,109 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
-import 'package:anystep/core/features/profile/domain/age_group.dart';
-import 'package:anystep/core/features/profile/domain/user_role.dart';
+import 'package:anystep/core/features/profile/presentation/profile/profile_form.dart';
+import 'package:anystep/core/features/profile/presentation/profile/profile_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   static const path = '/profile';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  bool isEditing = false;
+
+  void _logout() async {
+    await ref.read(authRepositoryProvider).logout();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final userAsync = ref.watch(currentUserStreamProvider);
     return AnyStepScaffold(
-      appBar: AnyStepAppBar(title: const Text('Profile')),
+      appBar: AnyStepAppBar(
+        title: const Text('Profile'),
+        actions: [
+          isEditing
+              ? IconButton(
+                icon: const Icon(Icons.edit_off),
+                onPressed:
+                    () => setState(() {
+                      isEditing = false;
+                    }),
+              )
+              : IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed:
+                    () => setState(() {
+                      isEditing = true;
+                    }),
+              ),
+        ],
+      ),
       body: userAsync.when(
-        loading: () => AnyStepLoadingIndicator(),
+        loading: () => const Center(child: AnyStepLoadingIndicator()),
         error:
             (e, st) => RefreshIndicator(
               onRefresh: () async => ref.invalidate(currentUserStreamProvider),
               child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
             ),
-
         data: (user) {
           if (user == null) {
-            return AnyStepLoadingIndicator();
+            return const Center(child: AnyStepLoadingIndicator());
           }
-          return ListView(
-            padding: const EdgeInsets.all(AnyStepSpacing.md16),
-            children: [
-              ListTile(title: Text('Name'), subtitle: Text('${user.firstName} ${user.lastName}')),
-              ListTile(title: Text('Email'), subtitle: Text(user.email)),
-              ListTile(title: Text('Phone'), subtitle: Text(user.phoneNumber ?? '—')),
-              ListTile(title: Text('Role'), subtitle: Text(user.role.displayName)),
-              ListTile(title: Text('Age Group'), subtitle: Text(user.ageGroup.displayName)),
-              ListTile(
-                title: Text('Address'),
-                subtitle: Text(
-                  user.address.street +
-                      ((user.address.streetSecondary ?? '').isNotEmpty
-                          ? ' ${user.address.streetSecondary}'
-                          : '') +
-                      (user.address.city.isNotEmpty ? '\n${user.address.city}' : '') +
-                      (user.address.state.isNotEmpty ? ', ${user.address.state}' : '') +
-                      (user.address.postalCode.isNotEmpty ? ' ${user.address.postalCode}' : ''),
-                ),
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  isEditing
+                      ? ProfileForm(
+                        user: user,
+                        onCancel:
+                            () => setState(() {
+                              isEditing = false;
+                            }),
+                        onSaved: () {
+                          setState(() {
+                            isEditing = false;
+                          });
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            ref.invalidate(currentUserStreamProvider);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Profile updated successfully',
+                                  style: const TextStyle(color: AnyStepColors.white),
+                                ),
+                                backgroundColor: AnyStepColors.success,
+                              ),
+                            );
+                          });
+                        },
+                      )
+                      : ProfileInfo(user: user),
+
+                  const SizedBox(height: AnyStepSpacing.md12),
+                  if (!isEditing)
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.logout),
+                      label: const Text('Logout'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                        foregroundColor: Theme.of(context).colorScheme.onError,
+                      ),
+                      onPressed: _logout,
+                    ),
+                ],
               ),
-              const SizedBox(height: AnyStepSpacing.md24),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  foregroundColor: Theme.of(context).colorScheme.onError,
-                ),
-                onPressed: () async => await ref.read(authRepositoryProvider).logout(),
-              ),
-            ],
+            ),
           );
         },
       ),

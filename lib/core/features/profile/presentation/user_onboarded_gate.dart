@@ -32,6 +32,12 @@ class UserOnboardedGate extends ConsumerWidget {
             }
           }
         },
+        error: (error, stackTrace) {
+          Log.e("User fetch failed", error, stackTrace);
+          if (context.mounted) {
+            context.go(OnboardingScreen.path);
+          }
+        },
       );
     });
 
@@ -39,12 +45,23 @@ class UserOnboardedGate extends ConsumerWidget {
     return userAsync.when(
       loading: () => const AppStartupLoadingWidget(),
       error: (e, st) {
-        Log.e("User fetch failed", e, st);
+        Log.e("User Gate: User fetch failed", e, st);
         return AppStartupErrorWidget(
           onRetry: () async => ref.invalidate(currentUserStreamProvider),
         );
       },
-      data: (user) => const AppStartupLoadingWidget(),
+      data: (user) {
+        if (user == null) {
+          Log.d('User is null, redirecting to onboarding screen');
+          if (context.mounted) {
+            Log.d('User not logged in, redirecting to onboarding screen');
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go(OnboardingScreen.path);
+            });
+          }
+        }
+        return const AppStartupLoadingWidget();
+      },
     );
   }
 }

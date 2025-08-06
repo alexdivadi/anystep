@@ -37,10 +37,7 @@ class EventCard extends StatelessWidget {
                   ),
                   child: Icon(Icons.event, color: AnyStepColors.navyDark),
                 ),
-        title: Text(
-          event.template?.name ?? event.name,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: Text(event.name, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

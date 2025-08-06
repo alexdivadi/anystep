@@ -40,35 +40,65 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     child: Text('Sign Up', style: Theme.of(context).textTheme.displayLarge),
                   ),
                   const SizedBox(height: AnyStepSpacing.md16),
-                  FormBuilderTextField(
+                  Row(
+                    children: [
+                      Flexible(
+                        child: AnyStepTextField(
+                          name: 'firstName',
+                          labelText: 'First Name',
+                          validator: FormBuilderValidators.firstName(),
+                        ),
+                      ),
+                      const SizedBox(width: AnyStepSpacing.sm8),
+                      Flexible(
+                        child: AnyStepTextField(
+                          name: 'lastName',
+                          labelText: 'Last Name',
+                          validator: FormBuilderValidators.lastName(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  AnyStepTextField(
                     name: 'email',
-                    decoration: const InputDecoration(labelText: 'Email'),
+                    labelText: 'Email',
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                       FormBuilderValidators.email(),
                     ]),
                   ),
-                  FormBuilderTextField(
+                  AnyStepTextField(
                     name: 'password',
-                    decoration: const InputDecoration(labelText: 'Password'),
+                    labelText: 'Password',
                     obscureText: true,
-                    validator: FormBuilderValidators.required(),
+                    validator: FormBuilderValidators.password(
+                      minSpecialCharCount: 0,
+                      errorText: '',
+                    ),
                   ),
-                  FormBuilderTextField(
-                    name: 'firstName',
-                    decoration: const InputDecoration(labelText: 'First Name'),
-                    validator: FormBuilderValidators.required(),
+                  AnyStepTextField(
+                    name: 'confirmPassword',
+                    labelText: 'Confirm Password',
+                    obscureText: true,
+                    validator: (value) {
+                      final password = formKey.currentState?.fields['password']?.value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm your password';
+                      }
+                      if (value != password) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
                   ),
-                  FormBuilderTextField(
-                    name: 'lastName',
-                    decoration: const InputDecoration(labelText: 'Last Name'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  const SizedBox(height: 16),
-                  if (state.isLoading) const CircularProgressIndicator(),
+                  const SizedBox(height: AnyStepSpacing.md16),
+                  if (state.isLoading) const CircularProgressIndicator.adaptive(),
                   if (state.error != null) ...[
-                    Text(state.error!, style: const TextStyle(color: Colors.red)),
-                    const SizedBox(height: 8),
+                    Text(
+                      state.error!,
+                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    ),
+                    const SizedBox(height: AnyStepSpacing.sm8),
                   ],
                   ElevatedButton(
                     onPressed:

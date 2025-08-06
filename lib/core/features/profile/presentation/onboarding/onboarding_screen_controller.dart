@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
@@ -18,17 +19,22 @@ class OnboardingScreenController extends _$OnboardingScreenController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final authState = await ref.read(authStateStreamProvider.future);
+      final authRepo = ref.read(authRepositoryProvider);
+      Log.d(authRepo.userId ?? 'No session found');
+      Log.d('Fetching user details for Email: ${authRepo.user?.email}');
       final address = AddressModel.withGeohash(
         street: values['street'],
         streetSecondary: values['streetSecondary'],
         city: values['city'],
         state: values['state'],
-        country: values['country'],
-        postalCode: values['postalCode'],
+        country: "US", // Assuming country is always USA for simplicity
+        postalCode: values['zipCode'],
         isUserAddress: true,
       );
       final user = UserModel(
-        email: authState!.email,
+        id: authState!.uid,
+        email: authState.email,
+        addressId: address.id,
         address: address,
         firstName: values['firstName'],
         lastName: values['lastName'],
@@ -36,7 +42,9 @@ class OnboardingScreenController extends _$OnboardingScreenController {
         role: UserRole.volunteer,
         phoneNumber: values['phoneNumber'],
       );
-      await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
+      await ref
+          .read(userRepositoryProvider)
+          .createOrUpdate(obj: user, documentId: authState.uid, userId: authState.uid);
     });
     ref.invalidate(currentUserStreamProvider);
   }

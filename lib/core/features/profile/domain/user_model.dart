@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
+// import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
@@ -11,15 +12,16 @@ part 'user_model.g.dart';
 @freezed
 abstract class UserModel with _$UserModel {
   const factory UserModel({
+    required String id,
     required String email,
-    required AddressModel address,
-    required String firstName,
-    required String lastName,
-    required AgeGroup ageGroup,
+    @JsonKey(name: "address") int? addressId,
+    @JsonKey(includeToJson: false, includeFromJson: false) AddressModel? address,
+    @JsonKey(name: "first_name") required String firstName,
+    @JsonKey(name: "last_name") required String lastName,
+    @JsonKey(name: "age_group") required AgeGroup ageGroup,
     required UserRole role,
-    String? phoneNumber,
-    @JsonKey(includeToJson: false, includeFromJson: true) DateTime? updatedAt,
-    @JsonKey(includeToJson: false, includeFromJson: true) DateTime? createdAt,
+    @JsonKey(name: "phone_number") String? phoneNumber,
+    @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,
     @JsonKey(includeToJson: false, includeFromJson: false) @Default(false) bool isCachedValue,
   }) = _UserModel;
 

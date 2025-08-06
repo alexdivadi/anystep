@@ -10,3 +10,20 @@ extension UserRoleExtension on UserRole {
     }
   }
 }
+
+extension UserRolePermissions on UserRole {
+  bool get canCreateEvent => switch (this) {
+    UserRole.admin => true,
+    UserRole.volunteer => false,
+  };
+
+  bool get canEditEvent => switch (this) {
+    UserRole.admin => true,
+    UserRole.volunteer => false,
+  };
+
+  bool get canDeleteEvent => switch (this) {
+    UserRole.admin => true,
+    UserRole.volunteer => false,
+  };
+}

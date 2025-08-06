@@ -7,7 +7,7 @@ part of 'event_feed_screen_controller.dart';
 // **************************************************************************
 
 String _$eventFeedScreenControllerHash() =>
-    r'b30b34730ac571c3b963d763b10cfd0a17a513f3';
+    r'26ef26ed2903b4b536b21b85cefee55a31e9c14d';
 
 /// See also [EventFeedScreenController].
 @ProviderFor(EventFeedScreenController)

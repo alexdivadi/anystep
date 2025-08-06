@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/events/presentation/screens.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
@@ -58,6 +59,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(onboardingScreenControllerProvider);
+    final firstName = ref.watch(authRepositoryProvider).user?.userMetadata?["first_name"] ?? '';
+    final lastName = ref.watch(authRepositoryProvider).user?.userMetadata?["last_name"] ?? '';
 
     ref.listen(currentUserStreamProvider, (previous, next) {
       if (next.hasValue && next.value != null) {
@@ -66,7 +69,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     });
 
     return AnyStepScaffold(
-      appBar: AnyStepAppBar(title: Text('Complete Your Profile')),
+      appBar: AnyStepAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(AnyStepSpacing.md16),
         child: FormBuilder(
@@ -79,29 +82,55 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ListView(
                 shrinkWrap: true,
                 children: [
-                  FormBuilderTextField(
-                    name: 'firstName',
-                    decoration: InputDecoration(labelText: 'First Name'),
-                    validator: FormBuilderValidators.firstName(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Enter Your Details',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
                   ),
-                  FormBuilderTextField(
-                    name: 'lastName',
-                    decoration: InputDecoration(labelText: 'Last Name'),
-                    validator: FormBuilderValidators.lastName(),
+                  const SizedBox(height: AnyStepSpacing.md16),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: AnyStepTextField(
+                          name: 'firstName',
+                          labelText: 'First Name',
+                          initialValue: firstName,
+                          validator: FormBuilderValidators.firstName(),
+                        ),
+                      ),
+                      const SizedBox(width: AnyStepSpacing.sm8),
+                      Flexible(
+                        child: AnyStepTextField(
+                          name: 'lastName',
+                          labelText: 'Last Name',
+                          initialValue: lastName,
+                          validator: FormBuilderValidators.lastName(),
+                        ),
+                      ),
+                    ],
                   ),
-                  FormBuilderTextField(
+
+                  AnyStepTextField(
                     name: 'phoneNumber',
-                    decoration: InputDecoration(labelText: 'Phone Number'),
+                    labelText: 'Phone Number',
+                    keyboardType: TextInputType.phone,
                     validator: FormBuilderValidators.phoneNumber(
                       regex: RegExp(r'^\+?[\d\s\-()]{7,20}'),
                     ),
                   ),
-                  FormBuilderDropdown<AgeGroup>(
+
+                  const SizedBox(height: AnyStepSpacing.md12),
+                  AnyStepSegmentedButtonField<AgeGroup>(
                     name: 'ageGroup',
-                    decoration: InputDecoration(labelText: 'Age Group'),
-                    items:
+                    labelText: 'Age Group',
+                    options:
                         AgeGroup.values
-                            .map((ag) => DropdownMenuItem(value: ag, child: Text(ag.displayName)))
+                            .map(
+                              (ag) =>
+                                  FormBuilderFieldOption(value: ag, child: Text(ag.displayName)),
+                            )
                             .toList(),
                     validator: FormBuilderValidators.required(),
                   ),
@@ -116,38 +145,72 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ListView(
                 shrinkWrap: true,
                 children: [
-                  FormBuilderTextField(
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Enter Your Address',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
+                  // const SizedBox(height: AnyStepSpacing.sm8),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: Text(
+                  //     'This is needed for volunteer reporting.',
+                  //     style: Theme.of(context).textTheme.bodySmall,
+                  //   ),
+                  // ),
+                  const SizedBox(height: AnyStepSpacing.md16),
+                  AnyStepTextField(
                     name: 'street',
-                    decoration: InputDecoration(labelText: 'Street Address'),
+                    labelText: 'Street Address',
                     validator: FormBuilderValidators.street(),
                   ),
-                  FormBuilderTextField(
+                  AnyStepTextField(
                     name: 'streetSecondary',
-                    decoration: InputDecoration(labelText: 'Apartment/Suite/Floor (optional)'),
+                    labelText: 'Apartment/Suite/Floor (optional)',
                     validator: FormBuilderValidators.street(checkNullOrEmpty: false),
                   ),
-                  FormBuilderTextField(
-                    name: 'city',
-                    decoration: InputDecoration(labelText: 'City'),
-                    validator: FormBuilderValidators.city(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'state',
-                    decoration: InputDecoration(labelText: 'State'),
-                    validator: FormBuilderValidators.state(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'country',
-                    decoration: InputDecoration(labelText: 'Country'),
-                    validator: FormBuilderValidators.country(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'postalCode',
-                    decoration: InputDecoration(labelText: 'Postal Code'),
-                    validator: FormBuilderValidators.zipCode(),
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 4,
+                        child: AnyStepTextField(
+                          name: 'city',
+                          labelText: 'City',
+                          validator: FormBuilderValidators.city(),
+                        ),
+                      ),
+                      const SizedBox(width: AnyStepSpacing.sm2),
+                      Flexible(
+                        flex: 2,
+                        child: AnyStepTextField(
+                          name: 'state',
+                          labelText: 'State',
+                          validator: FormBuilderValidators.state(),
+                        ),
+                      ),
+                      const SizedBox(width: AnyStepSpacing.sm2),
+                      Flexible(
+                        flex: 3,
+                        child: AnyStepTextField(
+                          name: 'zipCode',
+                          labelText: 'Zip Code',
+                          keyboardType: TextInputType.number,
+                          validator: FormBuilderValidators.zipCode(),
+                        ),
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: AnyStepSpacing.md24),
+                  const SizedBox(height: AnyStepSpacing.md16),
+                  if (state.hasError) ...[
+                    Text(
+                      "${state.error!}",
+                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    ),
+                    const SizedBox(height: AnyStepSpacing.sm8),
+                  ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

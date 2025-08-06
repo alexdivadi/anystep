@@ -1,24 +1,27 @@
 import 'dart:async';
-import 'package:anystep/appwrite/appwrite_client.dart';
+import 'package:anystep/database/client.dart';
 import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
-import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' hide Log;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 part 'auth_repository.g.dart';
 
 class AuthRepository {
   final AppPreferences _appPreferences;
-  final Account _account;
+  final GoTrueClient _supabase;
   final StreamController<AuthState?> _authStateController =
       StreamController<AuthState?>.broadcast();
   Session? _session;
   User? _user;
 
-  AuthRepository._(this._appPreferences, this._account) {
+  bool get isLoggedIn => _session != null;
+  bool get isEmailConfirmed => _user?.emailConfirmedAt != null;
+  String? get userId => _user?.id;
+
+  AuthRepository._(this._appPreferences, this._supabase) {
     _init();
   }
 
@@ -43,56 +46,58 @@ class AuthRepository {
   }
 
   Stream<AuthState?> getUserId() async* {
-    final userId = _appPreferences.getUserId();
+    final userId = _appPreferences.getAuthStateJson();
     if (userId != null) {
       Log.i('Using locally stored session: $userId');
       if (_user != null) {
-        yield AuthState(uid: userId, email: _user!.email, isCachedValue: true);
+        yield AuthState(uid: userId, email: _user!.email ?? "", isCachedValue: true);
       } else {
         yield null;
       }
     }
-    try {
-      _user = await _account.get();
-      _session = await _account.getSession(sessionId: 'current');
-      _appPreferences.setUserId(_session!.userId);
-      Log.i('User session found: ${_session!.userId}');
-      yield AuthState(uid: _session!.userId, email: _user!.email);
-    } catch (e) {
-      Log.i('User session not found');
-      _appPreferences.clearUserId();
+
+    _session = _supabase.currentSession;
+    _user = _supabase.currentUser;
+    if (_session != null || _user != null) {
+      final user = _user ?? _session?.user as User;
+      Log.i('Current session: ${user.id}, email: ${user.email}');
+      _appPreferences.setAuthStateJson(user.id);
+      yield AuthState(uid: user.id, email: user.email ?? "", isCachedValue: false);
+    } else {
       yield null;
     }
+
+    yield* _supabase.onAuthStateChange.map((data) {
+      final session = data.session;
+      if (session != null) {
+        _session = session;
+        _user = session.user;
+        _appPreferences.setAuthStateJson(_user!.id);
+        Log.i('User logged in: ${_user!.email}');
+        return AuthState(uid: session.user.id, email: _user!.email ?? '', isCachedValue: false);
+      } else {
+        Log.i('User logged out');
+        _session = null;
+        _user = null;
+        _appPreferences.clearAuthStateJson();
+        return null;
+      }
+    });
   }
 
   Future<String?> login({required String email, required String password}) async {
     try {
-      _session = await _account.createEmailPasswordSession(email: email, password: password);
-      _user = await _account.get();
-      _appPreferences.setUserId(_session!.userId);
-      _authStateController.add(AuthState(uid: _session!.userId, email: _user!.email));
+      await _supabase.signInWithPassword(email: email, password: password);
       return null;
-    } on AppwriteException catch (e) {
-      if (e.type == "user_session_already_exists") {
-        Log.w("User session already exists, attempting to refresh session");
-        try {
-          _session = await _account.getSession(sessionId: 'current');
-          _user = await _account.get();
-          _appPreferences.setUserId(_session!.userId);
-          _authStateController.add(AuthState(uid: _session!.userId, email: _user!.email));
-          return null;
-        } catch (e, st) {
-          Log.e("Error refreshing user session", e, st);
-          _authStateController.add(null);
-          return 'An error occurred';
-        }
+    } on AuthApiException catch (e) {
+      if (e.code == "email_not_confirmed") {
+        Log.w('Email not confirmed for user: $email');
+        return 'Please confirm your email address.';
       }
-      Log.e("AppwriteException during login", e);
-      _authStateController.add(null);
-      return e.message ?? 'An error occurred';
+      return 'Login failed. Please try again.';
     } catch (e, st) {
       Log.e('Login failed', e, st);
-      _authStateController.add(null);
+      // _authStateController.add(null);
       return 'An error occurred';
     }
   }
@@ -104,37 +109,31 @@ class AuthRepository {
     required String lastName,
   }) async {
     try {
-      _user = await _account.create(
-        userId: ID.unique(),
+      await _supabase.signUp(
         email: email,
         password: password,
-        name: '$firstName $lastName',
+        data: {'first_name': firstName, 'last_name': lastName},
       );
-      _session = await _account.createEmailPasswordSession(email: email, password: password);
-      _appPreferences.setUserId(_session!.$id);
-      _authStateController.add(AuthState(uid: _session!.userId, email: _user!.email));
+      await _supabase.signInWithPassword(email: email, password: password);
       return true;
     } catch (e, st) {
       Log.e('Signup failed', e, st);
-      _authStateController.add(null);
       return false;
     }
   }
 
   Future<void> logout() async {
     try {
-      await _account.deleteSession(sessionId: 'current');
+      await _supabase.signOut();
     } catch (e, st) {
       Log.e('Logout failed', e, st);
     } finally {
-      _appPreferences.clearUserId();
+      _appPreferences.clearAuthStateJson();
       _session = null;
       _user = null;
       _authStateController.add(null);
     }
   }
-
-  bool get isLoggedIn => _session?.userId != null;
 
   void dispose() {
     _authStateController.close();
@@ -144,7 +143,7 @@ class AuthRepository {
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) {
   final appPreferences = ref.watch(appPreferencesProvider).requireValue;
-  final account = Account(ref.watch(appwriteClientProvider));
+  final account = ref.watch(clientProvider).auth;
   final authRepository = AuthRepository._(appPreferences, account);
   ref.onDispose(() {
     authRepository.dispose();

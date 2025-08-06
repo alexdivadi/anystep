@@ -2,13 +2,10 @@ enum AgeGroup { under18, over55, other }
 
 extension AgeGroupDisplayName on AgeGroup {
   String get displayName {
-    switch (this) {
-      case AgeGroup.over55:
-        return 'Over 55';
-      case AgeGroup.under18:
-        return 'Under 18';
-      case AgeGroup.other:
-        return 'Other';
-    }
+    return switch (this) {
+      AgeGroup.over55 => 'Over 55',
+      AgeGroup.under18 => 'Under 18',
+      AgeGroup.other => 'Other',
+    };
   }
 }

@@ -9,13 +9,13 @@ class AppPreferences {
 
   AppPreferences(this._prefs);
 
-  static const String userIdKey = 'user_id';
+  static const String authStateKey = 'auth_state';
   static const String onboardingKey = 'onboarded';
   static const String currentUserKey = 'current_user';
 
-  String? getUserId() => _prefs.getString(userIdKey);
-  Future<void> setUserId(String token) async => await _prefs.setString(userIdKey, token);
-  Future<void> clearUserId() async => await _prefs.remove(userIdKey);
+  String? getAuthStateJson() => _prefs.getString(authStateKey);
+  Future<void> setAuthStateJson(String token) async => await _prefs.setString(authStateKey, token);
+  Future<void> clearAuthStateJson() async => await _prefs.remove(authStateKey);
 
   bool isOnboarded() => _prefs.getBool(onboardingKey) ?? false;
   Future<void> setIsOnboarded({bool isOnboarded = true}) async =>

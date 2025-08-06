@@ -1,4 +1,5 @@
-import 'package:anystep/appwrite/database.dart';
+import 'package:anystep/database/database.dart';
+import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/env/env.dart';
@@ -13,7 +14,11 @@ class AddressRepository implements IRepository<AddressModel> {
   final String collectionId;
 
   @override
-  Future<AddressModel> createOrUpdate({required AddressModel obj, String? documentId}) {
+  Future<AddressModel> createOrUpdate({
+    required AddressModel obj,
+    String? documentId,
+    String? userId,
+  }) async {
     // TODO: implement createOrUpdate
     throw UnimplementedError();
   }
@@ -25,7 +30,12 @@ class AddressRepository implements IRepository<AddressModel> {
   }
 
   @override
-  Future<List<AddressModel>> list({List<String>? queries}) {
+  Future<List<AddressModel>> list({
+    List<AnyStepFilter>? filters,
+    AnyStepOrder? order,
+    int? limit,
+    int? page,
+  }) {
     // TODO: implement list
     throw UnimplementedError();
   }

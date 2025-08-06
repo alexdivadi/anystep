@@ -3,6 +3,8 @@ import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
 import 'package:anystep/core/features/events/presentation/widgets/no_events_widget.dart';
+import 'package:anystep/core/features/profile/data/current_user.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,23 +16,36 @@ class EventFeedScreen extends ConsumerWidget {
   const EventFeedScreen({super.key});
 
   static const path = '/events';
+  static const pathAnonymous = '/anonymous/events';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final eventsAsync = ref.watch(eventFeedScreenControllerProvider);
     final uid = ref.watch(authStateStreamProvider);
+    final user = ref.watch(currentUserStreamProvider);
+    final showLogin = !uid.isLoading && uid.hasValue && uid.value == null;
+
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
         title: const Text('Event Feed'),
         actions:
-            uid.hasValue
-                ? null
-                : [
-                  IconButton(
-                    icon: const Icon(Icons.login),
-                    onPressed: () => context.go(LoginScreen.path),
+            showLogin
+                ? [
+                  Padding(
+                    padding: const EdgeInsets.all(AnyStepSpacing.md12),
+                    child: InkWell(
+                      onTap: () => context.go(LoginScreen.path),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.login),
+                          const SizedBox(width: 8),
+                          const Text('Login'),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
+                ]
+                : null,
       ),
       body: eventsAsync.when(
         loading:
@@ -57,7 +72,7 @@ class EventFeedScreen extends ConsumerWidget {
                   state.page.isNotEmpty) {
                 ref
                     .read(eventFeedScreenControllerProvider.notifier)
-                    .fetchEvents(lastId: state.lastId);
+                    .fetchEvents(pageNum: state.pageNum);
               }
               return false;
             },
@@ -85,6 +100,14 @@ class EventFeedScreen extends ConsumerWidget {
           );
         },
       ),
+      floatingActionButton:
+          user.hasValue && user.value != null && user.value!.role.canCreateEvent
+              ? FloatingActionButton.extended(
+                onPressed: () => context.pushNamed('create_event'),
+                icon: const Icon(Icons.add),
+                label: const Text('Create Event'),
+              )
+              : null,
     );
   }
 }

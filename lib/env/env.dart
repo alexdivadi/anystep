@@ -16,14 +16,18 @@ class Env {
     }
   }
 
+  //TODO: Get these from appwrite.json
   static String get appwriteEndpoint => _get('APPWRITE_ENDPOINT');
   static String get appwriteProjectId => _get('APPWRITE_PROJECT_ID');
   static String get appwriteDatabaseId => _get('APPWRITE_DATABASE_ID');
 
+  static String get supabaseUrl => _get('SUPABASE_URL');
+  static String get supabaseApiKey => _get('SUPABASE_API_KEY');
+
   // Collections (don't need to be secret)
-  static const String eventCollectionId = "684dc92100148ca700eb";
-  static const String userCollectionId = "684f54d400132f5f3686";
-  static const String addressCollectionId = "684f54d400132f5f3686";
-  static const String eventTemplateCollectionId = "684debf500048f54e3cc";
-  static const String userEventCollectionId = "684f554c00074b03a00e";
+  static const String eventCollectionId = "events";
+  static const String userCollectionId = "users";
+  static const String addressCollectionId = "addresses";
+  static const String eventTemplateCollectionId = "event_templates";
+  static const String userEventCollectionId = "user_events";
 }
