@@ -14,11 +14,7 @@ class AddressRepository implements IRepository<AddressModel> {
   final String collectionId;
 
   @override
-  Future<AddressModel> createOrUpdate({
-    required AddressModel obj,
-    String? documentId,
-    String? userId,
-  }) async {
+  Future<AddressModel> createOrUpdate({required AddressModel obj, String? documentId}) async {
     // TODO: implement createOrUpdate
     throw UnimplementedError();
   }

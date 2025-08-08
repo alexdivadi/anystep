@@ -32,7 +32,12 @@ class SettingsScreen extends ConsumerWidget {
                       ListTile(
                         leading: const Icon(Icons.logout),
                         title: const Text('Logout'),
-                        onTap: ref.read(authRepositoryProvider).logout,
+                        onTap: () async {
+                          await ref.read(authRepositoryProvider).logout();
+                          if (context.mounted) {
+                            context.go(LoginScreen.path);
+                          }
+                        },
                       ),
                     ]
                     : [

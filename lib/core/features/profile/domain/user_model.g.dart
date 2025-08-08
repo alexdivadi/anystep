@@ -10,6 +10,12 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   id: json['id'] as String,
   email: json['email'] as String,
   addressId: (json['address'] as num?)?.toInt(),
+  address:
+      json['address_model'] == null
+          ? null
+          : AddressModel.fromJson(
+            json['address_model'] as Map<String, dynamic>,
+          ),
   firstName: json['first_name'] as String,
   lastName: json['last_name'] as String,
   ageGroup: $enumDecode(_$AgeGroupEnumMap, json['age_group']),

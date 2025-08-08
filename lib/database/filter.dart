@@ -17,6 +17,9 @@ class AnyStepFilter<T> {
   factory AnyStepFilter.lessThan(String column, T value) {
     return AnyStepFilter(column: column, operator: 'lt', value: value);
   }
+  factory AnyStepFilter.contains(String column, T value) {
+    return AnyStepFilter(column: column, operator: 'cs', value: value);
+  }
 }
 
 class AnyStepOrder {
@@ -24,4 +27,11 @@ class AnyStepOrder {
   final bool ascending;
 
   AnyStepOrder({required this.column, this.ascending = true});
+
+  factory AnyStepOrder.asc(String column) {
+    return AnyStepOrder(column: column, ascending: true);
+  }
+  factory AnyStepOrder.desc(String column) {
+    return AnyStepOrder(column: column, ascending: false);
+  }
 }

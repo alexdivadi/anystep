@@ -7,11 +7,17 @@ part of 'event.dart';
 // **************************************************************************
 
 _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
-  id: json['id'] as String,
+  id: (json['id'] as num?)?.toInt(),
   name: json['name'] as String,
   startTime: DateTime.parse(json['start_time'] as String),
   endTime: DateTime.parse(json['end_time'] as String),
-  address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
+  addressId: (json['address'] as num?)?.toInt(),
+  address:
+      json['address_model'] == null
+          ? null
+          : AddressModel.fromJson(
+            json['address_model'] as Map<String, dynamic>,
+          ),
   tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   description: json['description'] as String?,
   imageUrl: json['image_url'] as String?,
@@ -23,11 +29,11 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      if (instance.id case final value?) 'id': value,
       'name': instance.name,
       'start_time': instance.startTime.toIso8601String(),
       'end_time': instance.endTime.toIso8601String(),
-      'address': instance.address,
+      'address': instance.addressId,
       'tags': instance.tags,
       'description': instance.description,
       'image_url': instance.imageUrl,

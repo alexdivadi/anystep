@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:intl/intl.dart';
+
+export 'event_card_shimmer.dart';
+export 'event_card_error.dart';
 
 class EventCard extends StatelessWidget {
   final EventModel event;
@@ -42,7 +46,7 @@ class EventCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${event.startTime} • ${event.address.city}, ${event.address.state}',
+              '${DateFormat('MMM dd, yyyy @ H:mm a').format(event.startTime)} • ${event.address?.city}, ${event.address?.state}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AnyStepColors.navyDark),
             ),
             if (event.description != null && event.description!.isNotEmpty)

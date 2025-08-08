@@ -1,7 +1,7 @@
 import 'package:anystep/database/filter.dart';
 
 abstract class IRepository<T> {
-  Future<T> createOrUpdate({required T obj, String? documentId, String? userId});
+  Future<T> createOrUpdate({required T obj, String? documentId});
 
   Future<T> get({required String documentId});
 

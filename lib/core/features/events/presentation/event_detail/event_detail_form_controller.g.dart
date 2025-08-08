@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_detail_screen_controller.dart';
+part of 'event_detail_form_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventDetailScreenControllerHash() =>
-    r'400f4643ac6399d95dd7bd99985906607b80d5cb';
+String _$eventDetailFormControllerHash() =>
+    r'0d1f7c1ba61aeb642a7055b486175abcd8a5d461';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,30 +30,30 @@ class _SystemHash {
   }
 }
 
-abstract class _$EventDetailScreenController
-    extends BuildlessAutoDisposeNotifier<AsyncValue<EventModel>> {
-  late final String eventId;
+abstract class _$EventDetailFormController
+    extends BuildlessAutoDisposeNotifier<EventDetailFormState> {
+  late final int? eventId;
 
-  AsyncValue<EventModel> build(String eventId);
+  EventDetailFormState build(int? eventId);
 }
 
-/// See also [EventDetailScreenController].
-@ProviderFor(EventDetailScreenController)
-const eventDetailScreenControllerProvider = EventDetailScreenControllerFamily();
+/// See also [EventDetailFormController].
+@ProviderFor(EventDetailFormController)
+const eventDetailFormControllerProvider = EventDetailFormControllerFamily();
 
-/// See also [EventDetailScreenController].
-class EventDetailScreenControllerFamily extends Family<AsyncValue<EventModel>> {
-  /// See also [EventDetailScreenController].
-  const EventDetailScreenControllerFamily();
+/// See also [EventDetailFormController].
+class EventDetailFormControllerFamily extends Family<EventDetailFormState> {
+  /// See also [EventDetailFormController].
+  const EventDetailFormControllerFamily();
 
-  /// See also [EventDetailScreenController].
-  EventDetailScreenControllerProvider call(String eventId) {
-    return EventDetailScreenControllerProvider(eventId);
+  /// See also [EventDetailFormController].
+  EventDetailFormControllerProvider call(int? eventId) {
+    return EventDetailFormControllerProvider(eventId);
   }
 
   @override
-  EventDetailScreenControllerProvider getProviderOverride(
-    covariant EventDetailScreenControllerProvider provider,
+  EventDetailFormControllerProvider getProviderOverride(
+    covariant EventDetailFormControllerProvider provider,
   ) {
     return call(provider.eventId);
   }
@@ -70,33 +70,33 @@ class EventDetailScreenControllerFamily extends Family<AsyncValue<EventModel>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'eventDetailScreenControllerProvider';
+  String? get name => r'eventDetailFormControllerProvider';
 }
 
-/// See also [EventDetailScreenController].
-class EventDetailScreenControllerProvider
+/// See also [EventDetailFormController].
+class EventDetailFormControllerProvider
     extends
         AutoDisposeNotifierProviderImpl<
-          EventDetailScreenController,
-          AsyncValue<EventModel>
+          EventDetailFormController,
+          EventDetailFormState
         > {
-  /// See also [EventDetailScreenController].
-  EventDetailScreenControllerProvider(String eventId)
+  /// See also [EventDetailFormController].
+  EventDetailFormControllerProvider(int? eventId)
     : this._internal(
-        () => EventDetailScreenController()..eventId = eventId,
-        from: eventDetailScreenControllerProvider,
-        name: r'eventDetailScreenControllerProvider',
+        () => EventDetailFormController()..eventId = eventId,
+        from: eventDetailFormControllerProvider,
+        name: r'eventDetailFormControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$eventDetailScreenControllerHash,
-        dependencies: EventDetailScreenControllerFamily._dependencies,
+                : _$eventDetailFormControllerHash,
+        dependencies: EventDetailFormControllerFamily._dependencies,
         allTransitiveDependencies:
-            EventDetailScreenControllerFamily._allTransitiveDependencies,
+            EventDetailFormControllerFamily._allTransitiveDependencies,
         eventId: eventId,
       );
 
-  EventDetailScreenControllerProvider._internal(
+  EventDetailFormControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -106,20 +106,20 @@ class EventDetailScreenControllerProvider
     required this.eventId,
   }) : super.internal();
 
-  final String eventId;
+  final int? eventId;
 
   @override
-  AsyncValue<EventModel> runNotifierBuild(
-    covariant EventDetailScreenController notifier,
+  EventDetailFormState runNotifierBuild(
+    covariant EventDetailFormController notifier,
   ) {
     return notifier.build(eventId);
   }
 
   @override
-  Override overrideWith(EventDetailScreenController Function() create) {
+  Override overrideWith(EventDetailFormController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: EventDetailScreenControllerProvider._internal(
+      override: EventDetailFormControllerProvider._internal(
         () => create()..eventId = eventId,
         from: from,
         name: null,
@@ -133,16 +133,16 @@ class EventDetailScreenControllerProvider
 
   @override
   AutoDisposeNotifierProviderElement<
-    EventDetailScreenController,
-    AsyncValue<EventModel>
+    EventDetailFormController,
+    EventDetailFormState
   >
   createElement() {
-    return _EventDetailScreenControllerProviderElement(this);
+    return _EventDetailFormControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is EventDetailScreenControllerProvider &&
+    return other is EventDetailFormControllerProvider &&
         other.eventId == eventId;
   }
 
@@ -157,23 +157,23 @@ class EventDetailScreenControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin EventDetailScreenControllerRef
-    on AutoDisposeNotifierProviderRef<AsyncValue<EventModel>> {
+mixin EventDetailFormControllerRef
+    on AutoDisposeNotifierProviderRef<EventDetailFormState> {
   /// The parameter `eventId` of this provider.
-  String get eventId;
+  int? get eventId;
 }
 
-class _EventDetailScreenControllerProviderElement
+class _EventDetailFormControllerProviderElement
     extends
         AutoDisposeNotifierProviderElement<
-          EventDetailScreenController,
-          AsyncValue<EventModel>
+          EventDetailFormController,
+          EventDetailFormState
         >
-    with EventDetailScreenControllerRef {
-  _EventDetailScreenControllerProviderElement(super.provider);
+    with EventDetailFormControllerRef {
+  _EventDetailFormControllerProviderElement(super.provider);
 
   @override
-  String get eventId => (origin as EventDetailScreenControllerProvider).eventId;
+  int? get eventId => (origin as EventDetailFormControllerProvider).eventId;
 }
 
 // ignore_for_file: type=lint

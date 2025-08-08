@@ -1,9 +1,8 @@
-import 'package:anystep/database/database.dart';
-import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
-import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
+import 'package:anystep/database/database.dart';
+import 'package:anystep/database/filter.dart';
 import 'package:anystep/env/env.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,11 +17,7 @@ class UserRepository implements IRepository<UserModel> {
   final String addressCollectionId = Env.addressCollectionId;
 
   @override
-  Future<UserModel> createOrUpdate({
-    required UserModel obj,
-    String? documentId,
-    String? userId,
-  }) async {
+  Future<UserModel> createOrUpdate({required UserModel obj, String? documentId}) async {
     final data = obj.toJson();
 
     final address = obj.address;
@@ -57,16 +52,12 @@ class UserRepository implements IRepository<UserModel> {
 
   @override
   Future<UserModel> get({required String documentId, bool withAddress = true}) async {
-    final document = await database.get(table: collectionId, documentId: documentId);
-    final user = UserModel.fromJson(document);
-    if (withAddress && user.addressId != null) {
-      return user.copyWith(
-        address: AddressModel.fromJson(
-          await database.get(table: addressCollectionId, documentId: "${user.addressId}"),
-        ),
-      );
-    }
-    return user;
+    final document = await database.get(
+      table: collectionId,
+      documentId: documentId,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
+    );
+    return UserModel.fromJson(document);
   }
 
   @override
@@ -75,12 +66,14 @@ class UserRepository implements IRepository<UserModel> {
     AnyStepOrder? order,
     int? limit,
     int? page,
+    bool withAddress = true,
   }) async {
     final documents = await database.list(
       table: collectionId,
       filters: filters,
       limit: limit,
       page: page,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
     );
     return documents.map((doc) => UserModel.fromJson(doc)).toList();
   }

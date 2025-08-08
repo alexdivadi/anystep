@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(includeToJson: false, includeFromJson: false) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group") AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;
+ String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group") AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(includeToJson: false, includeFromJson: false) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
 });
 
 
@@ -102,13 +102,13 @@ $AddressModelCopyWith<$Res>? get address {
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(includeToJson: false, includeFromJson: false) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group") required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false});
+  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group") required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
 @override final  String email;
 @override@JsonKey(name: "address") final  int? addressId;
-@override@JsonKey(includeToJson: false, includeFromJson: false) final  AddressModel? address;
+@override@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) final  AddressModel? address;
 @override@JsonKey(name: "first_name") final  String firstName;
 @override@JsonKey(name: "last_name") final  String lastName;
 @override@JsonKey(name: "age_group") final  AgeGroup ageGroup;
@@ -150,7 +150,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(includeToJson: false, includeFromJson: false) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue
 });
 
 

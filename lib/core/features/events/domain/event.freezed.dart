@@ -16,8 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EventModel {
 
- String get id; String get name;// EventTemplateModel? template,
-@JsonKey(name: "start_time") DateTime get startTime;@JsonKey(name: "end_time") DateTime get endTime; AddressModel get address; List<String>? get tags; String? get description;@JsonKey(name: "image_url") String? get imageUrl;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;
+@JsonKey(includeIfNull: false) int? get id; String get name;// EventTemplateModel? template,
+@JsonKey(name: "start_time") DateTime get startTime;@JsonKey(name: "end_time") DateTime get endTime;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address; List<String>? get tags; String? get description;@JsonKey(name: "image_url") String? get imageUrl;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +30,16 @@ $EventModelCopyWith<EventModel> get copyWith => _$EventModelCopyWithImpl<EventMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,address,const DeepCollectionEquality().hash(tags),description,imageUrl,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(tags),description,imageUrl,createdAt);
 
 @override
 String toString() {
-  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt)';
+  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt)';
 }
 
 
@@ -50,11 +50,11 @@ abstract mixin class $EventModelCopyWith<$Res>  {
   factory $EventModelCopyWith(EventModel value, $Res Function(EventModel) _then) = _$EventModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime, AddressModel address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt
+@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt
 });
 
 
-$AddressModelCopyWith<$Res> get address;
+$AddressModelCopyWith<$Res>? get address;
 
 }
 /// @nodoc
@@ -67,14 +67,15 @@ class _$EventModelCopyWithImpl<$Res>
 
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? startTime = null,Object? endTime = null,Object? address = null,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
 as DateTime,endTime: null == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
-as DateTime,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as AddressModel,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as DateTime,addressId: freezed == addressId ? _self.addressId : addressId // ignore: cast_nullable_to_non_nullable
+as int?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as AddressModel?,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -85,9 +86,12 @@ as DateTime?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AddressModelCopyWith<$Res> get address {
-  
-  return $AddressModelCopyWith<$Res>(_self.address, (value) {
+$AddressModelCopyWith<$Res>? get address {
+    if (_self.address == null) {
+    return null;
+  }
+
+  return $AddressModelCopyWith<$Res>(_self.address!, (value) {
     return _then(_self.copyWith(address: value));
   });
 }
@@ -98,15 +102,16 @@ $AddressModelCopyWith<$Res> get address {
 @JsonSerializable()
 
 class _EventModel implements EventModel {
-  const _EventModel({required this.id, required this.name, @JsonKey(name: "start_time") required this.startTime, @JsonKey(name: "end_time") required this.endTime, required this.address, final  List<String>? tags, this.description, @JsonKey(name: "image_url") this.imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt}): _tags = tags;
+  const _EventModel({@JsonKey(includeIfNull: false) this.id, required this.name, @JsonKey(name: "start_time") required this.startTime, @JsonKey(name: "end_time") required this.endTime, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, final  List<String>? tags, this.description, @JsonKey(name: "image_url") this.imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt}): _tags = tags;
   factory _EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);
 
-@override final  String id;
+@override@JsonKey(includeIfNull: false) final  int? id;
 @override final  String name;
 // EventTemplateModel? template,
 @override@JsonKey(name: "start_time") final  DateTime startTime;
 @override@JsonKey(name: "end_time") final  DateTime endTime;
-@override final  AddressModel address;
+@override@JsonKey(name: "address") final  int? addressId;
+@override@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) final  AddressModel? address;
  final  List<String>? _tags;
 @override List<String>? get tags {
   final value = _tags;
@@ -133,16 +138,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,address,const DeepCollectionEquality().hash(_tags),description,imageUrl,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(_tags),description,imageUrl,createdAt);
 
 @override
 String toString() {
-  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt)';
+  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt)';
 }
 
 
@@ -153,11 +158,11 @@ abstract mixin class _$EventModelCopyWith<$Res> implements $EventModelCopyWith<$
   factory _$EventModelCopyWith(_EventModel value, $Res Function(_EventModel) _then) = __$EventModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime, AddressModel address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt
+@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt
 });
 
 
-@override $AddressModelCopyWith<$Res> get address;
+@override $AddressModelCopyWith<$Res>? get address;
 
 }
 /// @nodoc
@@ -170,14 +175,15 @@ class __$EventModelCopyWithImpl<$Res>
 
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? startTime = null,Object? endTime = null,Object? address = null,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,}) {
   return _then(_EventModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
 as DateTime,endTime: null == endTime ? _self.endTime : endTime // ignore: cast_nullable_to_non_nullable
-as DateTime,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as AddressModel,tags: freezed == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
+as DateTime,addressId: freezed == addressId ? _self.addressId : addressId // ignore: cast_nullable_to_non_nullable
+as int?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as AddressModel?,tags: freezed == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -189,9 +195,12 @@ as DateTime?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AddressModelCopyWith<$Res> get address {
-  
-  return $AddressModelCopyWith<$Res>(_self.address, (value) {
+$AddressModelCopyWith<$Res>? get address {
+    if (_self.address == null) {
+    return null;
+  }
+
+  return $AddressModelCopyWith<$Res>(_self.address!, (value) {
     return _then(_self.copyWith(address: value));
   });
 }

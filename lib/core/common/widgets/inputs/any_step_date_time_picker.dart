@@ -2,63 +2,41 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
-class AnyStepTextField extends StatelessWidget {
-  const AnyStepTextField({
+class AnyStepDateTimePicker extends StatelessWidget {
+  const AnyStepDateTimePicker({
     super.key,
     required this.name,
-    this.controller,
+    this.initialValue,
     this.focusNode,
     this.onChanged,
-    this.onSubmitted,
     this.labelText,
     this.hintText,
-    this.obscureText = false,
-    this.keyboardType,
-    this.textInputAction,
-    this.maxLines = 1,
-    this.enabled = true,
     this.validator,
-    this.initialValue,
+    this.format,
   });
 
   final String name;
-  final TextEditingController? controller;
+  final DateTime? initialValue;
   final FocusNode? focusNode;
-  final ValueChanged<String?>? onChanged;
-  final ValueChanged<String?>? onSubmitted;
+  final Function(DateTime?)? onChanged;
   final String? labelText;
   final String? hintText;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final TextInputAction? textInputAction;
-  final int maxLines;
-  final bool enabled;
-  final String? Function(String?)? validator;
-  final String? initialValue;
+  final FormFieldValidator<DateTime?>? validator;
+  final DateFormat? format;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
-      child: FormBuilderTextField(
+      child: FormBuilderDateTimePicker(
         name: name,
-        controller: controller,
         focusNode: focusNode,
         onChanged: onChanged,
-        onSubmitted: onSubmitted,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        maxLines: maxLines,
-        enabled: enabled,
-        validator: validator,
-        initialValue: initialValue,
         decoration: InputDecoration(
           labelText: labelText,
-          // floatingLabelStyle: TextStyle(color: AnyStepColors.blueBright),
           hintText: hintText,
-          alignLabelWithHint: maxLines > 1,
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
           ),
@@ -71,6 +49,10 @@ class AnyStepTextField extends StatelessWidget {
             borderSide: BorderSide(color: AnyStepColors.blueBright, width: 2),
           ),
         ),
+        initialValue: initialValue ?? DateTime.now().add(const Duration(hours: 1)),
+        inputType: InputType.both,
+        format: format ?? DateFormat('MM/dd/yy, HH:mm a'),
+        validator: validator,
       ),
     );
   }

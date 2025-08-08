@@ -42,9 +42,7 @@ class OnboardingScreenController extends _$OnboardingScreenController {
         role: UserRole.volunteer,
         phoneNumber: values['phoneNumber'],
       );
-      await ref
-          .read(userRepositoryProvider)
-          .createOrUpdate(obj: user, documentId: authState.uid, userId: authState.uid);
+      await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
     });
     ref.invalidate(currentUserStreamProvider);
   }

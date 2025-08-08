@@ -4,6 +4,8 @@ import 'package:anystep/core/common/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final routes = [
   GoRoute(path: LoginScreen.path, builder: (context, state) => const LoginScreen()),
   GoRoute(path: SignUpScreen.path, builder: (context, state) => const SignUpScreen()),
@@ -82,6 +84,13 @@ final routes = [
         ],
       ),
     ],
+  ),
+  GoRoute(
+    path: EventDetailScreen.path,
+    builder: (context, state) {
+      final id = int.tryParse(state.pathParameters['id'] ?? '');
+      return EventDetailScreen(id: id!);
+    },
   ),
   GoRoute(path: ProfileScreen.path, builder: (context, state) => const ProfileScreen()),
 ];

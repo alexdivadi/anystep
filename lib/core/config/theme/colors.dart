@@ -2,6 +2,7 @@ import 'dart:ui';
 
 class AnyStepColors {
   static const Color black = Color(0xFF000000);
+  static const Color gray = Color(0xFFB0B0B0);
   static const Color grayDark = Color(0xFF28262C);
   static const Color navyDark = Color(0xFF273043);
   static const Color blueDeep = Color(0xFF14248A);

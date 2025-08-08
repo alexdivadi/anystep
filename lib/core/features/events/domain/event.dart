@@ -10,12 +10,14 @@ part 'event.g.dart';
 @freezed
 abstract class EventModel with _$EventModel {
   const factory EventModel({
-    required String id,
+    @JsonKey(includeIfNull: false) int? id,
     required String name,
     // EventTemplateModel? template,
     @JsonKey(name: "start_time") required DateTime startTime,
     @JsonKey(name: "end_time") required DateTime endTime,
-    required AddressModel address,
+    @JsonKey(name: "address") int? addressId,
+    @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)
+    AddressModel? address,
     List<String>? tags,
     String? description,
     @JsonKey(name: "image_url") String? imageUrl,

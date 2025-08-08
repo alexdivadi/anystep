@@ -9,6 +9,7 @@ class RouterUtils {
     WelcomeScreen.path,
     AppStartupLoadingWidget.path,
     EventFeedScreen.pathAnonymous,
+    EventDetailScreen.path,
     SettingsScreen.pathAnonymous,
     UserOnboardedGate.path,
     OnboardingScreen.path,

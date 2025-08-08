@@ -15,7 +15,8 @@ abstract class UserModel with _$UserModel {
     required String id,
     required String email,
     @JsonKey(name: "address") int? addressId,
-    @JsonKey(includeToJson: false, includeFromJson: false) AddressModel? address,
+    @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)
+    AddressModel? address,
     @JsonKey(name: "first_name") required String firstName,
     @JsonKey(name: "last_name") required String lastName,
     @JsonKey(name: "age_group") required AgeGroup ageGroup,

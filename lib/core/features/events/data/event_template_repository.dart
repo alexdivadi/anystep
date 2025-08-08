@@ -17,7 +17,6 @@ class EventTemplateRepository implements IRepository<EventTemplateModel> {
   Future<EventTemplateModel> createOrUpdate({
     required EventTemplateModel obj,
     String? documentId,
-    String? userId,
   }) async {
     // TODO: implement createOrUpdate
     throw UnimplementedError();
