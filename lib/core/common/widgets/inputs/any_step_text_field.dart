@@ -1,5 +1,4 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/config/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -39,6 +38,7 @@ class AnyStepTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
       child: FormBuilderTextField(
@@ -64,11 +64,11 @@ class AnyStepTextField extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-            borderSide: BorderSide(color: AnyStepColors.blueBright, width: 1.5),
+            borderSide: BorderSide(color: primary, width: 1.5),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-            borderSide: BorderSide(color: AnyStepColors.blueBright, width: 2),
+            borderSide: BorderSide(color: primary, width: 2),
           ),
         ),
       ),

@@ -9,7 +9,9 @@ class AnyStepTheme {
     brightness: Brightness.light,
     colorScheme: ColorScheme.light(
       primary: AnyStepColors.blueBright,
+      onPrimaryContainer: AnyStepColors.navyDark,
       secondary: AnyStepColors.blueDeep,
+      onSecondary: AnyStepColors.white,
       surface: AnyStepColors.white,
       error: AnyStepColors.error,
     ),
@@ -33,10 +35,9 @@ class AnyStepTheme {
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(
-      primary: AnyStepColors.navyDark,
-      secondary: AnyStepColors.blueDeep,
-      surface: AnyStepColors.grayDark,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AnyStepColors.blueBright,
+      brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
     ),
     textTheme: TextTheme(
@@ -63,7 +64,9 @@ class AnyStepTheme {
     brightness: Brightness.light,
     colorScheme: ColorScheme.highContrastLight(
       primary: AnyStepColors.blueBright,
+      onPrimaryContainer: AnyStepColors.navyDark,
       secondary: AnyStepColors.blueDeep,
+      onSecondary: AnyStepColors.white,
       surface: AnyStepColors.white,
       error: AnyStepColors.error,
     ),
@@ -87,10 +90,10 @@ class AnyStepTheme {
   static final highContrastDarkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.highContrastDark(
-      primary: AnyStepColors.navyDark,
-      secondary: AnyStepColors.blueDeep,
-      surface: AnyStepColors.grayDark,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AnyStepColors.blueBright,
+      contrastLevel: 1.0,
+      brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
     ),
     textTheme: TextTheme(

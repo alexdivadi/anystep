@@ -1,30 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_repository.dart';
+part of 'user_event_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventRepositoryHash() => r'91fd9a3b10390062e18cef77cb13521e86c6d448';
+String _$userEventRepositoryHash() =>
+    r'cf1a42849b08f22684db1163bba108fb81184a08';
 
-/// See also [eventRepository].
-@ProviderFor(eventRepository)
-final eventRepositoryProvider = AutoDisposeProvider<EventRepository>.internal(
-  eventRepository,
-  name: r'eventRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$eventRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+/// See also [userEventRepository].
+@ProviderFor(userEventRepository)
+final userEventRepositoryProvider =
+    AutoDisposeProvider<UserEventRepository>.internal(
+      userEventRepository,
+      name: r'userEventRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$userEventRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef EventRepositoryRef = AutoDisposeProviderRef<EventRepository>;
-String _$getEventHash() => r'8f6982980615aa6062ee5fd2caec55c105706cce';
+typedef UserEventRepositoryRef = AutoDisposeProviderRef<UserEventRepository>;
+String _$getUserEventHash() => r'7dd975bd13172a1c0e3404ce8685390456d1bc69';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -47,22 +49,24 @@ class _SystemHash {
   }
 }
 
-/// See also [getEvent].
-@ProviderFor(getEvent)
-const getEventProvider = GetEventFamily();
+/// See also [getUserEvent].
+@ProviderFor(getUserEvent)
+const getUserEventProvider = GetUserEventFamily();
 
-/// See also [getEvent].
-class GetEventFamily extends Family<AsyncValue<EventModel>> {
-  /// See also [getEvent].
-  const GetEventFamily();
+/// See also [getUserEvent].
+class GetUserEventFamily extends Family<AsyncValue<UserEventModel>> {
+  /// See also [getUserEvent].
+  const GetUserEventFamily();
 
-  /// See also [getEvent].
-  GetEventProvider call(int id) {
-    return GetEventProvider(id);
+  /// See also [getUserEvent].
+  GetUserEventProvider call(int id) {
+    return GetUserEventProvider(id);
   }
 
   @override
-  GetEventProvider getProviderOverride(covariant GetEventProvider provider) {
+  GetUserEventProvider getProviderOverride(
+    covariant GetUserEventProvider provider,
+  ) {
     return call(provider.id);
   }
 
@@ -78,27 +82,28 @@ class GetEventFamily extends Family<AsyncValue<EventModel>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getEventProvider';
+  String? get name => r'getUserEventProvider';
 }
 
-/// See also [getEvent].
-class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
-  /// See also [getEvent].
-  GetEventProvider(int id)
+/// See also [getUserEvent].
+class GetUserEventProvider extends AutoDisposeFutureProvider<UserEventModel> {
+  /// See also [getUserEvent].
+  GetUserEventProvider(int id)
     : this._internal(
-        (ref) => getEvent(ref as GetEventRef, id),
-        from: getEventProvider,
-        name: r'getEventProvider',
+        (ref) => getUserEvent(ref as GetUserEventRef, id),
+        from: getUserEventProvider,
+        name: r'getUserEventProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$getEventHash,
-        dependencies: GetEventFamily._dependencies,
-        allTransitiveDependencies: GetEventFamily._allTransitiveDependencies,
+                : _$getUserEventHash,
+        dependencies: GetUserEventFamily._dependencies,
+        allTransitiveDependencies:
+            GetUserEventFamily._allTransitiveDependencies,
         id: id,
       );
 
-  GetEventProvider._internal(
+  GetUserEventProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -112,12 +117,12 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
 
   @override
   Override overrideWith(
-    FutureOr<EventModel> Function(GetEventRef provider) create,
+    FutureOr<UserEventModel> Function(GetUserEventRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetEventProvider._internal(
-        (ref) => create(ref as GetEventRef),
+      override: GetUserEventProvider._internal(
+        (ref) => create(ref as GetUserEventRef),
         from: from,
         name: null,
         dependencies: null,
@@ -129,13 +134,13 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<EventModel> createElement() {
-    return _GetEventProviderElement(this);
+  AutoDisposeFutureProviderElement<UserEventModel> createElement() {
+    return _GetUserEventProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetEventProvider && other.id == id;
+    return other is GetUserEventProvider && other.id == id;
   }
 
   @override
@@ -149,39 +154,40 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetEventRef on AutoDisposeFutureProviderRef<EventModel> {
+mixin GetUserEventRef on AutoDisposeFutureProviderRef<UserEventModel> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
-class _GetEventProviderElement
-    extends AutoDisposeFutureProviderElement<EventModel>
-    with GetEventRef {
-  _GetEventProviderElement(super.provider);
+class _GetUserEventProviderElement
+    extends AutoDisposeFutureProviderElement<UserEventModel>
+    with GetUserEventRef {
+  _GetUserEventProviderElement(super.provider);
 
   @override
-  int get id => (origin as GetEventProvider).id;
+  int get id => (origin as GetUserEventProvider).id;
 }
 
-String _$getEventsHash() => r'574aa234012b0b11983a220fdd078dcee3fb8323';
+String _$getUserEventsHash() => r'043c99928d9350b0428ca491c4ef2e9d7407bf5a';
 
-/// See also [getEvents].
-@ProviderFor(getEvents)
-const getEventsProvider = GetEventsFamily();
+/// See also [getUserEvents].
+@ProviderFor(getUserEvents)
+const getUserEventsProvider = GetUserEventsFamily();
 
-/// See also [getEvents].
-class GetEventsFamily extends Family<AsyncValue<PaginationResult<EventModel>>> {
-  /// See also [getEvents].
-  const GetEventsFamily();
+/// See also [getUserEvents].
+class GetUserEventsFamily
+    extends Family<AsyncValue<PaginationResult<UserEventModel>>> {
+  /// See also [getUserEvents].
+  const GetUserEventsFamily();
 
-  /// See also [getEvents].
-  GetEventsProvider call({
+  /// See also [getUserEvents].
+  GetUserEventsProvider call({
     int? page,
     String? search,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) {
-    return GetEventsProvider(
+    return GetUserEventsProvider(
       page: page,
       search: search,
       filters: filters,
@@ -190,7 +196,9 @@ class GetEventsFamily extends Family<AsyncValue<PaginationResult<EventModel>>> {
   }
 
   @override
-  GetEventsProvider getProviderOverride(covariant GetEventsProvider provider) {
+  GetUserEventsProvider getProviderOverride(
+    covariant GetUserEventsProvider provider,
+  ) {
     return call(
       page: provider.page,
       search: provider.search,
@@ -211,41 +219,42 @@ class GetEventsFamily extends Family<AsyncValue<PaginationResult<EventModel>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getEventsProvider';
+  String? get name => r'getUserEventsProvider';
 }
 
-/// See also [getEvents].
-class GetEventsProvider
-    extends AutoDisposeFutureProvider<PaginationResult<EventModel>> {
-  /// See also [getEvents].
-  GetEventsProvider({
+/// See also [getUserEvents].
+class GetUserEventsProvider
+    extends AutoDisposeFutureProvider<PaginationResult<UserEventModel>> {
+  /// See also [getUserEvents].
+  GetUserEventsProvider({
     int? page,
     String? search,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) : this._internal(
-         (ref) => getEvents(
-           ref as GetEventsRef,
+         (ref) => getUserEvents(
+           ref as GetUserEventsRef,
            page: page,
            search: search,
            filters: filters,
            order: order,
          ),
-         from: getEventsProvider,
-         name: r'getEventsProvider',
+         from: getUserEventsProvider,
+         name: r'getUserEventsProvider',
          debugGetCreateSourceHash:
              const bool.fromEnvironment('dart.vm.product')
                  ? null
-                 : _$getEventsHash,
-         dependencies: GetEventsFamily._dependencies,
-         allTransitiveDependencies: GetEventsFamily._allTransitiveDependencies,
+                 : _$getUserEventsHash,
+         dependencies: GetUserEventsFamily._dependencies,
+         allTransitiveDependencies:
+             GetUserEventsFamily._allTransitiveDependencies,
          page: page,
          search: search,
          filters: filters,
          order: order,
        );
 
-  GetEventsProvider._internal(
+  GetUserEventsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -265,13 +274,15 @@ class GetEventsProvider
 
   @override
   Override overrideWith(
-    FutureOr<PaginationResult<EventModel>> Function(GetEventsRef provider)
+    FutureOr<PaginationResult<UserEventModel>> Function(
+      GetUserEventsRef provider,
+    )
     create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetEventsProvider._internal(
-        (ref) => create(ref as GetEventsRef),
+      override: GetUserEventsProvider._internal(
+        (ref) => create(ref as GetUserEventsRef),
         from: from,
         name: null,
         dependencies: null,
@@ -286,14 +297,14 @@ class GetEventsProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
+  AutoDisposeFutureProviderElement<PaginationResult<UserEventModel>>
   createElement() {
-    return _GetEventsProviderElement(this);
+    return _GetUserEventsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetEventsProvider &&
+    return other is GetUserEventsProvider &&
         other.page == page &&
         other.search == search &&
         other.filters == filters &&
@@ -314,8 +325,8 @@ class GetEventsProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetEventsRef
-    on AutoDisposeFutureProviderRef<PaginationResult<EventModel>> {
+mixin GetUserEventsRef
+    on AutoDisposeFutureProviderRef<PaginationResult<UserEventModel>> {
   /// The parameter `page` of this provider.
   int? get page;
 
@@ -329,20 +340,20 @@ mixin GetEventsRef
   AnyStepOrder? get order;
 }
 
-class _GetEventsProviderElement
-    extends AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
-    with GetEventsRef {
-  _GetEventsProviderElement(super.provider);
+class _GetUserEventsProviderElement
+    extends AutoDisposeFutureProviderElement<PaginationResult<UserEventModel>>
+    with GetUserEventsRef {
+  _GetUserEventsProviderElement(super.provider);
 
   @override
-  int? get page => (origin as GetEventsProvider).page;
+  int? get page => (origin as GetUserEventsProvider).page;
   @override
-  String? get search => (origin as GetEventsProvider).search;
+  String? get search => (origin as GetUserEventsProvider).search;
   @override
   List<AnyStepFilter<dynamic>>? get filters =>
-      (origin as GetEventsProvider).filters;
+      (origin as GetUserEventsProvider).filters;
   @override
-  AnyStepOrder? get order => (origin as GetEventsProvider).order;
+  AnyStepOrder? get order => (origin as GetUserEventsProvider).order;
 }
 
 // ignore_for_file: type=lint

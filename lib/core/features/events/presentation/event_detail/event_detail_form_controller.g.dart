@@ -7,7 +7,7 @@ part of 'event_detail_form_controller.dart';
 // **************************************************************************
 
 String _$eventDetailFormControllerHash() =>
-    r'0d1f7c1ba61aeb642a7055b486175abcd8a5d461';
+    r'f36d089c84efa74557f5cf448e4299e0f48c7cbc';
 
 /// Copied from Dart SDK
 class _SystemHash {

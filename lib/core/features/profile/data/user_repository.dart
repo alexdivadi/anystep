@@ -66,14 +66,14 @@ class UserRepository implements IRepository<UserModel> {
     AnyStepOrder? order,
     int? limit,
     int? page,
-    bool withAddress = true,
+    bool withRelatedModels = true,
   }) async {
     final documents = await database.list(
       table: collectionId,
       filters: filters,
       limit: limit,
       page: page,
-      select: withAddress ? "*, address_model:addresses(*)" : null,
+      select: withRelatedModels ? "*, address_model:addresses(*)" : null,
     );
     return documents.map((doc) => UserModel.fromJson(doc)).toList();
   }

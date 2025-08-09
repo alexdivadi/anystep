@@ -20,8 +20,8 @@ class EventDetailFormController extends _$EventDetailFormController {
       final event = EventModel(
         id: state.eventId,
         name: values['name']!,
-        startTime: values['startTime']!,
-        endTime: values['endTime']!,
+        startTime: (values['startTime'] as DateTime).toUtc(),
+        endTime: (values['endTime'] as DateTime).toUtc(),
         imageUrl: values['imageUrl'],
         address: AddressModel(
           street: values['street']!,

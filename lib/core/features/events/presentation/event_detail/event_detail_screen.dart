@@ -1,7 +1,9 @@
+import 'package:anystep/core/common/widgets/share_button.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_info.dart';
+import 'package:anystep/core/features/events/presentation/widgets/share_event_button.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:flutter/material.dart';
@@ -48,21 +50,23 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
         title: const Text('Event Detail'),
-        actions: user.whenOrNull(
+        actions: event.whenOrNull(
           data:
-              (value) =>
-                  value?.role == UserRole.admin
-                      ? event.maybeWhen(
-                        data:
-                            (event) => [
-                              IconButton(
-                                icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
-                                onPressed: _toggleEdit,
-                              ),
-                            ],
-                        orElse: () => null,
-                      )
-                      : null, // Show actions only if user is admin
+              (event) => [
+                ShareEventButton(event: event),
+                user.maybeWhen(
+                  data: (value) {
+                    if (value?.role == UserRole.admin) {
+                      return IconButton(
+                        icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
+                        onPressed: _toggleEdit,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                  orElse: () => const SizedBox.shrink(),
+                ),
+              ],
         ),
       ),
       body: SafeArea(

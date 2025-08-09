@@ -72,11 +72,11 @@ class EventRepository implements IRepository<EventModel> {
     int? limit,
     int? page,
     AnyStepOrder? order,
-    bool withAddress = true,
+    bool withRelatedModels = true,
   }) async {
     final documents = await database.list(
       table: collectionId,
-      select: withAddress ? "*, address_model:addresses(*)" : null,
+      select: withRelatedModels ? "*, address_model:addresses(*)" : null,
       filters: filters,
       limit: limit,
       page: page,
@@ -130,8 +130,10 @@ Future<PaginationResult<EventModel>> getEvents(
   AnyStepOrder? order,
 }) async {
   final repository = ref.watch(eventRepositoryProvider);
+
+  filters ??= [];
+  filters.add(AnyStepFilter.greaterThan('start_time', DateTime.now().toUtc()));
   if (search != null && search.isNotEmpty) {
-    filters ??= [];
     filters.add(AnyStepFilter.contains('name', search));
   }
   return repository.paginatedList(

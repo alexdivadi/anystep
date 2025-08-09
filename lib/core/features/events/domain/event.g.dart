@@ -25,6 +25,7 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
       json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+  active: json['active'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
@@ -37,4 +38,5 @@ Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
       'tags': instance.tags,
       'description': instance.description,
       'image_url': instance.imageUrl,
+      'active': instance.active,
     };

@@ -2,6 +2,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/screens.dart';
+import 'package:anystep/core/features/settings/presentation/theme_mode_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,32 +22,31 @@ class SettingsScreen extends ConsumerWidget {
         data: (isAuth) {
           return ListView(
             padding: const EdgeInsets.all(AnyStepSpacing.md16),
-            children:
-                isAuth != null
-                    ? [
-                      ListTile(
-                        leading: const Icon(Icons.account_circle),
-                        title: const Text('Account Settings'),
-                        onTap: () => context.push(ProfileScreen.path),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.logout),
-                        title: const Text('Logout'),
-                        onTap: () async {
-                          await ref.read(authRepositoryProvider).logout();
-                          if (context.mounted) {
-                            context.go(LoginScreen.path);
-                          }
-                        },
-                      ),
-                    ]
-                    : [
-                      ListTile(
-                        leading: const Icon(Icons.login),
-                        title: const Text('Login'),
-                        onTap: () => context.go(LoginScreen.path),
-                      ),
-                    ],
+            children: [
+              const ThemeModeSetting(),
+              if (isAuth != null) ...[
+                ListTile(
+                  leading: const Icon(Icons.account_circle),
+                  title: const Text('Account Settings'),
+                  onTap: () => context.push(ProfileScreen.path),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () async {
+                    await ref.read(authRepositoryProvider).logout();
+                    if (context.mounted) {
+                      context.go(LoginScreen.path);
+                    }
+                  },
+                ),
+              ] else
+                ListTile(
+                  leading: const Icon(Icons.login),
+                  title: const Text('Login'),
+                  onTap: () => context.go(LoginScreen.path),
+                ),
+            ],
           );
         },
         loading: () => const AnyStepLoadingIndicator(),

@@ -1,8 +1,9 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/features/profile/domain/age_group.dart';
+import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfileInfo extends StatelessWidget {
   const ProfileInfo({super.key, required this.user});
@@ -16,13 +17,33 @@ class ProfileInfo extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(title: Text('Name'), subtitle: Text('${user.firstName} ${user.lastName}')),
-            ListTile(title: Text('Email'), subtitle: Text(user.email)),
-            ListTile(title: Text('Phone'), subtitle: Text(user.phoneNumber ?? '—')),
-            ListTile(title: Text('Role'), subtitle: Text(user.role.displayName)),
-            ListTile(title: Text('Age Group'), subtitle: Text(user.ageGroup.displayName)),
             ListTile(
-              title: Text('Address'),
+              title: Text(
+                '${user.firstName} ${user.lastName}',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              trailing: AnyStepBadge(
+                child: Text(
+                  user.role.displayName,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.email),
+              title: Text('Email', style: Theme.of(context).textTheme.titleMedium),
+              subtitle: Text(user.email),
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone),
+              title: Text('Phone', style: Theme.of(context).textTheme.titleMedium),
+              subtitle: Text(user.phoneNumber ?? '—'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.location_on),
+              title: Text('Address', style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
                 user.address != null
                     ? user.address!.street +
@@ -35,6 +56,13 @@ class ProfileInfo extends StatelessWidget {
                     : 'No address provided',
               ),
             ),
+            user.createdAt != null
+                ? ListTile(
+                  leading: const Icon(Icons.cake),
+                  title: Text('Date Joined', style: Theme.of(context).textTheme.titleMedium),
+                  subtitle: Text(DateFormat.yMMMd().format(user.createdAt!.toLocal())),
+                )
+                : const SizedBox.shrink(),
           ],
         ),
       ),

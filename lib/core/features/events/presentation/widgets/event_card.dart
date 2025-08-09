@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:anystep/core/features/events/domain/event.dart';
-import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/features/events/domain/event.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-export 'event_card_shimmer.dart';
 export 'event_card_error.dart';
+export 'event_card_shimmer.dart';
 
 class EventCard extends StatelessWidget {
   final EventModel event;
@@ -36,18 +35,20 @@ class EventCard extends StatelessWidget {
                   width: AnyStepSpacing.xl56,
                   height: AnyStepSpacing.xl56,
                   decoration: BoxDecoration(
-                    color: AnyStepColors.grayDark.withAlpha(20),
+                    color: Theme.of(context).highlightColor.withAlpha(100),
                     borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
                   ),
-                  child: Icon(Icons.event, color: AnyStepColors.navyDark),
+                  child: Icon(Icons.event, color: Theme.of(context).highlightColor),
                 ),
         title: Text(event.name, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${DateFormat('MMM dd, yyyy @ H:mm a').format(event.startTime)} • ${event.address?.city}, ${event.address?.state}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AnyStepColors.navyDark),
+              '${DateFormat('MMM dd, yyyy @ h:mm a').format(event.startTime.toLocal())} • ${event.address?.city}, ${event.address?.state}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
             ),
             if (event.description != null && event.description!.isNotEmpty)
               Padding(

@@ -22,6 +22,7 @@ abstract class EventModel with _$EventModel {
     String? description,
     @JsonKey(name: "image_url") String? imageUrl,
     @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,
+    @Default(true) bool active,
   }) = _EventModel;
 
   factory EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);

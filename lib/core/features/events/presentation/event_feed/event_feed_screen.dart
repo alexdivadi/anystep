@@ -63,8 +63,8 @@ class EventFeedScreen extends ConsumerWidget {
               child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
             ),
 
-        data: (result) {
-          final items = result.items;
+        data: (feedResult) {
+          final items = feedResult.items;
           return RefreshIndicator(
             onRefresh: () async => ref.invalidate(getEventsProvider),
             child:
@@ -72,7 +72,7 @@ class EventFeedScreen extends ConsumerWidget {
                     ? ScrollableCenteredContent(child: NoEventsWidget())
                     : ListView.separated(
                       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.md12),
-                      itemCount: result.totalCount,
+                      itemCount: feedResult.totalCount,
                       separatorBuilder: (_, __) => const SizedBox(height: AnyStepSpacing.sm8),
                       itemBuilder: (context, i) {
                         final pageNum = i ~/ EventRepository.pageSize;
@@ -82,8 +82,8 @@ class EventFeedScreen extends ConsumerWidget {
                         return eventsPage.when(
                           loading: () => const EventCardShimmer(),
                           error: (e, st) => const EventCardError(),
-                          data: (result2) {
-                            final event = result2.items[index];
+                          data: (pageResult) {
+                            final event = pageResult.items[index];
                             return EventCard(
                               event: event,
                               onTap: () => context.push(EventDetailScreen.getPath(event.id!)),

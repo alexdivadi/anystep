@@ -12,6 +12,7 @@ class AppPreferences {
   static const String authStateKey = 'auth_state';
   static const String onboardingKey = 'onboarded';
   static const String currentUserKey = 'current_user';
+  static const String themeModeKey = 'theme_mode';
 
   String? getAuthStateJson() => _prefs.getString(authStateKey);
   Future<void> setAuthStateJson(String token) async => await _prefs.setString(authStateKey, token);
@@ -26,6 +27,10 @@ class AppPreferences {
   Future<void> setCurrentUser(String userJson) async =>
       await _prefs.setString(currentUserKey, userJson);
   Future<void> clearCurrentUser() async => await _prefs.remove(currentUserKey);
+
+  String? getThemeMode() => _prefs.getString(themeModeKey);
+  Future<void> setThemeMode(String mode) async => await _prefs.setString(themeModeKey, mode);
+  Future<void> clearThemeMode() async => await _prefs.remove(themeModeKey);
 }
 
 @Riverpod(keepAlive: true)

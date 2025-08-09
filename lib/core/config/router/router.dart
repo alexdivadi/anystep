@@ -53,7 +53,10 @@ GoRouter router(Ref ref) {
       final path = state.matchedLocation;
       if (path == AppStartupLoadingWidget.path) return EventFeedScreen.pathAnonymous;
 
-      if (RouterUtils.unauthenticatedRoutes.contains(path)) {
+      // Replace any sequence of digits between slashes with ':id'
+      final normalizedPath = path.replaceAllMapped(RegExp(r'\/\d+(?=\/|$)'), (match) => '/:id');
+
+      if (RouterUtils.unauthenticatedRoutes.contains(normalizedPath)) {
         if (RouterUtils.loginRoutes.contains(path)) {
           // Replace with dashboard screen
           return authStateAsync.hasValue && authStateAsync.valueOrNull != null
