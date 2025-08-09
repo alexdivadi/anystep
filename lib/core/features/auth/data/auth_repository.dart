@@ -92,7 +92,7 @@ class AuthRepository {
     } on AuthApiException catch (e) {
       if (e.code == "email_not_confirmed") {
         Log.w('Email not confirmed for user: $email');
-        return 'Please confirm your email address.';
+        return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
       }
       return 'Login failed. Please try again.';
     } catch (e, st) {
@@ -102,7 +102,7 @@ class AuthRepository {
     }
   }
 
-  Future<bool> signup({
+  Future<String?> signup({
     required String email,
     required String password,
     required String firstName,
@@ -115,10 +115,16 @@ class AuthRepository {
         data: {'first_name': firstName, 'last_name': lastName},
       );
       await _supabase.signInWithPassword(email: email, password: password);
-      return true;
+      return null;
+    } on AuthApiException catch (e) {
+      if (e.code == "email_not_confirmed") {
+        Log.w('Email not confirmed for user: $email');
+        return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
+      }
+      return 'Signup failed. Please try again.';
     } catch (e, st) {
       Log.e('Signup failed', e, st);
-      return false;
+      return 'An error occurred';
     }
   }
 

@@ -24,11 +24,11 @@ class SignUpScreenController extends _$SignUpScreenController {
         firstName: firstName,
         lastName: lastName,
       );
-      if (result) {
+      if (result == null) {
         state = state.copyWith(isLoading: false, success: true);
         Log.d('Sign up successful, user created');
       } else {
-        state = state.copyWith(isLoading: false, error: 'Sign up failed');
+        state = state.copyWith(isLoading: false, error: result);
       }
     } catch (e, st) {
       Log.e("Error signing up", e, st);

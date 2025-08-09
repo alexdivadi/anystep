@@ -97,6 +97,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Text(
                       state.error!,
                       style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AnyStepSpacing.sm8),
                   ],
