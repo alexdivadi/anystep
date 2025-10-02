@@ -5,6 +5,7 @@ import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_form.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_info.dart';
+import 'package:anystep/core/features/profile/presentation/profile/profile_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -71,6 +72,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               isEditing = false;
                             }),
                         onSaved: () {
+                          final state = ref.read(profileScreenControllerProvider);
+                          if (state.error != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  state.error!,
+                                  style: const TextStyle(color: AnyStepColors.white),
+                                ),
+                                backgroundColor: AnyStepColors.error,
+                              ),
+                            );
+                            return;
+                          }
                           setState(() {
                             isEditing = false;
                           });

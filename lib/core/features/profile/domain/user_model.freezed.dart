@@ -101,8 +101,8 @@ $AddressModelCopyWith<$Res>? get address {
 /// @nodoc
 @JsonSerializable()
 
-class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group") required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false});
+class _UserModel extends UserModel {
+  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group") required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;

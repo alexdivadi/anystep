@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/data/irepository.dart';
+import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
 import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
@@ -28,11 +29,18 @@ class UserEventRepository implements IRepository<UserEventModel> {
   }
 
   @override
-  Future<UserEventModel> get({required String documentId, bool withRelatedModels = true}) async {
+  Future<UserEventModel> get({
+    required String documentId,
+    bool withUsers = true,
+    bool withEvents = true,
+  }) async {
+    String select = '*';
+    if (withUsers) select += ', user_model:users(*)';
+    if (withEvents) select += ', event_model:events(*)';
     final document = await database.get(
       table: collectionId,
       documentId: documentId,
-      select: withRelatedModels ? "*, event_model:events(*), user_model:users(*)" : null,
+      select: select,
     );
     return UserEventModel.fromJson(document);
   }
@@ -43,11 +51,15 @@ class UserEventRepository implements IRepository<UserEventModel> {
     int? limit,
     int? page,
     AnyStepOrder? order,
-    bool withRelatedModels = true,
+    bool withUsers = true,
+    bool withEvents = true,
   }) async {
+    String select = '*';
+    if (withUsers) select += ', user_model:users(*)';
+    if (withEvents) select += ', event_model:events(*)';
     final documents = await database.list(
       table: collectionId,
-      select: withRelatedModels ? "*, event_model:events(*), user_model:users(*)" : null,
+      select: select,
       filters: filters,
       limit: limit,
       page: page,
@@ -60,12 +72,16 @@ class UserEventRepository implements IRepository<UserEventModel> {
     List<AnyStepFilter>? filters,
     int? page,
     AnyStepOrder? order,
-    bool withAddress = true,
+    bool withUsers = true,
+    bool withEvents = true,
   }) async {
     //TODO: offline-first structure: stream output; don't throw on Network Exception
+    String select = '*';
+    if (withUsers) select += ', user_model:users(*)';
+    if (withEvents) select += ', event_model:events(*)';
     final documents = await database.listWithCount(
       table: collectionId,
-      select: withAddress ? "*, address_model:addresses(*)" : null,
+      select: select,
       filters: filters,
       limit: limit,
       order: order,
@@ -78,6 +94,10 @@ class UserEventRepository implements IRepository<UserEventModel> {
       limit: limit,
     );
   }
+
+  @override
+  Future<void> delete(UserEventModel obj) =>
+      database.delete(table: collectionId, documentId: "${obj.id}");
 }
 
 @riverpod
@@ -96,15 +116,15 @@ Future<UserEventModel> getUserEvent(Ref ref, int id) async {
 Future<PaginationResult<UserEventModel>> getUserEvents(
   Ref ref, {
   int? page,
-  String? search,
+  int? eventId,
   List<AnyStepFilter>? filters,
   AnyStepOrder? order,
 }) async {
   final repository = ref.watch(userEventRepositoryProvider);
 
   filters ??= [];
-  if (search != null && search.isNotEmpty) {
-    filters.add(AnyStepFilter.contains('id', search));
+  if (eventId != null) {
+    filters.add(AnyStepFilter.equals('event', eventId));
   }
   return repository.paginatedList(
     limit: UserEventRepository.pageSize,
@@ -112,4 +132,16 @@ Future<PaginationResult<UserEventModel>> getUserEvents(
     page: page,
     order: order,
   );
+}
+
+@riverpod
+Future<PaginationResult<UserEventModel>> getCurrentUserEvents(
+  Ref ref, {
+  int? page,
+  List<AnyStepFilter>? filters,
+  AnyStepOrder? order,
+}) async {
+  filters ??= [];
+  filters.add(AnyStepFilter.equals('user', ref.watch(authStateStreamProvider).requireValue!.uid));
+  return ref.watch(getUserEventsProvider(filters: filters, page: page, order: order).future);
 }

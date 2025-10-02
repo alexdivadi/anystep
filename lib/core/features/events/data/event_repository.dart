@@ -107,6 +107,12 @@ class EventRepository implements IRepository<EventModel> {
       limit: limit,
     );
   }
+
+  @override
+  Future<void> delete(EventModel obj) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
@@ -116,9 +122,9 @@ EventRepository eventRepository(Ref ref) {
 }
 
 @riverpod
-Future<EventModel> getEvent(Ref ref, int id) async {
+Future<EventModel> getEvent(Ref ref, int id, {bool withAddress = true}) async {
   final repository = ref.watch(eventRepositoryProvider);
-  return repository.get(documentId: "$id");
+  return repository.get(documentId: "$id", withAddress: withAddress);
 }
 
 @riverpod

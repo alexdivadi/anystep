@@ -12,6 +12,7 @@ class SettingsScreen extends ConsumerWidget {
 
   static const path = '/settings';
   static const pathAnonymous = '/anonymous/settings';
+  static const pathAdmin = '/admin/settings';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

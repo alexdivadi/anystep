@@ -77,6 +77,12 @@ class UserRepository implements IRepository<UserModel> {
     );
     return documents.map((doc) => UserModel.fromJson(doc)).toList();
   }
+
+  @override
+  Future<void> delete(UserModel obj) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

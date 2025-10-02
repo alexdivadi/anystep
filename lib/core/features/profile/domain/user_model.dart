@@ -11,6 +11,7 @@ part 'user_model.g.dart';
 
 @freezed
 abstract class UserModel with _$UserModel {
+  const UserModel._();
   const factory UserModel({
     required String id,
     required String email,
@@ -27,4 +28,8 @@ abstract class UserModel with _$UserModel {
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
+  String get fullName => "$firstName $lastName";
+  String get profileImageUrl =>
+      'https://xwbzsprukcwoiaebxgev.supabase.co/storage/v1/object/public/images/profiles/$id.png';
 }

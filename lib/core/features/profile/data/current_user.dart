@@ -14,6 +14,7 @@ part 'current_user.g.dart';
 @Riverpod(keepAlive: true)
 Stream<UserModel?> currentUserStream(Ref ref) async* {
   final pref = await ref.watch(appPreferencesProvider.future);
+  final authState = ref.watch(authStateStreamProvider);
 
   final cachedUser = pref.getCurrentUser();
   if (cachedUser != null) {
@@ -27,10 +28,11 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
   }
 
   try {
-    final authState = await ref.watch(authStateStreamProvider.future);
-    if (authState == null) throw Exception('No user logged in');
+    if (authState.valueOrNull == null) throw Exception('No user logged in');
 
-    final user = await ref.read(userRepositoryProvider).get(documentId: authState.uid);
+    final user = await ref
+        .read(userRepositoryProvider)
+        .get(documentId: authState.requireValue!.uid);
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;
   } on AuthApiException catch (_) {

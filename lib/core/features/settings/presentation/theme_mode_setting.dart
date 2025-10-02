@@ -16,7 +16,7 @@ class ThemeModeSetting extends ConsumerWidget {
             (mode) => DropdownButton<ThemeMode>(
               value: mode,
               items: const [
-                DropdownMenuItem(value: ThemeMode.system, child: Text('System Default')),
+                DropdownMenuItem(value: ThemeMode.system, child: Text('Auto')),
                 DropdownMenuItem(value: ThemeMode.light, child: Text('Light Mode')),
                 DropdownMenuItem(value: ThemeMode.dark, child: Text('Dark Mode')),
               ],

@@ -3,17 +3,27 @@ import 'package:anystep/core/features/screens.dart';
 
 class RouterUtils {
   static const unauthenticatedRoutes = {
+    EventFeedScreen.pathAnonymous,
+    SettingsScreen.pathAnonymous,
+  };
+  static const volunteerRoutes = {EventFeedScreen.path, SettingsScreen.path};
+  static const adminRoutes = {
+    EventFeedScreen.pathAdmin,
+    SettingsScreen.pathAdmin,
+    ReportsScreen.pathAdmin,
+  };
+
+  static const anyRoutes = {
     LoginScreen.path,
     SignUpScreen.path,
     ConfirmEmailScreen.path,
     WelcomeScreen.path,
     AppStartupLoadingWidget.path,
-    EventFeedScreen.pathAnonymous,
-    EventDetailScreen.path,
-    SettingsScreen.pathAnonymous,
     UserOnboardedGate.path,
-    OnboardingScreen.path,
+    EventDetailScreen.path,
   };
 
   static const loginRoutes = {LoginScreen.path, SignUpScreen.path, ConfirmEmailScreen.path};
+
+  static const onboardingRoutes = {UserOnboardedGate.path, OnboardingScreen.path};
 }

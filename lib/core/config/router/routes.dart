@@ -29,7 +29,7 @@ final routes = [
     builder: (context, state, navigationShell) {
       return Scaffold(
         body: navigationShell,
-        bottomNavigationBar: AnyStepNavBar(
+        bottomNavigationBar: UnauthenticatedNavBar(
           currentIndex: navigationShell.currentIndex,
           onTap: navigationShell.goBranch,
         ),
@@ -55,12 +55,12 @@ final routes = [
     ],
   ),
 
-  // Authenticated Shell
+  // Volunteer Shell
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       return Scaffold(
         body: navigationShell,
-        bottomNavigationBar: AnyStepNavBar(
+        bottomNavigationBar: VolunteerNavBar(
           currentIndex: navigationShell.currentIndex,
           onTap: navigationShell.goBranch,
         ),
@@ -79,6 +79,45 @@ final routes = [
         routes: [
           GoRoute(
             path: SettingsScreen.path,
+            pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
+          ),
+        ],
+      ),
+    ],
+  ),
+
+  // Admin Shell
+  StatefulShellRoute.indexedStack(
+    builder: (context, state, navigationShell) {
+      return Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: AdminNavBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: navigationShell.goBranch,
+        ),
+      );
+    },
+    branches: [
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: EventFeedScreen.pathAdmin,
+            pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: ReportsScreen.pathAdmin,
+            pageBuilder: (context, state) => NoTransitionPage(child: const ReportsScreen()),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: SettingsScreen.pathAdmin,
             pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
           ),
         ],

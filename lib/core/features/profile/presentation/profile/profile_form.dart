@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'profile_screen_controller.dart';
 
@@ -21,6 +22,7 @@ class ProfileForm extends ConsumerStatefulWidget {
 
 class _ProfileFormState extends ConsumerState<ProfileForm> {
   final _formKey = GlobalKey<FormBuilderState>();
+  XFile? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,15 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              ImageUploadWidget(
+                shape: BoxShape.circle,
+                imageUrl: widget.user.profileImageUrl,
+                onImageSelected: (file) {
+                  setState(() {
+                    _imageFile = file;
+                  });
+                },
+              ),
               AnyStepTextField(
                 name: 'firstName',
                 initialValue: widget.user.firstName,
@@ -102,7 +113,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                   Flexible(
                     flex: 3,
                     child: AnyStepTextField(
-                      name: 'zipCode',
+                      name: 'postalCode',
                       initialValue: widget.user.address?.postalCode,
                       labelText: 'Zip Code',
                       keyboardType: TextInputType.number,
@@ -120,7 +131,10 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton(onPressed: widget.onCancel, child: const Text('Cancel')),
+                  TextButton(
+                    onPressed: state.isLoading ? null : widget.onCancel,
+                    child: const Text('Cancel'),
+                  ),
                   ElevatedButton(
                     onPressed:
                         state.isLoading
@@ -129,7 +143,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                               if (_formKey.currentState?.saveAndValidate() ?? false) {
                                 await ref
                                     .read(profileScreenControllerProvider.notifier)
-                                    .save(_formKey.currentState!.value);
+                                    .save(_formKey.currentState!.value, image: _imageFile);
                                 widget.onSaved?.call();
                               }
                             },

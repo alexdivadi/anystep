@@ -1,3 +1,4 @@
+import 'package:anystep/core/config/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -24,6 +25,9 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       actions: actions,
       leading: null,
+      // titleTextStyle: AnyStepTextStyles.title.copyWith(
+      //   color: Theme.of(context).colorScheme.onSurface,
+      // ),
       automaticallyImplyLeading: showBackArrow,
     );
   }

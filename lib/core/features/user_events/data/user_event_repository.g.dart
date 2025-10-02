@@ -168,7 +168,7 @@ class _GetUserEventProviderElement
   int get id => (origin as GetUserEventProvider).id;
 }
 
-String _$getUserEventsHash() => r'043c99928d9350b0428ca491c4ef2e9d7407bf5a';
+String _$getUserEventsHash() => r'f8349b8b7f50ca091ef2655912d513e1880e5a08';
 
 /// See also [getUserEvents].
 @ProviderFor(getUserEvents)
@@ -183,13 +183,13 @@ class GetUserEventsFamily
   /// See also [getUserEvents].
   GetUserEventsProvider call({
     int? page,
-    String? search,
+    int? eventId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) {
     return GetUserEventsProvider(
       page: page,
-      search: search,
+      eventId: eventId,
       filters: filters,
       order: order,
     );
@@ -201,7 +201,7 @@ class GetUserEventsFamily
   ) {
     return call(
       page: provider.page,
-      search: provider.search,
+      eventId: provider.eventId,
       filters: provider.filters,
       order: provider.order,
     );
@@ -228,14 +228,14 @@ class GetUserEventsProvider
   /// See also [getUserEvents].
   GetUserEventsProvider({
     int? page,
-    String? search,
+    int? eventId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) : this._internal(
          (ref) => getUserEvents(
            ref as GetUserEventsRef,
            page: page,
-           search: search,
+           eventId: eventId,
            filters: filters,
            order: order,
          ),
@@ -249,7 +249,7 @@ class GetUserEventsProvider
          allTransitiveDependencies:
              GetUserEventsFamily._allTransitiveDependencies,
          page: page,
-         search: search,
+         eventId: eventId,
          filters: filters,
          order: order,
        );
@@ -262,13 +262,13 @@ class GetUserEventsProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.page,
-    required this.search,
+    required this.eventId,
     required this.filters,
     required this.order,
   }) : super.internal();
 
   final int? page;
-  final String? search;
+  final int? eventId;
   final List<AnyStepFilter<dynamic>>? filters;
   final AnyStepOrder? order;
 
@@ -289,7 +289,7 @@ class GetUserEventsProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         page: page,
-        search: search,
+        eventId: eventId,
         filters: filters,
         order: order,
       ),
@@ -306,7 +306,7 @@ class GetUserEventsProvider
   bool operator ==(Object other) {
     return other is GetUserEventsProvider &&
         other.page == page &&
-        other.search == search &&
+        other.eventId == eventId &&
         other.filters == filters &&
         other.order == order;
   }
@@ -315,7 +315,7 @@ class GetUserEventsProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, page.hashCode);
-    hash = _SystemHash.combine(hash, search.hashCode);
+    hash = _SystemHash.combine(hash, eventId.hashCode);
     hash = _SystemHash.combine(hash, filters.hashCode);
     hash = _SystemHash.combine(hash, order.hashCode);
 
@@ -330,8 +330,8 @@ mixin GetUserEventsRef
   /// The parameter `page` of this provider.
   int? get page;
 
-  /// The parameter `search` of this provider.
-  String? get search;
+  /// The parameter `eventId` of this provider.
+  int? get eventId;
 
   /// The parameter `filters` of this provider.
   List<AnyStepFilter<dynamic>>? get filters;
@@ -348,12 +348,185 @@ class _GetUserEventsProviderElement
   @override
   int? get page => (origin as GetUserEventsProvider).page;
   @override
-  String? get search => (origin as GetUserEventsProvider).search;
+  int? get eventId => (origin as GetUserEventsProvider).eventId;
   @override
   List<AnyStepFilter<dynamic>>? get filters =>
       (origin as GetUserEventsProvider).filters;
   @override
   AnyStepOrder? get order => (origin as GetUserEventsProvider).order;
+}
+
+String _$getCurrentUserEventsHash() =>
+    r'e4ae417d4f47df6280ad0081a6289784d2d3b0cc';
+
+/// See also [getCurrentUserEvents].
+@ProviderFor(getCurrentUserEvents)
+const getCurrentUserEventsProvider = GetCurrentUserEventsFamily();
+
+/// See also [getCurrentUserEvents].
+class GetCurrentUserEventsFamily
+    extends Family<AsyncValue<PaginationResult<UserEventModel>>> {
+  /// See also [getCurrentUserEvents].
+  const GetCurrentUserEventsFamily();
+
+  /// See also [getCurrentUserEvents].
+  GetCurrentUserEventsProvider call({
+    int? page,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) {
+    return GetCurrentUserEventsProvider(
+      page: page,
+      filters: filters,
+      order: order,
+    );
+  }
+
+  @override
+  GetCurrentUserEventsProvider getProviderOverride(
+    covariant GetCurrentUserEventsProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      filters: provider.filters,
+      order: provider.order,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getCurrentUserEventsProvider';
+}
+
+/// See also [getCurrentUserEvents].
+class GetCurrentUserEventsProvider
+    extends AutoDisposeFutureProvider<PaginationResult<UserEventModel>> {
+  /// See also [getCurrentUserEvents].
+  GetCurrentUserEventsProvider({
+    int? page,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) : this._internal(
+         (ref) => getCurrentUserEvents(
+           ref as GetCurrentUserEventsRef,
+           page: page,
+           filters: filters,
+           order: order,
+         ),
+         from: getCurrentUserEventsProvider,
+         name: r'getCurrentUserEventsProvider',
+         debugGetCreateSourceHash:
+             const bool.fromEnvironment('dart.vm.product')
+                 ? null
+                 : _$getCurrentUserEventsHash,
+         dependencies: GetCurrentUserEventsFamily._dependencies,
+         allTransitiveDependencies:
+             GetCurrentUserEventsFamily._allTransitiveDependencies,
+         page: page,
+         filters: filters,
+         order: order,
+       );
+
+  GetCurrentUserEventsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.page,
+    required this.filters,
+    required this.order,
+  }) : super.internal();
+
+  final int? page;
+  final List<AnyStepFilter<dynamic>>? filters;
+  final AnyStepOrder? order;
+
+  @override
+  Override overrideWith(
+    FutureOr<PaginationResult<UserEventModel>> Function(
+      GetCurrentUserEventsRef provider,
+    )
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetCurrentUserEventsProvider._internal(
+        (ref) => create(ref as GetCurrentUserEventsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        page: page,
+        filters: filters,
+        order: order,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<PaginationResult<UserEventModel>>
+  createElement() {
+    return _GetCurrentUserEventsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetCurrentUserEventsProvider &&
+        other.page == page &&
+        other.filters == filters &&
+        other.order == order;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+    hash = _SystemHash.combine(hash, order.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetCurrentUserEventsRef
+    on AutoDisposeFutureProviderRef<PaginationResult<UserEventModel>> {
+  /// The parameter `page` of this provider.
+  int? get page;
+
+  /// The parameter `filters` of this provider.
+  List<AnyStepFilter<dynamic>>? get filters;
+
+  /// The parameter `order` of this provider.
+  AnyStepOrder? get order;
+}
+
+class _GetCurrentUserEventsProviderElement
+    extends AutoDisposeFutureProviderElement<PaginationResult<UserEventModel>>
+    with GetCurrentUserEventsRef {
+  _GetCurrentUserEventsProviderElement(super.provider);
+
+  @override
+  int? get page => (origin as GetCurrentUserEventsProvider).page;
+  @override
+  List<AnyStepFilter<dynamic>>? get filters =>
+      (origin as GetCurrentUserEventsProvider).filters;
+  @override
+  AnyStepOrder? get order => (origin as GetCurrentUserEventsProvider).order;
 }
 
 // ignore_for_file: type=lint

@@ -4,6 +4,7 @@ import 'package:anystep/database/client.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image/image.dart';
 import 'package:mime/mime.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,7 +20,11 @@ class Storage {
 
   String _getFileNameFromBytes(Uint8List bytes, String originalFileName) {
     final hash = sha256.convert(bytes).toString();
-    final extension = originalFileName.split('.').last;
+    final parts = originalFileName.split('.');
+    if (parts.length < 2 || parts.last.isEmpty) {
+      throw Exception('Invalid file extension in $originalFileName');
+    }
+    final extension = parts.last;
     return "$hash.$extension";
   }
 
@@ -28,10 +33,14 @@ class Storage {
     return await _supabase.storage.from(imageBucket).exists(newFileName);
   }
 
-  Future<String> upsertPublicImage({required Uint8List bytes, required String fileName}) async {
+  Future<String> upsertPublicImage({
+    required Uint8List bytes,
+    required String fileName,
+    bool useHashCode = true,
+  }) async {
     final contentType = lookupMimeType(fileName);
 
-    final newFileName = _getFileNameFromBytes(bytes, fileName);
+    final newFileName = useHashCode ? _getFileNameFromBytes(bytes, fileName) : fileName;
     Log.d("Uploading image to $newFileName with content type $contentType");
 
     final response = await _supabase.storage
@@ -52,6 +61,15 @@ class Storage {
     } else {
       throw Exception('Failed to upload image');
     }
+  }
+
+  Future<String> upsertProfileImage({required Uint8List bytes, required String userId}) async {
+    final profileFileName = "profiles/$userId.png";
+    return upsertPublicImage(
+      bytes: encodePng(decodeImage(bytes)!),
+      fileName: profileFileName,
+      useHashCode: false,
+    );
   }
 
   Future<String?> getPublicImageUrl({required Uint8List bytes, required String fileName}) async {

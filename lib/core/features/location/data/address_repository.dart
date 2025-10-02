@@ -35,6 +35,12 @@ class AddressRepository implements IRepository<AddressModel> {
     // TODO: implement list
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> delete(AddressModel obj) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

@@ -38,6 +38,12 @@ class EventTemplateRepository implements IRepository<EventTemplateModel> {
     // TODO: implement list
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> delete(EventTemplateModel obj) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

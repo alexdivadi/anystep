@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
+import 'package:anystep/core/features/events/presentation/widgets/did_sign_up_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -40,7 +41,13 @@ class EventCard extends StatelessWidget {
                   ),
                   child: Icon(Icons.event, color: Theme.of(context).highlightColor),
                 ),
-        title: Text(event.name, style: Theme.of(context).textTheme.titleMedium),
+        title: Row(
+          children: [
+            Text(event.name, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(width: AnyStepSpacing.sm8),
+            DidSignUpIndicator(eventId: event.id!),
+          ],
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

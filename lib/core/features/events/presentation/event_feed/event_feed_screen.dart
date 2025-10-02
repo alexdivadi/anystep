@@ -1,5 +1,4 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/common/widgets/any_step_modal.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
@@ -19,6 +18,7 @@ class EventFeedScreen extends ConsumerWidget {
 
   static const path = '/events';
   static const pathAnonymous = '/anonymous/events';
+  static const pathAdmin = '/admin/events';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

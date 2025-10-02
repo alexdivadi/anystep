@@ -5,6 +5,8 @@ import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_screen_controller_state.dart';
+import 'package:anystep/database/storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,10 +17,17 @@ class ProfileScreenController extends _$ProfileScreenController {
   @override
   ProfileScreenControllerState build() => ProfileScreenControllerState();
 
-  Future<void> save(Map<String, dynamic> values) async {
+  Future<void> save(Map<String, dynamic> values, {XFile? image}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authState = ref.read(authStateStreamProvider).requireValue!;
+      if (image != null) {
+        final storage = ref.read(storageProvider);
+        final bytes = await image.readAsBytes();
+        final fileName = await storage.upsertProfileImage(bytes: bytes, userId: authState.uid);
+        Log.d('Profile image uploaded: $fileName');
+      }
+
       final currentUser = ref.read(currentUserStreamProvider).requireValue!;
       final user = UserModel(
         id: authState.uid,
@@ -39,6 +48,7 @@ class ProfileScreenController extends _$ProfileScreenController {
         role: currentUser.role,
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
+
       state = state.copyWith(isLoading: false, error: null);
     } on AuthApiException catch (e) {
       Log.e('Error saving user profile: ${e.message}', e);
@@ -46,7 +56,8 @@ class ProfileScreenController extends _$ProfileScreenController {
         isLoading: false,
         error: "Something went wrong. Please try again later.",
       );
-    } catch (e) {
+    } catch (e, st) {
+      Log.e('Error saving user profile: $e', e, st);
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }

@@ -2,6 +2,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
+import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +18,8 @@ class ProfileInfo extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            ProfileImage(user: user),
+            const SizedBox(height: AnyStepSpacing.sm8),
             ListTile(
               title: Text(
                 '${user.firstName} ${user.lastName}',

@@ -4,6 +4,7 @@ import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/features/onboarding/data/onboarding_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/config/router/router_utils.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
@@ -56,7 +57,7 @@ GoRouter router(Ref ref) {
       // Replace any sequence of digits between slashes with ':id'
       final normalizedPath = path.replaceAllMapped(RegExp(r'\/\d+(?=\/|$)'), (match) => '/:id');
 
-      if (RouterUtils.unauthenticatedRoutes.contains(normalizedPath)) {
+      if (RouterUtils.anyRoutes.contains(normalizedPath)) {
         if (RouterUtils.loginRoutes.contains(path)) {
           // Replace with dashboard screen
           return authStateAsync.hasValue && authStateAsync.valueOrNull != null
@@ -67,21 +68,38 @@ GoRouter router(Ref ref) {
         return null;
       }
 
+      final isUnauthenticatedShell = RouterUtils.unauthenticatedRoutes.contains(normalizedPath);
+
       if (authStateAsync.valueOrNull != null) {
         // User is authenticated, allow access to the requested route
         // Check if user has submitted profile information
         final user = ref.read(currentUserStreamProvider);
         if (!user.hasValue || user.requireValue == null) {
           // User is not onboarded, redirecting to onboarding screen
+          if (RouterUtils.onboardingRoutes.contains(path)) {
+            return null;
+          }
           Log.d('Going to UserGate with redirect to $path');
           return '${UserOnboardedGate.path}?redirect=$path';
         }
+
+        final role = user.requireValue!.role;
+        final isVolunteerShell = RouterUtils.volunteerRoutes.contains(normalizedPath);
+        final isAdminShell = RouterUtils.adminRoutes.contains(normalizedPath);
+
+        if (role == UserRole.volunteer && (isAdminShell || isUnauthenticatedShell)) {
+          Log.d('Volunteer trying to access admin route, redirecting to volunteer dashboard');
+          return EventFeedScreen.path;
+        } else if (role == UserRole.admin && (isVolunteerShell || isUnauthenticatedShell)) {
+          Log.d('Admin trying to access volunteer route, redirecting to admin dashboard');
+          return EventFeedScreen.pathAdmin;
+        }
+
         return null;
       }
 
-      // User is not authenticated, redirect to the login screen
-      Log.d('User is not authenticated, redirecting to login screen');
-      return LoginScreen.path;
+      // User is not authenticated, redirect to the login screen if on a protected route
+      return isUnauthenticatedShell ? null : LoginScreen.path;
     },
   );
 }

@@ -24,7 +24,7 @@ final eventRepositoryProvider = AutoDisposeProvider<EventRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef EventRepositoryRef = AutoDisposeProviderRef<EventRepository>;
-String _$getEventHash() => r'8f6982980615aa6062ee5fd2caec55c105706cce';
+String _$getEventHash() => r'a1c6cab3570b28dc4e73ccd970b477aced839f14';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -57,13 +57,13 @@ class GetEventFamily extends Family<AsyncValue<EventModel>> {
   const GetEventFamily();
 
   /// See also [getEvent].
-  GetEventProvider call(int id) {
-    return GetEventProvider(id);
+  GetEventProvider call(int id, {bool withAddress = true}) {
+    return GetEventProvider(id, withAddress: withAddress);
   }
 
   @override
   GetEventProvider getProviderOverride(covariant GetEventProvider provider) {
-    return call(provider.id);
+    return call(provider.id, withAddress: provider.withAddress);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -84,9 +84,9 @@ class GetEventFamily extends Family<AsyncValue<EventModel>> {
 /// See also [getEvent].
 class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
   /// See also [getEvent].
-  GetEventProvider(int id)
+  GetEventProvider(int id, {bool withAddress = true})
     : this._internal(
-        (ref) => getEvent(ref as GetEventRef, id),
+        (ref) => getEvent(ref as GetEventRef, id, withAddress: withAddress),
         from: getEventProvider,
         name: r'getEventProvider',
         debugGetCreateSourceHash:
@@ -96,6 +96,7 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
         dependencies: GetEventFamily._dependencies,
         allTransitiveDependencies: GetEventFamily._allTransitiveDependencies,
         id: id,
+        withAddress: withAddress,
       );
 
   GetEventProvider._internal(
@@ -106,9 +107,11 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.id,
+    required this.withAddress,
   }) : super.internal();
 
   final int id;
+  final bool withAddress;
 
   @override
   Override overrideWith(
@@ -124,6 +127,7 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         id: id,
+        withAddress: withAddress,
       ),
     );
   }
@@ -135,13 +139,16 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
 
   @override
   bool operator ==(Object other) {
-    return other is GetEventProvider && other.id == id;
+    return other is GetEventProvider &&
+        other.id == id &&
+        other.withAddress == withAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, withAddress.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -152,6 +159,9 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
 mixin GetEventRef on AutoDisposeFutureProviderRef<EventModel> {
   /// The parameter `id` of this provider.
   int get id;
+
+  /// The parameter `withAddress` of this provider.
+  bool get withAddress;
 }
 
 class _GetEventProviderElement
@@ -161,6 +171,8 @@ class _GetEventProviderElement
 
   @override
   int get id => (origin as GetEventProvider).id;
+  @override
+  bool get withAddress => (origin as GetEventProvider).withAddress;
 }
 
 String _$getEventsHash() => r'574aa234012b0b11983a220fdd078dcee3fb8323';

@@ -106,6 +106,15 @@ class Database {
       rethrow;
     }
   }
+
+  Future<void> delete({required String table, required String documentId}) async {
+    try {
+      await _supabase.from(table).delete().eq('id', documentId);
+    } catch (e) {
+      Log.e("Error deleting document", e);
+      rethrow;
+    }
+  }
 }
 
 @riverpod
