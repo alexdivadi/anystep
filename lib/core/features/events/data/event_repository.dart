@@ -138,14 +138,53 @@ Future<PaginationResult<EventModel>> getEvents(
   final repository = ref.watch(eventRepositoryProvider);
 
   filters ??= [];
-  filters.add(AnyStepFilter.greaterThan('start_time', DateTime.now().toUtc()));
   if (search != null && search.isNotEmpty) {
-    filters.add(AnyStepFilter.contains('name', search));
+    filters.add(AnyStepFilter.like('name', "%$search%"));
   }
   return repository.paginatedList(
     limit: EventRepository.pageSize,
     filters: filters,
     page: page,
     order: order ?? AnyStepOrder.asc('start_time'),
+  );
+}
+
+@riverpod
+Future<PaginationResult<EventModel>> getUpcomingEvents(
+  Ref ref, {
+  int? page,
+  String? search,
+  List<AnyStepFilter>? filters,
+  AnyStepOrder? order,
+}) async {
+  filters ??= [];
+  filters.add(AnyStepFilter.greaterThan('start_time', DateTime.now().toUtc()));
+  return await ref.watch(
+    getEventsProvider(
+      page: page,
+      filters: filters,
+      search: search,
+      order: AnyStepOrder.asc('start_time'),
+    ).future,
+  );
+}
+
+@riverpod
+Future<PaginationResult<EventModel>> getPastEvents(
+  Ref ref, {
+  int? page,
+  String? search,
+  List<AnyStepFilter>? filters,
+  AnyStepOrder? order,
+}) async {
+  filters ??= [];
+  filters.add(AnyStepFilter.lessThan('start_time', DateTime.now().toUtc()));
+  return await ref.watch(
+    getEventsProvider(
+      page: page,
+      filters: filters,
+      search: search,
+      order: AnyStepOrder.desc('start_time'),
+    ).future,
   );
 }

@@ -13,11 +13,11 @@ class EventCardShimmer extends StatelessWidget {
         horizontal: AnyStepSpacing.md12,
         vertical: AnyStepSpacing.sm6,
       ),
-      child: ListTile(
-        leading: Shimmer.fromColors(
-          baseColor: AnyStepColors.grayDark.withAlpha(40),
-          highlightColor: AnyStepColors.grayDark.withAlpha(10),
-          child: Container(
+      child: Shimmer.fromColors(
+        baseColor: AnyStepColors.grayDark.withAlpha(40),
+        highlightColor: AnyStepColors.grayDark.withAlpha(10),
+        child: ListTile(
+          leading: Container(
             width: AnyStepSpacing.xl56,
             height: AnyStepSpacing.xl56,
             decoration: BoxDecoration(
@@ -25,40 +25,28 @@ class EventCardShimmer extends StatelessWidget {
               borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
             ),
           ),
-        ),
-        title: Shimmer.fromColors(
-          baseColor: AnyStepColors.grayDark.withAlpha(40),
-          highlightColor: AnyStepColors.grayDark.withAlpha(10),
-          child: Container(
+          title: Container(
             width: double.infinity,
             height: AnyStepSpacing.md16,
             color: AnyStepColors.grayDark.withAlpha(40),
           ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: AnyStepSpacing.sm8),
-            Shimmer.fromColors(
-              baseColor: AnyStepColors.grayDark.withAlpha(40),
-              highlightColor: AnyStepColors.grayDark.withAlpha(10),
-              child: Container(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: AnyStepSpacing.sm8),
+              Container(
                 width: 120,
                 height: AnyStepSpacing.sm10,
                 color: AnyStepColors.grayDark.withAlpha(40),
               ),
-            ),
-            SizedBox(height: AnyStepSpacing.sm4),
-            Shimmer.fromColors(
-              baseColor: AnyStepColors.grayDark.withAlpha(40),
-              highlightColor: AnyStepColors.grayDark.withAlpha(10),
-              child: Container(
+              SizedBox(height: AnyStepSpacing.sm4),
+              Container(
                 width: double.infinity,
                 height: AnyStepSpacing.sm8,
                 color: AnyStepColors.grayDark.withAlpha(40),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

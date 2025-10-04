@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncReports = ref.watch(volunteerHoursAggregateProvider(start: _start, end: _end));
+    final isMonthSelected = !_custom && _start.day == 1 && _start.month == DateTime.now().month;
+    final isYtdSelected = !_custom && _start.month == 1 && _start.day == 1;
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
         title: const Text('Volunteer Hours Reports'),
@@ -95,18 +98,16 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                 ElevatedButton(
                   onPressed: _setMonth,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        !_custom && _start.day == 1 && _start.month == DateTime.now().month
-                            ? Colors.blue
-                            : null,
+                    backgroundColor: isMonthSelected ? AnyStepColors.blueBright : null,
+                    foregroundColor: isMonthSelected ? Colors.white : null,
                   ),
                   child: const Text('This Month'),
                 ),
                 ElevatedButton(
                   onPressed: _setYtd,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        !_custom && _start.month == 1 && _start.day == 1 ? Colors.blue : null,
+                    backgroundColor: isYtdSelected ? AnyStepColors.blueBright : null,
+                    foregroundColor: isYtdSelected ? Colors.white : null,
                   ),
                   child: const Text('YTD'),
                 ),

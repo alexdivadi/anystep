@@ -17,8 +17,8 @@ class AnyStepFilter<T> {
   factory AnyStepFilter.lessThan(String column, T value) {
     return AnyStepFilter(column: column, operator: 'lt', value: value);
   }
-  factory AnyStepFilter.contains(String column, T value) {
-    return AnyStepFilter(column: column, operator: 'cs', value: value);
+  factory AnyStepFilter.like(String column, T value, {bool caseSensitive = false}) {
+    return AnyStepFilter(column: column, operator: caseSensitive ? 'like' : 'ilike', value: value);
   }
 }
 

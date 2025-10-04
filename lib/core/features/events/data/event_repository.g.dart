@@ -175,7 +175,7 @@ class _GetEventProviderElement
   bool get withAddress => (origin as GetEventProvider).withAddress;
 }
 
-String _$getEventsHash() => r'574aa234012b0b11983a220fdd078dcee3fb8323';
+String _$getEventsHash() => r'd084cf0138c8e8121f9f9a3990f15571deb2857b';
 
 /// See also [getEvents].
 @ProviderFor(getEvents)
@@ -355,6 +355,380 @@ class _GetEventsProviderElement
       (origin as GetEventsProvider).filters;
   @override
   AnyStepOrder? get order => (origin as GetEventsProvider).order;
+}
+
+String _$getUpcomingEventsHash() => r'0887d30dafb4f176385152bb01cfc3f2db8912ee';
+
+/// See also [getUpcomingEvents].
+@ProviderFor(getUpcomingEvents)
+const getUpcomingEventsProvider = GetUpcomingEventsFamily();
+
+/// See also [getUpcomingEvents].
+class GetUpcomingEventsFamily
+    extends Family<AsyncValue<PaginationResult<EventModel>>> {
+  /// See also [getUpcomingEvents].
+  const GetUpcomingEventsFamily();
+
+  /// See also [getUpcomingEvents].
+  GetUpcomingEventsProvider call({
+    int? page,
+    String? search,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) {
+    return GetUpcomingEventsProvider(
+      page: page,
+      search: search,
+      filters: filters,
+      order: order,
+    );
+  }
+
+  @override
+  GetUpcomingEventsProvider getProviderOverride(
+    covariant GetUpcomingEventsProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      search: provider.search,
+      filters: provider.filters,
+      order: provider.order,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getUpcomingEventsProvider';
+}
+
+/// See also [getUpcomingEvents].
+class GetUpcomingEventsProvider
+    extends AutoDisposeFutureProvider<PaginationResult<EventModel>> {
+  /// See also [getUpcomingEvents].
+  GetUpcomingEventsProvider({
+    int? page,
+    String? search,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) : this._internal(
+         (ref) => getUpcomingEvents(
+           ref as GetUpcomingEventsRef,
+           page: page,
+           search: search,
+           filters: filters,
+           order: order,
+         ),
+         from: getUpcomingEventsProvider,
+         name: r'getUpcomingEventsProvider',
+         debugGetCreateSourceHash:
+             const bool.fromEnvironment('dart.vm.product')
+                 ? null
+                 : _$getUpcomingEventsHash,
+         dependencies: GetUpcomingEventsFamily._dependencies,
+         allTransitiveDependencies:
+             GetUpcomingEventsFamily._allTransitiveDependencies,
+         page: page,
+         search: search,
+         filters: filters,
+         order: order,
+       );
+
+  GetUpcomingEventsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.page,
+    required this.search,
+    required this.filters,
+    required this.order,
+  }) : super.internal();
+
+  final int? page;
+  final String? search;
+  final List<AnyStepFilter<dynamic>>? filters;
+  final AnyStepOrder? order;
+
+  @override
+  Override overrideWith(
+    FutureOr<PaginationResult<EventModel>> Function(
+      GetUpcomingEventsRef provider,
+    )
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetUpcomingEventsProvider._internal(
+        (ref) => create(ref as GetUpcomingEventsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        page: page,
+        search: search,
+        filters: filters,
+        order: order,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
+  createElement() {
+    return _GetUpcomingEventsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetUpcomingEventsProvider &&
+        other.page == page &&
+        other.search == search &&
+        other.filters == filters &&
+        other.order == order;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, search.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+    hash = _SystemHash.combine(hash, order.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetUpcomingEventsRef
+    on AutoDisposeFutureProviderRef<PaginationResult<EventModel>> {
+  /// The parameter `page` of this provider.
+  int? get page;
+
+  /// The parameter `search` of this provider.
+  String? get search;
+
+  /// The parameter `filters` of this provider.
+  List<AnyStepFilter<dynamic>>? get filters;
+
+  /// The parameter `order` of this provider.
+  AnyStepOrder? get order;
+}
+
+class _GetUpcomingEventsProviderElement
+    extends AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
+    with GetUpcomingEventsRef {
+  _GetUpcomingEventsProviderElement(super.provider);
+
+  @override
+  int? get page => (origin as GetUpcomingEventsProvider).page;
+  @override
+  String? get search => (origin as GetUpcomingEventsProvider).search;
+  @override
+  List<AnyStepFilter<dynamic>>? get filters =>
+      (origin as GetUpcomingEventsProvider).filters;
+  @override
+  AnyStepOrder? get order => (origin as GetUpcomingEventsProvider).order;
+}
+
+String _$getPastEventsHash() => r'f1c7356fd9383c6b71c3494f6a35aa1221690546';
+
+/// See also [getPastEvents].
+@ProviderFor(getPastEvents)
+const getPastEventsProvider = GetPastEventsFamily();
+
+/// See also [getPastEvents].
+class GetPastEventsFamily
+    extends Family<AsyncValue<PaginationResult<EventModel>>> {
+  /// See also [getPastEvents].
+  const GetPastEventsFamily();
+
+  /// See also [getPastEvents].
+  GetPastEventsProvider call({
+    int? page,
+    String? search,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) {
+    return GetPastEventsProvider(
+      page: page,
+      search: search,
+      filters: filters,
+      order: order,
+    );
+  }
+
+  @override
+  GetPastEventsProvider getProviderOverride(
+    covariant GetPastEventsProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      search: provider.search,
+      filters: provider.filters,
+      order: provider.order,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getPastEventsProvider';
+}
+
+/// See also [getPastEvents].
+class GetPastEventsProvider
+    extends AutoDisposeFutureProvider<PaginationResult<EventModel>> {
+  /// See also [getPastEvents].
+  GetPastEventsProvider({
+    int? page,
+    String? search,
+    List<AnyStepFilter<dynamic>>? filters,
+    AnyStepOrder? order,
+  }) : this._internal(
+         (ref) => getPastEvents(
+           ref as GetPastEventsRef,
+           page: page,
+           search: search,
+           filters: filters,
+           order: order,
+         ),
+         from: getPastEventsProvider,
+         name: r'getPastEventsProvider',
+         debugGetCreateSourceHash:
+             const bool.fromEnvironment('dart.vm.product')
+                 ? null
+                 : _$getPastEventsHash,
+         dependencies: GetPastEventsFamily._dependencies,
+         allTransitiveDependencies:
+             GetPastEventsFamily._allTransitiveDependencies,
+         page: page,
+         search: search,
+         filters: filters,
+         order: order,
+       );
+
+  GetPastEventsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.page,
+    required this.search,
+    required this.filters,
+    required this.order,
+  }) : super.internal();
+
+  final int? page;
+  final String? search;
+  final List<AnyStepFilter<dynamic>>? filters;
+  final AnyStepOrder? order;
+
+  @override
+  Override overrideWith(
+    FutureOr<PaginationResult<EventModel>> Function(GetPastEventsRef provider)
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetPastEventsProvider._internal(
+        (ref) => create(ref as GetPastEventsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        page: page,
+        search: search,
+        filters: filters,
+        order: order,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
+  createElement() {
+    return _GetPastEventsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetPastEventsProvider &&
+        other.page == page &&
+        other.search == search &&
+        other.filters == filters &&
+        other.order == order;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, search.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
+    hash = _SystemHash.combine(hash, order.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetPastEventsRef
+    on AutoDisposeFutureProviderRef<PaginationResult<EventModel>> {
+  /// The parameter `page` of this provider.
+  int? get page;
+
+  /// The parameter `search` of this provider.
+  String? get search;
+
+  /// The parameter `filters` of this provider.
+  List<AnyStepFilter<dynamic>>? get filters;
+
+  /// The parameter `order` of this provider.
+  AnyStepOrder? get order;
+}
+
+class _GetPastEventsProviderElement
+    extends AutoDisposeFutureProviderElement<PaginationResult<EventModel>>
+    with GetPastEventsRef {
+  _GetPastEventsProviderElement(super.provider);
+
+  @override
+  int? get page => (origin as GetPastEventsProvider).page;
+  @override
+  String? get search => (origin as GetPastEventsProvider).search;
+  @override
+  List<AnyStepFilter<dynamic>>? get filters =>
+      (origin as GetPastEventsProvider).filters;
+  @override
+  AnyStepOrder? get order => (origin as GetPastEventsProvider).order;
 }
 
 // ignore_for_file: type=lint

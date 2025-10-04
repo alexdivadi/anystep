@@ -1,4 +1,3 @@
-import 'package:anystep/core/config/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,12 +7,14 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.showBackArrow = true,
     this.surfaceTint,
+    this.bottom,
   });
 
   final Widget? title;
   final List<Widget>? actions;
   final bool showBackArrow;
   final Color? surfaceTint;
+  final PreferredSizeWidget? bottom;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,10 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       //   color: Theme.of(context).colorScheme.onSurface,
       // ),
       automaticallyImplyLeading: showBackArrow,
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0));
 }
