@@ -101,7 +101,6 @@ class _ShimmerBox extends StatelessWidget {
     required this.height,
     required this.width,
     this.borderRadius,
-    this.margin,
     required this.base,
     required this.highlight,
   });
@@ -109,7 +108,6 @@ class _ShimmerBox extends StatelessWidget {
   final double height;
   final double width;
   final BorderRadius? borderRadius;
-  final EdgeInsets? margin;
   final Color base;
   final Color highlight;
 
@@ -121,7 +119,6 @@ class _ShimmerBox extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        margin: margin,
         decoration: BoxDecoration(
           color: base,
           borderRadius: borderRadius ?? BorderRadius.circular(4),

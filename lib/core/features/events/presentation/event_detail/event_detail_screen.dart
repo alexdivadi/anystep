@@ -1,4 +1,4 @@
-import 'dart:ui';
+// Removed unused dart:ui import after refactor.
 
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
@@ -50,87 +50,87 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final event = ref.watch(getEventProvider(widget.id));
-    final user = ref.watch(currentUserStreamProvider);
-    final theme = Theme.of(context);
+    final eventAsync = ref.watch(getEventProvider(widget.id));
+    final userAsync = ref.watch(currentUserStreamProvider);
 
-    return AnyStepScaffold(
-      appBar: AnyStepAppBar(
-        title: const Text('Event Detail'),
-        actions: event.whenOrNull(
-          data:
-              (event) => [
-                ShareEventButton(event: event),
-                user.maybeWhen(
-                  data: (value) {
-                    if (value?.role == UserRole.admin) {
-                      return IconButton(
-                        icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
-                        onPressed: _toggleEdit,
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  orElse: () => const SizedBox.shrink(),
-                ),
-              ],
-        ),
-      ),
-      body: SafeArea(
-        child: event.maybeWhen(
-          data:
-              (event) => Stack(
-                alignment: Alignment.topCenter,
-                fit: StackFit.expand,
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        isEditing
-                            ? EventDetailForm(event: event, onSuccess: _onSuccess)
-                            : EventDetailInfo(event: event),
-                        if (user.hasValue && user.value != null && !isEditing)
-                          Center(child: SignUpButton(eventId: widget.id)),
-                        if (user.hasValue && !isEditing) SignUpList(eventId: widget.id),
-                        if (user.hasValue && user.valueOrNull == null)
-                          ElevatedButton(
+    return eventAsync.when(
+      loading:
+          () => AnyStepScaffold(
+            appBar: const AnyStepAppBar(title: Text('Event Detail')),
+            body: const Center(child: AnyStepLoadingIndicator()),
+          ),
+      error:
+          (e, st) => AnyStepScaffold(
+            appBar: const AnyStepAppBar(title: Text('Event Detail')),
+            body: RefreshIndicator(
+              onRefresh: () async => ref.invalidate(getEventProvider(widget.id)),
+              child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
+            ),
+          ),
+      data: (event) {
+        final isPast = event.endTime.isBefore(DateTime.now().toUtc());
+        // Build actions list based on user role
+        final actions = <Widget>[
+          ShareEventButton(event: event),
+          userAsync.maybeWhen(
+            data: (u) {
+              if (u?.role == UserRole.admin) {
+                return IconButton(
+                  icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
+                  onPressed: _toggleEdit,
+                );
+              }
+              return const SizedBox.shrink();
+            },
+            orElse: () => const SizedBox.shrink(),
+          ),
+        ];
+
+        return AnyStepScaffold(
+          appBar: AnyStepAppBar(
+            title: const Text('Event Detail'),
+            actions: isPast ? null : actions,
+          ),
+          body: SafeArea(
+            child: Stack(
+              alignment: Alignment.topCenter,
+              fit: StackFit.expand,
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child:
+                          isEditing
+                              ? EventDetailForm(
+                                event: event,
+                                physics: const NeverScrollableScrollPhysics(),
+                                onSuccess: _onSuccess,
+                              )
+                              : EventDetailInfo(event: event),
+                    ),
+                    if (!isPast && userAsync.hasValue && userAsync.value != null && !isEditing)
+                      SliverToBoxAdapter(child: Center(child: SignUpButton(eventId: widget.id))),
+                    if (userAsync.hasValue && !isEditing)
+                      SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
+                    if (userAsync.hasValue && userAsync.value == null)
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: AnyStepSpacing.md16),
+                          child: ElevatedButton(
                             onPressed: () => context.go(LoginScreen.path),
                             child: const Text('Sign up'),
                           ),
-                        SizedBox(height: AnyStepSpacing.xl64), // Add space for the blur
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: AnyStepSpacing.lg48,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            theme.colorScheme.surface.withAlpha(0),
-                            theme.colorScheme.surface,
-                          ],
-                          stops: [0.0, 1.0],
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-
-          error:
-              (e, st) => RefreshIndicator(
-                onRefresh: () async => ref.invalidate(getEventProvider(widget.id)),
-                child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
-              ),
-          orElse: () => const Center(child: AnyStepLoadingIndicator()),
-        ),
-      ),
+                    const SliverToBoxAdapter(child: SizedBox(height: AnyStepSpacing.xl64)),
+                  ],
+                ),
+                const BottomFadeWidget(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

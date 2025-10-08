@@ -2,6 +2,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/common/widgets/dropdown_section.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
+import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
 import 'package:anystep/core/features/events/presentation/widgets/event_time_table.dart';
 import 'package:anystep/core/features/location/utils/launch_map.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class EventDetailInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPast = event.endTime.isBefore(DateTime.now());
     return Padding(
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       child: SingleChildScrollView(
@@ -27,17 +29,28 @@ class EventDetailInfo extends StatelessWidget {
                 )
                 : const SizedBox.shrink(),
             Container(
-              width: double.infinity,
               padding: const EdgeInsets.symmetric(
                 horizontal: AnyStepSpacing.md12,
                 vertical: AnyStepSpacing.md16,
               ),
-              child: Text(
-                event.name,
-                style: Theme.of(context).textTheme.displayLarge,
-                softWrap: true,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              child: Row(
+                children: [
+                  Text(
+                    event.name,
+                    style: Theme.of(context).textTheme.displayLarge,
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (isPast && event.id != null)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: AnyStepSpacing.sm4,
+                        top: AnyStepSpacing.sm2,
+                      ),
+                      child: DidAttendIndicator(eventId: event.id!),
+                    ),
+                ],
               ),
             ),
             DropdownSection(

@@ -4,7 +4,6 @@ import 'package:anystep/core/features/user_events/data/sign_up_status.dart';
 import 'package:anystep/core/features/user_events/domain/sign_up_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/widgets.dart';
 
 class DidSignUpIndicator extends ConsumerWidget {
   const DidSignUpIndicator({super.key, required this.eventId});

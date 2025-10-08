@@ -6,7 +6,7 @@ part of 'sign_up_status.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpStatusHash() => r'10505510563921bd6b6a80556b2af2a10bdb9a9d';
+String _$signUpStatusHash() => r'02390b445a29c931ca1f4496e9aec8182ad00f3f';
 
 /// Copied from Dart SDK
 class _SystemHash {

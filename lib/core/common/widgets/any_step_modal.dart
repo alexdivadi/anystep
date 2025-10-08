@@ -2,12 +2,12 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:flutter/material.dart';
 
 extension AnyStepModalContext on BuildContext {
-  void showModal(Widget child) => showModalBottomSheet(
+  void showModal(Widget child, {bool isScrollControlled = true}) => showModalBottomSheet(
     context: this,
     clipBehavior: Clip.antiAlias,
     elevation: 0,
     showDragHandle: true,
-    isScrollControlled: true,
+    isScrollControlled: isScrollControlled,
     useSafeArea: true,
     useRootNavigator: true,
     isDismissible: true,
@@ -16,6 +16,7 @@ extension AnyStepModalContext on BuildContext {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(AnyStepSpacing.md16)),
     ),
-    builder: (context) => child,
+    builder:
+        (context) => GestureDetector(onTap: () => FocusScope.of(context).unfocus(), child: child),
   );
 }

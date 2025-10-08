@@ -14,6 +14,7 @@ class SignUpButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpStatusAsync = ref.watch(signUpStatusProvider(eventId));
     final state = ref.watch(signUpButtonControllerProvider);
+
     return signUpStatusAsync.maybeWhen(
       data:
           (status) => switch (status) {

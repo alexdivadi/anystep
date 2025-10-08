@@ -2,7 +2,9 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class AnyStepTextField extends StatelessWidget {
+/// A wrapper around [FormBuilderTextField] that applies unified styling and
+/// optionally expands (increases maxLines) when focused for easier multi-line input.
+class AnyStepTextField extends StatefulWidget {
   const AnyStepTextField({
     super.key,
     required this.name,
@@ -19,6 +21,11 @@ class AnyStepTextField extends StatelessWidget {
     this.enabled = true,
     this.validator,
     this.initialValue,
+    // Expansion options
+    this.expandOnFocus = false,
+    this.expandedLines = 8,
+    this.animationDuration = const Duration(milliseconds: 220),
+    this.animationCurve = Curves.easeOut,
   });
 
   final String name;
@@ -36,39 +43,91 @@ class AnyStepTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final String? initialValue;
 
+  /// When true, the field animates to [expandedLines] while focused (only if maxLines > 1 or expandedLines > 1).
+  final bool expandOnFocus;
+
+  /// Number of lines to expand to when focused (ignored if [expandOnFocus] is false).
+  final int expandedLines;
+
+  final Duration animationDuration;
+  final Curve animationCurve;
+
+  @override
+  State<AnyStepTextField> createState() => _AnyStepTextFieldState();
+}
+
+class _AnyStepTextFieldState extends State<AnyStepTextField> with SingleTickerProviderStateMixin {
+  late final FocusNode _internalFocusNode;
+  FocusNode get _focusNode => widget.focusNode ?? _internalFocusNode;
+  bool _focused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _internalFocusNode = FocusNode();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    if (widget.focusNode == null) {
+      _internalFocusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  void _handleFocusChange() {
+    final hasFocus = _focusNode.hasFocus;
+    if (hasFocus != _focused) {
+      setState(() => _focused = hasFocus);
+    }
+  }
+
+  int get _currentMaxLines {
+    if (!widget.expandOnFocus) return widget.maxLines;
+    if (!_focused) return widget.maxLines;
+    return widget.expandedLines.clamp(widget.maxLines, 1000);
+  }
+
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final showMultiLine = (widget.maxLines > 1 || widget.expandedLines > 1);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
-      child: FormBuilderTextField(
-        name: name,
-        controller: controller,
-        focusNode: focusNode,
-        onChanged: onChanged,
-        onSubmitted: onSubmitted,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        maxLines: maxLines,
-        enabled: enabled,
-        validator: validator,
-        initialValue: initialValue,
-        decoration: InputDecoration(
-          labelText: labelText,
-          // floatingLabelStyle: TextStyle(color: AnyStepColors.blueBright),
-          hintText: hintText,
-          alignLabelWithHint: maxLines > 1,
-          border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-            borderSide: BorderSide(color: primary, width: 1.5),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-            borderSide: BorderSide(color: primary, width: 2),
+      child: AnimatedSize(
+        duration: widget.animationDuration,
+        curve: widget.animationCurve,
+        alignment: Alignment.topCenter,
+        child: FormBuilderTextField(
+          name: widget.name,
+          controller: widget.controller,
+          focusNode: _focusNode,
+          onChanged: widget.onChanged,
+          onSubmitted: widget.onSubmitted,
+          obscureText: widget.obscureText,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          maxLines: _currentMaxLines,
+          enabled: widget.enabled,
+          validator: widget.validator,
+          initialValue: widget.initialValue,
+          decoration: InputDecoration(
+            labelText: widget.labelText,
+            hintText: widget.hintText,
+            alignLabelWithHint: showMultiLine,
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
+              borderSide: BorderSide(color: primary, width: 1.5),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
+              borderSide: BorderSide(color: primary, width: 2),
+            ),
           ),
         ),
       ),

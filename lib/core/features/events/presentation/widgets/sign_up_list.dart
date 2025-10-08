@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignUpList extends ConsumerWidget {
-  const SignUpList({super.key, required this.eventId});
+  const SignUpList({super.key, required this.eventId, this.withAttendance = false});
 
   final int eventId;
-  static const int numToShow = 1;
+  final bool withAttendance;
+
+  static const int numToShow = 25;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

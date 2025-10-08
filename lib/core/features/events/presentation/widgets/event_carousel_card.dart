@@ -1,6 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
-import 'package:anystep/core/features/events/presentation/widgets/did_sign_up_indicator.dart';
+import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -64,7 +64,7 @@ class EventCarouselCard extends StatelessWidget {
                       if (event.id != null)
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0, top: 2.0),
-                          child: DidSignUpIndicator(eventId: event.id!),
+                          child: DidAttendIndicator(eventId: event.id!),
                         ),
                     ],
                   ),

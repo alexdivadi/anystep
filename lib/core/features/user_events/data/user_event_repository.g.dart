@@ -357,7 +357,7 @@ class _GetUserEventsProviderElement
 }
 
 String _$getCurrentUserEventsHash() =>
-    r'e4ae417d4f47df6280ad0081a6289784d2d3b0cc';
+    r'813202458c518033b2bbb5c62f8b7ebdfeb3ba73';
 
 /// See also [getCurrentUserEvents].
 @ProviderFor(getCurrentUserEvents)
@@ -372,11 +372,13 @@ class GetCurrentUserEventsFamily
   /// See also [getCurrentUserEvents].
   GetCurrentUserEventsProvider call({
     int? page,
+    int? eventId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) {
     return GetCurrentUserEventsProvider(
       page: page,
+      eventId: eventId,
       filters: filters,
       order: order,
     );
@@ -388,6 +390,7 @@ class GetCurrentUserEventsFamily
   ) {
     return call(
       page: provider.page,
+      eventId: provider.eventId,
       filters: provider.filters,
       order: provider.order,
     );
@@ -414,12 +417,14 @@ class GetCurrentUserEventsProvider
   /// See also [getCurrentUserEvents].
   GetCurrentUserEventsProvider({
     int? page,
+    int? eventId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) : this._internal(
          (ref) => getCurrentUserEvents(
            ref as GetCurrentUserEventsRef,
            page: page,
+           eventId: eventId,
            filters: filters,
            order: order,
          ),
@@ -433,6 +438,7 @@ class GetCurrentUserEventsProvider
          allTransitiveDependencies:
              GetCurrentUserEventsFamily._allTransitiveDependencies,
          page: page,
+         eventId: eventId,
          filters: filters,
          order: order,
        );
@@ -445,11 +451,13 @@ class GetCurrentUserEventsProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.page,
+    required this.eventId,
     required this.filters,
     required this.order,
   }) : super.internal();
 
   final int? page;
+  final int? eventId;
   final List<AnyStepFilter<dynamic>>? filters;
   final AnyStepOrder? order;
 
@@ -470,6 +478,7 @@ class GetCurrentUserEventsProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         page: page,
+        eventId: eventId,
         filters: filters,
         order: order,
       ),
@@ -486,6 +495,7 @@ class GetCurrentUserEventsProvider
   bool operator ==(Object other) {
     return other is GetCurrentUserEventsProvider &&
         other.page == page &&
+        other.eventId == eventId &&
         other.filters == filters &&
         other.order == order;
   }
@@ -494,6 +504,7 @@ class GetCurrentUserEventsProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, eventId.hashCode);
     hash = _SystemHash.combine(hash, filters.hashCode);
     hash = _SystemHash.combine(hash, order.hashCode);
 
@@ -507,6 +518,9 @@ mixin GetCurrentUserEventsRef
     on AutoDisposeFutureProviderRef<PaginationResult<UserEventModel>> {
   /// The parameter `page` of this provider.
   int? get page;
+
+  /// The parameter `eventId` of this provider.
+  int? get eventId;
 
   /// The parameter `filters` of this provider.
   List<AnyStepFilter<dynamic>>? get filters;
@@ -522,6 +536,8 @@ class _GetCurrentUserEventsProviderElement
 
   @override
   int? get page => (origin as GetCurrentUserEventsProvider).page;
+  @override
+  int? get eventId => (origin as GetCurrentUserEventsProvider).eventId;
   @override
   List<AnyStepFilter<dynamic>>? get filters =>
       (origin as GetCurrentUserEventsProvider).filters;

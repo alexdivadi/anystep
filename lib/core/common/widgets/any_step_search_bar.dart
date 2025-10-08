@@ -1,12 +1,12 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:flutter/material.dart';
 
-class EventSearchBar extends StatefulWidget {
-  const EventSearchBar({
+class AnyStepSearchBar extends StatefulWidget {
+  const AnyStepSearchBar({
     super.key,
     required this.onChanged,
     required this.onFocusChanged,
-    this.hintText = 'Search events',
+    this.hintText = 'Search',
     this.initialValue,
   });
 
@@ -16,10 +16,10 @@ class EventSearchBar extends StatefulWidget {
   final String? initialValue;
 
   @override
-  State<EventSearchBar> createState() => _EventSearchBarState();
+  State<AnyStepSearchBar> createState() => _AnyStepSearchBarState();
 }
 
-class _EventSearchBarState extends State<EventSearchBar> {
+class _AnyStepSearchBarState extends State<AnyStepSearchBar> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
 
@@ -32,6 +32,17 @@ class _EventSearchBarState extends State<EventSearchBar> {
   }
 
   void _handleFocus() => widget.onFocusChanged(_focusNode.hasFocus);
+
+  @override
+  void didUpdateWidget(covariant AnyStepSearchBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != oldWidget.initialValue && widget.initialValue != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: widget.initialValue ?? '',
+        selection: TextSelection.collapsed(offset: (widget.initialValue ?? '').length),
+      );
+    }
+  }
 
   @override
   void dispose() {

@@ -2,7 +2,6 @@ import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/sign_up_status.dart';
-import 'package:anystep/database/filter.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,9 +16,7 @@ part 'sign_up_status.g.dart';
 Future<SignUpStatus> signUpStatus(Ref ref, int eventId) async {
   try {
     final [userEvents as PaginationResult, event as EventModel] = await Future.wait([
-      ref.watch(
-        getCurrentUserEventsProvider(filters: [AnyStepFilter.equals('event', eventId)]).future,
-      ),
+      ref.watch(getCurrentUserEventsProvider(eventId: eventId).future),
       ref.watch(getEventProvider(eventId).future),
     ]);
     return SignUpStatus.data(

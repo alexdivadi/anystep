@@ -9,10 +9,11 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EventDetailForm extends ConsumerStatefulWidget {
-  const EventDetailForm({super.key, this.event, this.onSuccess});
+  const EventDetailForm({super.key, this.event, this.onSuccess, this.physics});
 
   final EventModel? event;
   final VoidCallback? onSuccess;
+  final ScrollPhysics? physics;
 
   @override
   ConsumerState<EventDetailForm> createState() => _EventDetailFormState();
@@ -49,113 +50,124 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
           key: formKey,
           child: Column(
             children: [
-              ImageUploadWidget(
-                imageUrl: widget.event?.imageUrl,
-                onImageSelected: (file) {
-                  setState(() {
-                    _imageFile = file;
-                  });
-                },
-              ),
-              AnyStepTextField(
-                name: 'name',
-                labelText: 'Name',
-                initialValue: widget.event?.name,
-                validator: FormBuilderValidators.required(),
-              ),
-              AnyStepTextField(
-                name: 'description',
-                labelText: 'Description (optional)',
-                maxLines: 3,
-                initialValue: widget.event?.description,
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    child: AnyStepDateTimePicker(
-                      name: 'startTime',
-                      labelText: 'Start Day/Time',
-                      initialValue:
-                          widget.event?.startTime.toLocal() ??
-                          DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 8, 0),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                        (val) {
-                          if (val != null && (val.toLocal().isBefore(now))) {
-                            return 'Start time has passed';
-                          }
-                          return null;
-                        },
-                      ]),
+              _ScrollableWrapper(
+                scrollable:
+                    widget.physics != null &&
+                    widget.physics != const NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    ImageUploadWidget(
+                      imageUrl: widget.event?.imageUrl,
+                      onImageSelected: (file) {
+                        setState(() {
+                          _imageFile = file;
+                        });
+                      },
                     ),
-                  ),
-                  const SizedBox(width: AnyStepSpacing.sm2),
-                  Flexible(
-                    child: AnyStepDateTimePicker(
-                      name: 'endTime',
-                      labelText: 'End Day/Time',
-                      initialValue:
-                          widget.event?.endTime.toLocal() ??
-                          DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 9, 0),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                        (val) {
-                          if (val != null &&
-                              widget.event != null &&
-                              val.isBefore(widget.event!.startTime)) {
-                            return 'End time must be after start time';
-                          }
-                          return null;
-                        },
-                      ]),
+                    AnyStepTextField(
+                      name: 'name',
+                      labelText: 'Name',
+                      initialValue: widget.event?.name,
+                      validator: FormBuilderValidators.required(),
                     ),
-                  ),
-                ],
-              ),
-              AnyStepTextField(
-                name: 'street',
-                initialValue: widget.event?.address?.street,
-                labelText: 'Street Address',
-                validator: FormBuilderValidators.required(),
-              ),
-              AnyStepTextField(
-                name: 'streetSecondary',
-                initialValue: widget.event?.address?.streetSecondary,
-                labelText: 'Apartment/Suite/Floor (optional)',
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 4,
-                    child: AnyStepTextField(
-                      name: 'city',
-                      initialValue: widget.event?.address?.city,
-                      labelText: 'City',
-                      validator: FormBuilderValidators.city(),
+                    AnyStepTextField(
+                      name: 'description',
+                      labelText: 'Description (optional)',
+                      maxLines: 3,
+                      expandOnFocus: true,
+                      expandedLines: 10,
+                      initialValue: widget.event?.description,
                     ),
-                  ),
-                  const SizedBox(width: AnyStepSpacing.sm2),
-                  Flexible(
-                    flex: 2,
-                    child: AnyStepTextField(
-                      name: 'state',
-                      initialValue: widget.event?.address?.state,
-                      labelText: 'State',
-                      validator: FormBuilderValidators.state(),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: AnyStepDateTimePicker(
+                            name: 'startTime',
+                            labelText: 'Start Day/Time',
+                            initialValue:
+                                widget.event?.startTime.toLocal() ??
+                                DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 8, 0),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              (val) {
+                                if (val != null && (val.toLocal().isBefore(now))) {
+                                  return 'Start time has passed';
+                                }
+                                return null;
+                              },
+                            ]),
+                          ),
+                        ),
+                        const SizedBox(width: AnyStepSpacing.sm2),
+                        Flexible(
+                          child: AnyStepDateTimePicker(
+                            name: 'endTime',
+                            labelText: 'End Day/Time',
+                            initialValue:
+                                widget.event?.endTime.toLocal() ??
+                                DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 9, 0),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              (val) {
+                                if (val != null &&
+                                    widget.event != null &&
+                                    val.isBefore(widget.event!.startTime)) {
+                                  return 'End time must be after start time';
+                                }
+                                return null;
+                              },
+                            ]),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: AnyStepSpacing.sm2),
-                  Flexible(
-                    flex: 3,
-                    child: AnyStepTextField(
-                      name: 'postalCode',
-                      initialValue: widget.event?.address?.postalCode,
-                      labelText: 'Zip Code',
-                      keyboardType: TextInputType.number,
-                      validator: FormBuilderValidators.zipCode(),
+                    AnyStepTextField(
+                      name: 'street',
+                      initialValue: widget.event?.address?.street,
+                      labelText: 'Street Address',
+                      validator: FormBuilderValidators.required(),
                     ),
-                  ),
-                ],
+                    AnyStepTextField(
+                      name: 'streetSecondary',
+                      initialValue: widget.event?.address?.streetSecondary,
+                      labelText: 'Apartment/Suite/Floor (optional)',
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: AnyStepTextField(
+                            name: 'city',
+                            initialValue: widget.event?.address?.city,
+                            labelText: 'City',
+                            validator: FormBuilderValidators.city(),
+                          ),
+                        ),
+                        const SizedBox(width: AnyStepSpacing.sm2),
+                        Flexible(
+                          flex: 2,
+                          child: AnyStepTextField(
+                            name: 'state',
+                            initialValue: widget.event?.address?.state,
+                            labelText: 'State',
+                            validator: FormBuilderValidators.state(),
+                          ),
+                        ),
+                        const SizedBox(width: AnyStepSpacing.sm2),
+                        Flexible(
+                          flex: 3,
+                          child: AnyStepTextField(
+                            name: 'postalCode',
+                            initialValue: widget.event?.address?.postalCode,
+                            labelText: 'Zip Code',
+                            keyboardType: TextInputType.number,
+                            validator: FormBuilderValidators.zipCode(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
               if (state.error != null)
@@ -170,5 +182,17 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
         ),
       ),
     );
+  }
+}
+
+class _ScrollableWrapper extends StatelessWidget {
+  const _ScrollableWrapper({required this.scrollable, required this.child});
+
+  final bool scrollable;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return scrollable ? Expanded(child: SingleChildScrollView(child: child)) : child;
   }
 }

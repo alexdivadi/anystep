@@ -138,10 +138,13 @@ Future<PaginationResult<UserEventModel>> getUserEvents(
 Future<PaginationResult<UserEventModel>> getCurrentUserEvents(
   Ref ref, {
   int? page,
+  int? eventId,
   List<AnyStepFilter>? filters,
   AnyStepOrder? order,
 }) async {
   filters ??= [];
   filters.add(AnyStepFilter.equals('user', ref.watch(authStateStreamProvider).requireValue!.uid));
-  return ref.watch(getUserEventsProvider(filters: filters, page: page, order: order).future);
+  return ref.watch(
+    getUserEventsProvider(filters: filters, page: page, order: order, eventId: eventId).future,
+  );
 }
