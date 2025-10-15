@@ -22,7 +22,10 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     Log.d('Using cached user data');
     try {
       final userMap = jsonDecode(cachedUser);
-      PostHogManager.identify(userMap['id'] as String, properties: userMap);
+      PostHogManager.identify(
+        userMap['id'] as String,
+        properties: {...(userMap as Map<String, dynamic>)},
+      );
       yield UserModel.fromJson(userMap).copyWith(isCachedValue: true);
     } catch (e) {
       Log.e('Error parsing cached user data', e);
