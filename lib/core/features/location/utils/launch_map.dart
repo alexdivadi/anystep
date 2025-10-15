@@ -1,3 +1,4 @@
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,6 +20,9 @@ Future<void> openMap(AddressModel address) async {
           ? Uri.encodeComponent('${address.latitude}, ${address.longitude}')
           : buildAddressQuery(address);
   final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+
+  PostHogManager.capture('map_opened', properties: {'address': address.toJson(), 'query': query});
+
   if (await canLaunchUrl(googleMapsUrl)) {
     await launchUrl(googleMapsUrl);
   } else {

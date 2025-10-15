@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
 import 'package:anystep/core/common/widgets/inputs/inputs.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
@@ -123,7 +124,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 ],
               ),
               const SizedBox(height: AnyStepSpacing.md24),
-              if (state.isLoading) const CircularProgressIndicator.adaptive(),
+              if (state.isLoading) const AnyStepLoadingIndicator(),
               if (state.error != null) ...[
                 Text(state.error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
                 const SizedBox(height: AnyStepSpacing.sm8),

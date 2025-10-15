@@ -92,7 +92,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     },
                   ),
                   const SizedBox(height: AnyStepSpacing.md16),
-                  if (state.isLoading) const CircularProgressIndicator.adaptive(),
+                  if (state.isLoading) const AnyStepLoadingIndicator(),
                   if (state.error != null) ...[
                     Text(
                       state.error!,

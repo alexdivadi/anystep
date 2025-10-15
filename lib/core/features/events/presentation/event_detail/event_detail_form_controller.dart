@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form_state.dart';
@@ -46,6 +47,20 @@ class EventDetailFormController extends _$EventDetailFormController {
         obj: event.copyWith(imageUrl: imageUrl ?? event.imageUrl),
         documentId: "${event.id}",
       );
+
+      PostHogManager.capture(
+        state.eventId == null ? 'event_created' : 'event_updated',
+        properties: {
+          'event_id': state.eventId ?? '',
+          'name': event.name,
+          'start_time': event.startTime.toIso8601String(),
+          'end_time': event.endTime.toIso8601String(),
+          'image_url': imageUrl ?? event.imageUrl ?? '',
+          'city': event.address?.city ?? '',
+          'state': event.address?.state ?? '',
+        },
+      );
+
       if (state.eventId != null) ref.invalidate(getEventProvider(state.eventId!));
       ref.invalidate(getEventsProvider);
       state = state.copyWith(isLoading: false, error: null);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
@@ -30,6 +31,15 @@ class AttendeeSearchFormController extends _$AttendeeSearchFormController {
               documentId: "${userEvent.id}",
             );
       }
+
+      PostHogManager.capture(
+        'user_toggled_attendance',
+        properties: {
+          'event_id': eventId,
+          'user_id': user.id,
+          'attended': res.items.isEmpty || !(res.items.first.attended),
+        },
+      );
     });
     ref.invalidate(getUserEventsProvider);
   }

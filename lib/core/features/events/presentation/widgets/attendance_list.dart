@@ -1,6 +1,7 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_badge.dart';
 import 'package:anystep/core/common/widgets/any_step_fade.dart';
+import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
@@ -41,7 +42,7 @@ class AttendanceList extends ConsumerWidget {
                 children: [
                   _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
                   const SizedBox(height: AnyStepSpacing.sm8),
-                  const Center(child: CircularProgressIndicator.adaptive()),
+                  const Center(child: AnyStepLoadingIndicator()),
                 ],
               ),
             ),

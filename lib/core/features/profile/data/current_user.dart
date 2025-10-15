@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
@@ -20,7 +21,9 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
   if (cachedUser != null) {
     Log.d('Using cached user data');
     try {
-      yield UserModel.fromJson(jsonDecode(cachedUser)).copyWith(isCachedValue: true);
+      final userMap = jsonDecode(cachedUser);
+      PostHogManager.identify(userMap['id'] as String, properties: userMap);
+      yield UserModel.fromJson(userMap).copyWith(isCachedValue: true);
     } catch (e) {
       Log.e('Error parsing cached user data', e);
       pref.clearCurrentUser();
@@ -33,6 +36,7 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     final user = await ref
         .read(userRepositoryProvider)
         .get(documentId: authState.requireValue!.uid);
+    PostHogManager.identify(user.id, properties: {...user.toJson()});
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;
   } on AuthApiException catch (_) {

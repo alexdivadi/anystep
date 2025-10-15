@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
@@ -69,9 +70,6 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   Future<void> _exportCsv(List<VolunteerHoursReport> reports) async {
     if (reports.isEmpty) return;
     try {
-      // Ensure the dialog paints before heavy work (CSV build is cheap but this guarantees one frame).
-      await Future.delayed(Duration.zero);
-
       // Build CSV
       final buffer = StringBuffer();
       buffer.writeln('Volunteer,Events,TotalHours');
@@ -88,12 +86,21 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       // Share as an in-memory file (no storage permission needed)
       final xfile = XFile.fromData(utf8.encode(csv), mimeType: 'text/csv', name: filename);
 
-      await SharePlus.instance.share(
+      final res = await SharePlus.instance.share(
         ShareParams(
           files: [xfile],
           text: 'Volunteer report for ${_dateFmt.format(_start)} to ${_dateFmt.format(_end)}',
           subject: 'Volunteer Hours Report',
         ),
+      );
+      PostHogManager.capture(
+        'report_exported',
+        properties: {
+          'dateRange': '${_dateFmt.format(_start)} → ${_dateFmt.format(_end)}',
+          'custom': _custom,
+          'filename': filename,
+          'method': res.status == ShareResultStatus.success ? 'shared' : 'dismissed',
+        },
       );
     } catch (e) {
       // Make sure dialog is closed on error
@@ -212,29 +219,6 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
             ),
             const SizedBox(height: 24),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BlockingProgressDialog extends StatelessWidget {
-  const _BlockingProgressDialog();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Dialog(
-        backgroundColor: theme.colorScheme.surface,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 80, vertical: 24),
-        child: const Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [AnyStepLoadingIndicator(), SizedBox(height: 16), Text('Preparing CSV...')],
-          ),
         ),
       ),
     );

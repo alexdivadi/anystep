@@ -24,6 +24,8 @@ class Env {
   static String get supabaseUrl => _get('SUPABASE_URL');
   static String get supabaseApiKey => _get('SUPABASE_API_KEY');
 
+  static String get posthogApiKey => _get('POSTHOG_API_KEY');
+
   // Collections (don't need to be secret)
   static const String eventCollectionId = "events";
   static const String userCollectionId = "users";

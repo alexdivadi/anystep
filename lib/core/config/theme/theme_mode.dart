@@ -1,3 +1,4 @@
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
@@ -20,6 +21,7 @@ class ThemeModeController extends _$ThemeModeController {
   Future<void> setThemeMode(ThemeMode mode) async {
     final prefs = ref.watch(appPreferencesProvider).requireValue;
     await prefs.setThemeMode(mode.name);
+    PostHogManager.capture('theme_mode_changed', properties: {'mode': mode.name});
     ref.invalidateSelf();
   }
 }

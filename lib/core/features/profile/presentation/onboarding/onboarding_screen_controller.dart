@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
@@ -43,6 +44,8 @@ class OnboardingScreenController extends _$OnboardingScreenController {
         phoneNumber: values['phoneNumber'],
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
+
+      PostHogManager.capture('user_onboarding_completed', properties: {'user_id': user.id});
     });
     ref.invalidate(currentUserStreamProvider);
   }

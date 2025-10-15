@@ -56,7 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   validator: FormBuilderValidators.required(),
                 ),
                 const SizedBox(height: AnyStepSpacing.md16),
-                if (state.isLoading) const CircularProgressIndicator(),
+                if (state.isLoading) const AnyStepLoadingIndicator(),
                 if (state.error != null) ...[
                   Text(
                     state.error!,

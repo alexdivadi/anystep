@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
@@ -48,6 +49,8 @@ class ProfileScreenController extends _$ProfileScreenController {
         role: currentUser.role,
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
+
+      PostHogManager.capture('profile_updated', properties: {'user_id': user.id});
 
       state = state.copyWith(isLoading: false, error: null);
     } on AuthApiException catch (e) {
