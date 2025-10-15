@@ -1,110 +1,165 @@
-import 'package:anystep/appwrite/appwrite_client.dart';
+import 'dart:async';
+import 'package:anystep/database/client.dart';
+import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
-import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' hide Log;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:anystep/core/utils/log_utils.dart';
+import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 part 'auth_repository.g.dart';
 
-@Riverpod(keepAlive: true)
-class AuthRepository extends _$AuthRepository {
-  AuthRepository();
-  late final AppPreferences _appPreferences;
-  late final Account _account;
+class AuthRepository {
+  final AppPreferences _appPreferences;
+  final GoTrueClient _supabase;
+  final StreamController<AuthState?> _authStateController =
+      StreamController<AuthState?>.broadcast();
   Session? _session;
   User? _user;
 
+  bool get isLoggedIn => _session != null;
+  bool get isEmailConfirmed => _user?.emailConfirmedAt != null;
+  String? get userId => _user?.id;
+
+  AuthRepository._(this._appPreferences, this._supabase) {
+    _init();
+  }
+
+  Stream<AuthState?> get authStateStream => _authStateController.stream;
   User? get user => _user;
   Session? get session => _session;
 
-  @override
-  Future<String?> build() async {
-    _appPreferences = ref.watch(appPreferencesProvider).requireValue;
-    _account = Account(ref.watch(appwriteClientProvider));
-
-    return getUserId()
-        .listen(
-          (userId) => state = AsyncValue.data(userId),
-          onError: (error) => Log.e('Error fetching user ID', error),
-        )
-        .asFuture();
+  void _init() {
+    getUserId().listen(
+      (authState) {
+        if (authState != null && _user != null) {
+          _authStateController.add(authState);
+        } else {
+          _authStateController.add(null);
+        }
+      },
+      onError: (error) {
+        Log.e('Error fetching user ID', error);
+        _authStateController.add(null);
+      },
+    );
   }
 
-  Stream<String?> getUserId() async* {
-    final userId = _appPreferences.getUserId();
-
+  Stream<AuthState?> getUserId() async* {
+    final userId = _appPreferences.getAuthStateJson();
     if (userId != null) {
       Log.i('Using locally stored session: $userId');
-      yield userId;
+      if (_user != null) {
+        yield AuthState(uid: userId, email: _user!.email ?? "", isCachedValue: true);
+      } else {
+        yield null;
+      }
     }
 
-    // Fetch the user profile from the API
-    try {
-      _user = await _account.get();
-      _session = await _account.getSession(sessionId: 'current');
-      _appPreferences.setUserId(_session!.userId);
-      Log.i('User session found: ${_session!.userId}');
-      yield _session!.userId;
-    } catch (e) {
-      Log.i('User session not found');
-      _appPreferences.clearUserId();
+    _session = _supabase.currentSession;
+    _user = _supabase.currentUser;
+    if (_session != null || _user != null) {
+      final user = _user ?? _session?.user as User;
+      Log.i('Current session: ${user.id}, email: ${user.email}');
+      _appPreferences.setAuthStateJson(user.id);
+      yield AuthState(uid: user.id, email: user.email ?? "", isCachedValue: false);
+    } else {
       yield null;
     }
-  }
 
-  Future<bool> login({required String email, required String password}) async {
-    state = await AsyncValue.guard(() async {
-      _session = await _account.createEmailPasswordSession(email: email, password: password);
-      _user = await _account.get();
-      _appPreferences.setUserId(_session!.userId);
-      return _session!.userId;
+    yield* _supabase.onAuthStateChange.map((data) {
+      final session = data.session;
+      if (session != null) {
+        _session = session;
+        _user = session.user;
+        _appPreferences.setAuthStateJson(_user!.id);
+        Log.i('User logged in: ${_user!.email}');
+        return AuthState(uid: session.user.id, email: _user!.email ?? '', isCachedValue: false);
+      } else {
+        Log.i('User logged out');
+        _session = null;
+        _user = null;
+        _appPreferences.clearAuthStateJson();
+        return null;
+      }
     });
-
-    if (state.hasError) {
-      Log.e('Login failed', state.error, state.stackTrace);
-    }
-
-    return state.hasValue && state.value != null;
   }
 
-  Future<bool> signup({
+  Future<String?> login({required String email, required String password}) async {
+    try {
+      await _supabase.signInWithPassword(email: email, password: password);
+      return null;
+    } on AuthApiException catch (e) {
+      if (e.code == "email_not_confirmed") {
+        Log.w('Email not confirmed for user: $email');
+        return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
+      }
+      return 'Login failed. Please try again.';
+    } catch (e, st) {
+      Log.e('Login failed', e, st);
+      // _authStateController.add(null);
+      return 'An error occurred';
+    }
+  }
+
+  Future<String?> signup({
     required String email,
     required String password,
     required String firstName,
     required String lastName,
   }) async {
-    state = await AsyncValue.guard(() async {
-      _user = await _account.create(
-        userId: ID.unique(),
+    try {
+      await _supabase.signUp(
         email: email,
         password: password,
-        name: '$firstName $lastName',
+        data: {'first_name': firstName, 'last_name': lastName},
       );
-      _session = await _account.createEmailPasswordSession(email: email, password: password);
-      _appPreferences.setUserId(_session!.$id);
-      return _session!.userId;
-    });
-
-    if (state.hasError) {
-      Log.e('Signup failed', state.error, state.stackTrace);
+      await _supabase.signInWithPassword(email: email, password: password);
+      return null;
+    } on AuthApiException catch (e) {
+      if (e.code == "email_not_confirmed") {
+        Log.w('Email not confirmed for user: $email');
+        return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
+      }
+      return 'Signup failed. Please try again.';
+    } catch (e, st) {
+      Log.e('Signup failed', e, st);
+      return 'An error occurred';
     }
-
-    return state.hasValue && state.value != null;
   }
 
   Future<void> logout() async {
     try {
-      await _account.deleteSession(sessionId: 'current');
+      await _supabase.signOut();
     } catch (e, st) {
       Log.e('Logout failed', e, st);
     } finally {
-      _appPreferences.clearUserId();
+      _appPreferences.clearAuthStateJson();
       _session = null;
       _user = null;
-      state = AsyncValue.data(null);
+      _authStateController.add(null);
     }
   }
 
-  bool get isLoggedIn => state.valueOrNull != null;
+  void dispose() {
+    _authStateController.close();
+  }
+}
+
+@Riverpod(keepAlive: true)
+AuthRepository authRepository(Ref ref) {
+  final appPreferences = ref.watch(appPreferencesProvider).requireValue;
+  final account = ref.watch(clientProvider).auth;
+  final authRepository = AuthRepository._(appPreferences, account);
+  ref.onDispose(() {
+    authRepository.dispose();
+  });
+  return authRepository;
+}
+
+@Riverpod(keepAlive: true)
+Stream<AuthState?> authStateStream(Ref ref) async* {
+  await ref.watch(appPreferencesProvider.future);
+  final repo = ref.watch(authRepositoryProvider);
+  yield* repo.authStateStream;
 }

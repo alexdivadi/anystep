@@ -1,0 +1,29 @@
+// ignore_for_file: invalid_annotation_target
+
+import 'package:anystep/core/features/location/domain/address_model.dart';
+// import 'package:anystep/core/features/events/domain/event_template.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'event.freezed.dart';
+part 'event.g.dart';
+
+@freezed
+abstract class EventModel with _$EventModel {
+  const factory EventModel({
+    @JsonKey(includeIfNull: false) int? id,
+    required String name,
+    // EventTemplateModel? template,
+    @JsonKey(name: "start_time") required DateTime startTime,
+    @JsonKey(name: "end_time") required DateTime endTime,
+    @JsonKey(name: "address") int? addressId,
+    @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)
+    AddressModel? address,
+    List<String>? tags,
+    String? description,
+    @JsonKey(name: "image_url") String? imageUrl,
+    @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,
+    @Default(true) bool active,
+  }) = _EventModel;
+
+  factory EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);
+}

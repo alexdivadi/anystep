@@ -1,8 +1,8 @@
 import 'package:anystep/core/app_startup/app_startup.dart';
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
-import 'package:anystep/core/constants/spacing.dart';
-import 'package:anystep/core/theme/colors.dart';
-import 'package:anystep/core/utils/log_utils.dart';
+import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/config/theme/colors.dart';
+import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,7 +31,7 @@ class AppStartupErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AnyStepColors.brightBlue,
+      color: AnyStepColors.blueBright,
       width: double.infinity,
       height: double.infinity,
       child: Center(
@@ -49,7 +49,7 @@ class AppStartupErrorWidget extends StatelessWidget {
                 'Retry',
                 style: Theme.of(
                   context,
-                ).textTheme.labelMedium?.copyWith(color: AnyStepColors.brightBlue),
+                ).textTheme.labelMedium?.copyWith(color: AnyStepColors.blueBright),
               ),
             ),
           ],
