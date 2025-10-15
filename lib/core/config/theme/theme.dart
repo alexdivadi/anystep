@@ -40,6 +40,7 @@ class AnyStepTheme {
       seedColor: AnyStepColors.blueBright,
       brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
+      onError: AnyStepColors.white,
     ),
     textTheme: TextTheme(
       displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.white),
@@ -97,6 +98,7 @@ class AnyStepTheme {
       contrastLevel: 1.0,
       brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
+      onError: AnyStepColors.white,
     ),
     textTheme: TextTheme(
       displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.white),

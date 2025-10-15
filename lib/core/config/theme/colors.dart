@@ -21,6 +21,7 @@ class AnyStepColors {
   static const Color red = Color(0xFFFF0000);
   static const Color redDark = Color(0xFFB71C1C);
 
+  static const Color greenLight = Color(0xFF81C784);
   static const Color green = Color(0xFF4CAF50);
   static const Color greenDark = Color(0xFF1B5E20);
 

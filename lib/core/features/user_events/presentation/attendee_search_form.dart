@@ -27,6 +27,7 @@ class _AttendeeSearchFormState extends ConsumerState<AttendeeSearchForm> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(attendeeSearchFormControllerProvider(widget.eventId));
+    final theme = Theme.of(context);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -56,8 +57,7 @@ class _AttendeeSearchFormState extends ConsumerState<AttendeeSearchForm> {
                       height: 12,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white, width: 1.5),
+                        color: theme.colorScheme.surface,
                       ),
                       child: DidAttendIndicator(
                         eventId: widget.eventId,

@@ -28,6 +28,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final userAsync = ref.watch(currentUserStreamProvider);
+    final theme = Theme.of(context);
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
         title: const Text('Profile'),
@@ -80,7 +81,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   state.error!,
                                   style: const TextStyle(color: AnyStepColors.white),
                                 ),
-                                backgroundColor: AnyStepColors.error,
+                                backgroundColor: theme.colorScheme.error,
                               ),
                             );
                             return;
@@ -110,8 +111,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       icon: const Icon(Icons.logout),
                       label: const Text('Logout'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                        foregroundColor: Theme.of(context).colorScheme.onError,
+                        backgroundColor: theme.colorScheme.error,
+                        foregroundColor: theme.colorScheme.onError,
                       ),
                       onPressed: _logout,
                     ),

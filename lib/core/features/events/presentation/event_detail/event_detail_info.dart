@@ -61,10 +61,18 @@ class EventDetailInfo extends StatelessWidget {
                     Row(
                       children: [
                         AnyStepBadge(
-                          color: AnyStepColors.green.withAlpha(120),
+                          color:
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? AnyStepColors.greenDark.withAlpha(180)
+                                  : AnyStepColors.green.withAlpha(120),
                           child: Text(
                             'Completed',
-                            style: TextStyle(color: AnyStepColors.greenDark.withAlpha(200)),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness == Brightness.dark
+                                      ? AnyStepColors.green
+                                      : AnyStepColors.greenDark.withAlpha(200),
+                            ),
                           ),
                         ),
                       ],

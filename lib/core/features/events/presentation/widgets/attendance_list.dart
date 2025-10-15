@@ -26,6 +26,7 @@ class AttendanceList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firstPage = ref.watch(getUserEventsProvider(eventId: eventId, page: 0));
+    final theme = Theme.of(context);
 
     return firstPage.when(
       loading:
@@ -136,8 +137,7 @@ class AttendanceList extends ConsumerWidget {
                             height: 12,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(color: Colors.white, width: 1.5),
+                              color: theme.colorScheme.surface,
                             ),
                             child:
                                 userEvent.attended

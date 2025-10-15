@@ -1,10 +1,12 @@
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReportsScreen extends ConsumerStatefulWidget {
   const ReportsScreen({super.key});
@@ -64,6 +66,43 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
     });
   }
 
+  Future<void> _exportCsv(List<VolunteerHoursReport> reports) async {
+    if (reports.isEmpty) return;
+    try {
+      // Ensure the dialog paints before heavy work (CSV build is cheap but this guarantees one frame).
+      await Future.delayed(Duration.zero);
+
+      // Build CSV
+      final buffer = StringBuffer();
+      buffer.writeln('Volunteer,Events,TotalHours');
+      for (final r in reports) {
+        final name = r.user.fullName.replaceAll('"', '""');
+        buffer.writeln('"$name",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}');
+      }
+      final csv = buffer.toString();
+
+      // File name includes selected date range
+      final rangeFmt = DateFormat('yyyyMMdd');
+      final filename = 'volunteer_hours_${rangeFmt.format(_start)}_${rangeFmt.format(_end)}.csv';
+
+      // Share as an in-memory file (no storage permission needed)
+      final xfile = XFile.fromData(utf8.encode(csv), mimeType: 'text/csv', name: filename);
+
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [xfile],
+          text: 'Volunteer report for ${_dateFmt.format(_start)} to ${_dateFmt.format(_end)}',
+          subject: 'Volunteer Hours Report',
+        ),
+      );
+    } catch (e) {
+      // Make sure dialog is closed on error
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to export: $e')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final asyncReports = ref.watch(volunteerHoursAggregateProvider(start: _start, end: _end));
@@ -71,7 +110,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
     final isYtdSelected = !_custom && _start.month == 1 && _start.day == 1;
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
-        title: const Text('Volunteer Hours Reports'),
+        title: const Text('Volunteer Reports'),
         actions: [
           asyncReports.when(
             data:
@@ -179,15 +218,25 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   }
 }
 
-void _exportCsv(List<VolunteerHoursReport> reports) {
-  // Convert to CSV string (simple implementation)
-  final buffer = StringBuffer();
-  buffer.writeln('Volunteer,Events,TotalHours');
-  for (final r in reports) {
-    final name = r.user.fullName;
-    buffer.writeln('"$name",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}');
+class _BlockingProgressDialog extends StatelessWidget {
+  const _BlockingProgressDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Dialog(
+        backgroundColor: theme.colorScheme.surface,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 80, vertical: 24),
+        child: const Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [AnyStepLoadingIndicator(), SizedBox(height: 16), Text('Preparing CSV...')],
+          ),
+        ),
+      ),
+    );
   }
-  // In a full implementation: use share_plus or clipboard. For now, debug print.
-  // ignore: avoid_print
-  print(buffer.toString());
 }
