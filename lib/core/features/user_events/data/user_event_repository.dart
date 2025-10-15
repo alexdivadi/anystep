@@ -117,6 +117,7 @@ Future<PaginationResult<UserEventModel>> getUserEvents(
   Ref ref, {
   int? page,
   int? eventId,
+  String? userId,
   List<AnyStepFilter>? filters,
   AnyStepOrder? order,
 }) async {
@@ -125,6 +126,9 @@ Future<PaginationResult<UserEventModel>> getUserEvents(
   filters ??= [];
   if (eventId != null) {
     filters.add(AnyStepFilter.equals('event', eventId));
+  }
+  if (userId != null) {
+    filters.add(AnyStepFilter.equals('user', userId));
   }
   return repository.paginatedList(
     limit: UserEventRepository.pageSize,
@@ -142,9 +146,14 @@ Future<PaginationResult<UserEventModel>> getCurrentUserEvents(
   List<AnyStepFilter>? filters,
   AnyStepOrder? order,
 }) async {
-  filters ??= [];
-  filters.add(AnyStepFilter.equals('user', ref.watch(authStateStreamProvider).requireValue!.uid));
+  final userId = ref.watch(authStateStreamProvider).requireValue!.uid;
   return ref.watch(
-    getUserEventsProvider(filters: filters, page: page, order: order, eventId: eventId).future,
+    getUserEventsProvider(
+      filters: filters,
+      page: page,
+      order: order,
+      eventId: eventId,
+      userId: userId,
+    ).future,
   );
 }

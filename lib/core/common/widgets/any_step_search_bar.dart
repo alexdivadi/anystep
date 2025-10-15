@@ -5,13 +5,13 @@ class AnyStepSearchBar extends StatefulWidget {
   const AnyStepSearchBar({
     super.key,
     required this.onChanged,
-    required this.onFocusChanged,
+    this.onFocusChanged,
     this.hintText = 'Search',
     this.initialValue,
   });
 
   final ValueChanged<String> onChanged;
-  final ValueChanged<bool> onFocusChanged;
+  final ValueChanged<bool>? onFocusChanged;
   final String hintText;
   final String? initialValue;
 
@@ -31,7 +31,8 @@ class _AnyStepSearchBarState extends State<AnyStepSearchBar> {
     _focusNode.addListener(_handleFocus);
   }
 
-  void _handleFocus() => widget.onFocusChanged(_focusNode.hasFocus);
+  void _handleFocus() =>
+      widget.onFocusChanged != null ? widget.onFocusChanged!(_focusNode.hasFocus) : null;
 
   @override
   void didUpdateWidget(covariant AnyStepSearchBar oldWidget) {

@@ -4,6 +4,7 @@ import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
+import 'package:anystep/database/filter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,33 +17,21 @@ Future<List<UserEventModel>> userEventsInRange(
   Ref ref, {
   required DateTime start,
   required DateTime end,
+  bool attendedOnly = true,
 }) async {
   // NOTE: user_event records reference events; we need to filter by event date.
   // Backend filtering on joined tables may not be supported directly; fetch pages until done.
   // For simplicity we fetch pages until there are no more. This could be optimized with backend support.
   final repo = ref.watch(userEventRepositoryProvider);
-  final List<UserEventModel> results = [];
-  int page = 0;
-  while (true) {
-    final pageResult = await repo.paginatedList(
-      limit: UserEventRepository.pageSize,
-      page: page,
-      // We can't filter by event start_time directly unless backend supports it.
-      // So we fetch and filter client-side. (Assumption)
-      withEvents: true,
-      withUsers: true,
-    );
-    final filtered = pageResult.items.where((ue) {
-      final ev = ue.event;
-      if (ev == null) return false;
-      return !(ev.endTime.isBefore(start) || ev.startTime.isAfter(end));
-    });
-    results.addAll(filtered);
-    final fetchedAll = (page + 1) * UserEventRepository.pageSize >= pageResult.totalCount;
-    if (fetchedAll) break;
-    page++;
-  }
-  return results;
+  return await repo.list(
+    filters: [
+      AnyStepFilter.greaterThan('event_model.start_time', start, inclusive: true),
+      AnyStepFilter.lessThan('event_model.end_time', end, inclusive: true),
+      if (attendedOnly) AnyStepFilter.equals('attended', true),
+    ],
+    withEvents: true,
+    withUsers: true,
+  );
 }
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.

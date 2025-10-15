@@ -80,84 +80,100 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                   onPressed: reports.isEmpty ? null : () => _exportCsv(reports),
                   icon: const Icon(Icons.download),
                 ),
-            loading: () => const SizedBox.shrink(),
+            loading: () => IconButton(onPressed: null, icon: const Icon(Icons.download)),
             error: (e, st) => IconButton(onPressed: null, icon: const Icon(Icons.error_outline)),
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _setMonth,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isMonthSelected ? AnyStepColors.blueBright : null,
-                    foregroundColor: isMonthSelected ? Colors.white : null,
-                  ),
-                  child: const Text('This Month'),
-                ),
-                ElevatedButton(
-                  onPressed: _setYtd,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isYtdSelected ? AnyStepColors.blueBright : null,
-                    foregroundColor: isYtdSelected ? Colors.white : null,
-                  ),
-                  child: const Text('YTD'),
-                ),
-                OutlinedButton(
-                  onPressed: _pickRange,
-                  child: Text('Custom: ${_dateFmt.format(_start)} → ${_dateFmt.format(_end)}'),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: asyncReports.when(
-              data: (reports) {
-                if (reports.isEmpty) {
-                  return const Center(child: Text('No data in selected range'));
-                }
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(label: Text('Volunteer')),
-                      DataColumn(label: Text('Events')),
-                      DataColumn(label: Text('Total Hours')),
-                    ],
-                    rows:
-                        reports
-                            .map(
-                              (r) => DataRow(
-                                cells: [
-                                  DataCell(Text(r.user.fullName)),
-                                  DataCell(Text(r.eventsCount.toString())),
-                                  DataCell(Text(r.totalHours.toStringAsFixed(2))),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                  ),
-                );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error:
-                  (e, st) => Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text('Error loading reports: $e'),
+      body: RefreshIndicator(
+        onRefresh: () async => ref.invalidate(userEventsInRangeProvider),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: _setMonth,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isMonthSelected ? AnyStepColors.blueBright : null,
+                      foregroundColor: isMonthSelected ? Colors.white : null,
                     ),
+                    child: const Text('This Month'),
                   ),
+                  ElevatedButton(
+                    onPressed: _setYtd,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isYtdSelected ? AnyStepColors.blueBright : null,
+                      foregroundColor: isYtdSelected ? Colors.white : null,
+                    ),
+                    child: const Text('YTD'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _pickRange,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _custom ? AnyStepColors.blueBright : null,
+                      foregroundColor: _custom ? Colors.white : null,
+                    ),
+                    child: Text('Custom: ${_dateFmt.format(_start)} → ${_dateFmt.format(_end)}'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            // Data section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: asyncReports.when(
+                data: (reports) {
+                  if (reports.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 48.0),
+                      child: Center(child: Text('No data in selected range')),
+                    );
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Volunteer')),
+                        DataColumn(label: Text('Events')),
+                        DataColumn(label: Text('Total Hours')),
+                      ],
+                      rows:
+                          reports
+                              .map(
+                                (r) => DataRow(
+                                  cells: [
+                                    DataCell(Text(r.user.fullName)),
+                                    DataCell(Text(r.eventsCount.toString())),
+                                    DataCell(Text(r.totalHours.toStringAsFixed(2))),
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                    ),
+                  );
+                },
+                loading:
+                    () => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 48.0),
+                      child: Center(child: AnyStepLoadingIndicator()),
+                    ),
+                error:
+                    (e, st) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 48.0),
+                      child: Center(child: Text('Error loading reports: $e')),
+                    ),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     );
   }

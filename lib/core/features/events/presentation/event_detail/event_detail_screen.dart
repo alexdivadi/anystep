@@ -5,11 +5,13 @@ import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_info.dart';
+import 'package:anystep/core/features/events/presentation/widgets/attendance_list.dart';
 import 'package:anystep/core/features/events/presentation/widgets/share_event_button.dart';
 import 'package:anystep/core/features/events/presentation/widgets/sign_up_list.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/screens.dart';
+import 'package:anystep/core/features/user_events/presentation/attendee_search_form.dart';
 import 'package:anystep/core/features/user_events/presentation/sign_up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,7 +76,7 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
           ShareEventButton(event: event),
           userAsync.maybeWhen(
             data: (u) {
-              if (u?.role == UserRole.admin) {
+              if (u?.role.canEditEvent == true) {
                 return IconButton(
                   icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
                   onPressed: _toggleEdit,
@@ -111,7 +113,17 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                     if (!isPast && userAsync.hasValue && userAsync.value != null && !isEditing)
                       SliverToBoxAdapter(child: Center(child: SignUpButton(eventId: widget.id))),
                     if (userAsync.hasValue && !isEditing)
-                      SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
+                      isPast
+                          ? AttendanceList(
+                            eventId: widget.id,
+                            isAdmin: userAsync.valueOrNull?.role.canEditEvent == true,
+                            onAddAttendee:
+                                () => context.showModal(
+                                  AttendeeSearchForm(eventId: widget.id),
+                                  isScrollControlled: false,
+                                ),
+                          )
+                          : SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
                     if (userAsync.hasValue && userAsync.value == null)
                       SliverToBoxAdapter(
                         child: Padding(

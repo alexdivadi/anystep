@@ -9,10 +9,10 @@ class AnyStepFilter<T> {
       AnyStepFilter(column: column, operator: 'eq', value: value);
   factory AnyStepFilter.notEquals(String column, T value) =>
       AnyStepFilter(column: column, operator: 'neq', value: value);
-  factory AnyStepFilter.greaterThan(String column, T value) =>
-      AnyStepFilter(column: column, operator: 'gt', value: value);
-  factory AnyStepFilter.lessThan(String column, T value) =>
-      AnyStepFilter(column: column, operator: 'lt', value: value);
+  factory AnyStepFilter.greaterThan(String column, T value, {bool inclusive = false}) =>
+      AnyStepFilter(column: column, operator: inclusive ? 'gte' : 'gt', value: value);
+  factory AnyStepFilter.lessThan(String column, T value, {bool inclusive = false}) =>
+      AnyStepFilter(column: column, operator: inclusive ? 'lte' : 'lt', value: value);
   factory AnyStepFilter.like(String column, T value, {bool caseSensitive = false}) =>
       AnyStepFilter(column: column, operator: caseSensitive ? 'like' : 'ilike', value: value);
 

@@ -39,7 +39,6 @@ class EventCarouselCard extends StatelessWidget {
               offset: const Offset(0, 2),
             ),
           ],
-          border: Border.all(color: theme.dividerColor.withAlpha(50)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

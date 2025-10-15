@@ -168,7 +168,7 @@ class _GetUserEventProviderElement
   int get id => (origin as GetUserEventProvider).id;
 }
 
-String _$getUserEventsHash() => r'f8349b8b7f50ca091ef2655912d513e1880e5a08';
+String _$getUserEventsHash() => r'60c6a575c37f2d26748e92e88e294c249422051c';
 
 /// See also [getUserEvents].
 @ProviderFor(getUserEvents)
@@ -184,12 +184,14 @@ class GetUserEventsFamily
   GetUserEventsProvider call({
     int? page,
     int? eventId,
+    String? userId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) {
     return GetUserEventsProvider(
       page: page,
       eventId: eventId,
+      userId: userId,
       filters: filters,
       order: order,
     );
@@ -202,6 +204,7 @@ class GetUserEventsFamily
     return call(
       page: provider.page,
       eventId: provider.eventId,
+      userId: provider.userId,
       filters: provider.filters,
       order: provider.order,
     );
@@ -229,6 +232,7 @@ class GetUserEventsProvider
   GetUserEventsProvider({
     int? page,
     int? eventId,
+    String? userId,
     List<AnyStepFilter<dynamic>>? filters,
     AnyStepOrder? order,
   }) : this._internal(
@@ -236,6 +240,7 @@ class GetUserEventsProvider
            ref as GetUserEventsRef,
            page: page,
            eventId: eventId,
+           userId: userId,
            filters: filters,
            order: order,
          ),
@@ -250,6 +255,7 @@ class GetUserEventsProvider
              GetUserEventsFamily._allTransitiveDependencies,
          page: page,
          eventId: eventId,
+         userId: userId,
          filters: filters,
          order: order,
        );
@@ -263,12 +269,14 @@ class GetUserEventsProvider
     required super.from,
     required this.page,
     required this.eventId,
+    required this.userId,
     required this.filters,
     required this.order,
   }) : super.internal();
 
   final int? page;
   final int? eventId;
+  final String? userId;
   final List<AnyStepFilter<dynamic>>? filters;
   final AnyStepOrder? order;
 
@@ -290,6 +298,7 @@ class GetUserEventsProvider
         debugGetCreateSourceHash: null,
         page: page,
         eventId: eventId,
+        userId: userId,
         filters: filters,
         order: order,
       ),
@@ -307,6 +316,7 @@ class GetUserEventsProvider
     return other is GetUserEventsProvider &&
         other.page == page &&
         other.eventId == eventId &&
+        other.userId == userId &&
         other.filters == filters &&
         other.order == order;
   }
@@ -316,6 +326,7 @@ class GetUserEventsProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, page.hashCode);
     hash = _SystemHash.combine(hash, eventId.hashCode);
+    hash = _SystemHash.combine(hash, userId.hashCode);
     hash = _SystemHash.combine(hash, filters.hashCode);
     hash = _SystemHash.combine(hash, order.hashCode);
 
@@ -332,6 +343,9 @@ mixin GetUserEventsRef
 
   /// The parameter `eventId` of this provider.
   int? get eventId;
+
+  /// The parameter `userId` of this provider.
+  String? get userId;
 
   /// The parameter `filters` of this provider.
   List<AnyStepFilter<dynamic>>? get filters;
@@ -350,6 +364,8 @@ class _GetUserEventsProviderElement
   @override
   int? get eventId => (origin as GetUserEventsProvider).eventId;
   @override
+  String? get userId => (origin as GetUserEventsProvider).userId;
+  @override
   List<AnyStepFilter<dynamic>>? get filters =>
       (origin as GetUserEventsProvider).filters;
   @override
@@ -357,7 +373,7 @@ class _GetUserEventsProviderElement
 }
 
 String _$getCurrentUserEventsHash() =>
-    r'813202458c518033b2bbb5c62f8b7ebdfeb3ba73';
+    r'80043a6b955e64ce90473a8aec3c62ecf6809e7d';
 
 /// See also [getCurrentUserEvents].
 @ProviderFor(getCurrentUserEvents)

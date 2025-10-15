@@ -5,13 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DidAttendIndicator extends ConsumerWidget {
-  const DidAttendIndicator({super.key, required this.eventId});
+  const DidAttendIndicator({super.key, required this.eventId, this.userId, this.size});
 
   final int eventId;
+  final String? userId;
+  final double? size;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpStatusAsync = ref.watch(getCurrentUserEventsProvider(eventId: eventId));
+    final signUpStatusAsync =
+        userId != null
+            ? ref.watch(getUserEventsProvider(eventId: eventId, userId: userId!))
+            : ref.watch(getCurrentUserEventsProvider(eventId: eventId));
     return signUpStatusAsync.maybeWhen(
       data: (uevents) {
         if (uevents.items.isEmpty) {
@@ -21,8 +26,8 @@ class DidAttendIndicator extends ConsumerWidget {
           return AnyStepFade(
             child:
                 userEvent.attended
-                    ? Icon(Icons.check_circle, color: AnyStepColors.green)
-                    : Icon(Icons.cancel, color: AnyStepColors.red),
+                    ? Icon(Icons.check_circle, color: AnyStepColors.green, size: size)
+                    : Icon(Icons.cancel, color: AnyStepColors.red, size: size),
           );
         }
       },

@@ -165,6 +165,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
         floatingActionButton:
             !isSearching && isAuthenticated && user.value!.role.canCreateEvent
                 ? FloatingActionButton.extended(
+                  heroTag: 'create_event_fab',
                   onPressed:
                       () => context.showModal(
                         EventDetailForm(

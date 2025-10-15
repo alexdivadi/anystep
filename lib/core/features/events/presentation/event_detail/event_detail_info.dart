@@ -1,6 +1,8 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/common/widgets/any_step_badge.dart';
 import 'package:anystep/core/common/widgets/dropdown_section.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
 import 'package:anystep/core/features/events/presentation/widgets/event_time_table.dart';
@@ -33,23 +35,41 @@ class EventDetailInfo extends StatelessWidget {
                 horizontal: AnyStepSpacing.md12,
                 vertical: AnyStepSpacing.md16,
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  Text(
-                    event.name,
-                    style: Theme.of(context).textTheme.displayLarge,
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (isPast && event.id != null)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: AnyStepSpacing.sm4,
-                        top: AnyStepSpacing.sm2,
+                  Row(
+                    children: [
+                      Text(
+                        event.name,
+                        style: Theme.of(context).textTheme.displayLarge,
+                        softWrap: true,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      child: DidAttendIndicator(eventId: event.id!),
+                      if (isPast && event.id != null)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: AnyStepSpacing.sm4,
+                            top: AnyStepSpacing.sm2,
+                          ),
+                          child: DidAttendIndicator(eventId: event.id!),
+                        ),
+                    ],
+                  ),
+                  if (isPast) ...[
+                    const SizedBox(height: AnyStepSpacing.sm8),
+                    Row(
+                      children: [
+                        AnyStepBadge(
+                          color: AnyStepColors.green.withAlpha(120),
+                          child: Text(
+                            'Completed',
+                            style: TextStyle(color: AnyStepColors.greenDark.withAlpha(200)),
+                          ),
+                        ),
+                      ],
                     ),
+                  ],
                 ],
               ),
             ),

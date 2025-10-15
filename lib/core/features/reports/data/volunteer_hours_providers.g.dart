@@ -6,7 +6,7 @@ part of 'volunteer_hours_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userEventsInRangeHash() => r'5c837a22e927057062e1dc001a58049e0f1689d1';
+String _$userEventsInRangeHash() => r'428f98b79bf80bc78f29beab97491f3f7eabc8d3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -54,15 +54,24 @@ class UserEventsInRangeFamily extends Family<AsyncValue<List<UserEventModel>>> {
   UserEventsInRangeProvider call({
     required DateTime start,
     required DateTime end,
+    bool attendedOnly = true,
   }) {
-    return UserEventsInRangeProvider(start: start, end: end);
+    return UserEventsInRangeProvider(
+      start: start,
+      end: end,
+      attendedOnly: attendedOnly,
+    );
   }
 
   @override
   UserEventsInRangeProvider getProviderOverride(
     covariant UserEventsInRangeProvider provider,
   ) {
-    return call(start: provider.start, end: provider.end);
+    return call(
+      start: provider.start,
+      end: provider.end,
+      attendedOnly: provider.attendedOnly,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -90,25 +99,30 @@ class UserEventsInRangeProvider
   /// We request both user and event models from repository.
   ///
   /// Copied from [userEventsInRange].
-  UserEventsInRangeProvider({required DateTime start, required DateTime end})
-    : this._internal(
-        (ref) => userEventsInRange(
-          ref as UserEventsInRangeRef,
-          start: start,
-          end: end,
-        ),
-        from: userEventsInRangeProvider,
-        name: r'userEventsInRangeProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$userEventsInRangeHash,
-        dependencies: UserEventsInRangeFamily._dependencies,
-        allTransitiveDependencies:
-            UserEventsInRangeFamily._allTransitiveDependencies,
-        start: start,
-        end: end,
-      );
+  UserEventsInRangeProvider({
+    required DateTime start,
+    required DateTime end,
+    bool attendedOnly = true,
+  }) : this._internal(
+         (ref) => userEventsInRange(
+           ref as UserEventsInRangeRef,
+           start: start,
+           end: end,
+           attendedOnly: attendedOnly,
+         ),
+         from: userEventsInRangeProvider,
+         name: r'userEventsInRangeProvider',
+         debugGetCreateSourceHash:
+             const bool.fromEnvironment('dart.vm.product')
+                 ? null
+                 : _$userEventsInRangeHash,
+         dependencies: UserEventsInRangeFamily._dependencies,
+         allTransitiveDependencies:
+             UserEventsInRangeFamily._allTransitiveDependencies,
+         start: start,
+         end: end,
+         attendedOnly: attendedOnly,
+       );
 
   UserEventsInRangeProvider._internal(
     super._createNotifier, {
@@ -119,10 +133,12 @@ class UserEventsInRangeProvider
     required super.from,
     required this.start,
     required this.end,
+    required this.attendedOnly,
   }) : super.internal();
 
   final DateTime start;
   final DateTime end;
+  final bool attendedOnly;
 
   @override
   Override overrideWith(
@@ -140,6 +156,7 @@ class UserEventsInRangeProvider
         debugGetCreateSourceHash: null,
         start: start,
         end: end,
+        attendedOnly: attendedOnly,
       ),
     );
   }
@@ -153,7 +170,8 @@ class UserEventsInRangeProvider
   bool operator ==(Object other) {
     return other is UserEventsInRangeProvider &&
         other.start == start &&
-        other.end == end;
+        other.end == end &&
+        other.attendedOnly == attendedOnly;
   }
 
   @override
@@ -161,6 +179,7 @@ class UserEventsInRangeProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, start.hashCode);
     hash = _SystemHash.combine(hash, end.hashCode);
+    hash = _SystemHash.combine(hash, attendedOnly.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -175,6 +194,9 @@ mixin UserEventsInRangeRef
 
   /// The parameter `end` of this provider.
   DateTime get end;
+
+  /// The parameter `attendedOnly` of this provider.
+  bool get attendedOnly;
 }
 
 class _UserEventsInRangeProviderElement
@@ -186,6 +208,8 @@ class _UserEventsInRangeProviderElement
   DateTime get start => (origin as UserEventsInRangeProvider).start;
   @override
   DateTime get end => (origin as UserEventsInRangeProvider).end;
+  @override
+  bool get attendedOnly => (origin as UserEventsInRangeProvider).attendedOnly;
 }
 
 String _$volunteerHoursAggregateHash() =>

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_badge.dart';
+import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
@@ -9,12 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignUpList extends ConsumerWidget {
-  const SignUpList({super.key, required this.eventId, this.withAttendance = false});
+  const SignUpList({super.key, required this.eventId});
 
   final int eventId;
-  final bool withAttendance;
 
-  static const int numToShow = 25;
+  static const int numToShow = 10;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,7 +84,7 @@ class SignUpList extends ConsumerWidget {
                 },
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator.adaptive()),
+            loading: () => const Center(child: AnyStepLoadingIndicator()),
             error: (error, stack) => const SizedBox(),
           ),
         ],
