@@ -12,6 +12,7 @@ class UserOnboardedGate extends ConsumerWidget {
   final String redirect;
 
   static const path = "/gate";
+  static const name = "gate";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

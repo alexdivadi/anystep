@@ -6,6 +6,7 @@ class AppStartupLoadingWidget extends StatelessWidget {
   const AppStartupLoadingWidget({super.key});
 
   static const String path = '/app-startup-loading';
+  static const String name = 'app-startup-loading';
 
   @override
   Widget build(BuildContext context) {

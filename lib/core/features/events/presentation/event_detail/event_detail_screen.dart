@@ -22,6 +22,8 @@ class EventDetailScreen extends ConsumerStatefulWidget {
   static const path = '/events/:id';
   static String getPath(int id) => '/events/$id';
 
+  static const name = 'event-detail';
+
   final int id;
 
   @override

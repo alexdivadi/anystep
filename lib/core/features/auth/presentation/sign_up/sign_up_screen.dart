@@ -11,6 +11,7 @@ class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   static const path = '/sign-up';
+  static const name = 'sign-up';
 
   @override
   ConsumerState<SignUpScreen> createState() => _SignUpScreenState();

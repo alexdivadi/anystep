@@ -7,13 +7,34 @@ import 'package:go_router/go_router.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final routes = [
-  GoRoute(path: LoginScreen.path, builder: (context, state) => const LoginScreen()),
-  GoRoute(path: SignUpScreen.path, builder: (context, state) => const SignUpScreen()),
-  GoRoute(path: ConfirmEmailScreen.path, builder: (context, state) => const ConfirmEmailScreen()),
-  GoRoute(path: WelcomeScreen.path, builder: (context, state) => const WelcomeScreen()),
-  GoRoute(path: OnboardingScreen.path, builder: (context, state) => const OnboardingScreen()),
+  GoRoute(
+    path: LoginScreen.path,
+    name: LoginScreen.name,
+    builder: (context, state) => const LoginScreen(),
+  ),
+  GoRoute(
+    path: SignUpScreen.path,
+    name: SignUpScreen.name,
+    builder: (context, state) => const SignUpScreen(),
+  ),
+  GoRoute(
+    path: ConfirmEmailScreen.path,
+    name: ConfirmEmailScreen.name,
+    builder: (context, state) => const ConfirmEmailScreen(),
+  ),
+  GoRoute(
+    path: WelcomeScreen.path,
+    name: WelcomeScreen.name,
+    builder: (context, state) => const WelcomeScreen(),
+  ),
+  GoRoute(
+    path: OnboardingScreen.path,
+    name: OnboardingScreen.name,
+    builder: (context, state) => const OnboardingScreen(),
+  ),
   GoRoute(
     path: UserOnboardedGate.path,
+    name: UserOnboardedGate.name,
     pageBuilder: (context, state) {
       final redirectParam = state.uri.queryParameters['redirect'] ?? EventFeedScreen.path;
       return NoTransitionPage(child: UserOnboardedGate(redirect: redirectParam));
@@ -21,6 +42,7 @@ final routes = [
   ),
   GoRoute(
     path: AppStartupLoadingWidget.path,
+    name: AppStartupLoadingWidget.name,
     builder: (context, state) => const AppStartupLoadingWidget(),
   ),
 
@@ -40,6 +62,7 @@ final routes = [
         routes: [
           GoRoute(
             path: EventFeedScreen.pathAnonymous,
+            name: EventFeedScreen.nameAnonymous,
             pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
           ),
         ],
@@ -48,6 +71,7 @@ final routes = [
         routes: [
           GoRoute(
             path: SettingsScreen.pathAnonymous,
+            name: SettingsScreen.nameAnonymous,
             pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
           ),
         ],
@@ -71,6 +95,7 @@ final routes = [
         routes: [
           GoRoute(
             path: EventFeedScreen.path,
+            name: EventFeedScreen.name,
             pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
           ),
         ],
@@ -79,6 +104,7 @@ final routes = [
         routes: [
           GoRoute(
             path: SettingsScreen.path,
+            name: SettingsScreen.name,
             pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
           ),
         ],
@@ -102,6 +128,7 @@ final routes = [
         routes: [
           GoRoute(
             path: EventFeedScreen.pathAdmin,
+            name: EventFeedScreen.nameAdmin,
             pageBuilder: (context, state) => NoTransitionPage(child: const EventFeedScreen()),
           ),
         ],
@@ -110,6 +137,7 @@ final routes = [
         routes: [
           GoRoute(
             path: ReportsScreen.pathAdmin,
+            name: ReportsScreen.nameAdmin,
             pageBuilder: (context, state) => NoTransitionPage(child: const ReportsScreen()),
           ),
         ],
@@ -118,6 +146,7 @@ final routes = [
         routes: [
           GoRoute(
             path: SettingsScreen.pathAdmin,
+            name: SettingsScreen.nameAdmin,
             pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
           ),
         ],
@@ -126,10 +155,15 @@ final routes = [
   ),
   GoRoute(
     path: EventDetailScreen.path,
+    name: EventDetailScreen.name,
     builder: (context, state) {
       final id = int.tryParse(state.pathParameters['id'] ?? '');
       return EventDetailScreen(id: id!);
     },
   ),
-  GoRoute(path: ProfileScreen.path, builder: (context, state) => const ProfileScreen()),
+  GoRoute(
+    path: ProfileScreen.path,
+    name: ProfileScreen.name,
+    builder: (context, state) => const ProfileScreen(),
+  ),
 ];

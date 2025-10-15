@@ -6,6 +6,7 @@ import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void bootstrap(FutureOr<Widget> Function() builder) async {
@@ -29,5 +30,5 @@ void bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   // Initialize the app
-  runApp(ProviderScope(child: await builder()));
+  runApp(ProviderScope(child: PostHogWidget(child: await builder())));
 }

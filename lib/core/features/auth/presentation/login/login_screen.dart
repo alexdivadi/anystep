@@ -14,6 +14,7 @@ class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   static const path = '/login';
+  static const name = 'login';
 
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();

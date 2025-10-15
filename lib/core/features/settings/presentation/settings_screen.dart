@@ -14,6 +14,10 @@ class SettingsScreen extends ConsumerWidget {
   static const pathAnonymous = '/anonymous/settings';
   static const pathAdmin = '/admin/settings';
 
+  static const name = 'settings';
+  static const nameAnonymous = 'anonymous-settings';
+  static const nameAdmin = 'admin-settings';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isAuthAsync = ref.watch(authStateStreamProvider);

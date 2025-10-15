@@ -13,6 +13,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   static const path = '/profile';
+  static const name = 'profile';
 
   @override
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();

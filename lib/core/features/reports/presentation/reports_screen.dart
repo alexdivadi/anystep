@@ -15,6 +15,9 @@ class ReportsScreen extends ConsumerStatefulWidget {
   static const path = '/reports';
   static const pathAdmin = '/admin/reports';
 
+  static const name = 'reports';
+  static const nameAdmin = 'admin-reports';
+
   @override
   ConsumerState<ReportsScreen> createState() => _ReportsScreenState();
 }

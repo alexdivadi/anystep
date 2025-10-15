@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'routes.dart';
 
@@ -37,6 +38,7 @@ GoRouter router(Ref ref) {
   return GoRouter(
     initialLocation: EventFeedScreen.pathAnonymous,
     routes: routes,
+    observers: [PosthogObserver()],
     refreshListenable: isAuth,
     redirect: (context, state) {
       final authStateAsync = isAuth.value;

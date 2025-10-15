@@ -21,6 +21,10 @@ class EventFeedScreen extends ConsumerStatefulWidget {
   static const pathAnonymous = '/anonymous/events';
   static const pathAdmin = '/admin/events';
 
+  static const name = 'events';
+  static const nameAnonymous = 'anonymous-events';
+  static const nameAdmin = 'admin-events';
+
   @override
   ConsumerState<EventFeedScreen> createState() => _EventFeedScreenState();
 }

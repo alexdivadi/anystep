@@ -30,6 +30,7 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     } catch (e) {
       Log.e('Error parsing cached user data', e);
       pref.clearCurrentUser();
+      PostHogManager.reset();
     }
   }
 
@@ -44,10 +45,12 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     yield user;
   } on AuthApiException catch (_) {
     pref.clearCurrentUser();
+    PostHogManager.reset();
     yield null;
   } catch (e) {
     Log.e('Error fetching current user', e);
     pref.clearCurrentUser();
+    PostHogManager.reset();
     yield null;
   }
 }

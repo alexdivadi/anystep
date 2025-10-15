@@ -13,6 +13,7 @@ class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({super.key});
 
   static const String path = '/welcome';
+  static const String name = 'welcome';
 
   @override
   ConsumerState<WelcomeScreen> createState() => _WelcomeScreenState();
