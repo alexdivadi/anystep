@@ -91,8 +91,8 @@ as String?,
 /// @nodoc
 @JsonSerializable()
 
-class _AddressModel implements AddressModel {
-  const _AddressModel({@JsonKey(includeIfNull: false) this.id, required this.street, @JsonKey(name: "street_secondary") this.streetSecondary, required this.city, required this.state, this.country, @JsonKey(name: "postal_code") required this.postalCode, @JsonKey(name: "is_user_address") required this.isUserAddress, this.latitude, this.longitude, @JsonKey(name: "place_id") this.placeId, this.name, this.geohash});
+class _AddressModel extends AddressModel {
+  const _AddressModel({@JsonKey(includeIfNull: false) this.id, required this.street, @JsonKey(name: "street_secondary") this.streetSecondary, required this.city, required this.state, this.country, @JsonKey(name: "postal_code") required this.postalCode, @JsonKey(name: "is_user_address") required this.isUserAddress, this.latitude, this.longitude, @JsonKey(name: "place_id") this.placeId, this.name, this.geohash}): super._();
   factory _AddressModel.fromJson(Map<String, dynamic> json) => _$AddressModelFromJson(json);
 
 @override@JsonKey(includeIfNull: false) final  int? id;

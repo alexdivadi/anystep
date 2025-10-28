@@ -7,7 +7,7 @@ part of 'attendee_search_form_controller.dart';
 // **************************************************************************
 
 String _$attendeeSearchFormControllerHash() =>
-    r'ad3bb0956f00b1b3dc7d9b3dc79a95864d98e83c';
+    r'2288f2afcd834d8e8d91478d3760175cb522fa2a';
 
 /// Copied from Dart SDK
 class _SystemHash {

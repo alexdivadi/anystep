@@ -52,10 +52,15 @@ class UserEventRepository implements IRepository<UserEventModel> {
     int? page,
     AnyStepOrder? order,
     bool withUsers = true,
+    bool withUserAddresses = false,
     bool withEvents = true,
   }) async {
+    assert(!withUserAddresses || withUsers, 'withUserAddresses requires withUsers to be true');
     String select = '*';
-    if (withUsers) select += ', user_model:users(*)';
+    if (withUsers && !withUserAddresses) select += ', user_model:users(*)';
+    if (withUsers && withUserAddresses) {
+      select += ', user_model:users(*, address_model:addresses(*))';
+    }
     if (withEvents) select += ', event_model:events(*)';
     final documents = await database.list(
       table: collectionId,

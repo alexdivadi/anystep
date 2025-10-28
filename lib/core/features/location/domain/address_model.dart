@@ -8,6 +8,7 @@ part 'address_model.g.dart';
 
 @freezed
 abstract class AddressModel with _$AddressModel {
+  const AddressModel._();
   const factory AddressModel({
     @JsonKey(includeIfNull: false) int? id,
     required String street,
@@ -56,5 +57,13 @@ abstract class AddressModel with _$AddressModel {
       name: name,
       geohash: geohash,
     );
+  }
+
+  String get formattedAddress {
+    final streetLine =
+        streetSecondary != null && streetSecondary!.isNotEmpty
+            ? '$street $streetSecondary'
+            : street;
+    return '$streetLine $city, $state $postalCode${country != null ? ' $country' : ''}';
   }
 }

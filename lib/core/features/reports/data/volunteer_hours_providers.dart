@@ -31,6 +31,7 @@ Future<List<UserEventModel>> userEventsInRange(
     ],
     withEvents: true,
     withUsers: true,
+    withUserAddresses: true,
   );
 }
 

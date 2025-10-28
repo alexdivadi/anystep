@@ -75,10 +75,12 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
     try {
       // Build CSV
       final buffer = StringBuffer();
-      buffer.writeln('Volunteer,Events,TotalHours');
+      buffer.writeln('Volunteer,Address,Email,Phone,Events,TotalHours');
       for (final r in reports) {
         final name = r.user.fullName.replaceAll('"', '""');
-        buffer.writeln('"$name",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}');
+        buffer.writeln(
+          '"$name",${r.user.address?.formattedAddress ?? ''},${r.user.email},${r.user.phoneNumber ?? ''},${r.eventsCount},${r.totalHours.toStringAsFixed(2)}',
+        );
       }
       final csv = buffer.toString();
 
@@ -190,6 +192,9 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                     child: DataTable(
                       columns: const [
                         DataColumn(label: Text('Volunteer')),
+                        DataColumn(label: Text('Address')),
+                        DataColumn(label: Text('Email')),
+                        DataColumn(label: Text('Phone')),
                         DataColumn(label: Text('Events')),
                         DataColumn(label: Text('Total Hours')),
                       ],
@@ -199,6 +204,9 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                                 (r) => DataRow(
                                   cells: [
                                     DataCell(Text(r.user.fullName)),
+                                    DataCell(Text(r.user.address?.formattedAddress ?? 'NA')),
+                                    DataCell(Text(r.user.email)),
+                                    DataCell(Text(r.user.phoneNumber ?? 'NA')),
                                     DataCell(Text(r.eventsCount.toString())),
                                     DataCell(Text(r.totalHours.toStringAsFixed(2))),
                                   ],

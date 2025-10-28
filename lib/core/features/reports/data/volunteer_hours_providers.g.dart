@@ -6,7 +6,7 @@ part of 'volunteer_hours_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userEventsInRangeHash() => r'428f98b79bf80bc78f29beab97491f3f7eabc8d3';
+String _$userEventsInRangeHash() => r'ee760e47a276d34bb7406434588037548c9a92fa';
 
 /// Copied from Dart SDK
 class _SystemHash {
