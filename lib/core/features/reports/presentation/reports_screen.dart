@@ -1,9 +1,13 @@
+import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
+import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
+import 'package:anystep/core/features/reports/presentation/volunteer_hours_report_table_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -79,7 +83,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       for (final r in reports) {
         final name = r.user.fullName.replaceAll('"', '""');
         buffer.writeln(
-          '"$name",${r.user.address?.formattedAddress ?? ''},${r.user.email},${r.user.phoneNumber ?? ''},${r.eventsCount},${r.totalHours.toStringAsFixed(2)}',
+          '"$name","${(r.user.address?.formattedAddress ?? '').replaceAll(',', ' ')}","${r.user.email}","${r.user.phoneNumber ?? ''}",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}',
         );
       }
       final csv = buffer.toString();
@@ -107,10 +111,14 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
           'method': res.status == ShareResultStatus.success ? 'shared' : 'dismissed',
         },
       );
+
+      if (mounted && res.status == ShareResultStatus.success) {
+        context.showSuccessSnackbar('Report shared successfully!');
+      }
     } catch (e) {
       // Make sure dialog is closed on error
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to export: $e')));
+        context.showErrorSnackbar('Failed to export: $e');
       }
     }
   }
@@ -183,37 +191,23 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                 data: (reports) {
                   if (reports.isEmpty) {
                     return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 48.0),
+                      padding: EdgeInsets.symmetric(vertical: AnyStepSpacing.lg48),
                       child: Center(child: Text('No data in selected range')),
                     );
                   }
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Volunteer')),
-                        DataColumn(label: Text('Address')),
-                        DataColumn(label: Text('Email')),
-                        DataColumn(label: Text('Phone')),
-                        DataColumn(label: Text('Events')),
-                        DataColumn(label: Text('Total Hours')),
-                      ],
-                      rows:
-                          reports
-                              .map(
-                                (r) => DataRow(
-                                  cells: [
-                                    DataCell(Text(r.user.fullName)),
-                                    DataCell(Text(r.user.address?.formattedAddress ?? 'NA')),
-                                    DataCell(Text(r.user.email)),
-                                    DataCell(Text(r.user.phoneNumber ?? 'NA')),
-                                    DataCell(Text(r.eventsCount.toString())),
-                                    DataCell(Text(r.totalHours.toStringAsFixed(2))),
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                    ),
+                  // Condensed list view instead of wide horizontal DataTable
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
+                        child: Text(
+                          'Reports (${reports.length})',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      ...reports.map((r) => VolunteerHoursReportTableCell(volunteerHoursReport: r)),
+                    ],
                   );
                 },
                 loading:

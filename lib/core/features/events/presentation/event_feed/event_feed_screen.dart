@@ -148,8 +148,11 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                             ),
                           ),
                         ),
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: 250, child: PastEventsCarousel()),
+                        SliverToBoxAdapter(
+                          child: Container(
+                            constraints: BoxConstraints(minHeight: 250, maxHeight: 275),
+                            child: const PastEventsCarousel(),
+                          ),
                         ),
                         SliverToBoxAdapter(
                           child: Padding(
