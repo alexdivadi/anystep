@@ -1,0 +1,21 @@
+{
+  "@@locale": "es",
+  "appTitle": "Servicios Comunitarios AnyStep",
+  "@appTitle": {
+    "description": "Título de la aplicación que se muestra en el selector de tareas del sistema y en la barra de la aplicación."
+  },
+  "welcomeUser": "¡Bienvenido, {name}!",
+  "@welcomeUser": {
+    "description": "Mensaje de saludo con el nombre del usuario.",
+    "placeholders": {
+      "name": {"type": "String", "example": "Alicia"}
+    }
+  },
+  "itemCount": "{count, plural, =0 {No hay elementos} one {1 elemento} other {{count} elementos}}",
+  "@itemCount": {
+    "description": "Conteo pluralizado de elementos genéricos.",
+    "placeholders": {
+      "count": {"type": "int", "example": "5"}
+    }
+  }
+}

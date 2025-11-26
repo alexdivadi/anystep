@@ -3,6 +3,7 @@ import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/features/settings/presentation/theme_mode_setting.dart';
+import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +30,7 @@ class SettingsScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(AnyStepSpacing.md16),
             children: [
               const ThemeModeSetting(),
+              const LocaleSetting(),
               if (isAuth != null) ...[
                 ListTile(
                   leading: const Icon(Icons.account_circle),

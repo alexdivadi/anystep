@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "appTitle": "AnyStep Community Services",
+  "@appTitle": {
+    "description": "Application title displayed in OS task switcher and app bar where used."
+  },
+  "welcomeUser": "Welcome, {name}!",
+  "@welcomeUser": {
+    "description": "Greeting message with the user's first name.",
+    "placeholders": {
+      "name": {"type": "String", "example": "Alice"}
+    }
+  },
+  "itemCount": "{count, plural, =0 {No items} one {1 item} other {{count} items}}",
+  "@itemCount": {
+    "description": "Pluralized count of generic items.",
+    "placeholders": {
+      "count": {"type": "int", "example": "5"}
+    }
+  }
+}

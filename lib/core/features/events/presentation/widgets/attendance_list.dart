@@ -1,6 +1,4 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/common/widgets/any_step_badge.dart';
-import 'package:anystep/core/common/widgets/any_step_fade.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';

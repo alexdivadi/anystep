@@ -4,7 +4,6 @@ import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
-import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:anystep/core/features/reports/presentation/volunteer_hours_report_table_cell.dart';
