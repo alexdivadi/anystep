@@ -298,4 +298,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get endDateTime => 'End Day/Time';
+
+  @override
+  String get changeLanguage => 'Change Language';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to AnyStep';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Track and discover volunteer events easily.';
+
+  @override
+  String get onboardingFindEventsTitle => 'Find Events';
+
+  @override
+  String get onboardingFindEventsDesc =>
+      'Browse nearby opportunities that fit your passion.';
+
+  @override
+  String get onboardingImpactTitle => 'Make an Impact';
+
+  @override
+  String get onboardingImpactDesc =>
+      'Join events and measure the difference you make.';
+
+  @override
+  String get onboardingCompleteTitle => 'Onboarding Complete!';
+
+  @override
+  String get goToEventFeed => 'Go to Event Feed';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get getStarted => 'Get Started';
 }

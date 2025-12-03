@@ -578,7 +578,7 @@ abstract class AppLocalizations {
   /// **'Street Address 2'**
   String get streetAddress2;
 
-  /// Button label to go to the next page
+  /// Button label to go to next onboarding page
   ///
   /// In en, this message translates to:
   /// **'Next'**
@@ -637,6 +637,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'End Day/Time'**
   String get endDateTime;
+
+  /// Button label to change the app language during onboarding
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get changeLanguage;
+
+  /// Title for onboarding welcome page
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to AnyStep'**
+  String get onboardingWelcomeTitle;
+
+  /// Description for onboarding welcome page
+  ///
+  /// In en, this message translates to:
+  /// **'Track and discover volunteer events easily.'**
+  String get onboardingWelcomeDesc;
+
+  /// Title for onboarding find events page
+  ///
+  /// In en, this message translates to:
+  /// **'Find Events'**
+  String get onboardingFindEventsTitle;
+
+  /// Description for onboarding find events page
+  ///
+  /// In en, this message translates to:
+  /// **'Browse nearby opportunities that fit your passion.'**
+  String get onboardingFindEventsDesc;
+
+  /// Title for onboarding impact page
+  ///
+  /// In en, this message translates to:
+  /// **'Make an Impact'**
+  String get onboardingImpactTitle;
+
+  /// Description for onboarding impact page
+  ///
+  /// In en, this message translates to:
+  /// **'Join events and measure the difference you make.'**
+  String get onboardingImpactDesc;
+
+  /// Success text shown when user is already onboarded
+  ///
+  /// In en, this message translates to:
+  /// **'Onboarding Complete!'**
+  String get onboardingCompleteTitle;
+
+  /// Button label to navigate to event feed from onboarding complete
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Event Feed'**
+  String get goToEventFeed;
+
+  /// Button label to skip to final onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// Final onboarding button label
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
 }
 
 class _AppLocalizationsDelegate

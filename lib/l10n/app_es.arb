@@ -224,5 +224,31 @@
   "@startDateTime": {"description": "Etiqueta para el campo de inicio del evento (fecha/hora)"},
   "endDateTime": "Fin (fecha/hora)",
   "@endDateTime": {"description": "Etiqueta para el campo de fin del evento (fecha/hora)"}
+  ,
+  "changeLanguage": "Cambiar idioma",
+  "@changeLanguage": {"description": "Etiqueta del botón para cambiar el idioma de la app durante el onboarding"}
+  ,
+  "onboardingWelcomeTitle": "Bienvenido a AnyStep",
+  "@onboardingWelcomeTitle": {"description": "Título de la página de bienvenida del onboarding"},
+  "onboardingWelcomeDesc": "Explora y descubre fácilmente eventos de voluntariado.",
+  "@onboardingWelcomeDesc": {"description": "Descripción de la página de bienvenida del onboarding"},
+  "onboardingFindEventsTitle": "Buscar eventos",
+  "@onboardingFindEventsTitle": {"description": "Título de la página para encontrar eventos"},
+  "onboardingFindEventsDesc": "Explora oportunidades cercanas que se ajusten a tu pasión.",
+  "@onboardingFindEventsDesc": {"description": "Descripción de la página para encontrar eventos"},
+  "onboardingImpactTitle": "Genera impacto",
+  "@onboardingImpactTitle": {"description": "Título de la página de impacto"},
+  "onboardingImpactDesc": "Únete a eventos y mide la diferencia que generas.",
+  "@onboardingImpactDesc": {"description": "Descripción de la página de impacto"},
+  "onboardingCompleteTitle": "¡Onboarding completado!",
+  "@onboardingCompleteTitle": {"description": "Texto de éxito mostrado cuando el usuario ya completó el onboarding"},
+  "goToEventFeed": "Ir al feed de eventos",
+  "@goToEventFeed": {"description": "Etiqueta del botón para navegar al feed de eventos desde onboarding"},
+  "skip": "Saltar",
+  "@skip": {"description": "Etiqueta del botón para saltar a la última página del onboarding"},
+  "next": "Siguiente",
+  "@next": {"description": "Etiqueta del botón para ir a la siguiente página del onboarding"},
+  "getStarted": "Comenzar",
+  "@getStarted": {"description": "Etiqueta del botón final del onboarding"}
   
 }

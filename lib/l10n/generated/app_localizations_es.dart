@@ -300,4 +300,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get endDateTime => 'Fin (fecha/hora)';
+
+  @override
+  String get changeLanguage => 'Cambiar idioma';
+
+  @override
+  String get onboardingWelcomeTitle => 'Bienvenido a AnyStep';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Explora y descubre fácilmente eventos de voluntariado.';
+
+  @override
+  String get onboardingFindEventsTitle => 'Buscar eventos';
+
+  @override
+  String get onboardingFindEventsDesc =>
+      'Explora oportunidades cercanas que se ajusten a tu pasión.';
+
+  @override
+  String get onboardingImpactTitle => 'Genera impacto';
+
+  @override
+  String get onboardingImpactDesc =>
+      'Únete a eventos y mide la diferencia que generas.';
+
+  @override
+  String get onboardingCompleteTitle => '¡Onboarding completado!';
+
+  @override
+  String get goToEventFeed => 'Ir al feed de eventos';
+
+  @override
+  String get skip => 'Saltar';
+
+  @override
+  String get getStarted => 'Comenzar';
 }

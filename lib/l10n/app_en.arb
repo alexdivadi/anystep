@@ -224,5 +224,31 @@
   "@startDateTime": {"description": "Label for event start date/time field"},
   "endDateTime": "End Day/Time",
   "@endDateTime": {"description": "Label for event end date/time field"}
+  ,
+  "changeLanguage": "Change Language",
+  "@changeLanguage": {"description": "Button label to change the app language during onboarding"}
+  ,
+  "onboardingWelcomeTitle": "Welcome to AnyStep",
+  "@onboardingWelcomeTitle": {"description": "Title for onboarding welcome page"},
+  "onboardingWelcomeDesc": "Track and discover volunteer events easily.",
+  "@onboardingWelcomeDesc": {"description": "Description for onboarding welcome page"},
+  "onboardingFindEventsTitle": "Find Events",
+  "@onboardingFindEventsTitle": {"description": "Title for onboarding find events page"},
+  "onboardingFindEventsDesc": "Browse nearby opportunities that fit your passion.",
+  "@onboardingFindEventsDesc": {"description": "Description for onboarding find events page"},
+  "onboardingImpactTitle": "Make an Impact",
+  "@onboardingImpactTitle": {"description": "Title for onboarding impact page"},
+  "onboardingImpactDesc": "Join events and measure the difference you make.",
+  "@onboardingImpactDesc": {"description": "Description for onboarding impact page"},
+  "onboardingCompleteTitle": "Onboarding Complete!",
+  "@onboardingCompleteTitle": {"description": "Success text shown when user is already onboarded"},
+  "goToEventFeed": "Go to Event Feed",
+  "@goToEventFeed": {"description": "Button label to navigate to event feed from onboarding complete"},
+  "skip": "Skip",
+  "@skip": {"description": "Button label to skip to final onboarding page"},
+  "next": "Next",
+  "@next": {"description": "Button label to go to next onboarding page"},
+  "getStarted": "Get Started",
+  "@getStarted": {"description": "Final onboarding button label"}
   
 }
