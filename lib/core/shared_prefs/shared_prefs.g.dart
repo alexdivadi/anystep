@@ -13,10 +13,9 @@ String _$appPreferencesHash() => r'1580d6ba5499a64f1e7ca2315995000049ab48d0';
 final appPreferencesProvider = FutureProvider<AppPreferences>.internal(
   appPreferences,
   name: r'appPreferencesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appPreferencesHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appPreferencesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

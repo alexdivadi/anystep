@@ -15,10 +15,9 @@ final themeModeControllerProvider =
     AsyncNotifierProvider<ThemeModeController, ThemeMode>.internal(
       ThemeModeController.new,
       name: r'themeModeControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$themeModeControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$themeModeControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

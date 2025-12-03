@@ -15,10 +15,9 @@ final userEventRepositoryProvider =
     AutoDisposeProvider<UserEventRepository>.internal(
       userEventRepository,
       name: r'userEventRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$userEventRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$userEventRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -93,10 +92,9 @@ class GetUserEventProvider extends AutoDisposeFutureProvider<UserEventModel> {
         (ref) => getUserEvent(ref as GetUserEventRef, id),
         from: getUserEventProvider,
         name: r'getUserEventProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$getUserEventHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$getUserEventHash,
         dependencies: GetUserEventFamily._dependencies,
         allTransitiveDependencies:
             GetUserEventFamily._allTransitiveDependencies,
@@ -246,10 +244,9 @@ class GetUserEventsProvider
          ),
          from: getUserEventsProvider,
          name: r'getUserEventsProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getUserEventsHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getUserEventsHash,
          dependencies: GetUserEventsFamily._dependencies,
          allTransitiveDependencies:
              GetUserEventsFamily._allTransitiveDependencies,
@@ -446,10 +443,9 @@ class GetCurrentUserEventsProvider
          ),
          from: getCurrentUserEventsProvider,
          name: r'getCurrentUserEventsProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getCurrentUserEventsHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getCurrentUserEventsHash,
          dependencies: GetCurrentUserEventsFamily._dependencies,
          allTransitiveDependencies:
              GetCurrentUserEventsFamily._allTransitiveDependencies,

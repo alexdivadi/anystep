@@ -86,10 +86,9 @@ class EventDetailFormControllerProvider
         () => EventDetailFormController()..eventId = eventId,
         from: eventDetailFormControllerProvider,
         name: r'eventDetailFormControllerProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$eventDetailFormControllerHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$eventDetailFormControllerHash,
         dependencies: EventDetailFormControllerFamily._dependencies,
         allTransitiveDependencies:
             EventDetailFormControllerFamily._allTransitiveDependencies,

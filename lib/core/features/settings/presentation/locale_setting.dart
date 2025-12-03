@@ -29,7 +29,7 @@ class LocaleSetting extends ConsumerWidget {
       ),
       onTap: () {
         context.showModal(
-          _LocaleSelectionList(
+          LocaleSelectionList(
             current: current,
             onSelected: (newLocale) {
               ref.read(localeControllerProvider.notifier).setLocale(newLocale);
@@ -55,8 +55,13 @@ class LocaleSetting extends ConsumerWidget {
   }
 }
 
-class _LocaleSelectionList extends StatelessWidget {
-  const _LocaleSelectionList({required this.current, required this.onSelected, required this.loc});
+class LocaleSelectionList extends StatelessWidget {
+  const LocaleSelectionList({
+    super.key,
+    required this.current,
+    required this.onSelected,
+    required this.loc,
+  });
 
   final Locale? current;
   final ValueChanged<Locale?> onSelected;
@@ -83,8 +88,9 @@ class _LocaleSelectionList extends StatelessWidget {
         ...options.map(
           (l) => ListTile(
             title: Text(labelFor(l)),
-            trailing:
-                (l == current || (l == null && current == null)) ? const Icon(Icons.check) : null,
+            trailing: (l == current || (l == null && current == null))
+                ? const Icon(Icons.check)
+                : null,
             onTap: () => onSelected(l),
           ),
         ),

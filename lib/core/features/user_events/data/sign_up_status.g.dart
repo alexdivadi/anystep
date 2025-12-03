@@ -103,10 +103,9 @@ class SignUpStatusProvider extends AutoDisposeFutureProvider<SignUpStatus> {
         (ref) => signUpStatus(ref as SignUpStatusRef, eventId),
         from: signUpStatusProvider,
         name: r'signUpStatusProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$signUpStatusHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$signUpStatusHash,
         dependencies: SignUpStatusFamily._dependencies,
         allTransitiveDependencies:
             SignUpStatusFamily._allTransitiveDependencies,

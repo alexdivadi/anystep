@@ -13,10 +13,9 @@ String _$eventRepositoryHash() => r'91fd9a3b10390062e18cef77cb13521e86c6d448';
 final eventRepositoryProvider = AutoDisposeProvider<EventRepository>.internal(
   eventRepository,
   name: r'eventRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$eventRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$eventRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -89,10 +88,9 @@ class GetEventProvider extends AutoDisposeFutureProvider<EventModel> {
         (ref) => getEvent(ref as GetEventRef, id, withAddress: withAddress),
         from: getEventProvider,
         name: r'getEventProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$getEventHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$getEventHash,
         dependencies: GetEventFamily._dependencies,
         allTransitiveDependencies: GetEventFamily._allTransitiveDependencies,
         id: id,
@@ -245,10 +243,9 @@ class GetEventsProvider
          ),
          from: getEventsProvider,
          name: r'getEventsProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getEventsHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getEventsHash,
          dependencies: GetEventsFamily._dependencies,
          allTransitiveDependencies: GetEventsFamily._allTransitiveDependencies,
          page: page,
@@ -430,10 +427,9 @@ class GetUpcomingEventsProvider
          ),
          from: getUpcomingEventsProvider,
          name: r'getUpcomingEventsProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getUpcomingEventsHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getUpcomingEventsHash,
          dependencies: GetUpcomingEventsFamily._dependencies,
          allTransitiveDependencies:
              GetUpcomingEventsFamily._allTransitiveDependencies,
@@ -618,10 +614,9 @@ class GetPastEventsProvider
          ),
          from: getPastEventsProvider,
          name: r'getPastEventsProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getPastEventsHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getPastEventsHash,
          dependencies: GetPastEventsFamily._dependencies,
          allTransitiveDependencies:
              GetPastEventsFamily._allTransitiveDependencies,

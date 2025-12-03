@@ -11,21 +11,16 @@ _UserEventModel _$UserEventModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt(),
       attended: json['attended'] as bool,
       userId: json['user'] as String?,
-      user:
-          json['user_model'] == null
-              ? null
-              : UserModel.fromJson(json['user_model'] as Map<String, dynamic>),
+      user: json['user_model'] == null
+          ? null
+          : UserModel.fromJson(json['user_model'] as Map<String, dynamic>),
       eventId: (json['event'] as num?)?.toInt(),
-      event:
-          json['event_model'] == null
-              ? null
-              : EventModel.fromJson(
-                json['event_model'] as Map<String, dynamic>,
-              ),
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
+      event: json['event_model'] == null
+          ? null
+          : EventModel.fromJson(json['event_model'] as Map<String, dynamic>),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$UserEventModelToJson(_UserEventModel instance) =>

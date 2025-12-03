@@ -334,4 +334,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
+
+  @override
+  String get volunteerAgreementTitle => 'Volunteer Agreement';
+
+  @override
+  String get tapToSign => 'Tap to sign';
 }

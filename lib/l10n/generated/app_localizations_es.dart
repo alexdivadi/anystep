@@ -65,7 +65,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get login => 'Iniciar sesión';
 
   @override
-  String get reportsTitle => 'Informes de voluntarios';
+  String get reportsTitle => 'Informes';
 
   @override
   String get exportCsv => 'Exportar CSV';
@@ -336,4 +336,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get getStarted => 'Comenzar';
+
+  @override
+  String get volunteerAgreementTitle => 'Acuerdo de Voluntariado';
+
+  @override
+  String get tapToSign => 'Toca para firmar';
 }

@@ -11,19 +11,19 @@ String _$loginScreenControllerHash() =>
 
 /// See also [LoginScreenController].
 @ProviderFor(LoginScreenController)
-final loginScreenControllerProvider = AutoDisposeNotifierProvider<
-  LoginScreenController,
-  LoginScreenState
->.internal(
-  LoginScreenController.new,
-  name: r'loginScreenControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final loginScreenControllerProvider =
+    AutoDisposeNotifierProvider<
+      LoginScreenController,
+      LoginScreenState
+    >.internal(
+      LoginScreenController.new,
+      name: r'loginScreenControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$loginScreenControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$LoginScreenController = AutoDisposeNotifier<LoginScreenState>;
 // ignore_for_file: type=lint

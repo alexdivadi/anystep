@@ -6,17 +6,16 @@ part of 'current_user.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentUserStreamHash() => r'89d0b1d56bdd38bc474a17c4a4f66ebe19dbe6e7';
+String _$currentUserStreamHash() => r'793f39847a1cc07975cc75509b3319021909a90b';
 
 /// See also [currentUserStream].
 @ProviderFor(currentUserStream)
 final currentUserStreamProvider = StreamProvider<UserModel?>.internal(
   currentUserStream,
   name: r'currentUserStreamProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$currentUserStreamHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentUserStreamHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

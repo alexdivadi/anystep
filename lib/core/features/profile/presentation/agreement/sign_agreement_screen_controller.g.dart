@@ -1,30 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sign_up_screen_controller.dart';
+part of 'sign_agreement_screen_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpScreenControllerHash() =>
-    r'85c197ff6bab73b6cd37d5928144cc8e8b8d612e';
+String _$signAgreementScreenControllerHash() =>
+    r'76f3b0cb9a77ddda338384028b7e334d23f77c9e';
 
-/// See also [SignUpScreenController].
-@ProviderFor(SignUpScreenController)
-final signUpScreenControllerProvider =
-    AutoDisposeNotifierProvider<
-      SignUpScreenController,
-      SignUpScreenState
+/// See also [SignAgreementScreenController].
+@ProviderFor(SignAgreementScreenController)
+final signAgreementScreenControllerProvider =
+    AutoDisposeAsyncNotifierProvider<
+      SignAgreementScreenController,
+      void
     >.internal(
-      SignUpScreenController.new,
-      name: r'signUpScreenControllerProvider',
+      SignAgreementScreenController.new,
+      name: r'signAgreementScreenControllerProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$signUpScreenControllerHash,
+          : _$signAgreementScreenControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$SignUpScreenController = AutoDisposeNotifier<SignUpScreenState>;
+typedef _$SignAgreementScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

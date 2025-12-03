@@ -3,6 +3,7 @@
 // import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
+import 'package:anystep/core/features/profile/domain/user_agreement_type.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,6 +26,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: "phone_number") String? phoneNumber,
     @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,
     @JsonKey(includeToJson: false, includeFromJson: false) @Default(false) bool isCachedValue,
+    @JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
@@ -32,4 +34,8 @@ abstract class UserModel with _$UserModel {
   String get fullName => "$firstName $lastName";
   String get profileImageUrl =>
       'https://xwbzsprukcwoiaebxgev.supabase.co/storage/v1/object/public/images/profiles/$id.png';
+  bool get hasSignedAgreement => agreementSignedOn != null;
+  UserAgreementType get requiredAgreementType => ageGroup == AgeGroup.under18
+      ? UserAgreementType.minorAgreement
+      : UserAgreementType.adultAgreement;
 }

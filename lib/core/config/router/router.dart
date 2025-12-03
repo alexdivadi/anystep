@@ -85,6 +85,11 @@ GoRouter router(Ref ref) {
           return '${UserOnboardedGate.path}?redirect=$path';
         }
 
+        if (!user.requireValue!.hasSignedAgreement) {
+          Log.d('User has not signed agreement, redirecting to sign agreement screen');
+          return SignAgreementScreen.path;
+        }
+
         final role = user.requireValue!.role;
         final isVolunteerShell = RouterUtils.volunteerRoutes.contains(normalizedPath);
         final isAdminShell = RouterUtils.adminRoutes.contains(normalizedPath);

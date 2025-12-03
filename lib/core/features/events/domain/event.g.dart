@@ -12,19 +12,15 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
   startTime: DateTime.parse(json['start_time'] as String),
   endTime: DateTime.parse(json['end_time'] as String),
   addressId: (json['address'] as num?)?.toInt(),
-  address:
-      json['address_model'] == null
-          ? null
-          : AddressModel.fromJson(
-            json['address_model'] as Map<String, dynamic>,
-          ),
+  address: json['address_model'] == null
+      ? null
+      : AddressModel.fromJson(json['address_model'] as Map<String, dynamic>),
   tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   description: json['description'] as String?,
   imageUrl: json['image_url'] as String?,
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
   active: json['active'] as bool? ?? true,
 );
 

@@ -44,7 +44,7 @@
   "login": "Iniciar sesión",
   "@login": {"description": "Etiqueta del botón de iniciar sesión"}
   ,
-  "reportsTitle": "Informes de voluntarios",
+  "reportsTitle": "Informes",
   "@reportsTitle": {"description": "Título de la pantalla de informes"},
   "exportCsv": "Exportar CSV",
   "@exportCsv": {"description": "Tooltip para exportar CSV"},
@@ -250,5 +250,10 @@
   "@next": {"description": "Etiqueta del botón para ir a la siguiente página del onboarding"},
   "getStarted": "Comenzar",
   "@getStarted": {"description": "Etiqueta del botón final del onboarding"}
+  ,
+  "volunteerAgreementTitle": "Acuerdo de Voluntariado",
+  "@volunteerAgreementTitle": {"description": "Título para la página de firma del acuerdo"},
+  "tapToSign": "Toca para firmar",
+  "@tapToSign": {"description": "Etiqueta del botón para firmar el acuerdo"}
   
 }

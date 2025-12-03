@@ -15,10 +15,9 @@ final eventTemplateRepositoryProvider =
     AutoDisposeProvider<EventTemplateRepository>.internal(
       eventTemplateRepository,
       name: r'eventTemplateRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$eventTemplateRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$eventTemplateRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

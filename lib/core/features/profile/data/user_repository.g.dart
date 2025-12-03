@@ -13,10 +13,9 @@ String _$userRepositoryHash() => r'd4d6f3930c9ec06b882a93dab83e41af5e1dce21';
 final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
   userRepository,
   name: r'userRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$userRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$userRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -115,10 +114,9 @@ class GetUsersProvider
          ),
          from: getUsersProvider,
          name: r'getUsersProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$getUsersHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$getUsersHash,
          dependencies: GetUsersFamily._dependencies,
          allTransitiveDependencies: GetUsersFamily._allTransitiveDependencies,
          page: page,

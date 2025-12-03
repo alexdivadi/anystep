@@ -13,8 +13,9 @@ String _$storageHash() => r'9ac9dc55a3340e5aaa5e87cce23370542bca667d';
 final storageProvider = AutoDisposeProvider<Storage>.internal(
   storage,
   name: r'storageProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$storageHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$storageHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

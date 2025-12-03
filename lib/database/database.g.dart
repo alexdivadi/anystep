@@ -13,8 +13,9 @@ String _$databaseHash() => r'a618ca31483a3148a21f218e45fb1fcc1ec4fb83';
 final databaseProvider = AutoDisposeProvider<Database>.internal(
   database,
   name: r'databaseProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$databaseHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$databaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

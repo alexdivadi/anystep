@@ -14,10 +14,9 @@ final addressRepositoryProvider =
     AutoDisposeProvider<AddressRepository>.internal(
       addressRepository,
       name: r'addressRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$addressRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$addressRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

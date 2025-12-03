@@ -13,10 +13,9 @@ String _$authRepositoryHash() => r'41356c95341c04cb32c7aacf01fbd9c67e0794c9';
 final authRepositoryProvider = Provider<AuthRepository>.internal(
   authRepository,
   name: r'authRepositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authRepositoryHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -31,10 +30,9 @@ String _$authStateStreamHash() => r'e4884613c35417d980aee2417cbf8c8f03703f5b';
 final authStateStreamProvider = StreamProvider<AuthState?>.internal(
   authStateStream,
   name: r'authStateStreamProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$authStateStreamHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authStateStreamHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

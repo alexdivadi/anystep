@@ -15,10 +15,9 @@ final onboardingRepositoryProvider =
     AsyncNotifierProvider<OnboardingRepository, bool>.internal(
       OnboardingRepository.new,
       name: r'onboardingRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$onboardingRepositoryHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$onboardingRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

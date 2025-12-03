@@ -87,10 +87,9 @@ class AttendeeSearchFormControllerProvider
         () => AttendeeSearchFormController()..eventId = eventId,
         from: attendeeSearchFormControllerProvider,
         name: r'attendeeSearchFormControllerProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$attendeeSearchFormControllerHash,
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$attendeeSearchFormControllerHash,
         dependencies: AttendeeSearchFormControllerFamily._dependencies,
         allTransitiveDependencies:
             AttendeeSearchFormControllerFamily._allTransitiveDependencies,

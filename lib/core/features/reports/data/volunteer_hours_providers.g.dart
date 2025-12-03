@@ -112,10 +112,9 @@ class UserEventsInRangeProvider
          ),
          from: userEventsInRangeProvider,
          name: r'userEventsInRangeProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$userEventsInRangeHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$userEventsInRangeHash,
          dependencies: UserEventsInRangeFamily._dependencies,
          allTransitiveDependencies:
              UserEventsInRangeFamily._allTransitiveDependencies,
@@ -282,10 +281,9 @@ class VolunteerHoursAggregateProvider
          ),
          from: volunteerHoursAggregateProvider,
          name: r'volunteerHoursAggregateProvider',
-         debugGetCreateSourceHash:
-             const bool.fromEnvironment('dart.vm.product')
-                 ? null
-                 : _$volunteerHoursAggregateHash,
+         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+             ? null
+             : _$volunteerHoursAggregateHash,
          dependencies: VolunteerHoursAggregateFamily._dependencies,
          allTransitiveDependencies:
              VolunteerHoursAggregateFamily._allTransitiveDependencies,
@@ -383,10 +381,9 @@ final volunteerHoursYtdProvider =
     AutoDisposeFutureProvider<List<VolunteerHoursReport>>.internal(
       volunteerHoursYtd,
       name: r'volunteerHoursYtdProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$volunteerHoursYtdHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$volunteerHoursYtdHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
@@ -406,10 +403,9 @@ final volunteerHoursThisMonthProvider =
     AutoDisposeFutureProvider<List<VolunteerHoursReport>>.internal(
       volunteerHoursThisMonth,
       name: r'volunteerHoursThisMonthProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$volunteerHoursThisMonthHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$volunteerHoursThisMonthHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

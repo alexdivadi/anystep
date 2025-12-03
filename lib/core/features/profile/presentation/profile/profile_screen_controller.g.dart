@@ -11,19 +11,19 @@ String _$profileScreenControllerHash() =>
 
 /// See also [ProfileScreenController].
 @ProviderFor(ProfileScreenController)
-final profileScreenControllerProvider = AutoDisposeNotifierProvider<
-  ProfileScreenController,
-  ProfileScreenControllerState
->.internal(
-  ProfileScreenController.new,
-  name: r'profileScreenControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final profileScreenControllerProvider =
+    AutoDisposeNotifierProvider<
+      ProfileScreenController,
+      ProfileScreenControllerState
+    >.internal(
+      ProfileScreenController.new,
+      name: r'profileScreenControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$profileScreenControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProfileScreenController =
     AutoDisposeNotifier<ProfileScreenControllerState>;

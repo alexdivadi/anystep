@@ -11,19 +11,19 @@ String _$welcomeScreenControllerHash() =>
 
 /// See also [WelcomeScreenController].
 @ProviderFor(WelcomeScreenController)
-final welcomeScreenControllerProvider = AutoDisposeNotifierProvider<
-  WelcomeScreenController,
-  WelcomeScreenState
->.internal(
-  WelcomeScreenController.new,
-  name: r'welcomeScreenControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
+final welcomeScreenControllerProvider =
+    AutoDisposeNotifierProvider<
+      WelcomeScreenController,
+      WelcomeScreenState
+    >.internal(
+      WelcomeScreenController.new,
+      name: r'welcomeScreenControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
           : _$welcomeScreenControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$WelcomeScreenController = AutoDisposeNotifier<WelcomeScreenState>;
 // ignore_for_file: type=lint

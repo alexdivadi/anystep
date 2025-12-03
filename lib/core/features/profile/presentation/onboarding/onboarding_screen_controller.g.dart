@@ -15,10 +15,9 @@ final onboardingScreenControllerProvider =
     AutoDisposeAsyncNotifierProvider<OnboardingScreenController, void>.internal(
       OnboardingScreenController.new,
       name: r'onboardingScreenControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$onboardingScreenControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$onboardingScreenControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

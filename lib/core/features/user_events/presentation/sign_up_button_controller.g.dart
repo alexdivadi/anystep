@@ -15,10 +15,9 @@ final signUpButtonControllerProvider =
     AutoDisposeAsyncNotifierProvider<SignUpButtonController, void>.internal(
       SignUpButtonController.new,
       name: r'signUpButtonControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$signUpButtonControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$signUpButtonControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

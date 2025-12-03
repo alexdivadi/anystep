@@ -703,6 +703,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// Title for sign agreement page
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteer Agreement'**
+  String get volunteerAgreementTitle;
+
+  /// Button label to sign agreement
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to sign'**
+  String get tapToSign;
 }
 
 class _AppLocalizationsDelegate

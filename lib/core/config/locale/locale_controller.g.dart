@@ -14,10 +14,9 @@ final localeControllerProvider =
     AsyncNotifierProvider<LocaleController, Locale?>.internal(
       LocaleController.new,
       name: r'localeControllerProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$localeControllerHash,
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$localeControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );

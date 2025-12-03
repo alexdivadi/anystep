@@ -249,6 +249,9 @@
   "next": "Next",
   "@next": {"description": "Button label to go to next onboarding page"},
   "getStarted": "Get Started",
-  "@getStarted": {"description": "Final onboarding button label"}
-  
+  "@getStarted": {"description": "Final onboarding button label"},
+  "volunteerAgreementTitle": "Volunteer Agreement",
+  "@volunteerAgreementTitle": {"description": "Title for sign agreement page"},
+  "tapToSign": "Tap to sign",
+  "@tapToSign": {"description": "Button label to sign agreement"}
 }
