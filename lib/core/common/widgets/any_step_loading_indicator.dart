@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 class AnyStepLoadingIndicator extends StatefulWidget {
   const AnyStepLoadingIndicator({
@@ -51,7 +52,10 @@ class _AnyStepLoadingIndicatorState extends State<AnyStepLoadingIndicator>
       final start = index * 0.33;
       final end = start + widget.fadeInDurationPercentage;
       return Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(parent: _controller, curve: Interval(start, end, curve: Curves.easeIn)),
+        CurvedAnimation(
+          parent: _controller,
+          curve: Interval(start, end, curve: Curves.easeIn),
+        ),
       );
     });
   }
@@ -101,12 +105,11 @@ class _AnyStepLoadingIndicatorState extends State<AnyStepLoadingIndicator>
             opacity: animation.value,
             child: Transform(
               alignment: Alignment.center,
-              transform:
-                  Matrix4.identity()
-                    // Rotate 45 degrees clockwise
-                    ..rotateZ(45 * 3.1415927 / 180)
-                    // Flip horizontally if flip==true
-                    ..scale(flip ? -1.0 : 1.0, 1.0),
+              transform: Matrix4.identity()
+                // Rotate 45 degrees clockwise
+                ..rotateZ(45 * pi / 180)
+                // Flip horizontally if flip==true using non-uniform scaling
+                ..scaleByVector3(Vector3(flip ? -1.0 : 1.0, 1.0, 1.0)),
               child: Image.asset(
                 'assets/images/shoe_print.png',
                 width: widget.size,

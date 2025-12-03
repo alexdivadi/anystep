@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUploadWidget extends StatefulWidget {
@@ -49,48 +50,43 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
             margin: const EdgeInsets.symmetric(vertical: AnyStepSpacing.md12),
             decoration: BoxDecoration(
               border: Border.all(color: AnyStepColors.gray.withAlpha(100)),
-              borderRadius:
-                  widget.shape == BoxShape.circle
-                      ? null
-                      : BorderRadius.circular(AnyStepSpacing.sm8),
+              borderRadius: widget.shape == BoxShape.circle
+                  ? null
+                  : BorderRadius.circular(AnyStepSpacing.sm8),
               color: AnyStepColors.gray.withAlpha(100),
               shape: widget.shape ?? BoxShape.rectangle,
             ),
-            child:
-                _imageFile == null
-                    ? (widget.imageUrl == null
-                        ? const _ImagePlaceholder()
-                        : _EditableImageWidget(
+            child: _imageFile == null
+                ? (widget.imageUrl == null
+                      ? const _ImagePlaceholder()
+                      : _EditableImageWidget(
                           shape: widget.shape ?? BoxShape.rectangle,
-                          borderRadius:
-                              widget.shape == BoxShape.circle
-                                  ? null
-                                  : BorderRadius.circular(AnyStepSpacing.sm8),
+                          borderRadius: widget.shape == BoxShape.circle
+                              ? null
+                              : BorderRadius.circular(AnyStepSpacing.sm8),
                           onEdit: _pickImage,
                           child: Image.network(
                             widget.imageUrl!,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: widget.height,
-                            errorBuilder:
-                                (context, error, stackTrace) =>
-                                    const Center(child: _ImagePlaceholder()),
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Center(child: _ImagePlaceholder()),
                           ),
                         ))
-                    : _EditableImageWidget(
-                      shape: widget.shape ?? BoxShape.rectangle,
-                      borderRadius:
-                          widget.shape == BoxShape.circle
-                              ? null
-                              : BorderRadius.circular(AnyStepSpacing.sm8),
-                      onEdit: _pickImage,
-                      child: Image.file(
-                        File(_imageFile!.path),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: widget.height,
-                      ),
+                : _EditableImageWidget(
+                    shape: widget.shape ?? BoxShape.rectangle,
+                    borderRadius: widget.shape == BoxShape.circle
+                        ? null
+                        : BorderRadius.circular(AnyStepSpacing.sm8),
+                    onEdit: _pickImage,
+                    child: Image.file(
+                      File(_imageFile!.path),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: widget.height,
                     ),
+                  ),
           ),
         ),
       ],
@@ -114,10 +110,9 @@ class _EditableImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clipped =
-        shape == BoxShape.circle
-            ? ClipOval(child: child)
-            : ClipRRect(borderRadius: borderRadius ?? BorderRadius.zero, child: child);
+    final clipped = shape == BoxShape.circle
+        ? ClipOval(child: child)
+        : ClipRRect(borderRadius: borderRadius ?? BorderRadius.zero, child: child);
 
     return Stack(
       fit: StackFit.expand,
@@ -151,10 +146,13 @@ class _ImagePlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Icon(Icons.image, size: AnyStepSpacing.lg48, color: AnyStepColors.gray),
-        SizedBox(height: AnyStepSpacing.sm8),
-        Text('Tap to pick image', style: TextStyle(color: AnyStepColors.gray)),
+      children: [
+        const Icon(Icons.image, size: AnyStepSpacing.lg48, color: AnyStepColors.gray),
+        const SizedBox(height: AnyStepSpacing.sm8),
+        Text(
+          AppLocalizations.of(context).tapToPickImage,
+          style: const TextStyle(color: AnyStepColors.gray),
+        ),
       ],
     );
   }

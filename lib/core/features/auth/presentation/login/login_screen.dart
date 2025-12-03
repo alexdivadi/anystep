@@ -3,6 +3,7 @@ import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.d
 import 'package:anystep/core/common/widgets/widgets.dart';
 
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -27,6 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final controller = ref.watch(loginScreenControllerProvider.notifier);
     final state = ref.watch(loginScreenControllerProvider);
+    final loc = AppLocalizations.of(context);
 
     return AnyStepScaffold(
       body: Padding(
@@ -37,14 +39,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Welcome back! Please login to continue.',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+                Text(loc.welcomeBackMessage, style: Theme.of(context).textTheme.displayLarge),
                 const SizedBox(height: AnyStepSpacing.md16),
                 AnyStepTextField(
                   name: 'email',
-                  labelText: 'Email',
+                  labelText: loc.email,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.email(),
@@ -52,7 +51,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 AnyStepTextField(
                   name: 'password',
-                  labelText: 'Password',
+                  labelText: loc.password,
                   obscureText: true,
                   validator: FormBuilderValidators.required(),
                 ),
@@ -67,26 +66,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: AnyStepSpacing.sm8),
                 ],
                 ElevatedButton(
-                  onPressed:
-                      state.isLoading
-                          ? null
-                          : () {
-                            if (formKey.currentState?.saveAndValidate() ?? false) {
-                              final values = formKey.currentState!.value;
-                              controller.login(
-                                email: values['email'] ?? '',
-                                password: values['password'] ?? '',
-                              );
-                            }
-                          },
-                  child: const Text('Login'),
+                  onPressed: state.isLoading
+                      ? null
+                      : () {
+                          if (formKey.currentState?.saveAndValidate() ?? false) {
+                            final values = formKey.currentState!.value;
+                            controller.login(
+                              email: values['email'] ?? '',
+                              password: values['password'] ?? '',
+                            );
+                          }
+                        },
+                  child: Text(loc.login),
                 ),
                 const SizedBox(height: AnyStepSpacing.md16),
                 TextButton(
                   onPressed: () {
                     context.push(SignUpScreen.path);
                   },
-                  child: const Text('Don\'t have an account? Sign Up'),
+                  child: Text(loc.dontHaveAccount),
                 ),
               ],
             ),

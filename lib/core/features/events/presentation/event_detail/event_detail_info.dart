@@ -7,6 +7,7 @@ import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
 import 'package:anystep/core/features/events/presentation/widgets/event_time_table.dart';
 import 'package:anystep/core/features/location/utils/launch_map.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailInfo extends StatelessWidget {
@@ -17,6 +18,7 @@ class EventDetailInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPast = event.endTime.isBefore(DateTime.now());
+    final loc = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       child: SingleChildScrollView(
@@ -24,11 +26,11 @@ class EventDetailInfo extends StatelessWidget {
           children: [
             event.imageUrl != null
                 ? Image.network(
-                  event.imageUrl!,
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                )
+                    event.imageUrl!,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
                 : const SizedBox.shrink(),
             Container(
               padding: const EdgeInsets.symmetric(
@@ -61,17 +63,15 @@ class EventDetailInfo extends StatelessWidget {
                     Row(
                       children: [
                         AnyStepBadge(
-                          color:
-                              Theme.of(context).brightness == Brightness.dark
-                                  ? AnyStepColors.greenDark.withAlpha(180)
-                                  : AnyStepColors.green.withAlpha(120),
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AnyStepColors.greenDark.withAlpha(180)
+                              : AnyStepColors.green.withAlpha(120),
                           child: Text(
-                            'Completed',
+                            loc.completed,
                             style: TextStyle(
-                              color:
-                                  Theme.of(context).brightness == Brightness.dark
-                                      ? AnyStepColors.green
-                                      : AnyStepColors.greenDark.withAlpha(200),
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? AnyStepColors.green
+                                  : AnyStepColors.greenDark.withAlpha(200),
                             ),
                           ),
                         ),
@@ -82,8 +82,8 @@ class EventDetailInfo extends StatelessWidget {
               ),
             ),
             DropdownSection(
-              title: Text('Description', style: Theme.of(context).textTheme.titleMedium),
-              content: event.description ?? 'No description',
+              title: Text(loc.description, style: Theme.of(context).textTheme.titleMedium),
+              content: event.description ?? loc.noDescription,
               maxLines: 2,
             ),
             Padding(
@@ -92,30 +92,29 @@ class EventDetailInfo extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.location_on),
-              title: Text('Address', style: Theme.of(context).textTheme.titleMedium),
+              title: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
                 event.address != null
                     ? event.address!.street +
-                        ((event.address!.streetSecondary ?? '').isNotEmpty
-                            ? ' ${event.address!.streetSecondary}'
-                            : '') +
-                        (event.address!.city.isNotEmpty ? '\n${event.address!.city}' : '') +
-                        (event.address!.state.isNotEmpty ? ', ${event.address!.state}' : '') +
-                        (event.address!.postalCode.isNotEmpty
-                            ? ' ${event.address!.postalCode}'
-                            : '')
-                    : 'No address provided',
+                          ((event.address!.streetSecondary ?? '').isNotEmpty
+                              ? ' ${event.address!.streetSecondary}'
+                              : '') +
+                          (event.address!.city.isNotEmpty ? '\n${event.address!.city}' : '') +
+                          (event.address!.state.isNotEmpty ? ', ${event.address!.state}' : '') +
+                          (event.address!.postalCode.isNotEmpty
+                              ? ' ${event.address!.postalCode}'
+                              : '')
+                    : loc.noAddressProvided,
               ),
-              onTap:
-                  event.address != null
-                      ? () async {
-                        try {
-                          await openMap(event.address!);
-                        } catch (e) {
-                          Log.e('Error opening map', e);
-                        }
+              onTap: event.address != null
+                  ? () async {
+                      try {
+                        await openMap(event.address!);
+                      } catch (e) {
+                        Log.e('Error opening map', e);
                       }
-                      : null,
+                    }
+                  : null,
             ),
           ],
         ),

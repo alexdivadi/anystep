@@ -1,7 +1,10 @@
+import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/config/locale/locale_controller.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
+import 'package:anystep/core/common/widgets/any_step_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LocaleSetting extends ConsumerWidget {
   const LocaleSetting({super.key});
@@ -14,31 +17,79 @@ class LocaleSetting extends ConsumerWidget {
 
     return ListTile(
       leading: const Icon(Icons.language),
-      title: const Text('Language'),
+      title: Text(loc.languageLabel),
       subtitle: Text(_labelForLocale(current, loc)),
-      trailing: DropdownButton<Locale?>(
-        value: current,
-        items: const [
-          DropdownMenuItem(value: null, child: Text('System Default')),
-          DropdownMenuItem(value: Locale('en'), child: Text('English')),
-          DropdownMenuItem(value: Locale('es'), child: Text('Español')),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(_labelForLocale(current, loc)),
+          const SizedBox(width: AnyStepSpacing.sm8),
+          const Icon(Icons.expand_more),
         ],
-        onChanged: (newLocale) {
-          ref.read(localeControllerProvider.notifier).setLocale(newLocale);
-        },
       ),
+      onTap: () {
+        context.showModal(
+          _LocaleSelectionList(
+            current: current,
+            onSelected: (newLocale) {
+              ref.read(localeControllerProvider.notifier).setLocale(newLocale);
+              context.pop();
+            },
+            loc: loc,
+          ),
+        );
+      },
     );
   }
 
   String _labelForLocale(Locale? locale, AppLocalizations loc) {
-    if (locale == null) return 'System Default';
+    if (locale == null) return loc.systemDefault;
     switch (locale.languageCode) {
       case 'en':
-        return 'English';
+        return loc.languageEnglish;
       case 'es':
-        return 'Español';
+        return loc.languageSpanish;
       default:
         return locale.languageCode;
     }
+  }
+}
+
+class _LocaleSelectionList extends StatelessWidget {
+  const _LocaleSelectionList({required this.current, required this.onSelected, required this.loc});
+
+  final Locale? current;
+  final ValueChanged<Locale?> onSelected;
+  final AppLocalizations loc;
+
+  @override
+  Widget build(BuildContext context) {
+    final options = <Locale?>[
+      null, // System default
+      const Locale('en'),
+      const Locale('es'),
+    ];
+    String labelFor(Locale? l) => switch (l?.languageCode) {
+      null => loc.systemDefault,
+      'en' => loc.languageEnglish,
+      'es' => loc.languageSpanish,
+      _ => l!.languageCode,
+    };
+
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(AnyStepSpacing.md16),
+      children: [
+        ...options.map(
+          (l) => ListTile(
+            title: Text(labelFor(l)),
+            trailing:
+                (l == current || (l == null && current == null)) ? const Icon(Icons.check) : null,
+            onTap: () => onSelected(l),
+          ),
+        ),
+        const SizedBox(height: AnyStepSpacing.sm8),
+      ],
+    );
   }
 }

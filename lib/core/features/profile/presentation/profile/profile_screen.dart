@@ -7,6 +7,7 @@ import 'package:anystep/core/features/profile/presentation/profile/profile_form.
 import 'package:anystep/core/features/profile/presentation/profile/profile_info.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -30,34 +31,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final userAsync = ref.watch(currentUserStreamProvider);
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context);
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
-        title: const Text('Profile'),
+        title: Text(loc.profileTitle),
         actions: [
           isEditing
               ? IconButton(
-                icon: const Icon(Icons.edit_off),
-                onPressed:
-                    () => setState(() {
-                      isEditing = false;
-                    }),
-              )
+                  icon: const Icon(Icons.edit_off),
+                  onPressed: () => setState(() {
+                    isEditing = false;
+                  }),
+                )
               : IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed:
-                    () => setState(() {
-                      isEditing = true;
-                    }),
-              ),
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => setState(() {
+                    isEditing = true;
+                  }),
+                ),
         ],
       ),
       body: userAsync.when(
         loading: () => const Center(child: AnyStepLoadingIndicator()),
-        error:
-            (e, st) => RefreshIndicator(
-              onRefresh: () async => ref.invalidate(currentUserStreamProvider),
-              child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
-            ),
+        error: (e, st) => RefreshIndicator(
+          onRefresh: () async => ref.invalidate(currentUserStreamProvider),
+          child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
+        ),
         data: (user) {
           if (user == null) {
             return const Center(child: AnyStepLoadingIndicator());
@@ -68,49 +67,48 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 children: [
                   isEditing
                       ? ProfileForm(
-                        user: user,
-                        onCancel:
-                            () => setState(() {
-                              isEditing = false;
-                            }),
-                        onSaved: () {
-                          final state = ref.read(profileScreenControllerProvider);
-                          if (state.error != null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  state.error!,
-                                  style: const TextStyle(color: AnyStepColors.white),
-                                ),
-                                backgroundColor: theme.colorScheme.error,
-                              ),
-                            );
-                            return;
-                          }
-                          setState(() {
+                          user: user,
+                          onCancel: () => setState(() {
                             isEditing = false;
-                          });
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            ref.invalidate(currentUserStreamProvider);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Profile updated successfully',
-                                  style: const TextStyle(color: AnyStepColors.white),
+                          }),
+                          onSaved: () {
+                            final state = ref.read(profileScreenControllerProvider);
+                            if (state.error != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    state.error!,
+                                    style: const TextStyle(color: AnyStepColors.white),
+                                  ),
+                                  backgroundColor: theme.colorScheme.error,
                                 ),
-                                backgroundColor: AnyStepColors.success,
-                              ),
-                            );
-                          });
-                        },
-                      )
+                              );
+                              return;
+                            }
+                            setState(() {
+                              isEditing = false;
+                            });
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ref.invalidate(currentUserStreamProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    loc.profileUpdatedSuccessfully,
+                                    style: const TextStyle(color: AnyStepColors.white),
+                                  ),
+                                  backgroundColor: AnyStepColors.success,
+                                ),
+                              );
+                            });
+                          },
+                        )
                       : ProfileInfo(user: user),
 
                   const SizedBox(height: AnyStepSpacing.md12),
                   if (!isEditing)
                     ElevatedButton.icon(
                       icon: const Icon(Icons.logout),
-                      label: const Text('Logout'),
+                      label: Text(loc.logout),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: theme.colorScheme.error,
                         foregroundColor: theme.colorScheme.onError,

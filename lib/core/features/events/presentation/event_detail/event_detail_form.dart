@@ -4,6 +4,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/inputs/inputs.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,6 +43,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
     final state = ref.watch(eventDetailFormControllerProvider(widget.event?.id));
     final now = DateTime.now().toLocal();
     final tomorrow = DateTime(now.year, now.month, now.day + 1, 0, 0);
+    final loc = AppLocalizations.of(context);
     return PopScope(
       canPop: !state.isLoading,
       child: Padding(
@@ -66,13 +68,13 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     ),
                     AnyStepTextField(
                       name: 'name',
-                      labelText: 'Name',
+                      labelText: loc.nameLabel,
                       initialValue: widget.event?.name,
                       validator: FormBuilderValidators.required(),
                     ),
                     AnyStepTextField(
                       name: 'description',
-                      labelText: 'Description (optional)',
+                      labelText: loc.descriptionOptional,
                       maxLines: 3,
                       expandOnFocus: true,
                       expandedLines: 10,
@@ -83,7 +85,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                         Flexible(
                           child: AnyStepDateTimePicker(
                             name: 'startTime',
-                            labelText: 'Start Day/Time',
+                            labelText: loc.startDateTime,
                             initialValue:
                                 widget.event?.startTime.toLocal() ??
                                 DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 8, 0),
@@ -102,7 +104,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                         Flexible(
                           child: AnyStepDateTimePicker(
                             name: 'endTime',
-                            labelText: 'End Day/Time',
+                            labelText: loc.endDateTime,
                             initialValue:
                                 widget.event?.endTime.toLocal() ??
                                 DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 9, 0),
@@ -124,13 +126,13 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     AnyStepTextField(
                       name: 'street',
                       initialValue: widget.event?.address?.street,
-                      labelText: 'Street Address',
+                      labelText: loc.streetAddress,
                       validator: FormBuilderValidators.required(),
                     ),
                     AnyStepTextField(
                       name: 'streetSecondary',
                       initialValue: widget.event?.address?.streetSecondary,
-                      labelText: 'Apartment/Suite/Floor (optional)',
+                      labelText: loc.apartmentSuiteOptional,
                     ),
                     Row(
                       children: [
@@ -139,7 +141,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                           child: AnyStepTextField(
                             name: 'city',
                             initialValue: widget.event?.address?.city,
-                            labelText: 'City',
+                            labelText: loc.city,
                             validator: FormBuilderValidators.city(),
                           ),
                         ),
@@ -149,7 +151,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                           child: AnyStepTextField(
                             name: 'state',
                             initialValue: widget.event?.address?.state,
-                            labelText: 'State',
+                            labelText: loc.state,
                             validator: FormBuilderValidators.state(),
                           ),
                         ),
@@ -159,7 +161,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                           child: AnyStepTextField(
                             name: 'postalCode',
                             initialValue: widget.event?.address?.postalCode,
-                            labelText: 'Zip Code',
+                            labelText: loc.postalCode,
                             keyboardType: TextInputType.number,
                             validator: FormBuilderValidators.zipCode(),
                           ),
@@ -174,7 +176,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                 Text(state.error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
               ElevatedButton(
                 onPressed: state.isLoading ? null : _onSubmit,
-                child: const Text('Save Event'),
+                child: Builder(builder: (context) => Text(loc.saveEvent)),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
             ],

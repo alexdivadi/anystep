@@ -4,6 +4,7 @@ import 'package:anystep/core/common/widgets/inputs/inputs.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -28,6 +29,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(profileScreenControllerProvider);
+    final loc = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       child: FormBuilder(
@@ -66,15 +68,14 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 name: 'ageGroup',
                 initialValue: widget.user.ageGroup,
                 labelText: 'Age Group',
-                options:
-                    AgeGroup.values
-                        .map(
-                          (ageGroup) => FormBuilderFieldOption(
-                            value: ageGroup,
-                            child: Text(ageGroup.displayName),
-                          ),
-                        )
-                        .toList(),
+                options: AgeGroup.values
+                    .map(
+                      (ageGroup) => FormBuilderFieldOption(
+                        value: ageGroup,
+                        child: Text(ageGroup.displayName),
+                      ),
+                    )
+                    .toList(),
                 validator: FormBuilderValidators.required(),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
@@ -134,21 +135,20 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 children: [
                   TextButton(
                     onPressed: state.isLoading ? null : widget.onCancel,
-                    child: const Text('Cancel'),
+                    child: Text(loc.cancel),
                   ),
                   ElevatedButton(
-                    onPressed:
-                        state.isLoading
-                            ? null
-                            : () async {
-                              if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                await ref
-                                    .read(profileScreenControllerProvider.notifier)
-                                    .save(_formKey.currentState!.value, image: _imageFile);
-                                widget.onSaved?.call();
-                              }
-                            },
-                    child: const Text('Save'),
+                    onPressed: state.isLoading
+                        ? null
+                        : () async {
+                            if (_formKey.currentState?.saveAndValidate() ?? false) {
+                              await ref
+                                  .read(profileScreenControllerProvider.notifier)
+                                  .save(_formKey.currentState!.value, image: _imageFile);
+                              widget.onSaved?.call();
+                            }
+                          },
+                    child: Text(loc.save),
                   ),
                 ],
               ),

@@ -7,6 +7,7 @@ import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignUpList extends ConsumerWidget {
@@ -20,6 +21,7 @@ class SignUpList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Could set withEvents to false, but currently not a significant performance improvement
     final responseAsync = ref.watch(getUserEventsProvider(eventId: eventId));
+    final loc = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -29,14 +31,14 @@ class SignUpList extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Sign Ups', style: Theme.of(context).textTheme.titleLarge),
+          Text(loc.signUps, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AnyStepSpacing.sm8),
           responseAsync.when(
             data: (data) {
               final count = data.totalCount;
               final n = min(count, numToShow);
               if (count == 0) {
-                return const Text("No sign ups yet");
+                return Text(loc.noSignUpsYet);
               }
 
               return ListView.builder(
@@ -69,10 +71,9 @@ class SignUpList extends ConsumerWidget {
                     leading: ProfileImage(user: user, size: 20),
                     title: Text(user.firstName),
                     trailing: AnyStepBadge(
-                      color:
-                          user.role == UserRole.admin
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.secondary,
+                      color: user.role == UserRole.admin
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       child: Text(
                         user.role.displayName,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(

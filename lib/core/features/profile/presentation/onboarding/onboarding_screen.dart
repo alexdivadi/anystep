@@ -5,6 +5,7 @@ import 'package:anystep/core/features/events/presentation/screens.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/presentation/onboarding/onboarding_screen_controller.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,9 +62,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final state = ref.watch(onboardingScreenControllerProvider);
     final firstName = ref.watch(authRepositoryProvider).user?.userMetadata?["first_name"] ?? '';
     final lastName = ref.watch(authRepositoryProvider).user?.userMetadata?["last_name"] ?? '';
+    final loc = AppLocalizations.of(context);
 
     ref.listen(currentUserStreamProvider, (previous, next) {
-      if (next.hasValue && next.value != null) {
+      // Navigate to event feed when user data is available
+      if (next.hasValue) {
         context.go(EventFeedScreen.path);
       }
     });
@@ -85,7 +88,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Text(
-                      'Enter Your Details',
+                      loc.enterYourAddress,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
@@ -95,7 +98,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'firstName',
-                          labelText: 'First Name',
+                          labelText: loc.firstName,
                           initialValue: firstName,
                           validator: FormBuilderValidators.firstName(),
                         ),
@@ -104,9 +107,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'lastName',
-                          labelText: 'Last Name',
+                          labelText: loc.lastName,
                           initialValue: lastName,
-                          validator: FormBuilderValidators.lastName(),
                         ),
                       ),
                     ],
@@ -114,7 +116,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
                   AnyStepTextField(
                     name: 'phoneNumber',
-                    labelText: 'Phone Number',
+                    labelText: loc.phoneNumber,
                     keyboardType: TextInputType.phone,
                     validator: FormBuilderValidators.phoneNumber(
                       regex: RegExp(r'^\+?[\d\s\-()]{7,20}'),
@@ -124,14 +126,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   const SizedBox(height: AnyStepSpacing.md12),
                   AnyStepSegmentedButtonField<AgeGroup>(
                     name: 'ageGroup',
-                    labelText: 'Age Group',
-                    options:
-                        AgeGroup.values
-                            .map(
-                              (ag) =>
-                                  FormBuilderFieldOption(value: ag, child: Text(ag.displayName)),
-                            )
-                            .toList(),
+                    labelText: loc.ageGroup,
+                    options: AgeGroup.values
+                        .map((ag) => FormBuilderFieldOption(value: ag, child: Text(ag.displayName)))
+                        .toList(),
                     validator: FormBuilderValidators.required(),
                   ),
                   const SizedBox(height: AnyStepSpacing.md24),
@@ -148,7 +146,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Text(
-                      'Enter Your Address',
+                      loc.enterYourAddress,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
@@ -163,12 +161,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   const SizedBox(height: AnyStepSpacing.md16),
                   AnyStepTextField(
                     name: 'street',
-                    labelText: 'Street Address',
+                    labelText: loc.streetAddress,
                     validator: FormBuilderValidators.street(),
                   ),
                   AnyStepTextField(
                     name: 'streetSecondary',
-                    labelText: 'Apartment/Suite/Floor (optional)',
+                    labelText: loc.streetAddress2,
                     validator: FormBuilderValidators.street(checkNullOrEmpty: false),
                   ),
                   Row(
@@ -177,7 +175,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         flex: 4,
                         child: AnyStepTextField(
                           name: 'city',
-                          labelText: 'City',
+                          labelText: loc.city,
                           validator: FormBuilderValidators.city(),
                         ),
                       ),
@@ -186,7 +184,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         flex: 2,
                         child: AnyStepTextField(
                           name: 'state',
-                          labelText: 'State',
+                          labelText: loc.state,
                           validator: FormBuilderValidators.state(),
                         ),
                       ),
@@ -195,7 +193,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         flex: 3,
                         child: AnyStepTextField(
                           name: 'zipCode',
-                          labelText: 'Zip Code',
+                          labelText: loc.postalCode,
                           keyboardType: TextInputType.number,
                           validator: FormBuilderValidators.zipCode(),
                         ),
@@ -214,20 +212,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(onPressed: _prevPage, child: Text('Back')),
+                      ElevatedButton(onPressed: _prevPage, child: Text(loc.back)),
                       ElevatedButton(
-                        onPressed:
-                            state.isLoading
-                                ? null
-                                : () async {
-                                  if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                    await ref
-                                        .read(onboardingScreenControllerProvider.notifier)
-                                        .updateUserDetails(values: _formKey.currentState!.value);
-                                  }
-                                },
-                        child:
-                            state.isLoading ? CircularProgressIndicator.adaptive() : Text('Submit'),
+                        onPressed: state.isLoading
+                            ? null
+                            : () async {
+                                if (_formKey.currentState?.saveAndValidate() ?? false) {
+                                  await ref
+                                      .read(onboardingScreenControllerProvider.notifier)
+                                      .updateUserDetails(values: _formKey.currentState!.value);
+                                }
+                              },
+                        child: state.isLoading
+                            ? CircularProgressIndicator.adaptive()
+                            : Text(loc.submit),
                       ),
                     ],
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 
 abstract class AnyStepNavBar extends StatelessWidget {
   const AnyStepNavBar({super.key, required this.currentIndex, required this.onTap});
@@ -6,7 +7,8 @@ abstract class AnyStepNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  List<BottomNavigationBarItem> get items;
+  /// Subclasses provide localized items using the current BuildContext.
+  List<BottomNavigationBarItem> items(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ abstract class AnyStepNavBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onTap,
       useLegacyColorScheme: false,
-      items: items,
+      items: items(context),
     );
   }
 }
@@ -23,29 +25,38 @@ class AdminNavBar extends AnyStepNavBar {
   const AdminNavBar({super.key, required super.currentIndex, required super.onTap});
 
   @override
-  List<BottomNavigationBarItem> get items => const [
-    BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
-    BottomNavigationBarItem(icon: Icon(Icons.line_axis_rounded), label: 'Reports'),
-    BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'See More'),
-  ];
+  List<BottomNavigationBarItem> items(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return [
+      BottomNavigationBarItem(icon: const Icon(Icons.dashboard), label: loc.dashboard),
+      BottomNavigationBarItem(icon: const Icon(Icons.line_axis_rounded), label: loc.reportsTitle),
+      BottomNavigationBarItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
+    ];
+  }
 }
 
 class VolunteerNavBar extends AnyStepNavBar {
   const VolunteerNavBar({super.key, required super.currentIndex, required super.onTap});
 
   @override
-  List<BottomNavigationBarItem> get items => const [
-    BottomNavigationBarItem(icon: Icon(Icons.event_rounded), label: 'Events'),
-    BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'See More'),
-  ];
+  List<BottomNavigationBarItem> items(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return [
+      BottomNavigationBarItem(icon: const Icon(Icons.event_rounded), label: loc.eventFeed),
+      BottomNavigationBarItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
+    ];
+  }
 }
 
 class UnauthenticatedNavBar extends AnyStepNavBar {
   const UnauthenticatedNavBar({super.key, required super.currentIndex, required super.onTap});
 
   @override
-  List<BottomNavigationBarItem> get items => const [
-    BottomNavigationBarItem(icon: Icon(Icons.event_rounded), label: 'Events'),
-    BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'See More'),
-  ];
+  List<BottomNavigationBarItem> items(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return [
+      BottomNavigationBarItem(icon: const Icon(Icons.event_rounded), label: loc.eventFeed),
+      BottomNavigationBarItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
+    ];
+  }
 }
