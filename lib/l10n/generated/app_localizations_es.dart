@@ -133,6 +133,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventFeed => 'Eventos';
 
   @override
+  String get search => 'Buscar';
+
+  @override
   String get searchEvents => 'Buscar eventos';
 
   @override
@@ -342,4 +345,47 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tapToSign => 'Toca para firmar';
+
+  @override
+  String get validatorRequired => 'Este campo es obligatorio';
+
+  @override
+  String get validatorEmail => 'Ingresa un correo electrónico válido';
+
+  @override
+  String get validatorPassword => 'La contraseña no cumple los requisitos';
+
+  @override
+  String get validatorFirstName => 'Ingresa un nombre válido';
+
+  @override
+  String get validatorLastName => 'Ingresa un apellido válido';
+
+  @override
+  String get validatorPhoneNumber => 'Ingresa un número de teléfono válido';
+
+  @override
+  String get validatorStreet => 'Ingresa una dirección válida';
+
+  @override
+  String get validatorCity => 'Ingresa una ciudad válida';
+
+  @override
+  String get validatorState => 'Ingresa un estado válido';
+
+  @override
+  String get validatorZipCode => 'Ingresa un código postal válido';
+
+  @override
+  String get noEventsFound => 'No hay eventos';
+
+  @override
+  String get checkBackLater => 'Vuelve más tarde para ver actualizaciones';
+
+  @override
+  String get noUsersFound => 'No hay usuarios';
+
+  @override
+  String get enterSearchTerm =>
+      'Ingresa un término de búsqueda para encontrar eventos.';
 }

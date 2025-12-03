@@ -133,6 +133,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventFeed => 'Event Feed';
 
   @override
+  String get search => 'Search';
+
+  @override
   String get searchEvents => 'Search events';
 
   @override
@@ -340,4 +343,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tapToSign => 'Tap to sign';
+
+  @override
+  String get validatorRequired => 'This field is required';
+
+  @override
+  String get validatorEmail => 'Please enter a valid email address';
+
+  @override
+  String get validatorPassword => 'Password must meet the requirements';
+
+  @override
+  String get validatorFirstName => 'Please enter a valid first name';
+
+  @override
+  String get validatorLastName => 'Please enter a valid last name';
+
+  @override
+  String get validatorPhoneNumber => 'Please enter a valid phone number';
+
+  @override
+  String get validatorStreet => 'Please enter a valid street address';
+
+  @override
+  String get validatorCity => 'Please enter a valid city';
+
+  @override
+  String get validatorState => 'Please enter a valid state';
+
+  @override
+  String get validatorZipCode => 'Please enter a valid postal code';
+
+  @override
+  String get noEventsFound => 'No events found';
+
+  @override
+  String get checkBackLater => 'Check back later for updates';
+
+  @override
+  String get noUsersFound => 'No users found';
+
+  @override
+  String get enterSearchTerm => 'Please enter a search term to find events.';
 }

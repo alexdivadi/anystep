@@ -308,6 +308,12 @@ abstract class AppLocalizations {
   /// **'Event Feed'**
   String get eventFeed;
 
+  /// Generic label for search
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
   /// Search bar hint text for events
   ///
   /// In en, this message translates to:
@@ -715,6 +721,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap to sign'**
   String get tapToSign;
+
+  /// Error shown when a required field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get validatorRequired;
+
+  /// Error for invalid email format
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get validatorEmail;
+
+  /// Generic password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must meet the requirements'**
+  String get validatorPassword;
+
+  /// Error for invalid first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid first name'**
+  String get validatorFirstName;
+
+  /// Error for invalid last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid last name'**
+  String get validatorLastName;
+
+  /// Error for invalid phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get validatorPhoneNumber;
+
+  /// Error for invalid street address
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid street address'**
+  String get validatorStreet;
+
+  /// Error for invalid city
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid city'**
+  String get validatorCity;
+
+  /// Error for invalid state
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid state'**
+  String get validatorState;
+
+  /// Error for invalid postal/zip code
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid postal code'**
+  String get validatorZipCode;
+
+  /// Empty state title when there are no events
+  ///
+  /// In en, this message translates to:
+  /// **'No events found'**
+  String get noEventsFound;
+
+  /// Helper text encouraging the user to return later
+  ///
+  /// In en, this message translates to:
+  /// **'Check back later for updates'**
+  String get checkBackLater;
+
+  /// Empty state when no users are available
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// Text when search field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a search term to find events.'**
+  String get enterSearchTerm;
 }
 
 class _AppLocalizationsDelegate

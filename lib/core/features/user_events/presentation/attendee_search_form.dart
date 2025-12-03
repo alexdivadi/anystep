@@ -3,6 +3,7 @@ import 'package:anystep/core/features/events/presentation/widgets/did_attend_ind
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/profile/presentation/user_feed.dart';
 import 'package:anystep/core/features/user_events/presentation/attendee_search_form_controller.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -34,27 +35,28 @@ class _AttendeeSearchFormState extends ConsumerState<AttendeeSearchForm> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           titleSpacing: 0,
-          title: AnyStepSearchBar(onChanged: _onSearchChanged),
+          title: AnyStepSearchBar(
+            onChanged: _onSearchChanged,
+            hintText: AppLocalizations.of(context).search,
+          ),
         ),
         UserFeed(
           search: search,
-          onTapUser:
-              state.isLoading
-                  ? null
-                  : ref
-                      .read(attendeeSearchFormControllerProvider(widget.eventId).notifier)
-                      .toggleAttendance,
-          leadingBuilder:
-              (user) => Stack(
-                children: [
-                  ProfileImage(user: user, size: 20),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: DidAttendIndicator(eventId: widget.eventId, userId: user.id, size: 12.0),
-                  ),
-                ],
+          onTapUser: state.isLoading
+              ? null
+              : ref
+                    .read(attendeeSearchFormControllerProvider(widget.eventId).notifier)
+                    .toggleAttendance,
+          leadingBuilder: (user) => Stack(
+            children: [
+              ProfileImage(user: user, size: 20),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: DidAttendIndicator(eventId: widget.eventId, userId: user.id, size: 12.0),
               ),
+            ],
+          ),
         ),
       ],
     );

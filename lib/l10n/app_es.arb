@@ -103,7 +103,8 @@
   "@dashboard": {"description": "Título del panel de administración"},
   "eventFeed": "Eventos",
   "@eventFeed": {"description": "Título del feed de eventos"},
-  
+  "search": "Buscar",
+  "@search": {"description": "Para buscador"},
   "searchEvents": "Buscar eventos",
   "@searchEvents": {"description": "Texto de sugerencia del buscador de eventos"},
   "cancel": "Cancelar",
@@ -251,9 +252,41 @@
   "getStarted": "Comenzar",
   "@getStarted": {"description": "Etiqueta del botón final del onboarding"}
   ,
+  "validatorRequired": "Este campo es obligatorio",
+  "@validatorRequired": {"description": "Error cuando un campo requerido está vacío"},
+  "validatorEmail": "Ingresa un correo electrónico válido",
+  "@validatorEmail": {"description": "Error por formato de correo inválido"},
+  "validatorPassword": "La contraseña no cumple los requisitos",
+  "@validatorPassword": {"description": "Error genérico de validación de contraseña"},
+  "validatorFirstName": "Ingresa un nombre válido",
+  "@validatorFirstName": {"description": "Error por nombre inválido"},
+  "validatorLastName": "Ingresa un apellido válido",
+  "@validatorLastName": {"description": "Error por apellido inválido"},
+  "validatorPhoneNumber": "Ingresa un número de teléfono válido",
+  "@validatorPhoneNumber": {"description": "Error por teléfono inválido"},
+  "validatorStreet": "Ingresa una dirección válida",
+  "@validatorStreet": {"description": "Error por dirección inválida"},
+  "validatorCity": "Ingresa una ciudad válida",
+  "@validatorCity": {"description": "Error por ciudad inválida"},
+  "validatorState": "Ingresa un estado válido",
+  "@validatorState": {"description": "Error por estado inválido"},
+  "validatorZipCode": "Ingresa un código postal válido",
+  "@validatorZipCode": {"description": "Error por código postal inválido"}
+  ,
+  "enterSearchTerm": "Ingresa un término de búsqueda para encontrar eventos.",
+  "@enterSearchTerm": {"description": "Texto cuando el campo de búsqueda está vacío"}
+  ,
   "volunteerAgreementTitle": "Acuerdo de Voluntariado",
   "@volunteerAgreementTitle": {"description": "Título para la página de firma del acuerdo"},
   "tapToSign": "Toca para firmar",
   "@tapToSign": {"description": "Etiqueta del botón para firmar el acuerdo"}
+  ,
+  "noEventsFound": "No hay eventos",
+  "@noEventsFound": {"description": "Estado vacío cuando no hay eventos"},
+  "checkBackLater": "Vuelve más tarde para ver actualizaciones",
+  "@checkBackLater": {"description": "Texto de ayuda invitando a regresar más tarde"}
+  ,
+  "noUsersFound": "No hay usuarios",
+  "@noUsersFound": {"description": "Estado vacío cuando no hay usuarios"}
   
 }

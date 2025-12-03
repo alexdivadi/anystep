@@ -103,7 +103,8 @@
   "@dashboard": {"description": "Admin dashboard title"},
   "eventFeed": "Event Feed",
   "@eventFeed": {"description": "Event feed title"},
-  
+  "search": "Search",
+  "@search": {"description": "Generic label for search"},
   "searchEvents": "Search events",
   "@searchEvents": {"description": "Search bar hint text for events"},
   "cancel": "Cancel",
@@ -254,4 +255,36 @@
   "@volunteerAgreementTitle": {"description": "Title for sign agreement page"},
   "tapToSign": "Tap to sign",
   "@tapToSign": {"description": "Button label to sign agreement"}
+  ,
+  "validatorRequired": "This field is required",
+  "@validatorRequired": {"description": "Error shown when a required field is empty"},
+  "validatorEmail": "Please enter a valid email address",
+  "@validatorEmail": {"description": "Error for invalid email format"},
+  "validatorPassword": "Password must meet the requirements",
+  "@validatorPassword": {"description": "Generic password validation error"},
+  "validatorFirstName": "Please enter a valid first name",
+  "@validatorFirstName": {"description": "Error for invalid first name"},
+  "validatorLastName": "Please enter a valid last name",
+  "@validatorLastName": {"description": "Error for invalid last name"},
+  "validatorPhoneNumber": "Please enter a valid phone number",
+  "@validatorPhoneNumber": {"description": "Error for invalid phone number"},
+  "validatorStreet": "Please enter a valid street address",
+  "@validatorStreet": {"description": "Error for invalid street address"},
+  "validatorCity": "Please enter a valid city",
+  "@validatorCity": {"description": "Error for invalid city"},
+  "validatorState": "Please enter a valid state",
+  "@validatorState": {"description": "Error for invalid state"},
+  "validatorZipCode": "Please enter a valid postal code",
+  "@validatorZipCode": {"description": "Error for invalid postal/zip code"}
+  ,
+  "noEventsFound": "No events found",
+  "@noEventsFound": {"description": "Empty state title when there are no events"},
+  "checkBackLater": "Check back later for updates",
+  "@checkBackLater": {"description": "Helper text encouraging the user to return later"}
+  ,
+  "noUsersFound": "No users found",
+  "@noUsersFound": {"description": "Empty state when no users are available"}
+  ,
+  "enterSearchTerm": "Please enter a search term to find events.",
+  "@enterSearchTerm": {"description": "Text when search field is empty"}
 }

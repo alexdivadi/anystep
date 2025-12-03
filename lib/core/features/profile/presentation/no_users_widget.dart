@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/widgets/any_step_fade.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:anystep/core/common/constants/spacing.dart';
 
@@ -22,7 +23,7 @@ class NoUsersWidget extends StatelessWidget {
             ),
             const SizedBox(height: AnyStepSpacing.md16),
             Text(
-              'No users found',
+              AppLocalizations.of(context).noUsersFound,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withAlpha(150),
               ),
