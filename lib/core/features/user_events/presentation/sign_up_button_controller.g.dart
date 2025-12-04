@@ -6,22 +6,51 @@ part of 'sign_up_button_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SignUpButtonController)
+const signUpButtonControllerProvider = SignUpButtonControllerProvider._();
+
+final class SignUpButtonControllerProvider
+    extends $AsyncNotifierProvider<SignUpButtonController, void> {
+  const SignUpButtonControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'signUpButtonControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$signUpButtonControllerHash();
+
+  @$internal
+  @override
+  SignUpButtonController create() => SignUpButtonController();
+}
+
 String _$signUpButtonControllerHash() =>
     r'25882fa0bfe82a6884c8811691ee8e5c894b11d2';
 
-/// See also [SignUpButtonController].
-@ProviderFor(SignUpButtonController)
-final signUpButtonControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SignUpButtonController, void>.internal(
-      SignUpButtonController.new,
-      name: r'signUpButtonControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$signUpButtonControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$SignUpButtonController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$SignUpButtonController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

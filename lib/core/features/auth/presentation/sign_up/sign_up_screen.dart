@@ -48,7 +48,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'firstName',
-                          labelText: 'First Name',
+                          labelText: loc.firstName,
                           validator: FormBuilderValidators.firstName(),
                         ),
                       ),
@@ -56,7 +56,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'lastName',
-                          labelText: 'Last Name',
+                          labelText: loc.lastName,
                           validator: FormBuilderValidators.lastName(),
                         ),
                       ),
@@ -72,7 +72,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   AnyStepTextField(
                     name: 'password',
-                    labelText: 'Password',
+                    labelText: loc.password,
                     obscureText: true,
                     validator: FormBuilderValidators.password(
                       minSpecialCharCount: 0,
@@ -81,7 +81,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   AnyStepTextField(
                     name: 'confirmPassword',
-                    labelText: 'Confirm Password',
+                    labelText: loc.confirmPassword,
                     obscureText: true,
                     validator: (value) {
                       final password = formKey.currentState?.fields['password']?.value;

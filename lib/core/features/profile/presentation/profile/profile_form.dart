@@ -49,25 +49,25 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
               AnyStepTextField(
                 name: 'firstName',
                 initialValue: widget.user.firstName,
-                labelText: 'First Name',
+                labelText: loc.firstName,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'lastName',
                 initialValue: widget.user.lastName,
-                labelText: 'Last Name',
+                labelText: loc.lastName,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'phoneNumber',
                 keyboardType: TextInputType.phone,
                 initialValue: widget.user.phoneNumber,
-                labelText: 'Phone',
+                labelText: loc.phone,
               ),
               AnyStepSegmentedButtonField<AgeGroup>(
                 name: 'ageGroup',
                 initialValue: widget.user.ageGroup,
-                labelText: 'Age Group',
+                labelText: loc.ageGroup,
                 options: AgeGroup.values
                     .map(
                       (ageGroup) => FormBuilderFieldOption(
@@ -82,13 +82,13 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
               AnyStepTextField(
                 name: 'street',
                 initialValue: widget.user.address?.street,
-                labelText: 'Street Address',
+                labelText: loc.streetAddress,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'streetSecondary',
                 initialValue: widget.user.address?.streetSecondary,
-                labelText: 'Apartment/Suite/Floor (optional)',
+                labelText: loc.apartmentSuiteOptional,
               ),
               Row(
                 children: [
@@ -97,7 +97,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'city',
                       initialValue: widget.user.address?.city,
-                      labelText: 'City',
+                      labelText: loc.city,
                       validator: FormBuilderValidators.city(),
                     ),
                   ),
@@ -107,7 +107,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'state',
                       initialValue: widget.user.address?.state,
-                      labelText: 'State',
+                      labelText: loc.state,
                       validator: FormBuilderValidators.state(),
                     ),
                   ),
@@ -117,7 +117,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'postalCode',
                       initialValue: widget.user.address?.postalCode,
-                      labelText: 'Zip Code',
+                      labelText: loc.postalCode,
                       keyboardType: TextInputType.number,
                       validator: FormBuilderValidators.zipCode(),
                     ),

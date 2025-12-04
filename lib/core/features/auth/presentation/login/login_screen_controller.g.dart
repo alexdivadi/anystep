@@ -6,25 +6,59 @@ part of 'login_screen_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(LoginScreenController)
+const loginScreenControllerProvider = LoginScreenControllerProvider._();
+
+final class LoginScreenControllerProvider
+    extends $NotifierProvider<LoginScreenController, LoginScreenState> {
+  const LoginScreenControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'loginScreenControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$loginScreenControllerHash();
+
+  @$internal
+  @override
+  LoginScreenController create() => LoginScreenController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LoginScreenState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LoginScreenState>(value),
+    );
+  }
+}
+
 String _$loginScreenControllerHash() =>
     r'e6de5624e0f2ed5ccef56f27789ef09812c617fc';
 
-/// See also [LoginScreenController].
-@ProviderFor(LoginScreenController)
-final loginScreenControllerProvider =
-    AutoDisposeNotifierProvider<
-      LoginScreenController,
-      LoginScreenState
-    >.internal(
-      LoginScreenController.new,
-      name: r'loginScreenControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$loginScreenControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$LoginScreenController = AutoDisposeNotifier<LoginScreenState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$LoginScreenController extends $Notifier<LoginScreenState> {
+  LoginScreenState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<LoginScreenState, LoginScreenState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<LoginScreenState, LoginScreenState>,
+              LoginScreenState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

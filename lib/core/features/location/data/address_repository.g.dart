@@ -6,23 +6,52 @@ part of 'address_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addressRepositoryHash() => r'1f3dd636881532bc7c3124722710b9a4ba3f3395';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [addressRepository].
 @ProviderFor(addressRepository)
-final addressRepositoryProvider =
-    AutoDisposeProvider<AddressRepository>.internal(
-      addressRepository,
-      name: r'addressRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$addressRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+const addressRepositoryProvider = AddressRepositoryProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AddressRepositoryRef = AutoDisposeProviderRef<AddressRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class AddressRepositoryProvider
+    extends
+        $FunctionalProvider<
+          AddressRepository,
+          AddressRepository,
+          AddressRepository
+        >
+    with $Provider<AddressRepository> {
+  const AddressRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'addressRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$addressRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<AddressRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AddressRepository create(Ref ref) {
+    return addressRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AddressRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AddressRepository>(value),
+    );
+  }
+}
+
+String _$addressRepositoryHash() => r'1f3dd636881532bc7c3124722710b9a4ba3f3395';

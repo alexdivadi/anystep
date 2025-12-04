@@ -10,7 +10,6 @@ import 'package:anystep/core/config/router/router_utils.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -62,7 +61,7 @@ GoRouter router(Ref ref) {
       if (RouterUtils.anyRoutes.contains(normalizedPath)) {
         if (RouterUtils.loginRoutes.contains(path)) {
           // Replace with dashboard screen
-          return authStateAsync.hasValue && authStateAsync.valueOrNull != null
+          return authStateAsync.hasValue && authStateAsync.value != null
               ? EventFeedScreen.path
               : null;
         }
@@ -72,7 +71,7 @@ GoRouter router(Ref ref) {
 
       final isUnauthenticatedShell = RouterUtils.unauthenticatedRoutes.contains(normalizedPath);
 
-      if (authStateAsync.valueOrNull != null) {
+      if (authStateAsync.value != null) {
         // User is authenticated, allow access to the requested route
         // Check if user has submitted profile information
         final user = ref.read(currentUserStreamProvider);

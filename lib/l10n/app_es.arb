@@ -190,6 +190,9 @@
   "password": "Contraseña",
   "@password": {"description": "Etiqueta para contraseña"}
   ,
+  "confirmPassword": "Confirmar contraseña",
+  "@confirmPassword": {"description": "Etiqueta para confirmar la contraseña"}
+  ,
   "enterYourDetails": "Ingresa tus datos",
   "@enterYourDetails": {"description": "Título de sección de onboarding para datos del usuario"},
   "firstName": "Nombre",

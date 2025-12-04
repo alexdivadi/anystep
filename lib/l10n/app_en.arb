@@ -188,7 +188,9 @@
   "postalCode": "Postal Code",
   "@postalCode": {"description": "Label for postal code field"},
   "password": "Password",
-  "@password": {"description": "Label for password field"}
+  "@password": {"description": "Label for password field"},
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {"description": "Label for confirm password field"}
   ,
   "enterYourDetails": "Enter Your Details",
   "@enterYourDetails": {"description": "Onboarding section title for user details"},

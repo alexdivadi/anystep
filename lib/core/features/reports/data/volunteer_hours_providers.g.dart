@@ -6,413 +6,305 @@ part of 'volunteer_hours_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userEventsInRangeHash() => r'ee760e47a276d34bb7406434588037548c9a92fa';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 /// Raw list of user events (with embedded event & user) for a date range.
 /// We request both user and event models from repository.
-///
-/// Copied from [userEventsInRange].
+
 @ProviderFor(userEventsInRange)
-const userEventsInRangeProvider = UserEventsInRangeFamily();
+const userEventsInRangeProvider = UserEventsInRangeFamily._();
 
 /// Raw list of user events (with embedded event & user) for a date range.
 /// We request both user and event models from repository.
-///
-/// Copied from [userEventsInRange].
-class UserEventsInRangeFamily extends Family<AsyncValue<List<UserEventModel>>> {
+
+final class UserEventsInRangeProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<UserEventModel>>,
+          List<UserEventModel>,
+          FutureOr<List<UserEventModel>>
+        >
+    with
+        $FutureModifier<List<UserEventModel>>,
+        $FutureProvider<List<UserEventModel>> {
   /// Raw list of user events (with embedded event & user) for a date range.
   /// We request both user and event models from repository.
-  ///
-  /// Copied from [userEventsInRange].
-  const UserEventsInRangeFamily();
-
-  /// Raw list of user events (with embedded event & user) for a date range.
-  /// We request both user and event models from repository.
-  ///
-  /// Copied from [userEventsInRange].
-  UserEventsInRangeProvider call({
-    required DateTime start,
-    required DateTime end,
-    bool attendedOnly = true,
-  }) {
-    return UserEventsInRangeProvider(
-      start: start,
-      end: end,
-      attendedOnly: attendedOnly,
-    );
-  }
-
-  @override
-  UserEventsInRangeProvider getProviderOverride(
-    covariant UserEventsInRangeProvider provider,
-  ) {
-    return call(
-      start: provider.start,
-      end: provider.end,
-      attendedOnly: provider.attendedOnly,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'userEventsInRangeProvider';
-}
-
-/// Raw list of user events (with embedded event & user) for a date range.
-/// We request both user and event models from repository.
-///
-/// Copied from [userEventsInRange].
-class UserEventsInRangeProvider
-    extends AutoDisposeFutureProvider<List<UserEventModel>> {
-  /// Raw list of user events (with embedded event & user) for a date range.
-  /// We request both user and event models from repository.
-  ///
-  /// Copied from [userEventsInRange].
-  UserEventsInRangeProvider({
-    required DateTime start,
-    required DateTime end,
-    bool attendedOnly = true,
-  }) : this._internal(
-         (ref) => userEventsInRange(
-           ref as UserEventsInRangeRef,
-           start: start,
-           end: end,
-           attendedOnly: attendedOnly,
-         ),
-         from: userEventsInRangeProvider,
+  const UserEventsInRangeProvider._({
+    required UserEventsInRangeFamily super.from,
+    required ({DateTime start, DateTime end, bool attendedOnly}) super.argument,
+  }) : super(
+         retry: null,
          name: r'userEventsInRangeProvider',
-         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-             ? null
-             : _$userEventsInRangeHash,
-         dependencies: UserEventsInRangeFamily._dependencies,
-         allTransitiveDependencies:
-             UserEventsInRangeFamily._allTransitiveDependencies,
-         start: start,
-         end: end,
-         attendedOnly: attendedOnly,
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
        );
 
-  UserEventsInRangeProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.start,
-    required this.end,
-    required this.attendedOnly,
-  }) : super.internal();
-
-  final DateTime start;
-  final DateTime end;
-  final bool attendedOnly;
+  @override
+  String debugGetCreateSourceHash() => _$userEventsInRangeHash();
 
   @override
-  Override overrideWith(
-    FutureOr<List<UserEventModel>> Function(UserEventsInRangeRef provider)
-    create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: UserEventsInRangeProvider._internal(
-        (ref) => create(ref as UserEventsInRangeRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        start: start,
-        end: end,
-        attendedOnly: attendedOnly,
-      ),
-    );
+  String toString() {
+    return r'userEventsInRangeProvider'
+        ''
+        '$argument';
   }
 
+  @$internal
   @override
-  AutoDisposeFutureProviderElement<List<UserEventModel>> createElement() {
-    return _UserEventsInRangeProviderElement(this);
+  $FutureProviderElement<List<UserEventModel>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<UserEventModel>> create(Ref ref) {
+    final argument =
+        this.argument as ({DateTime start, DateTime end, bool attendedOnly});
+    return userEventsInRange(
+      ref,
+      start: argument.start,
+      end: argument.end,
+      attendedOnly: argument.attendedOnly,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserEventsInRangeProvider &&
-        other.start == start &&
-        other.end == end &&
-        other.attendedOnly == attendedOnly;
+    return other is UserEventsInRangeProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, start.hashCode);
-    hash = _SystemHash.combine(hash, end.hashCode);
-    hash = _SystemHash.combine(hash, attendedOnly.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin UserEventsInRangeRef
-    on AutoDisposeFutureProviderRef<List<UserEventModel>> {
-  /// The parameter `start` of this provider.
-  DateTime get start;
+String _$userEventsInRangeHash() => r'ee760e47a276d34bb7406434588037548c9a92fa';
 
-  /// The parameter `end` of this provider.
-  DateTime get end;
+/// Raw list of user events (with embedded event & user) for a date range.
+/// We request both user and event models from repository.
 
-  /// The parameter `attendedOnly` of this provider.
-  bool get attendedOnly;
+final class UserEventsInRangeFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<UserEventModel>>,
+          ({DateTime start, DateTime end, bool attendedOnly})
+        > {
+  const UserEventsInRangeFamily._()
+    : super(
+        retry: null,
+        name: r'userEventsInRangeProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Raw list of user events (with embedded event & user) for a date range.
+  /// We request both user and event models from repository.
+
+  UserEventsInRangeProvider call({
+    required DateTime start,
+    required DateTime end,
+    bool attendedOnly = true,
+  }) => UserEventsInRangeProvider._(
+    argument: (start: start, end: end, attendedOnly: attendedOnly),
+    from: this,
+  );
+
+  @override
+  String toString() => r'userEventsInRangeProvider';
 }
 
-class _UserEventsInRangeProviderElement
-    extends AutoDisposeFutureProviderElement<List<UserEventModel>>
-    with UserEventsInRangeRef {
-  _UserEventsInRangeProviderElement(super.provider);
+/// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+
+@ProviderFor(volunteerHoursAggregate)
+const volunteerHoursAggregateProvider = VolunteerHoursAggregateFamily._();
+
+/// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+
+final class VolunteerHoursAggregateProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<VolunteerHoursReport>>,
+          List<VolunteerHoursReport>,
+          FutureOr<List<VolunteerHoursReport>>
+        >
+    with
+        $FutureModifier<List<VolunteerHoursReport>>,
+        $FutureProvider<List<VolunteerHoursReport>> {
+  /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+  const VolunteerHoursAggregateProvider._({
+    required VolunteerHoursAggregateFamily super.from,
+    required ({DateTime start, DateTime end}) super.argument,
+  }) : super(
+         retry: null,
+         name: r'volunteerHoursAggregateProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
-  DateTime get start => (origin as UserEventsInRangeProvider).start;
+  String debugGetCreateSourceHash() => _$volunteerHoursAggregateHash();
+
   @override
-  DateTime get end => (origin as UserEventsInRangeProvider).end;
+  String toString() {
+    return r'volunteerHoursAggregateProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
   @override
-  bool get attendedOnly => (origin as UserEventsInRangeProvider).attendedOnly;
+  $FutureProviderElement<List<VolunteerHoursReport>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<VolunteerHoursReport>> create(Ref ref) {
+    final argument = this.argument as ({DateTime start, DateTime end});
+    return volunteerHoursAggregate(
+      ref,
+      start: argument.start,
+      end: argument.end,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VolunteerHoursAggregateProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$volunteerHoursAggregateHash() =>
     r'10176eafd4c64e34bd68ffe1ee9cb4424041074e';
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-///
-/// Copied from [volunteerHoursAggregate].
-@ProviderFor(volunteerHoursAggregate)
-const volunteerHoursAggregateProvider = VolunteerHoursAggregateFamily();
 
-/// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-///
-/// Copied from [volunteerHoursAggregate].
-class VolunteerHoursAggregateFamily
-    extends Family<AsyncValue<List<VolunteerHoursReport>>> {
-  /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-  ///
-  /// Copied from [volunteerHoursAggregate].
-  const VolunteerHoursAggregateFamily();
+final class VolunteerHoursAggregateFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<VolunteerHoursReport>>,
+          ({DateTime start, DateTime end})
+        > {
+  const VolunteerHoursAggregateFamily._()
+    : super(
+        retry: null,
+        name: r'volunteerHoursAggregateProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
 
   /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-  ///
-  /// Copied from [volunteerHoursAggregate].
+
   VolunteerHoursAggregateProvider call({
     required DateTime start,
     required DateTime end,
-  }) {
-    return VolunteerHoursAggregateProvider(start: start, end: end);
-  }
+  }) => VolunteerHoursAggregateProvider._(
+    argument: (start: start, end: end),
+    from: this,
+  );
 
   @override
-  VolunteerHoursAggregateProvider getProviderOverride(
-    covariant VolunteerHoursAggregateProvider provider,
-  ) {
-    return call(start: provider.start, end: provider.end);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'volunteerHoursAggregateProvider';
+  String toString() => r'volunteerHoursAggregateProvider';
 }
 
-/// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-///
-/// Copied from [volunteerHoursAggregate].
-class VolunteerHoursAggregateProvider
-    extends AutoDisposeFutureProvider<List<VolunteerHoursReport>> {
-  /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
-  ///
-  /// Copied from [volunteerHoursAggregate].
-  VolunteerHoursAggregateProvider({
-    required DateTime start,
-    required DateTime end,
-  }) : this._internal(
-         (ref) => volunteerHoursAggregate(
-           ref as VolunteerHoursAggregateRef,
-           start: start,
-           end: end,
-         ),
-         from: volunteerHoursAggregateProvider,
-         name: r'volunteerHoursAggregateProvider',
-         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-             ? null
-             : _$volunteerHoursAggregateHash,
-         dependencies: VolunteerHoursAggregateFamily._dependencies,
-         allTransitiveDependencies:
-             VolunteerHoursAggregateFamily._allTransitiveDependencies,
-         start: start,
-         end: end,
-       );
+/// Convenience provider: Year-to-date
 
-  VolunteerHoursAggregateProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.start,
-    required this.end,
-  }) : super.internal();
+@ProviderFor(volunteerHoursYtd)
+const volunteerHoursYtdProvider = VolunteerHoursYtdProvider._();
 
-  final DateTime start;
-  final DateTime end;
+/// Convenience provider: Year-to-date
 
-  @override
-  Override overrideWith(
-    FutureOr<List<VolunteerHoursReport>> Function(
-      VolunteerHoursAggregateRef provider,
-    )
-    create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: VolunteerHoursAggregateProvider._internal(
-        (ref) => create(ref as VolunteerHoursAggregateRef),
-        from: from,
-        name: null,
+final class VolunteerHoursYtdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<VolunteerHoursReport>>,
+          List<VolunteerHoursReport>,
+          FutureOr<List<VolunteerHoursReport>>
+        >
+    with
+        $FutureModifier<List<VolunteerHoursReport>>,
+        $FutureProvider<List<VolunteerHoursReport>> {
+  /// Convenience provider: Year-to-date
+  const VolunteerHoursYtdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volunteerHoursYtdProvider',
+        isAutoDispose: true,
         dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        start: start,
-        end: end,
-      ),
-    );
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volunteerHoursYtdHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<VolunteerHoursReport>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<VolunteerHoursReport>> create(Ref ref) {
+    return volunteerHoursYtd(ref);
   }
-
-  @override
-  AutoDisposeFutureProviderElement<List<VolunteerHoursReport>> createElement() {
-    return _VolunteerHoursAggregateProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is VolunteerHoursAggregateProvider &&
-        other.start == start &&
-        other.end == end;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, start.hashCode);
-    hash = _SystemHash.combine(hash, end.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin VolunteerHoursAggregateRef
-    on AutoDisposeFutureProviderRef<List<VolunteerHoursReport>> {
-  /// The parameter `start` of this provider.
-  DateTime get start;
-
-  /// The parameter `end` of this provider.
-  DateTime get end;
-}
-
-class _VolunteerHoursAggregateProviderElement
-    extends AutoDisposeFutureProviderElement<List<VolunteerHoursReport>>
-    with VolunteerHoursAggregateRef {
-  _VolunteerHoursAggregateProviderElement(super.provider);
-
-  @override
-  DateTime get start => (origin as VolunteerHoursAggregateProvider).start;
-  @override
-  DateTime get end => (origin as VolunteerHoursAggregateProvider).end;
 }
 
 String _$volunteerHoursYtdHash() => r'4d3cfe11eeafb69879ea30051ce4543c7bf81cc1';
 
-/// Convenience provider: Year-to-date
-///
-/// Copied from [volunteerHoursYtd].
-@ProviderFor(volunteerHoursYtd)
-final volunteerHoursYtdProvider =
-    AutoDisposeFutureProvider<List<VolunteerHoursReport>>.internal(
-      volunteerHoursYtd,
-      name: r'volunteerHoursYtdProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$volunteerHoursYtdHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+/// Convenience provider: Current month
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef VolunteerHoursYtdRef =
-    AutoDisposeFutureProviderRef<List<VolunteerHoursReport>>;
-String _$volunteerHoursThisMonthHash() =>
-    r'b7c49894b18d3bd439e2963d26c60d33e2a9a539';
+@ProviderFor(volunteerHoursThisMonth)
+const volunteerHoursThisMonthProvider = VolunteerHoursThisMonthProvider._();
 
 /// Convenience provider: Current month
-///
-/// Copied from [volunteerHoursThisMonth].
-@ProviderFor(volunteerHoursThisMonth)
-final volunteerHoursThisMonthProvider =
-    AutoDisposeFutureProvider<List<VolunteerHoursReport>>.internal(
-      volunteerHoursThisMonth,
-      name: r'volunteerHoursThisMonthProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$volunteerHoursThisMonthHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef VolunteerHoursThisMonthRef =
-    AutoDisposeFutureProviderRef<List<VolunteerHoursReport>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class VolunteerHoursThisMonthProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<VolunteerHoursReport>>,
+          List<VolunteerHoursReport>,
+          FutureOr<List<VolunteerHoursReport>>
+        >
+    with
+        $FutureModifier<List<VolunteerHoursReport>>,
+        $FutureProvider<List<VolunteerHoursReport>> {
+  /// Convenience provider: Current month
+  const VolunteerHoursThisMonthProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volunteerHoursThisMonthProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volunteerHoursThisMonthHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<VolunteerHoursReport>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<VolunteerHoursReport>> create(Ref ref) {
+    return volunteerHoursThisMonth(ref);
+  }
+}
+
+String _$volunteerHoursThisMonthHash() =>
+    r'b7c49894b18d3bd439e2963d26c60d33e2a9a539';

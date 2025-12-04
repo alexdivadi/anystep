@@ -256,6 +256,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get password => 'Contraseña';
 
   @override
+  String get confirmPassword => 'Confirmar contraseña';
+
+  @override
   String get enterYourDetails => 'Ingresa tus datos';
 
   @override

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group") AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;@JsonKey(name: "agreement_signed_on") DateTime? get agreementSignedOn;
+ String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;@JsonKey(name: "agreement_signed_on") DateTime? get agreementSignedOn;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn
 });
 
 
@@ -176,7 +176,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group")  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn);case _:
@@ -197,7 +197,7 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group")  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn);case _:
@@ -217,7 +217,7 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group")  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn);case _:
@@ -232,7 +232,7 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 @JsonSerializable()
 
 class _UserModel extends UserModel {
-  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group") required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false, @JsonKey(name: "agreement_signed_on") this.agreementSignedOn}): super._();
+  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false, @JsonKey(name: "agreement_signed_on") this.agreementSignedOn}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -241,7 +241,7 @@ class _UserModel extends UserModel {
 @override@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) final  AddressModel? address;
 @override@JsonKey(name: "first_name") final  String firstName;
 @override@JsonKey(name: "last_name") final  String lastName;
-@override@JsonKey(name: "age_group") final  AgeGroup ageGroup;
+@override@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) final  AgeGroup ageGroup;
 @override final  UserRole role;
 @override@JsonKey(name: "phone_number") final  String? phoneNumber;
 @override@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") final  DateTime? createdAt;
@@ -281,7 +281,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group") AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn
 });
 
 

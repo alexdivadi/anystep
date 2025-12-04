@@ -5,7 +5,6 @@ import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_repository.g.dart';
@@ -37,13 +36,12 @@ class UserRepository implements IRepository<UserModel> {
             AnyStepFilter.equals('country', address.country),
           ],
         );
-        data['address'] =
-            addressDoc.isNotEmpty
-                ? addressDoc.first["id"]
-                : (await database.createOrUpdate(
-                  table: addressCollectionId,
-                  data: address.toJson(),
-                )).first["id"];
+        data['address'] = addressDoc.isNotEmpty
+            ? addressDoc.first["id"]
+            : (await database.createOrUpdate(
+                table: addressCollectionId,
+                data: address.toJson(),
+              )).first["id"];
       } catch (e) {
         Log.e("Error handling address", e);
       }

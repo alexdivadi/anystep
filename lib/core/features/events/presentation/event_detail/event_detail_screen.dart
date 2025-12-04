@@ -119,7 +119,7 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                       isPast
                           ? AttendanceList(
                               eventId: widget.id,
-                              isAdmin: userAsync.valueOrNull?.role.canEditEvent == true,
+                              isAdmin: userAsync.value?.role.canEditEvent == true,
                               onAddAttendee: () => context.showModal(
                                 AttendeeSearchForm(eventId: widget.id),
                                 isScrollControlled: false,

@@ -25,7 +25,7 @@ _UserEventModel _$UserEventModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$UserEventModelToJson(_UserEventModel instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': ?instance.id,
       'attended': instance.attended,
       'user': instance.userId,
       'event': instance.eventId,

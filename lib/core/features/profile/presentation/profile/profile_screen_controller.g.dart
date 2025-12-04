@@ -6,26 +6,69 @@ part of 'profile_screen_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ProfileScreenController)
+const profileScreenControllerProvider = ProfileScreenControllerProvider._();
+
+final class ProfileScreenControllerProvider
+    extends
+        $NotifierProvider<
+          ProfileScreenController,
+          ProfileScreenControllerState
+        > {
+  const ProfileScreenControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'profileScreenControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$profileScreenControllerHash();
+
+  @$internal
+  @override
+  ProfileScreenController create() => ProfileScreenController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ProfileScreenControllerState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ProfileScreenControllerState>(value),
+    );
+  }
+}
+
 String _$profileScreenControllerHash() =>
     r'4ed0c55338fa2e889e7ed6f081616beb377bf275';
 
-/// See also [ProfileScreenController].
-@ProviderFor(ProfileScreenController)
-final profileScreenControllerProvider =
-    AutoDisposeNotifierProvider<
-      ProfileScreenController,
-      ProfileScreenControllerState
-    >.internal(
-      ProfileScreenController.new,
-      name: r'profileScreenControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$profileScreenControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$ProfileScreenController =
-    AutoDisposeNotifier<ProfileScreenControllerState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ProfileScreenController
+    extends $Notifier<ProfileScreenControllerState> {
+  ProfileScreenControllerState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<ProfileScreenControllerState, ProfileScreenControllerState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                ProfileScreenControllerState,
+                ProfileScreenControllerState
+              >,
+              ProfileScreenControllerState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

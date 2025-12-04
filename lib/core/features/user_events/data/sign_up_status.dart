@@ -3,7 +3,6 @@ import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/sign_up_status.dart';
 import 'package:anystep/database/pagination_result.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_up_status.g.dart';

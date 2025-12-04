@@ -6,21 +6,50 @@ part of 'locale_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(LocaleController)
+const localeControllerProvider = LocaleControllerProvider._();
+
+final class LocaleControllerProvider
+    extends $AsyncNotifierProvider<LocaleController, Locale?> {
+  const LocaleControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'localeControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$localeControllerHash();
+
+  @$internal
+  @override
+  LocaleController create() => LocaleController();
+}
+
 String _$localeControllerHash() => r'13ee707cadd13dc645ea21d76190787b60df0801';
 
-/// See also [LocaleController].
-@ProviderFor(LocaleController)
-final localeControllerProvider =
-    AsyncNotifierProvider<LocaleController, Locale?>.internal(
-      LocaleController.new,
-      name: r'localeControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$localeControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$LocaleController = AsyncNotifier<Locale?>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$LocaleController extends $AsyncNotifier<Locale?> {
+  FutureOr<Locale?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<Locale?>, Locale?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<Locale?>, Locale?>,
+              AsyncValue<Locale?>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

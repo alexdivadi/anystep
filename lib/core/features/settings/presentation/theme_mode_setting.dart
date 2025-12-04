@@ -14,15 +14,14 @@ class ThemeModeSetting extends ConsumerWidget {
     final themeModeAsync = ref.watch(themeModeControllerProvider);
     final loc = AppLocalizations.of(context);
     final trailing = themeModeAsync.when(
-      data:
-          (mode) => Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(_labelForThemeMode(mode, loc)),
-              const SizedBox(width: AnyStepSpacing.sm8),
-              const Icon(Icons.expand_more),
-            ],
-          ),
+      data: (mode) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(_labelForThemeMode(mode, loc)),
+          const SizedBox(width: AnyStepSpacing.sm8),
+          const Icon(Icons.expand_more),
+        ],
+      ),
       loading: () => const SizedBox.shrink(),
       error: (e, _) => const SizedBox.shrink(),
     );
@@ -32,7 +31,7 @@ class ThemeModeSetting extends ConsumerWidget {
       title: Text(loc.themeLabel),
       trailing: trailing,
       onTap: () {
-        final current = themeModeAsync.valueOrNull;
+        final current = themeModeAsync.value;
         context.showModal(
           _ThemeModeSelectionList(
             current: current ?? ThemeMode.system,

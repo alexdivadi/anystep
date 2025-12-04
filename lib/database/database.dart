@@ -1,7 +1,6 @@
 import 'package:anystep/database/client.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

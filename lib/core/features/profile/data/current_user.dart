@@ -6,7 +6,6 @@ import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -42,7 +41,7 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
   }
 
   try {
-    if (authState.valueOrNull == null) throw Exception('No user logged in');
+    if (authState.value == null) throw Exception('No user logged in');
 
     final user = await ref
         .read(userRepositoryProvider)

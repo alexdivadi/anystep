@@ -26,7 +26,7 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': ?instance.id,
       'name': instance.name,
       'start_time': instance.startTime.toIso8601String(),
       'end_time': instance.endTime.toIso8601String(),

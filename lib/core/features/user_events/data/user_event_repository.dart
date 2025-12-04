@@ -5,7 +5,6 @@ import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_event_repository.g.dart';

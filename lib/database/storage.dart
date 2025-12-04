@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:anystep/database/client.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:crypto/crypto.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart';
 import 'package:mime/mime.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,6 +16,8 @@ class Storage {
   final SupabaseClient _supabase;
 
   static const String imageBucket = 'images';
+  static const String publicUrl =
+      'https://xwbzsprukcwoiaebxgev.supabase.co/storage/v1/object/public/images';
 
   String _getFileNameFromBytes(Uint8List bytes, String originalFileName) {
     final hash = sha256.convert(bytes).toString();

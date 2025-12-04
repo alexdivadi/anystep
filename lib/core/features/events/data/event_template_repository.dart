@@ -3,7 +3,6 @@ import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/features/events/domain/event_template.dart';
 import 'package:anystep/env/env.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'event_template_repository.g.dart';

@@ -4,7 +4,6 @@ import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 part 'auth_repository.g.dart';

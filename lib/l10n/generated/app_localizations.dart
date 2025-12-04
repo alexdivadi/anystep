@@ -548,6 +548,12 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get password;
 
+  /// Label for confirm password field
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
   /// Onboarding section title for user details
   ///
   /// In en, this message translates to:
