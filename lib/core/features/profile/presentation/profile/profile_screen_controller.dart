@@ -30,11 +30,10 @@ class ProfileScreenController extends _$ProfileScreenController {
       }
 
       final currentUser = ref.read(currentUserStreamProvider).requireValue!;
-      final user = UserModel(
+      final user = currentUser.copyWith(
         id: authState.uid,
         firstName: values['firstName'],
         lastName: values['lastName'],
-        email: currentUser.email,
         phoneNumber: values['phoneNumber'],
         address: AddressModel(
           street: values['street'],
@@ -46,7 +45,6 @@ class ProfileScreenController extends _$ProfileScreenController {
           isUserAddress: true,
         ),
         ageGroup: values['ageGroup'],
-        role: currentUser.role,
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
 
