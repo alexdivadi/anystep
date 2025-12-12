@@ -4,10 +4,10 @@ import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
-import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:anystep/core/features/reports/presentation/volunteer_hours_report_table_cell.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -128,14 +128,15 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
     final asyncReports = ref.watch(volunteerHoursAggregateProvider(start: _start, end: _end));
     final isMonthSelected = !_custom && _start.day == 1 && _start.month == DateTime.now().month;
     final isYtdSelected = !_custom && _start.month == 1 && _start.day == 1;
+    final loc = AppLocalizations.of(context);
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
-        title: const Text('Volunteer Reports'),
+        title: Text(loc.reportsTitle),
         actions: [
           asyncReports.when(
             data:
                 (reports) => IconButton(
-                  tooltip: 'Export CSV',
+                  tooltip: loc.exportCsv,
                   onPressed: reports.isEmpty ? null : () => _exportCsv(reports),
                   icon: const Icon(Icons.download),
                 ),
@@ -163,7 +164,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       backgroundColor: isMonthSelected ? AnyStepColors.blueBright : null,
                       foregroundColor: isMonthSelected ? Colors.white : null,
                     ),
-                    child: const Text('This Month'),
+                    child: Text(loc.rangeThisMonth),
                   ),
                   ElevatedButton(
                     onPressed: _setYtd,
@@ -171,7 +172,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       backgroundColor: isYtdSelected ? AnyStepColors.blueBright : null,
                       foregroundColor: isYtdSelected ? Colors.white : null,
                     ),
-                    child: const Text('YTD'),
+                    child: Text(loc.rangeYtd),
                   ),
                   ElevatedButton(
                     onPressed: _pickRange,
@@ -179,7 +180,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       backgroundColor: _custom ? AnyStepColors.blueBright : null,
                       foregroundColor: _custom ? Colors.white : null,
                     ),
-                    child: Text('Custom: ${_dateFmt.format(_start)} → ${_dateFmt.format(_end)}'),
+                    child: Text(loc.rangeCustom(_dateFmt.format(_start), _dateFmt.format(_end))),
                   ),
                 ],
               ),
@@ -190,9 +191,9 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
               child: asyncReports.when(
                 data: (reports) {
                   if (reports.isEmpty) {
-                    return const Padding(
+                    return Padding(
                       padding: EdgeInsets.symmetric(vertical: AnyStepSpacing.lg48),
-                      child: Center(child: Text('No data in selected range')),
+                      child: Center(child: Text(loc.noDataInRange)),
                     );
                   }
                   // Condensed list view instead of wide horizontal DataTable
@@ -202,7 +203,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
                         child: Text(
-                          'Reports (${reports.length})',
+                          loc.reportsCount(reports.length),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -218,7 +219,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                 error:
                     (e, st) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 48.0),
-                      child: Center(child: Text('Error loading reports: $e')),
+                      child: Center(child: Text(loc.errorLoadingReports('$e'))),
                     ),
               ),
             ),

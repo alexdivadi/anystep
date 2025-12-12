@@ -6,21 +6,46 @@ part of 'storage.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$storageHash() => r'9ac9dc55a3340e5aaa5e87cce23370542bca667d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [storage].
 @ProviderFor(storage)
-final storageProvider = AutoDisposeProvider<Storage>.internal(
-  storage,
-  name: r'storageProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$storageHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const storageProvider = StorageProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef StorageRef = AutoDisposeProviderRef<Storage>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class StorageProvider
+    extends $FunctionalProvider<Storage, Storage, Storage>
+    with $Provider<Storage> {
+  const StorageProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'storageProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$storageHash();
+
+  @$internal
+  @override
+  $ProviderElement<Storage> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Storage create(Ref ref) {
+    return storage(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Storage value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Storage>(value),
+    );
+  }
+}
+
+String _$storageHash() => r'9ac9dc55a3340e5aaa5e87cce23370542bca667d';

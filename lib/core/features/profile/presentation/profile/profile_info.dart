@@ -4,6 +4,7 @@ import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class ProfileInfo extends StatelessWidget {
@@ -13,6 +14,7 @@ class ProfileInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       child: SingleChildScrollView(
@@ -36,35 +38,37 @@ class ProfileInfo extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.email),
-              title: Text('Email', style: Theme.of(context).textTheme.titleMedium),
+              title: Text(loc.email, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(user.email),
             ),
             ListTile(
               leading: const Icon(Icons.phone),
-              title: Text('Phone', style: Theme.of(context).textTheme.titleMedium),
+              title: Text(loc.phone, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(user.phoneNumber ?? '—'),
             ),
             ListTile(
               leading: const Icon(Icons.location_on),
-              title: Text('Address', style: Theme.of(context).textTheme.titleMedium),
+              title: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
                 user.address != null
                     ? user.address!.street +
-                        ((user.address!.streetSecondary ?? '').isNotEmpty
-                            ? ' ${user.address!.streetSecondary}'
-                            : '') +
-                        (user.address!.city.isNotEmpty ? '\n${user.address!.city}' : '') +
-                        (user.address!.state.isNotEmpty ? ', ${user.address!.state}' : '') +
-                        (user.address!.postalCode.isNotEmpty ? ' ${user.address!.postalCode}' : '')
+                          ((user.address!.streetSecondary ?? '').isNotEmpty
+                              ? ' ${user.address!.streetSecondary}'
+                              : '') +
+                          (user.address!.city.isNotEmpty ? '\n${user.address!.city}' : '') +
+                          (user.address!.state.isNotEmpty ? ', ${user.address!.state}' : '') +
+                          (user.address!.postalCode.isNotEmpty
+                              ? ' ${user.address!.postalCode}'
+                              : '')
                     : 'No address provided',
               ),
             ),
             user.createdAt != null
                 ? ListTile(
-                  leading: const Icon(Icons.cake),
-                  title: Text('Date Joined', style: Theme.of(context).textTheme.titleMedium),
-                  subtitle: Text(DateFormat.yMMMd().format(user.createdAt!.toLocal())),
-                )
+                    leading: const Icon(Icons.cake),
+                    title: Text(loc.dateJoined, style: Theme.of(context).textTheme.titleMedium),
+                    subtitle: Text(DateFormat.yMMMd().format(user.createdAt!.toLocal())),
+                  )
                 : const SizedBox.shrink(),
           ],
         ),

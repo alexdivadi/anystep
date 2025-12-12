@@ -45,6 +45,11 @@ final routes = [
     name: AppStartupLoadingWidget.name,
     builder: (context, state) => const AppStartupLoadingWidget(),
   ),
+  GoRoute(
+    path: SignAgreementScreen.path,
+    name: SignAgreementScreen.name,
+    builder: (context, state) => const SignAgreementScreen(),
+  ),
 
   // Unauthenticated Shell
   StatefulShellRoute.indexedStack(

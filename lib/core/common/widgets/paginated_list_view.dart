@@ -4,6 +4,7 @@ import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PaginatedListView<T> extends ConsumerWidget {
@@ -30,31 +31,29 @@ class PaginatedListView<T> extends ConsumerWidget {
 
     return firstPageAsync.when(
       // Initial loading state – show 6 shimmer placeholders separated by spacing.
-      loading:
-          () => SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.md12),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, idx) {
-                  if (idx.isOdd) return const SizedBox(height: AnyStepSpacing.sm8);
-                  return shimmer ?? const _DefaultShimmer();
-                },
-                childCount: 6 * 2 - 1, // shimmer + separators
-              ),
-            ),
+      loading: () => SliverPadding(
+        padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.md12),
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, idx) {
+              if (idx.isOdd) return const SizedBox(height: AnyStepSpacing.sm8);
+              return shimmer ?? const _DefaultShimmer();
+            },
+            childCount: 6 * 2 - 1, // shimmer + separators
           ),
+        ),
+      ),
       // Error – fill remaining to allow pull-to-refresh from parent.
-      error:
-          (e, st) => const SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(child: AnyStepErrorWidget()),
-          ),
+      error: (e, st) => const SliverFillRemaining(
+        hasScrollBody: false,
+        child: Center(child: AnyStepErrorWidget()),
+      ),
       // Data loaded
       data: (feedResult) {
         if (feedResult.items.isEmpty) {
           return SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: noItemsWidget ?? const Text("No items found")),
+            child: Center(child: noItemsWidget ?? Text(AppLocalizations.of(context).noItemsFound)),
           );
         }
 
@@ -73,9 +72,8 @@ class PaginatedListView<T> extends ConsumerWidget {
               final pageAsync = pageProvider(ref, pageNum);
               return pageAsync.when(
                 loading: () => shimmer ?? const _DefaultShimmer(),
-                error:
-                    (e, st) =>
-                        errorBuilder != null ? errorBuilder!(context, e) : const _DefaultError(),
+                error: (e, st) =>
+                    errorBuilder != null ? errorBuilder!(context, e) : const _DefaultError(),
                 data: (pageResult) {
                   if (indexInPage >= pageResult.items.length) {
                     // Safety net – if the page hasn't finished loading this index yet.
@@ -148,8 +146,11 @@ class _DefaultError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: Padding(padding: EdgeInsets.all(AnyStepSpacing.md16), child: Text('Failed to load')),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AnyStepSpacing.md16),
+        child: Text(AppLocalizations.of(context).failedToLoad),
+      ),
     );
   }
 }

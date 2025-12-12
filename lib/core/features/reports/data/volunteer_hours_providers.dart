@@ -5,7 +5,6 @@ import 'package:anystep/core/features/user_events/data/user_event_repository.dar
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/database/filter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'volunteer_hours_providers.g.dart';
@@ -60,19 +59,18 @@ Future<List<VolunteerHoursReport>> volunteerHoursAggregate(
     acc.eventsCount += 1;
     acc.hoursPerMonth.update(ym, (value) => value + capped, ifAbsent: () => capped);
   }
-  final reports =
-      map.values
-          .map(
-            (a) => VolunteerHoursReport(
-              user: a.user,
-              totalHours: double.parse(a.totalHours.toStringAsFixed(2)),
-              eventsCount: a.eventsCount,
-              hoursPerMonth: a.hoursPerMonth.map(
-                (k, v) => MapEntry(k, double.parse(v.toStringAsFixed(2))),
-              ),
-            ),
-          )
-          .toList();
+  final reports = map.values
+      .map(
+        (a) => VolunteerHoursReport(
+          user: a.user,
+          totalHours: double.parse(a.totalHours.toStringAsFixed(2)),
+          eventsCount: a.eventsCount,
+          hoursPerMonth: a.hoursPerMonth.map(
+            (k, v) => MapEntry(k, double.parse(v.toStringAsFixed(2))),
+          ),
+        ),
+      )
+      .toList();
   reports.sort((a, b) => b.totalHours.compareTo(a.totalHours));
   return reports;
 }

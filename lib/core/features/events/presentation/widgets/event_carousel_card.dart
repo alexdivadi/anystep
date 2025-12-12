@@ -107,14 +107,27 @@ class _ImageHeader extends StatelessWidget {
       ),
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child:
-            imageUrl != null && imageUrl!.isNotEmpty
-                ? Image.network(imageUrl!, fit: BoxFit.cover)
-                : Container(
-                  color: theme.highlightColor.withAlpha(38),
-                  child: Icon(Icons.event, size: 40, color: theme.highlightColor),
-                ),
+        child: imageUrl != null && imageUrl!.isNotEmpty
+            ? Image.network(
+                imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const _ImagePlaceholder(),
+              )
+            : const _ImagePlaceholder(),
       ),
+    );
+  }
+}
+
+class _ImagePlaceholder extends StatelessWidget {
+  const _ImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      color: theme.highlightColor.withAlpha(38),
+      child: Icon(Icons.event, size: 40, color: theme.highlightColor),
     );
   }
 }

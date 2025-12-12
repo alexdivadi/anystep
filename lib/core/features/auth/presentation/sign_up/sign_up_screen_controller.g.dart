@@ -6,25 +6,59 @@ part of 'sign_up_screen_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SignUpScreenController)
+const signUpScreenControllerProvider = SignUpScreenControllerProvider._();
+
+final class SignUpScreenControllerProvider
+    extends $NotifierProvider<SignUpScreenController, SignUpScreenState> {
+  const SignUpScreenControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'signUpScreenControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$signUpScreenControllerHash();
+
+  @$internal
+  @override
+  SignUpScreenController create() => SignUpScreenController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SignUpScreenState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SignUpScreenState>(value),
+    );
+  }
+}
+
 String _$signUpScreenControllerHash() =>
     r'85c197ff6bab73b6cd37d5928144cc8e8b8d612e';
 
-/// See also [SignUpScreenController].
-@ProviderFor(SignUpScreenController)
-final signUpScreenControllerProvider = AutoDisposeNotifierProvider<
-  SignUpScreenController,
-  SignUpScreenState
->.internal(
-  SignUpScreenController.new,
-  name: r'signUpScreenControllerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$signUpScreenControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SignUpScreenController = AutoDisposeNotifier<SignUpScreenState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$SignUpScreenController extends $Notifier<SignUpScreenState> {
+  SignUpScreenState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<SignUpScreenState, SignUpScreenState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SignUpScreenState, SignUpScreenState>,
+              SignUpScreenState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

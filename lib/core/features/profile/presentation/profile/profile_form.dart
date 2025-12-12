@@ -4,6 +4,7 @@ import 'package:anystep/core/common/widgets/inputs/inputs.dart';
 import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -28,6 +29,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(profileScreenControllerProvider);
+    final loc = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       child: FormBuilder(
@@ -47,47 +49,46 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
               AnyStepTextField(
                 name: 'firstName',
                 initialValue: widget.user.firstName,
-                labelText: 'First Name',
+                labelText: loc.firstName,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'lastName',
                 initialValue: widget.user.lastName,
-                labelText: 'Last Name',
+                labelText: loc.lastName,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'phoneNumber',
                 keyboardType: TextInputType.phone,
                 initialValue: widget.user.phoneNumber,
-                labelText: 'Phone',
+                labelText: loc.phone,
               ),
               AnyStepSegmentedButtonField<AgeGroup>(
                 name: 'ageGroup',
                 initialValue: widget.user.ageGroup,
-                labelText: 'Age Group',
-                options:
-                    AgeGroup.values
-                        .map(
-                          (ageGroup) => FormBuilderFieldOption(
-                            value: ageGroup,
-                            child: Text(ageGroup.displayName),
-                          ),
-                        )
-                        .toList(),
+                labelText: loc.ageGroup,
+                options: AgeGroup.values
+                    .map(
+                      (ageGroup) => FormBuilderFieldOption(
+                        value: ageGroup,
+                        child: Text(ageGroup.displayName),
+                      ),
+                    )
+                    .toList(),
                 validator: FormBuilderValidators.required(),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
               AnyStepTextField(
                 name: 'street',
                 initialValue: widget.user.address?.street,
-                labelText: 'Street Address',
+                labelText: loc.streetAddress,
                 validator: FormBuilderValidators.required(),
               ),
               AnyStepTextField(
                 name: 'streetSecondary',
                 initialValue: widget.user.address?.streetSecondary,
-                labelText: 'Apartment/Suite/Floor (optional)',
+                labelText: loc.apartmentSuiteOptional,
               ),
               Row(
                 children: [
@@ -96,7 +97,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'city',
                       initialValue: widget.user.address?.city,
-                      labelText: 'City',
+                      labelText: loc.city,
                       validator: FormBuilderValidators.city(),
                     ),
                   ),
@@ -106,7 +107,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'state',
                       initialValue: widget.user.address?.state,
-                      labelText: 'State',
+                      labelText: loc.state,
                       validator: FormBuilderValidators.state(),
                     ),
                   ),
@@ -116,7 +117,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                     child: AnyStepTextField(
                       name: 'postalCode',
                       initialValue: widget.user.address?.postalCode,
-                      labelText: 'Zip Code',
+                      labelText: loc.postalCode,
                       keyboardType: TextInputType.number,
                       validator: FormBuilderValidators.zipCode(),
                     ),
@@ -134,21 +135,20 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 children: [
                   TextButton(
                     onPressed: state.isLoading ? null : widget.onCancel,
-                    child: const Text('Cancel'),
+                    child: Text(loc.cancel),
                   ),
                   ElevatedButton(
-                    onPressed:
-                        state.isLoading
-                            ? null
-                            : () async {
-                              if (_formKey.currentState?.saveAndValidate() ?? false) {
-                                await ref
-                                    .read(profileScreenControllerProvider.notifier)
-                                    .save(_formKey.currentState!.value, image: _imageFile);
-                                widget.onSaved?.call();
-                              }
-                            },
-                    child: const Text('Save'),
+                    onPressed: state.isLoading
+                        ? null
+                        : () async {
+                            if (_formKey.currentState?.saveAndValidate() ?? false) {
+                              await ref
+                                  .read(profileScreenControllerProvider.notifier)
+                                  .save(_formKey.currentState!.value, image: _imageFile);
+                              widget.onSaved?.call();
+                            }
+                          },
+                    child: Text(loc.save),
                   ),
                 ],
               ),

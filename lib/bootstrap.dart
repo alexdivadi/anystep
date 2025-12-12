@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/config/posthog/posthog_exception.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
+import 'package:anystep/core/firebase/firebase.dart';
 import 'package:anystep/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ void bootstrap(FutureOr<Widget> Function() builder) async {
     authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
   );
   await PostHogManager.init();
+  await FirebaseService.init();
 
   FlutterError.onError = (FlutterErrorDetails details) {
     // Report Flutter framework errors to PostHog

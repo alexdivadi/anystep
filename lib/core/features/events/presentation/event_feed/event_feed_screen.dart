@@ -10,6 +10,7 @@ import 'package:anystep/core/features/events/presentation/event_feed/widgets/sea
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -40,6 +41,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     final showLogin = !uid.isLoading && uid.hasValue && uid.value == null;
     final isAuthenticated = !user.isLoading && user.hasValue && user.value != null;
     final isAdmin = isAuthenticated && user.value!.role == UserRole.admin;
+    final loc = AppLocalizations.of(context);
 
     return PopScope(
       onPopInvokedWithResult: (popped, result) async {
@@ -56,25 +58,24 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
       },
       child: AnyStepScaffold(
         appBar: AnyStepAppBar(
-          title: isAdmin ? const Text('Dashboard') : const Text('Event Feed'),
-          actions:
-              showLogin
-                  ? [
-                    Padding(
-                      padding: const EdgeInsets.all(AnyStepSpacing.md12),
-                      child: InkWell(
-                        onTap: () => context.go(LoginScreen.path),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.login),
-                            const SizedBox(width: 8),
-                            const Text('Login'),
-                          ],
-                        ),
+          title: isAdmin ? Text(loc.dashboard) : Text(loc.eventFeed),
+          actions: showLogin
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.all(AnyStepSpacing.md12),
+                    child: InkWell(
+                      onTap: () => context.go(LoginScreen.path),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.login),
+                          const SizedBox(width: 8),
+                          Text(loc.login),
+                        ],
                       ),
                     ),
-                  ]
-                  : null,
+                  ),
+                ]
+              : null,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(AnyStepSpacing.xl56),
             child: Row(
@@ -86,11 +87,11 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                     duration: const Duration(milliseconds: 250),
                     curve: Curves.easeOut,
                     child: AnyStepSearchBar(
-                      hintText: 'Search events',
+                      hintText: loc.searchEvents,
                       initialValue: q,
                       onChanged: (value) => setState(() => q = value),
-                      onFocusChanged:
-                          (focused) => setState(() => isSearching = focused || q.isNotEmpty),
+                      onFocusChanged: (focused) =>
+                          setState(() => isSearching = focused || q.isNotEmpty),
                     ),
                   ),
                 ),
@@ -109,86 +110,82 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                       child: SlideTransition(position: offsetAnim, child: child),
                     );
                   },
-                  child:
-                      isSearching
-                          ? Padding(
-                            key: const ValueKey('cancel_btn'),
-                            padding: const EdgeInsets.only(right: AnyStepSpacing.md16),
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  q = '';
-                                  isSearching = false;
-                                });
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: const Text('Cancel'),
-                            ),
-                          )
-                          : const SizedBox.shrink(key: ValueKey('cancel_btn_space')),
+                  child: isSearching
+                      ? Padding(
+                          key: const ValueKey('cancel_btn'),
+                          padding: const EdgeInsets.only(right: AnyStepSpacing.md16),
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                q = '';
+                                isSearching = false;
+                              });
+                              FocusScope.of(context).unfocus();
+                            },
+                            child: Text(loc.cancel),
+                          ),
+                        )
+                      : const SizedBox.shrink(key: ValueKey('cancel_btn_space')),
                 ),
               ],
             ),
           ),
         ),
-        body:
-            isSearching
-                ? SearchEventsFeed(search: q)
-                : RefreshIndicator(
-                  onRefresh: () async => ref.invalidate(getEventsProvider),
-                  child: CustomScrollView(
-                    slivers: [
-                      if (isAuthenticated) ...[
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
-                            child: Text(
-                              'Recent Events',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
+        body: isSearching
+            ? SearchEventsFeed(search: q)
+            : RefreshIndicator(
+                onRefresh: () async => ref.invalidate(getEventsProvider),
+                child: CustomScrollView(
+                  slivers: [
+                    if (isAuthenticated) ...[
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
+                          child: Text(
+                            loc.recentEvents,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: Container(
-                            constraints: BoxConstraints(minHeight: 250, maxHeight: 275),
-                            child: const PastEventsCarousel(),
-                          ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
-                            child: Text(
-                              'Upcoming Events',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ),
-                        ),
-                      ],
-                      const UpcomingEventsFeed(),
-                    ],
-                  ),
-                ),
-
-        floatingActionButton:
-            !isSearching && isAuthenticated && user.value!.role.canCreateEvent
-                ? FloatingActionButton.extended(
-                  heroTag: 'create_event_fab',
-                  onPressed:
-                      () => context.showModal(
-                        EventDetailForm(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          onSuccess: () {
-                            if (context.mounted) {
-                              context.showSuccessSnackbar('Event created successfully');
-                              context.pop();
-                            }
-                          },
                         ),
                       ),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Create Event'),
-                )
-                : null,
+                      SliverToBoxAdapter(
+                        child: Container(
+                          constraints: BoxConstraints(minHeight: 250, maxHeight: 275),
+                          child: const PastEventsCarousel(),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
+                          child: Text(
+                            loc.upcomingEvents,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                      ),
+                    ],
+                    const UpcomingEventsFeed(),
+                  ],
+                ),
+              ),
+
+        floatingActionButton: !isSearching && isAuthenticated && user.value!.role.canCreateEvent
+            ? FloatingActionButton.extended(
+                heroTag: 'create_event_fab',
+                onPressed: () => context.showModal(
+                  EventDetailForm(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    onSuccess: () {
+                      if (context.mounted) {
+                        context.showSuccessSnackbar(loc.eventCreated);
+                        context.pop();
+                      }
+                    },
+                  ),
+                ),
+                icon: const Icon(Icons.add),
+                label: Text(loc.createEvent),
+              )
+            : null,
       ),
     );
   }

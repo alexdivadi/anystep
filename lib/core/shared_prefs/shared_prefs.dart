@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +12,7 @@ class AppPreferences {
   static const String onboardingKey = 'onboarded';
   static const String currentUserKey = 'current_user';
   static const String themeModeKey = 'theme_mode';
+  static const String localeCodeKey = 'locale_code';
 
   String? getAuthStateJson() => _prefs.getString(authStateKey);
   Future<void> setAuthStateJson(String token) async => await _prefs.setString(authStateKey, token);
@@ -31,6 +31,10 @@ class AppPreferences {
   String? getThemeMode() => _prefs.getString(themeModeKey);
   Future<void> setThemeMode(String mode) async => await _prefs.setString(themeModeKey, mode);
   Future<void> clearThemeMode() async => await _prefs.remove(themeModeKey);
+
+  String? getLocaleCode() => _prefs.getString(localeCodeKey);
+  Future<void> setLocaleCode(String code) async => await _prefs.setString(localeCodeKey, code);
+  Future<void> clearLocaleCode() async => await _prefs.remove(localeCodeKey);
 }
 
 @Riverpod(keepAlive: true)

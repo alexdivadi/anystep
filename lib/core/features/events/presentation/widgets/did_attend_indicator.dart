@@ -23,11 +23,19 @@ class DidAttendIndicator extends ConsumerWidget {
           return const SizedBox.shrink();
         } else {
           final userEvent = uevents.items.first;
-          return AnyStepFade(
-            child:
-                userEvent.attended
-                    ? Icon(Icons.check_circle, color: AnyStepColors.green, size: size)
-                    : Icon(Icons.cancel, color: AnyStepColors.red, size: size),
+          return Container(
+            width: size ?? 12,
+            height: size ?? 12,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+            child: AnyStepFade(
+              child:
+                  userEvent.attended
+                      ? Icon(Icons.check_circle, color: AnyStepColors.green, size: size)
+                      : Icon(Icons.cancel, color: AnyStepColors.red, size: size),
+            ),
           );
         }
       },

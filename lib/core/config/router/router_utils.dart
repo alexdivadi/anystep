@@ -21,6 +21,7 @@ class RouterUtils {
     AppStartupLoadingWidget.path,
     UserOnboardedGate.path,
     EventDetailScreen.path,
+    SignAgreementScreen.path,
   };
 
   static const loginRoutes = {LoginScreen.path, SignUpScreen.path, ConfirmEmailScreen.path};

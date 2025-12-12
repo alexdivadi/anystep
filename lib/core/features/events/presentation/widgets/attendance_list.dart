@@ -1,11 +1,10 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/common/widgets/any_step_badge.dart';
-import 'package:anystep/core/common/widgets/any_step_fade.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anystep/core/config/theme/colors.dart';
 
@@ -30,45 +29,43 @@ class AttendanceList extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return firstPage.when(
-      loading:
-          () => SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AnyStepSpacing.lg32,
-                vertical: AnyStepSpacing.md16,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
-                  const SizedBox(height: AnyStepSpacing.sm8),
-                  const Center(child: AnyStepLoadingIndicator()),
-                ],
-              ),
-            ),
+      loading: () => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnyStepSpacing.lg32,
+            vertical: AnyStepSpacing.md16,
           ),
-      error:
-          (e, st) => SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AnyStepSpacing.lg32,
-                vertical: AnyStepSpacing.md16,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
-                  const SizedBox(height: AnyStepSpacing.sm8),
-                  AnyStepFade(
-                    child: Text(
-                      'Failed to load attendees',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+              const SizedBox(height: AnyStepSpacing.sm8),
+              const Center(child: AnyStepLoadingIndicator()),
+            ],
           ),
+        ),
+      ),
+      error: (e, st) => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnyStepSpacing.lg32,
+            vertical: AnyStepSpacing.md16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+              const SizedBox(height: AnyStepSpacing.sm8),
+              AnyStepFade(
+                child: Text(
+                  AppLocalizations.of(context).failedToLoadAttendees,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       data: (pageData) {
         final total = pageData.totalCount;
         if (total == 0) {
@@ -83,7 +80,7 @@ class AttendanceList extends ConsumerWidget {
                 children: [
                   _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
                   const SizedBox(height: AnyStepSpacing.sm8),
-                  const Text('No attendees'),
+                  Builder(builder: (context) => Text(AppLocalizations.of(context).noAttendees)),
                 ],
               ),
             ),
@@ -140,28 +137,22 @@ class AttendanceList extends ConsumerWidget {
                               shape: BoxShape.circle,
                               color: theme.colorScheme.surface,
                             ),
-                            child:
-                                userEvent.attended
-                                    ? const Icon(
-                                      Icons.check_circle,
-                                      size: 12,
-                                      color: AnyStepColors.success,
-                                    )
-                                    : const Icon(
-                                      Icons.cancel,
-                                      size: 12,
-                                      color: AnyStepColors.error,
-                                    ),
+                            child: userEvent.attended
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    size: 12,
+                                    color: AnyStepColors.success,
+                                  )
+                                : const Icon(Icons.cancel, size: 12, color: AnyStepColors.error),
                           ),
                         ),
                       ],
                     ),
                     title: Text(user.firstName),
                     trailing: AnyStepBadge(
-                      color:
-                          user.role == UserRole.admin
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.secondary,
+                      color: user.role == UserRole.admin
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       child: Text(
                         user.role.displayName,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -191,7 +182,7 @@ class _TitleRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('Attendees', style: Theme.of(context).textTheme.titleLarge),
+        Text(AppLocalizations.of(context).attendees, style: Theme.of(context).textTheme.titleLarge),
         if (isAdmin && onAddAttendee != null)
           IconButton(
             icon: const Icon(Icons.person_add),

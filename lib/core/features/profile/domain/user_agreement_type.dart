@@ -1,0 +1,1 @@
+enum UserAgreementType { adultAgreement, minorAgreement }

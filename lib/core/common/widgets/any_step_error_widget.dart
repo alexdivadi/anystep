@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 
 class AnyStepErrorWidget extends StatelessWidget {
   const AnyStepErrorWidget({super.key, this.error, this.onRetry});
@@ -19,11 +20,12 @@ class AnyStepErrorWidget extends StatelessWidget {
         ),
         const SizedBox(height: AnyStepSpacing.md16),
         Text(
-          error != null ? "$error" : 'Something went wrong.',
+          error != null ? "$error" : AppLocalizations.of(context).genericError,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: AnyStepSpacing.md16),
-        if (onRetry != null) ElevatedButton(onPressed: onRetry!, child: const Text('Retry')),
+        if (onRetry != null)
+          ElevatedButton(onPressed: onRetry!, child: Text(AppLocalizations.of(context).retry)),
         const SizedBox(height: AnyStepSpacing.md16),
       ],
     );

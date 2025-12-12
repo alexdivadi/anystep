@@ -1,6 +1,7 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -24,9 +25,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Widget build(BuildContext context) {
     final controller = ref.watch(signUpScreenControllerProvider.notifier);
     final state = ref.watch(signUpScreenControllerProvider);
+    final loc = AppLocalizations.of(context);
 
     return AnyStepScaffold(
-      appBar: AnyStepAppBar(title: Text('Back to Login')),
+      appBar: AnyStepAppBar(title: Text(loc.backToLogin)),
       body: Padding(
         padding: const EdgeInsets.all(AnyStepSpacing.md16),
         child: Center(
@@ -38,7 +40,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    child: Text('Sign Up', style: Theme.of(context).textTheme.displayLarge),
+                    child: Text(loc.signUp, style: Theme.of(context).textTheme.displayLarge),
                   ),
                   const SizedBox(height: AnyStepSpacing.md16),
                   Row(
@@ -46,7 +48,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'firstName',
-                          labelText: 'First Name',
+                          labelText: loc.firstName,
                           validator: FormBuilderValidators.firstName(),
                         ),
                       ),
@@ -54,7 +56,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Flexible(
                         child: AnyStepTextField(
                           name: 'lastName',
-                          labelText: 'Last Name',
+                          labelText: loc.lastName,
                           validator: FormBuilderValidators.lastName(),
                         ),
                       ),
@@ -62,7 +64,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   AnyStepTextField(
                     name: 'email',
-                    labelText: 'Email',
+                    labelText: loc.email,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
                       FormBuilderValidators.email(),
@@ -70,7 +72,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   AnyStepTextField(
                     name: 'password',
-                    labelText: 'Password',
+                    labelText: loc.password,
                     obscureText: true,
                     validator: FormBuilderValidators.password(
                       minSpecialCharCount: 0,
@@ -79,7 +81,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   AnyStepTextField(
                     name: 'confirmPassword',
-                    labelText: 'Confirm Password',
+                    labelText: loc.confirmPassword,
                     obscureText: true,
                     validator: (value) {
                       final password = formKey.currentState?.fields['password']?.value;
@@ -103,21 +105,20 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     const SizedBox(height: AnyStepSpacing.sm8),
                   ],
                   ElevatedButton(
-                    onPressed:
-                        state.isLoading
-                            ? null
-                            : () {
-                              if (formKey.currentState?.saveAndValidate() ?? false) {
-                                final values = formKey.currentState!.value;
-                                controller.signUp(
-                                  email: values['email'] ?? '',
-                                  password: values['password'] ?? '',
-                                  firstName: values['firstName'] ?? '',
-                                  lastName: values['lastName'] ?? '',
-                                );
-                              }
-                            },
-                    child: const Text('Sign Up'),
+                    onPressed: state.isLoading
+                        ? null
+                        : () {
+                            if (formKey.currentState?.saveAndValidate() ?? false) {
+                              final values = formKey.currentState!.value;
+                              controller.signUp(
+                                email: values['email'] ?? '',
+                                password: values['password'] ?? '',
+                                firstName: values['firstName'] ?? '',
+                                lastName: values['lastName'] ?? '',
+                              );
+                            }
+                          },
+                    child: Text(loc.signUp),
                   ),
                   const SizedBox(height: kToolbarHeight),
                 ],

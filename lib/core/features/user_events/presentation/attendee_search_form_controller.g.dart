@@ -6,173 +6,98 @@ part of 'attendee_search_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$attendeeSearchFormControllerHash() =>
-    r'2288f2afcd834d8e8d91478d3760175cb522fa2a';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$AttendeeSearchFormController
-    extends BuildlessAutoDisposeAsyncNotifier<void> {
-  late final int eventId;
-
-  FutureOr<void> build(int eventId);
-}
-
-/// See also [AttendeeSearchFormController].
 @ProviderFor(AttendeeSearchFormController)
 const attendeeSearchFormControllerProvider =
-    AttendeeSearchFormControllerFamily();
+    AttendeeSearchFormControllerFamily._();
 
-/// See also [AttendeeSearchFormController].
-class AttendeeSearchFormControllerFamily extends Family<AsyncValue<void>> {
-  /// See also [AttendeeSearchFormController].
-  const AttendeeSearchFormControllerFamily();
+final class AttendeeSearchFormControllerProvider
+    extends $AsyncNotifierProvider<AttendeeSearchFormController, void> {
+  const AttendeeSearchFormControllerProvider._({
+    required AttendeeSearchFormControllerFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'attendeeSearchFormControllerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [AttendeeSearchFormController].
-  AttendeeSearchFormControllerProvider call(int eventId) {
-    return AttendeeSearchFormControllerProvider(eventId);
+  @override
+  String debugGetCreateSourceHash() => _$attendeeSearchFormControllerHash();
+
+  @override
+  String toString() {
+    return r'attendeeSearchFormControllerProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AttendeeSearchFormControllerProvider getProviderOverride(
-    covariant AttendeeSearchFormControllerProvider provider,
-  ) {
-    return call(provider.eventId);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'attendeeSearchFormControllerProvider';
-}
-
-/// See also [AttendeeSearchFormController].
-class AttendeeSearchFormControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          AttendeeSearchFormController,
-          void
-        > {
-  /// See also [AttendeeSearchFormController].
-  AttendeeSearchFormControllerProvider(int eventId)
-    : this._internal(
-        () => AttendeeSearchFormController()..eventId = eventId,
-        from: attendeeSearchFormControllerProvider,
-        name: r'attendeeSearchFormControllerProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$attendeeSearchFormControllerHash,
-        dependencies: AttendeeSearchFormControllerFamily._dependencies,
-        allTransitiveDependencies:
-            AttendeeSearchFormControllerFamily._allTransitiveDependencies,
-        eventId: eventId,
-      );
-
-  AttendeeSearchFormControllerProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.eventId,
-  }) : super.internal();
-
-  final int eventId;
-
-  @override
-  FutureOr<void> runNotifierBuild(
-    covariant AttendeeSearchFormController notifier,
-  ) {
-    return notifier.build(eventId);
-  }
-
-  @override
-  Override overrideWith(AttendeeSearchFormController Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: AttendeeSearchFormControllerProvider._internal(
-        () => create()..eventId = eventId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        eventId: eventId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<AttendeeSearchFormController, void>
-  createElement() {
-    return _AttendeeSearchFormControllerProviderElement(this);
-  }
+  AttendeeSearchFormController create() => AttendeeSearchFormController();
 
   @override
   bool operator ==(Object other) {
     return other is AttendeeSearchFormControllerProvider &&
-        other.eventId == eventId;
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, eventId.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin AttendeeSearchFormControllerRef
-    on AutoDisposeAsyncNotifierProviderRef<void> {
-  /// The parameter `eventId` of this provider.
-  int get eventId;
-}
+String _$attendeeSearchFormControllerHash() =>
+    r'2288f2afcd834d8e8d91478d3760175cb522fa2a';
 
-class _AttendeeSearchFormControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
+final class AttendeeSearchFormControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<
           AttendeeSearchFormController,
-          void
-        >
-    with AttendeeSearchFormControllerRef {
-  _AttendeeSearchFormControllerProviderElement(super.provider);
+          AsyncValue<void>,
+          void,
+          FutureOr<void>,
+          int
+        > {
+  const AttendeeSearchFormControllerFamily._()
+    : super(
+        retry: null,
+        name: r'attendeeSearchFormControllerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  AttendeeSearchFormControllerProvider call(int eventId) =>
+      AttendeeSearchFormControllerProvider._(argument: eventId, from: this);
 
   @override
-  int get eventId => (origin as AttendeeSearchFormControllerProvider).eventId;
+  String toString() => r'attendeeSearchFormControllerProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$AttendeeSearchFormController extends $AsyncNotifier<void> {
+  late final _$args = ref.$arg as int;
+  int get eventId => _$args;
+
+  FutureOr<void> build(int eventId);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build(_$args);
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

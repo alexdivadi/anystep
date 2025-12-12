@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anystep/core/features/onboarding/presentation/onboarding/welcome_screen_controller.dart';
 import 'package:go_router/go_router.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
+import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
 
 /// Multi-page onboarding / welcome flow.
 /// Shows 3 pages in a PageView with a dot indicator. The final page displays
@@ -43,6 +45,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(welcomeScreenControllerProvider);
+    final loc = AppLocalizations.of(context);
 
     if (state.isLoading) {
       return const Scaffold(body: Center(child: AnyStepLoadingIndicator()));
@@ -56,11 +59,11 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('You are onboarded!'),
+                Text(loc.onboardingCompleteTitle),
                 const SizedBox(height: AnyStepSpacing.md20),
                 ElevatedButton(
                   onPressed: () => context.go(EventFeedScreen.path),
-                  child: const Text('Go to Event Feed'),
+                  child: Text(loc.goToEventFeed),
                 ),
               ],
             ),
@@ -80,18 +83,15 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
               child: PageView(
                 controller: _controller,
                 onPageChanged: (i) => setState(() => _index = i),
-                children: const [
+                children: [
                   _OnboardingPage(
-                    title: 'Welcome to AnyStep',
-                    description: 'Track and discover volunteer events easily.',
+                    title: loc.onboardingWelcomeTitle,
+                    description: loc.onboardingWelcomeDesc,
                   ),
+                  _OnboardingPage(title: loc.changeLanguage, extra: const LocaleSetting()),
                   _OnboardingPage(
-                    title: 'Find Events',
-                    description: 'Browse nearby opportunities that fit your passion.',
-                  ),
-                  _OnboardingPage(
-                    title: 'Make an Impact',
-                    description: 'Join events and measure the difference you make.',
+                    title: loc.onboardingImpactTitle,
+                    description: loc.onboardingImpactDesc,
                   ),
                 ],
               ),
@@ -108,10 +108,9 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   width: _index == i ? 16 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color:
-                        _index == i
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.primary.withAlpha(80),
+                    color: _index == i
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.primary.withAlpha(80),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -125,7 +124,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   if (!isLast)
                     TextButton(
                       onPressed: () => _controller.jumpToPage(_pageCount - 1),
-                      child: const Text('Skip'),
+                      child: Text(loc.skip),
                     ),
                   const Spacer(),
                   ElevatedButton(
@@ -141,7 +140,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         _goNext();
                       }
                     },
-                    child: Text(isLast ? 'Get Started' : 'Next'),
+                    child: Text(isLast ? loc.getStarted : loc.next),
                   ),
                 ],
               ),
@@ -154,15 +153,16 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
 }
 
 class _OnboardingPage extends StatelessWidget {
-  const _OnboardingPage({required this.title, required this.description});
+  const _OnboardingPage({required this.title, this.description, this.extra});
 
   final String title;
-  final String description;
+  final String? description;
+  final Widget? extra;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      padding: .symmetric(horizontal: AnyStepSpacing.lg32, vertical: AnyStepSpacing.md24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -172,12 +172,15 @@ class _OnboardingPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: AnyStepSpacing.md20),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+          if (description != null) ...[
+            const SizedBox(height: AnyStepSpacing.md20),
+            Text(
+              description!,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ],
+          if (extra != null) ...[const SizedBox(height: AnyStepSpacing.md20), extra!],
         ],
       ),
     );

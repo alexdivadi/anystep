@@ -5,7 +5,6 @@ import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'event_repository.g.dart';
@@ -41,13 +40,12 @@ class EventRepository implements IRepository<EventModel> {
             AnyStepFilter.equals('country', address.country),
           ],
         );
-        data['address'] =
-            addressDoc.isNotEmpty
-                ? addressDoc.first["id"]
-                : (await database.createOrUpdate(
-                  table: addressCollectionId,
-                  data: address.toJson(),
-                )).first["id"];
+        data['address'] = addressDoc.isNotEmpty
+            ? addressDoc.first["id"]
+            : (await database.createOrUpdate(
+                table: addressCollectionId,
+                data: address.toJson(),
+              )).first["id"];
       } catch (e) {
         Log.e("Error handling address", e);
       }

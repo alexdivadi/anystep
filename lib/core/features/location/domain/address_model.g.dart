@@ -25,7 +25,7 @@ _AddressModel _$AddressModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AddressModelToJson(_AddressModel instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': ?instance.id,
       'street': instance.street,
       'street_secondary': instance.streetSecondary,
       'city': instance.city,

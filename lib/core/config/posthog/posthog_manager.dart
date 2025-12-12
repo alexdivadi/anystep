@@ -33,7 +33,7 @@ class PostHogManager {
     }
   }
 
-  static Future<void> identify(String userId, {Map<String, Object>? properties}) async {
+  static Future<void> identify(String userId, {Map<String, dynamic>? properties}) async {
     // Identify the user with their ID and optional properties
     await _guard(() async {
       final ph = Posthog();
@@ -41,7 +41,7 @@ class PostHogManager {
         // If the user is already identified, skip
         return;
       }
-      await ph.identify(userId: userId, userProperties: properties);
+      await ph.identify(userId: userId, userProperties: properties as Map<String, Object>?);
     });
   }
 
@@ -52,10 +52,10 @@ class PostHogManager {
     });
   }
 
-  static Future<void> capture(String eventName, {Map<String, Object>? properties}) async {
+  static Future<void> capture(String eventName, {Map<String, dynamic>? properties}) async {
     // Capture an event for the user with their ID and optional properties
     await _guard(() async {
-      await Posthog().capture(eventName: eventName, properties: properties);
+      await Posthog().capture(eventName: eventName, properties: properties as Map<String, Object>?);
     });
   }
 

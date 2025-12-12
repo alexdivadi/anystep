@@ -16,11 +16,6 @@ class Env {
     }
   }
 
-  //TODO: Get these from appwrite.json
-  static String get appwriteEndpoint => _get('APPWRITE_ENDPOINT');
-  static String get appwriteProjectId => _get('APPWRITE_PROJECT_ID');
-  static String get appwriteDatabaseId => _get('APPWRITE_DATABASE_ID');
-
   static String get supabaseUrl => _get('SUPABASE_URL');
   static String get supabaseApiKey => _get('SUPABASE_API_KEY');
 
