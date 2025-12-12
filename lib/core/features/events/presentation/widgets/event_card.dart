@@ -23,26 +23,18 @@ class EventCard extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
-        leading:
-            event.imageUrl != null && event.imageUrl!.isNotEmpty
-                ? ClipRRect(
-                  borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
-                  child: Image.network(
-                    event.imageUrl!,
-                    width: AnyStepSpacing.xl56,
-                    height: AnyStepSpacing.xl56,
-                    fit: BoxFit.cover,
-                  ),
-                )
-                : Container(
+        leading: event.imageUrl != null && event.imageUrl!.isNotEmpty
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
+                child: Image.network(
+                  event.imageUrl!,
                   width: AnyStepSpacing.xl56,
                   height: AnyStepSpacing.xl56,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).highlightColor.withAlpha(100),
-                    borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
-                  ),
-                  child: Icon(Icons.event, color: Theme.of(context).highlightColor),
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const _ImagePlaceholder(),
                 ),
+              )
+            : const _ImagePlaceholder(),
         title: Row(
           children: [
             Text(event.name, style: Theme.of(context).textTheme.titleMedium),
@@ -75,6 +67,23 @@ class EventCard extends StatelessWidget {
         ),
         isThreeLine: event.description != null && event.description!.isNotEmpty,
       ),
+    );
+  }
+}
+
+class _ImagePlaceholder extends StatelessWidget {
+  const _ImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: AnyStepSpacing.xl56,
+      height: AnyStepSpacing.xl56,
+      decoration: BoxDecoration(
+        color: Theme.of(context).highlightColor.withAlpha(100),
+        borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
+      ),
+      child: Icon(Icons.event, color: Theme.of(context).highlightColor),
     );
   }
 }

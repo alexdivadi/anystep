@@ -30,6 +30,9 @@ class EventDetailInfo extends StatelessWidget {
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const SizedBox.shrink();
+                    },
                   )
                 : const SizedBox.shrink(),
             Container(
