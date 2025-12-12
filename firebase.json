@@ -1,1 +1,42 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"anystep-community-services","appId":"1:970538144554:android:44b9979dca1952bcae0453","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"anystep-community-services","appId":"1:970538144554:ios:8a8e10f59628080dae0453","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"anystep-community-services","configurations":{"android":"1:970538144554:android:44b9979dca1952bcae0453","ios":"1:970538144554:ios:8a8e10f59628080dae0453","web":"1:970538144554:web:10f21f826b37f1aaae0453"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "anystep-community-services",
+          "appId": "1:970538144554:android:44b9979dca1952bcae0453",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "anystep-community-services",
+          "appId": "1:970538144554:ios:8a8e10f59628080dae0453",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "anystep-community-services",
+          "configurations": {
+            "android": "1:970538144554:android:44b9979dca1952bcae0453",
+            "ios": "1:970538144554:ios:8a8e10f59628080dae0453",
+            "web": "1:970538144554:web:10f21f826b37f1aaae0453"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}
