@@ -45,13 +45,27 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
 # Firebase related
 **/google-services.json
 **/GoogleService-Info.plist
 **/firebase-debug.log
+<<<<<<< Updated upstream
+=======
+.firebase/
+>>>>>>> Stashed changes
 
 # Keys
 *.keystore
 *.jks
+<<<<<<< Updated upstream
 key.properties
+=======
+key.properties
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

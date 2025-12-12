@@ -4,7 +4,6 @@ import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
-import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_screen_controller_state.dart';
 import 'package:anystep/database/storage.dart';
 import 'package:image_picker/image_picker.dart';

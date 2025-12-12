@@ -1,6 +1,6 @@
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
+import 'package:anystep/core/common/widgets/navigation/anystep_nav_items.dart';
 import 'package:anystep/core/features/screens.dart';
-import 'package:anystep/core/common/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -54,12 +54,10 @@ final routes = [
   // Unauthenticated Shell
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      return Scaffold(
-        body: navigationShell,
-        bottomNavigationBar: UnauthenticatedNavBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: navigationShell.goBranch,
-        ),
+      return UnauthenticatedNavigation(
+        currentIndex: navigationShell.currentIndex,
+        onTap: navigationShell.goBranch,
+        navigationShell: navigationShell,
       );
     },
     branches: [
@@ -87,12 +85,10 @@ final routes = [
   // Volunteer Shell
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      return Scaffold(
-        body: navigationShell,
-        bottomNavigationBar: VolunteerNavBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: navigationShell.goBranch,
-        ),
+      return VolunteerNavigation(
+        currentIndex: navigationShell.currentIndex,
+        onTap: navigationShell.goBranch,
+        navigationShell: navigationShell,
       );
     },
     branches: [
@@ -120,12 +116,10 @@ final routes = [
   // Admin Shell
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      return Scaffold(
-        body: navigationShell,
-        bottomNavigationBar: AdminNavBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: navigationShell.goBranch,
-        ),
+      return AdminNavigation(
+        currentIndex: navigationShell.currentIndex,
+        onTap: navigationShell.goBranch,
+        navigationShell: navigationShell,
       );
     },
     branches: [
