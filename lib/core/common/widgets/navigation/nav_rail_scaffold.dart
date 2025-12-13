@@ -1,4 +1,3 @@
-import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:flutter/material.dart';
 
 class NavRailScaffold extends StatelessWidget {

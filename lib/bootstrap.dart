@@ -13,12 +13,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void bootstrap(FutureOr<Widget> Function() builder) async {
   // Ensure that Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
-  await Env.load();
-  await Supabase.initialize(
-    url: Env.supabaseUrl,
-    anonKey: Env.supabaseApiKey,
-    authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
-  );
+  try {
+    await Env.load();
+  } catch (e, st) {
+    Log.e('Error loading environment variables: $e', e, st);
+  }
+  try {
+    await Supabase.initialize(
+      url: Env.supabaseUrl,
+      anonKey: Env.supabaseApiKey,
+      authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
+    );
+  } catch (e, st) {
+    Log.e('Error initializing Supabase: $e', e, st);
+  }
+
   await PostHogManager.init();
   await FirebaseService.init();
 

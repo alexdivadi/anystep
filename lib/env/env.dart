@@ -12,6 +12,11 @@ class Env {
       return dotenv.env[key]!;
     } catch (e, st) {
       Log.e('Missing env: $key', e, st);
+    }
+    try {
+      return String.fromEnvironment(key);
+    } catch (e, st) {
+      Log.e('Missing env from --fromEnvironment--: $key', e, st);
       rethrow;
     }
   }
