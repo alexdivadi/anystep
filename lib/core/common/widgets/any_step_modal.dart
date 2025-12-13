@@ -9,6 +9,7 @@ extension AnyStepModalContext on BuildContext {
       showDialog(
         context: this,
         builder: (context) => Dialog(
+          constraints: BoxConstraints(maxWidth: 900),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnyStepSpacing.md16)),
           child: GestureDetector(onTap: () => FocusScope.of(context).unfocus(), child: child),
         ),
