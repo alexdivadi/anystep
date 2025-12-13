@@ -5,6 +5,7 @@ import 'package:anystep/core/config/posthog/posthog_exception.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/firebase/firebase.dart';
 import 'package:anystep/env/env.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
@@ -13,11 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void bootstrap(FutureOr<Widget> Function() builder) async {
   // Ensure that Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Env.load();
-  } catch (e, st) {
-    Log.e('Error loading environment variables: $e', e, st);
-  }
+
   try {
     await Supabase.initialize(
       url: Env.supabaseUrl,
@@ -25,7 +22,8 @@ void bootstrap(FutureOr<Widget> Function() builder) async {
       authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
     );
   } catch (e, st) {
-    Log.e('Error initializing Supabase: $e', e, st);
+    Log.e('[FATAL] Error initializing Supabase: $e', e, st);
+    rethrow;
   }
 
   await PostHogManager.init();

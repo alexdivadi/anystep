@@ -24,9 +24,9 @@ jobs:
           echo "SUPABASE_API_KEY=${{ vars.SUPABASE_API_KEY || secrets.SUPABASE_API_KEY }}" >> .env
           echo "POSTHOG_API_KEY=${{ vars.POSTHOG_API_KEY || secrets.POSTHOG_API_KEY }}" >> .env
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter pub get 
       - name: Build Flutter web app
-        run: flutter build web 
+        run: flutter build web --release --dart-define-from-file=.env
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
