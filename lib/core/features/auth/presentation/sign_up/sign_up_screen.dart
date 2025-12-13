@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
@@ -29,99 +30,101 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
     return AnyStepScaffold(
       appBar: AnyStepAppBar(title: Text(loc.backToLogin)),
-      body: Padding(
-        padding: const EdgeInsets.all(AnyStepSpacing.md16),
-        child: Center(
-          child: SingleChildScrollView(
-            child: FormBuilder(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text(loc.signUp, style: Theme.of(context).textTheme.displayLarge),
-                  ),
-                  const SizedBox(height: AnyStepSpacing.md16),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: AnyStepTextField(
-                          name: 'firstName',
-                          labelText: loc.firstName,
-                          validator: FormBuilderValidators.firstName(),
+      body: MaxWidthContainer(
+        child: Padding(
+          padding: const EdgeInsets.all(AnyStepSpacing.md16),
+          child: Center(
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(loc.signUp, style: Theme.of(context).textTheme.displayLarge),
+                    ),
+                    const SizedBox(height: AnyStepSpacing.md16),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: AnyStepTextField(
+                            name: 'firstName',
+                            labelText: loc.firstName,
+                            validator: FormBuilderValidators.firstName(),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: AnyStepSpacing.sm8),
-                      Flexible(
-                        child: AnyStepTextField(
-                          name: 'lastName',
-                          labelText: loc.lastName,
-                          validator: FormBuilderValidators.lastName(),
+                        const SizedBox(width: AnyStepSpacing.sm8),
+                        Flexible(
+                          child: AnyStepTextField(
+                            name: 'lastName',
+                            labelText: loc.lastName,
+                            validator: FormBuilderValidators.lastName(),
+                          ),
                         ),
+                      ],
+                    ),
+                    AnyStepTextField(
+                      name: 'email',
+                      labelText: loc.email,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.email(),
+                      ]),
+                    ),
+                    AnyStepTextField(
+                      name: 'password',
+                      labelText: loc.password,
+                      obscureText: true,
+                      validator: FormBuilderValidators.password(
+                        minSpecialCharCount: 0,
+                        errorText: '',
                       ),
+                    ),
+                    AnyStepTextField(
+                      name: 'confirmPassword',
+                      labelText: loc.confirmPassword,
+                      obscureText: true,
+                      validator: (value) {
+                        final password = formKey.currentState?.fields['password']?.value;
+                        if (value == null || value.isEmpty) {
+                          return 'Please confirm your password';
+                        }
+                        if (value != password) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: AnyStepSpacing.md16),
+                    if (state.isLoading) const AnyStepLoadingIndicator(),
+                    if (state.error != null) ...[
+                      Text(
+                        state.error!,
+                        style: TextStyle(color: Theme.of(context).colorScheme.error),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: AnyStepSpacing.sm8),
                     ],
-                  ),
-                  AnyStepTextField(
-                    name: 'email',
-                    labelText: loc.email,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.email(),
-                    ]),
-                  ),
-                  AnyStepTextField(
-                    name: 'password',
-                    labelText: loc.password,
-                    obscureText: true,
-                    validator: FormBuilderValidators.password(
-                      minSpecialCharCount: 0,
-                      errorText: '',
+                    ElevatedButton(
+                      onPressed: state.isLoading
+                          ? null
+                          : () {
+                              if (formKey.currentState?.saveAndValidate() ?? false) {
+                                final values = formKey.currentState!.value;
+                                controller.signUp(
+                                  email: values['email'] ?? '',
+                                  password: values['password'] ?? '',
+                                  firstName: values['firstName'] ?? '',
+                                  lastName: values['lastName'] ?? '',
+                                );
+                              }
+                            },
+                      child: Text(loc.signUp),
                     ),
-                  ),
-                  AnyStepTextField(
-                    name: 'confirmPassword',
-                    labelText: loc.confirmPassword,
-                    obscureText: true,
-                    validator: (value) {
-                      final password = formKey.currentState?.fields['password']?.value;
-                      if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value != password) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AnyStepSpacing.md16),
-                  if (state.isLoading) const AnyStepLoadingIndicator(),
-                  if (state.error != null) ...[
-                    Text(
-                      state.error!,
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AnyStepSpacing.sm8),
+                    const SizedBox(height: kToolbarHeight),
                   ],
-                  ElevatedButton(
-                    onPressed: state.isLoading
-                        ? null
-                        : () {
-                            if (formKey.currentState?.saveAndValidate() ?? false) {
-                              final values = formKey.currentState!.value;
-                              controller.signUp(
-                                email: values['email'] ?? '',
-                                password: values['password'] ?? '',
-                                firstName: values['firstName'] ?? '',
-                                lastName: values['lastName'] ?? '',
-                              );
-                            }
-                          },
-                    child: Text(loc.signUp),
-                  ),
-                  const SizedBox(height: kToolbarHeight),
-                ],
+                ),
               ),
             ),
           ),
