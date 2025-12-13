@@ -33,3 +33,5 @@ jobs:
           channelId: pr-${{ github.event.number }}
           expires: 12h
           projectId: anystep-community-services
+    env:
+      FIREBASE_CLI_EXPERIMENTS: webframeworks
