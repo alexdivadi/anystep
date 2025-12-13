@@ -19,17 +19,16 @@ class PastEventsCarousel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventsAsync = ref.watch(getPastEventsProvider(page: 0));
     return eventsAsync.when(
-      loading:
-          () => ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(
-              vertical: AnyStepSpacing.md12,
-              horizontal: AnyStepSpacing.sm8,
-            ),
-            itemCount: numItems,
-            separatorBuilder: (_, __) => const SizedBox(width: AnyStepSpacing.sm8),
-            itemBuilder: (_, __) => const EventCarouselCardShimmer(),
-          ),
+      loading: () => ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(
+          vertical: AnyStepSpacing.md12,
+          horizontal: AnyStepSpacing.sm8,
+        ),
+        itemCount: numItems,
+        separatorBuilder: (_, __) => const SizedBox(width: AnyStepSpacing.sm8),
+        itemBuilder: (_, __) => const EventCarouselCardShimmer(),
+      ),
       error: (e, st) {
         Log.e('Error loading past events', e, st);
         return ListView.separated(
@@ -48,31 +47,31 @@ class PastEventsCarousel extends ConsumerWidget {
         return items.isEmpty
             ? Center(child: NoEventsWidget())
             : ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(
-                vertical: AnyStepSpacing.md12,
-                horizontal: AnyStepSpacing.sm8,
-              ),
-              itemCount: feedResult.totalCount,
-              separatorBuilder: (_, __) => const SizedBox(width: AnyStepSpacing.sm8),
-              itemBuilder: (context, i) {
-                final pageNum = i ~/ EventRepository.pageSize;
-                final index = i % EventRepository.pageSize;
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(
+                  vertical: AnyStepSpacing.md12,
+                  horizontal: AnyStepSpacing.sm8,
+                ),
+                itemCount: feedResult.totalCount,
+                separatorBuilder: (_, __) => const SizedBox(width: AnyStepSpacing.sm8),
+                itemBuilder: (context, i) {
+                  final pageNum = i ~/ EventRepository.pageSize;
+                  final index = i % EventRepository.pageSize;
 
-                final eventsPage = ref.watch(getPastEventsProvider(page: pageNum));
-                return eventsPage.when(
-                  loading: () => const EventCarouselCardShimmer(),
-                  error: (e, st) => const EventCardError(),
-                  data: (pageResult) {
-                    final event = pageResult.items[index];
-                    return EventCarouselCard(
-                      event: event,
-                      onTap: () => context.push(EventDetailScreen.getPath(event.id!)),
-                    );
-                  },
-                );
-              },
-            );
+                  final eventsPage = ref.watch(getPastEventsProvider(page: pageNum));
+                  return eventsPage.when(
+                    loading: () => const EventCarouselCardShimmer(),
+                    error: (e, st) => const EventCardError(),
+                    data: (pageResult) {
+                      final event = pageResult.items[index];
+                      return EventCarouselCard(
+                        event: event,
+                        onTap: () => context.push(EventDetailScreen.getPath(event.id!)),
+                      );
+                    },
+                  );
+                },
+              );
       },
     );
   }

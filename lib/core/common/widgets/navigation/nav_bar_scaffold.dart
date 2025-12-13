@@ -1,3 +1,4 @@
+import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class NavBarScaffold extends StatelessWidget {
@@ -15,7 +16,7 @@ class NavBarScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AnyStepScaffold(
       body: body,
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,

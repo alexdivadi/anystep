@@ -1,4 +1,4 @@
-import 'package:anystep/core/common/widgets/max_width_container.dart';
+import 'package:anystep/core/common/widgets/any_step_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class NavRailScaffold extends StatelessWidget {
@@ -16,7 +16,7 @@ class NavRailScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AnyStepScaffold(
       body: Row(
         children: [
           // Fixed navigation rail on the left (start)

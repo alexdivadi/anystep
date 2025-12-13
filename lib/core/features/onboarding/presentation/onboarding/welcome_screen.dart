@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
+import 'package:anystep/core/common/widgets/any_step_scaffold.dart';
 import 'package:anystep/core/features/events/presentation/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,12 +49,12 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
     final loc = AppLocalizations.of(context);
 
     if (state.isLoading) {
-      return const Scaffold(body: Center(child: AnyStepLoadingIndicator()));
+      return const AnyStepScaffold(body: Center(child: AnyStepLoadingIndicator()));
     }
 
     // If already onboarded, show quick success screen with navigation option.
     if (state.isOnboarded) {
-      return Scaffold(
+      return AnyStepScaffold(
         body: SafeArea(
           child: Center(
             child: Column(
@@ -74,7 +75,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
 
     final isLast = _index == _pageCount - 1;
 
-    return Scaffold(
+    return AnyStepScaffold(
       // No AppBar per requirements.
       body: SafeArea(
         child: Column(
