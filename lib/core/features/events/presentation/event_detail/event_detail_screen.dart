@@ -1,6 +1,7 @@
 // Removed unused dart:ui import after refactor.
 
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form.dart';
@@ -95,56 +96,58 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
             title: Text(loc.eventDetailTitle),
             actions: isPast ? null : actions,
           ),
-          body: SafeArea(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              fit: StackFit.expand,
-              children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: isEditing
-                          ? EventDetailForm(
-                              event: event,
-                              physics: const NeverScrollableScrollPhysics(),
-                              onSuccess: _onSuccess,
-                            )
-                          : EventDetailInfo(event: event),
-                    ),
-                    if (!isPast && userAsync.hasValue && userAsync.value != null && !isEditing)
+          body: MaxWidthContainer(
+            child: SafeArea(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                fit: StackFit.expand,
+                children: [
+                  CustomScrollView(
+                    slivers: [
                       SliverToBoxAdapter(
-                        child: Center(child: SignUpButton(eventId: widget.id)),
+                        child: isEditing
+                            ? EventDetailForm(
+                                event: event,
+                                physics: const NeverScrollableScrollPhysics(),
+                                onSuccess: _onSuccess,
+                              )
+                            : EventDetailInfo(event: event),
                       ),
-                    if (userAsync.hasValue && !isEditing)
-                      isPast
-                          ? AttendanceList(
-                              eventId: widget.id,
-                              isAdmin: userAsync.value?.role.canEditEvent == true,
-                              onAddAttendee: () => context.showModal(
-                                AttendeeSearchForm(eventId: widget.id),
-                                isScrollControlled: false,
-                              ),
-                            )
-                          : SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
-                    if (userAsync.hasValue && userAsync.value == null)
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: .only(
-                            top: AnyStepSpacing.md16,
-                            left: AnyStepSpacing.md16,
-                            right: AnyStepSpacing.md16,
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () => context.go(LoginScreen.path),
-                            child: Text(loc.signUp),
+                      if (!isPast && userAsync.hasValue && userAsync.value != null && !isEditing)
+                        SliverToBoxAdapter(
+                          child: Center(child: SignUpButton(eventId: widget.id)),
+                        ),
+                      if (userAsync.hasValue && !isEditing)
+                        isPast
+                            ? AttendanceList(
+                                eventId: widget.id,
+                                isAdmin: userAsync.value?.role.canEditEvent == true,
+                                onAddAttendee: () => context.showModal(
+                                  AttendeeSearchForm(eventId: widget.id),
+                                  isScrollControlled: false,
+                                ),
+                              )
+                            : SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
+                      if (userAsync.hasValue && userAsync.value == null)
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: .only(
+                              top: AnyStepSpacing.md16,
+                              left: AnyStepSpacing.md16,
+                              right: AnyStepSpacing.md16,
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () => context.go(LoginScreen.path),
+                              child: Text(loc.signUp),
+                            ),
                           ),
                         ),
-                      ),
-                    const SliverToBoxAdapter(child: SizedBox(height: AnyStepSpacing.xl64)),
-                  ],
-                ),
-                const BottomFadeWidget(),
-              ],
+                      const SliverToBoxAdapter(child: SizedBox(height: AnyStepSpacing.xl64)),
+                    ],
+                  ),
+                  const BottomFadeWidget(),
+                ],
+              ),
             ),
           ),
         );

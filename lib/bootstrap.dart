@@ -5,7 +5,6 @@ import 'package:anystep/core/config/posthog/posthog_exception.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/firebase/firebase.dart';
 import 'package:anystep/env/env.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';

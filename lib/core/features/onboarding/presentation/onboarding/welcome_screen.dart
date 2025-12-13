@@ -43,6 +43,13 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
     }
   }
 
+  void _submitOnboarding() async {
+    await ref.read(welcomeScreenControllerProvider.notifier).completeOnboarding();
+    if (mounted && context.mounted) {
+      context.go(EventFeedScreen.path);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(welcomeScreenControllerProvider);
@@ -122,21 +129,12 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               child: Row(
                 children: [
-                  if (!isLast)
-                    TextButton(
-                      onPressed: () => _controller.jumpToPage(_pageCount - 1),
-                      child: Text(loc.skip),
-                    ),
+                  if (!isLast) TextButton(onPressed: _submitOnboarding, child: Text(loc.skip)),
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () async {
                       if (isLast) {
-                        await ref
-                            .read(welcomeScreenControllerProvider.notifier)
-                            .completeOnboarding();
-                        if (mounted && context.mounted) {
-                          context.go(EventFeedScreen.path);
-                        }
+                        _submitOnboarding();
                       } else {
                         _goNext();
                       }
