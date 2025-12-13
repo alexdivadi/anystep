@@ -5,7 +5,12 @@
             "name": "run app",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart"
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=SUPABASE_URL=https://xwbzsprukcwoiaebxgev.supabase.co",
+                "--dart-define=SUPABASE_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3YnpzcHJ1a2N3b2lhZWJ4Z2V2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzNjQwMzgsImV4cCI6MjA2OTk0MDAzOH0.gfJjftMzArji9cLnR-1EUyVdSycS5MoS-vN-_tV6WtY",
+                "--dart-define=POSTHOG_API_KEY=phc_7lngiY37ujUqMH3mAlYOMrxmQydIZA0cy8bGbQMUhAJ"
+            ]
         }
     ]
 }

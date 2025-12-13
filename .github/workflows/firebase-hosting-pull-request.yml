@@ -25,4 +25,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANYSTEP_COMMUNITY_SERVICES }}
+          channelId: pr-${{ github.event.number }}
+          expires: 12h
           projectId: anystep-community-services
