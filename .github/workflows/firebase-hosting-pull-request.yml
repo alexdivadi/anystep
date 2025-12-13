@@ -17,16 +17,12 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Add .env file
-        run: |
-          touch .env
-          echo "SUPABASE_URL=${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}" >> .env
-          echo "SUPABASE_API_KEY=${{ vars.SUPABASE_API_KEY || secrets.SUPABASE_API_KEY }}" >> .env
-          echo "POSTHOG_API_KEY=${{ vars.POSTHOG_API_KEY || secrets.POSTHOG_API_KEY }}" >> .env
+      - name: Add .env file (empty)
+        run: touch .env
       - name: Install dependencies
         run: flutter pub get
       - name: Build Flutter web app
-        run: flutter build web --release 
+        run: flutter build web --release --dart-define=SUPABASE_URL=${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }} --dart-define=SUPABASE_API_KEY=${{ vars.SUPABASE_API_KEY || secrets.SUPABASE_API_KEY }} --dart-define=POSTHOG_API_KEY=${{ vars.POSTHOG_API_KEY || secrets.POSTHOG_API_KEY }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
