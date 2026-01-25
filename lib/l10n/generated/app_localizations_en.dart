@@ -316,6 +316,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Track and discover volunteer events easily.';
 
   @override
+  String get onboardingNotificationsTitle => 'Stay in the Loop';
+
+  @override
+  String get onboardingNotificationsDesc =>
+      'Get a heads-up when new events are added.';
+
+  @override
   String get onboardingFindEventsTitle => 'Find Events';
 
   @override
@@ -328,6 +335,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingImpactDesc =>
       'Join events and measure the difference you make.';
+
+  @override
+  String get eventNotificationsTitle => 'Event notifications';
+
+  @override
+  String get eventNotificationsDescription =>
+      'Notify me when a new event is added.';
 
   @override
   String get onboardingCompleteTitle => 'Onboarding Complete!';

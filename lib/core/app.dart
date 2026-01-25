@@ -3,6 +3,7 @@ import 'package:anystep/core/config/router/router.dart';
 import 'package:anystep/core/config/theme/theme.dart';
 import 'package:anystep/core/config/theme/theme_mode.dart';
 import 'package:anystep/core/config/locale/locale_controller.dart';
+import 'package:anystep/core/features/notifications/data/notification_repository.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class AnyStepApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeModeControllerProvider);
     final localeAsync = ref.watch(localeControllerProvider);
+    ref.watch(notificationStartupProvider);
 
     return MaterialApp.router(
       routerConfig: router,

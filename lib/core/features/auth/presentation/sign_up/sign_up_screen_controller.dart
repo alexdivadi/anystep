@@ -2,6 +2,7 @@ import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen_s
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/notifications/data/event_notifications_controller.dart';
 part 'sign_up_screen_controller.g.dart';
 
 @riverpod
@@ -25,6 +26,7 @@ class SignUpScreenController extends _$SignUpScreenController {
         lastName: lastName,
       );
       if (result == null) {
+        await ref.read(eventNotificationsControllerProvider.notifier).enableOnSignup();
         state = state.copyWith(isLoading: false, success: true);
         Log.d('Sign up successful, user created');
       } else {

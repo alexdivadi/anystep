@@ -668,6 +668,18 @@ abstract class AppLocalizations {
   /// **'Track and discover volunteer events easily.'**
   String get onboardingWelcomeDesc;
 
+  /// Title for onboarding notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Stay in the Loop'**
+  String get onboardingNotificationsTitle;
+
+  /// Description for onboarding notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Get a heads-up when new events are added.'**
+  String get onboardingNotificationsDesc;
+
   /// Title for onboarding find events page
   ///
   /// In en, this message translates to:
@@ -691,6 +703,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join events and measure the difference you make.'**
   String get onboardingImpactDesc;
+
+  /// Settings label for event notification toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Event notifications'**
+  String get eventNotificationsTitle;
+
+  /// Settings helper text for event notification toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me when a new event is added.'**
+  String get eventNotificationsDescription;
 
   /// Success text shown when user is already onboarded
   ///

@@ -318,6 +318,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Explora y descubre fácilmente eventos de voluntariado.';
 
   @override
+  String get onboardingNotificationsTitle => 'Mantente al tanto';
+
+  @override
+  String get onboardingNotificationsDesc =>
+      'Recibe un aviso cuando se agreguen nuevos eventos.';
+
+  @override
   String get onboardingFindEventsTitle => 'Buscar eventos';
 
   @override
@@ -330,6 +337,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get onboardingImpactDesc =>
       'Únete a eventos y mide la diferencia que generas.';
+
+  @override
+  String get eventNotificationsTitle => 'Notificaciones de eventos';
+
+  @override
+  String get eventNotificationsDescription =>
+      'Avísame cuando se agregue un nuevo evento.';
 
   @override
   String get onboardingCompleteTitle => '¡Onboarding completado!';
