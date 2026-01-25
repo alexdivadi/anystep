@@ -24,6 +24,26 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="anystep"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="anystep-community-services.web.app"/>
+                <data
+                    android:scheme="http"
+                    android:host="localhost"/>
+                <data
+                    android:scheme="http"
+                    android:host="127.0.0.1"/>
+            </intent-filter>
         </activity>
         <meta-data android:name="com.posthog.posthog.API_KEY" android:value="phc_7lngiY37ujUqMH3mAlYOMrxmQydIZA0cy8bGbQMUhAJ" />
         <meta-data android:name="com.posthog.posthog.POSTHOG_HOST" android:value="https://us.i.posthog.com" />

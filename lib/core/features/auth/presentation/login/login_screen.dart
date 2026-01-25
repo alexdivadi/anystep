@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/max_width_container.dart';
+import 'package:anystep/core/features/auth/presentation/forgot_password/forgot_password_screen.dart';
 import 'package:anystep/core/features/auth/presentation/sign_up/sign_up_screen.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 
@@ -56,6 +57,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     labelText: loc.password,
                     obscureText: true,
                     validator: FormBuilderValidators.required(),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        context.push(ForgotPasswordScreen.path);
+                      },
+                      child: Text(loc.forgotPassword),
+                    ),
                   ),
                   const SizedBox(height: AnyStepSpacing.md16),
                   if (state.isLoading) const AnyStepLoadingIndicator(),

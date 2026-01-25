@@ -196,6 +196,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dontHaveAccount => 'Don\'t have an account? Sign Up';
 
   @override
+  String get forgotPassword => 'Forgot your password?';
+
+  @override
+  String get forgotPasswordTitle => 'Reset your password';
+
+  @override
+  String get forgotPasswordInstructions =>
+      'Enter the email for your account and we\'ll send a reset link.';
+
+  @override
+  String get sendResetEmail => 'Send reset email';
+
+  @override
+  String get passwordResetEmailSent =>
+      'Password reset email sent. Check your inbox.';
+
+  @override
+  String get resetPasswordTitle => 'Reset password';
+
+  @override
+  String get resetPasswordInstructions =>
+      'Choose a new password for your account.';
+
+  @override
+  String get updatePassword => 'Update password';
+
+  @override
+  String get passwordUpdatedSuccess => 'Your password has been updated.';
+
+  @override
+  String get resetPasswordConfirmRequired => 'Please confirm your password';
+
+  @override
+  String get resetPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get emailConfirmedTitle => 'Email confirmed';
+
+  @override
+  String get emailConfirmedMessage =>
+      'Your email has been verified. You can now log in.';
+
+  @override
   String get confirmEmailMessage => 'Confirm your email to continue.';
 
   @override

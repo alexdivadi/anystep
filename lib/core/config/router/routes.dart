@@ -18,9 +18,24 @@ final routes = [
     builder: (context, state) => const SignUpScreen(),
   ),
   GoRoute(
+    path: ForgotPasswordScreen.path,
+    name: ForgotPasswordScreen.name,
+    builder: (context, state) => const ForgotPasswordScreen(),
+  ),
+  GoRoute(
+    path: ResetPasswordScreen.path,
+    name: ResetPasswordScreen.name,
+    builder: (context, state) => const ResetPasswordScreen(),
+  ),
+  GoRoute(
     path: ConfirmEmailScreen.path,
     name: ConfirmEmailScreen.name,
     builder: (context, state) => const ConfirmEmailScreen(),
+  ),
+  GoRoute(
+    path: EmailConfirmedScreen.path,
+    name: EmailConfirmedScreen.name,
+    builder: (context, state) => const EmailConfirmedScreen(),
   ),
   GoRoute(
     path: WelcomeScreen.path,

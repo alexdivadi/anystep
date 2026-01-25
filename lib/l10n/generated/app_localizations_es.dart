@@ -196,6 +196,49 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dontHaveAccount => '¿No tienes cuenta? Regístrate';
 
   @override
+  String get forgotPassword => '¿Olvidaste tu contraseña?';
+
+  @override
+  String get forgotPasswordTitle => 'Restablecer contraseña';
+
+  @override
+  String get forgotPasswordInstructions =>
+      'Ingresa el correo asociado a tu cuenta y te enviaremos un enlace para restablecerla.';
+
+  @override
+  String get sendResetEmail => 'Enviar correo de restablecimiento';
+
+  @override
+  String get passwordResetEmailSent =>
+      'Se envió el correo para restablecer la contraseña. Revisa tu bandeja de entrada.';
+
+  @override
+  String get resetPasswordTitle => 'Restablecer contraseña';
+
+  @override
+  String get resetPasswordInstructions =>
+      'Elige una nueva contraseña para tu cuenta.';
+
+  @override
+  String get updatePassword => 'Actualizar contraseña';
+
+  @override
+  String get passwordUpdatedSuccess => 'Tu contraseña ha sido actualizada.';
+
+  @override
+  String get resetPasswordConfirmRequired => 'Confirma tu contraseña';
+
+  @override
+  String get resetPasswordMismatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get emailConfirmedTitle => 'Correo confirmado';
+
+  @override
+  String get emailConfirmedMessage =>
+      'Tu correo fue verificado. Ya puedes iniciar sesión.';
+
+  @override
   String get confirmEmailMessage => 'Confirma tu correo para continuar.';
 
   @override

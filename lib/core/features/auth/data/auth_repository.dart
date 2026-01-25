@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:anystep/database/client.dart';
 import 'package:anystep/core/features/auth/domain/auth_state.dart';
 import 'package:anystep/core/shared_prefs/shared_prefs.dart';
+import 'package:anystep/core/config/router/deep_link_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
@@ -108,9 +109,11 @@ class AuthRepository {
     required String lastName,
   }) async {
     try {
+      final redirectTo = DeepLinkConfig.emailConfirmationRedirect().toString();
       await _supabase.signUp(
         email: email,
         password: password,
+        emailRedirectTo: redirectTo,
         data: {'first_name': firstName, 'last_name': lastName},
       );
       await _supabase.signInWithPassword(email: email, password: password);
@@ -123,6 +126,35 @@ class AuthRepository {
       return 'Signup failed. Please try again.';
     } catch (e, st) {
       Log.e('Signup failed', e, st);
+      return 'An error occurred';
+    }
+  }
+
+  Future<String?> sendPasswordReset({required String email, String? redirectTo}) async {
+    try {
+      await _supabase.resetPasswordForEmail(email, redirectTo: redirectTo);
+      return null;
+    } on AuthApiException catch (e) {
+      Log.w('Password reset failed for user: $email', e);
+      return 'Password reset failed. Please try again.';
+    } catch (e, st) {
+      Log.e('Password reset failed', e, st);
+      return 'An error occurred';
+    }
+  }
+
+  Future<String?> updatePassword({required String newPassword}) async {
+    try {
+      await _supabase.updateUser(UserAttributes(password: newPassword));
+      return null;
+    } on AuthSessionMissingException catch (e) {
+      Log.w('Password update failed: missing session', e);
+      return 'Reset link expired. Please request a new one.';
+    } on AuthApiException catch (e) {
+      Log.w('Password update failed', e);
+      return 'Unable to update password. Please try again.';
+    } catch (e, st) {
+      Log.e('Password update failed', e, st);
       return 'An error occurred';
     }
   }

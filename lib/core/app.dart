@@ -1,4 +1,5 @@
 import 'package:anystep/core/app_startup/app_startup_widget.dart';
+import 'package:anystep/core/config/router/deep_link_handler.dart';
 import 'package:anystep/core/config/router/router.dart';
 import 'package:anystep/core/config/theme/theme.dart';
 import 'package:anystep/core/config/theme/theme_mode.dart';
@@ -18,6 +19,7 @@ class AnyStepApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeControllerProvider);
     final localeAsync = ref.watch(localeControllerProvider);
     ref.watch(notificationStartupProvider);
+    ref.watch(deepLinkHandlerProvider);
 
     return MaterialApp.router(
       routerConfig: router,

@@ -434,6 +434,84 @@ abstract class AppLocalizations {
   /// **'Don\'t have an account? Sign Up'**
   String get dontHaveAccount;
 
+  /// Text button label to start password reset
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get forgotPassword;
+
+  /// Title for the forgot password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reset your password'**
+  String get forgotPasswordTitle;
+
+  /// Instructions for the forgot password form
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the email for your account and we\'ll send a reset link.'**
+  String get forgotPasswordInstructions;
+
+  /// Button label to send password reset email
+  ///
+  /// In en, this message translates to:
+  /// **'Send reset email'**
+  String get sendResetEmail;
+
+  /// Confirmation message after sending password reset email
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent. Check your inbox.'**
+  String get passwordResetEmailSent;
+
+  /// Title for the reset password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get resetPasswordTitle;
+
+  /// Instructions for the reset password form
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password for your account.'**
+  String get resetPasswordInstructions;
+
+  /// Button label for updating the password
+  ///
+  /// In en, this message translates to:
+  /// **'Update password'**
+  String get updatePassword;
+
+  /// Confirmation message after updating password
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been updated.'**
+  String get passwordUpdatedSuccess;
+
+  /// Validation error when confirm password is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get resetPasswordConfirmRequired;
+
+  /// Validation error when passwords do not match
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get resetPasswordMismatch;
+
+  /// Title shown after email confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Email confirmed'**
+  String get emailConfirmedTitle;
+
+  /// Body message after email confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your email has been verified. You can now log in.'**
+  String get emailConfirmedMessage;
+
   /// Message instructing user to confirm email
   ///
   /// In en, this message translates to:
