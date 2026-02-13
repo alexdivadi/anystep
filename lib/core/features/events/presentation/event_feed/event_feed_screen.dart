@@ -1,15 +1,20 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/constants/breakpoints.dart';
 import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/features/dashboard/presentation/widgets/dashboard_calendar_card.dart';
+import 'package:anystep/core/features/dashboard/presentation/widgets/dashboard_metrics_card.dart';
+import 'package:anystep/core/features/dashboard/presentation/widgets/dashboard_section_header.dart';
+import 'package:anystep/core/features/dashboard/presentation/widgets/recent_events_list.dart';
+import 'package:anystep/core/features/dashboard/presentation/widgets/upcoming_events_list.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form.dart';
-import 'package:anystep/core/features/events/presentation/event_feed/widgets/past_events_carousel.dart';
-import 'package:anystep/core/features/events/presentation/event_feed/widgets/upcoming_events_feed.dart';
 import 'package:anystep/core/features/events/presentation/event_feed/widgets/search_events_feed.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
+import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +39,22 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
   bool isSearching = false;
   String q = '';
 
+  Future<void> _refreshDashboard(bool includeReports) async {
+    ref.invalidate(getEventsProvider);
+    ref.invalidate(getUpcomingEventsProvider);
+    ref.invalidate(getPastEventsProvider);
+    if (includeReports) {
+      ref.invalidate(userEventsInRangeProvider);
+      ref.invalidate(volunteerHoursAggregateProvider);
+      ref.invalidate(volunteerHoursSummaryThisMonthProvider);
+      ref.invalidate(volunteerHoursSummaryYtdProvider);
+      ref.invalidate(currentUserHoursSummaryThisMonthProvider);
+      ref.invalidate(currentUserHoursSummaryYtdProvider);
+      ref.invalidate(volunteerMonthlyHoursYtdProvider);
+      ref.invalidate(currentUserMonthlyHoursYtdProvider);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final uid = ref.watch(authStateStreamProvider);
@@ -42,6 +63,16 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     final isAuthenticated = !user.isLoading && user.hasValue && user.value != null;
     final isAdmin = isAuthenticated && user.value!.role == UserRole.admin;
     final loc = AppLocalizations.of(context);
+    final currentMonthSummary =
+        isAuthenticated && !isAdmin ? ref.watch(currentUserHoursSummaryThisMonthProvider) : null;
+    final currentYtdSummary =
+        isAuthenticated && !isAdmin ? ref.watch(currentUserHoursSummaryYtdProvider) : null;
+    final currentMonthlySeries =
+        isAuthenticated && !isAdmin ? ref.watch(currentUserMonthlyHoursYtdProvider) : null;
+    final adminMonthSummary =
+        isAdmin ? ref.watch(volunteerHoursSummaryThisMonthProvider) : null;
+    final adminYtdSummary = isAdmin ? ref.watch(volunteerHoursSummaryYtdProvider) : null;
+    final adminMonthlySeries = isAdmin ? ref.watch(volunteerMonthlyHoursYtdProvider) : null;
 
     return PopScope(
       onPopInvokedWithResult: (popped, result) async {
@@ -129,47 +160,93 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                 ),
               ],
             ),
-          ),
+              ),
         ),
         body: isSearching
             ? SearchEventsFeed(search: q)
-            : RefreshIndicator(
-                onRefresh: () async => ref.invalidate(getEventsProvider),
-                child: CustomScrollView(
-                  slivers: [
-                    if (isAuthenticated) ...[
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
-                          child: Text(
-                            loc.recentEvents,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+            : LayoutBuilder(
+                builder: (context, constraints) {
+                  final isWide = constraints.maxWidth >= kDashboardGridBreakpoint;
+                  final slivers = <Widget>[];
+
+                  if (isAuthenticated && !isAdmin) {
+                    final metricsCard = DashboardMetricsCard(
+                      title: loc.dashboardYourVolunteering,
+                      monthSummary: currentMonthSummary!,
+                      ytdSummary: currentYtdSummary!,
+                      monthlySeries: currentMonthlySeries!,
+                      showVolunteers: false,
+                    );
+                    if (isWide) {
+                      slivers.add(_gridSection(children: [metricsCard]));
+                    } else {
+                      slivers.add(SliverToBoxAdapter(child: metricsCard));
+                    }
+                  }
+
+                  if (isAdmin) {
+                    final metricsCard = DashboardMetricsCard(
+                      title: loc.dashboardVolunteerMetrics,
+                      monthSummary: adminMonthSummary!,
+                      ytdSummary: adminYtdSummary!,
+                      monthlySeries: adminMonthlySeries!,
+                      showVolunteers: true,
+                    );
+                    if (isWide) {
+                      slivers.add(
+                        _gridSection(
+                          children: [
+                            metricsCard,
+                            const DashboardCalendarCard(),
+                          ],
+                          aspectRatio: 1.1,
                         ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Container(
-                          constraints: BoxConstraints(minHeight: 250, maxHeight: 275),
-                          child: const PastEventsCarousel(),
+                      );
+                    } else {
+                      slivers.add(SliverToBoxAdapter(child: metricsCard));
+                    }
+                    slivers.add(
+                      SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardRecentEvents)),
+                    );
+                    slivers.add(const RecentEventsList(maxItems: 4));
+                    if (!isWide) {
+                      slivers.add(
+                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
+                      );
+                      slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
+                    }
+                  }
+
+                  if (!isAdmin) {
+                    if (isWide) {
+                      slivers.add(
+                        _gridSection(
+                          children: const [DashboardCalendarCard()],
+                          aspectRatio: 1.1,
                         ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
-                          child: Text(
-                            loc.upcomingEvents,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                      ),
-                    ],
-                    const UpcomingEventsFeed(),
-                  ],
-                ),
+                      );
+                    } else {
+                      slivers.add(
+                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
+                      );
+                      slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
+                    }
+                  }
+
+                  slivers.add(
+                    SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardUpcomingEvents)),
+                  );
+                  slivers.add(const UpcomingEventsList());
+
+                  return RefreshIndicator(
+                    onRefresh: () => _refreshDashboard(isAuthenticated),
+                    child: CustomScrollView(slivers: slivers),
+                  );
+                },
               ),
 
         floatingActionButton: !isSearching && isAuthenticated && user.value!.role.canCreateEvent
-            ? FloatingActionButton.extended(
+            ? AnyStepFab(
                 heroTag: 'create_event_fab',
                 onPressed: () => context.showModal(
                   EventDetailForm(
@@ -182,10 +259,31 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                     },
                   ),
                 ),
-                icon: const Icon(Icons.add),
-                label: Text(loc.createEvent),
+                icon: Icons.add,
+                tooltip: loc.createEvent,
               )
             : null,
+      ),
+    );
+  }
+
+  SliverPadding _gridSection({
+    required List<Widget> children,
+    double aspectRatio = 1.3,
+  }) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AnyStepSpacing.md16,
+        vertical: AnyStepSpacing.sm8,
+      ),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: AnyStepSpacing.md16,
+          crossAxisSpacing: AnyStepSpacing.md16,
+          childAspectRatio: aspectRatio,
+        ),
+        delegate: SliverChildListDelegate(children),
       ),
     );
   }

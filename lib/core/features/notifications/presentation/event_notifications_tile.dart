@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EventNotificationsTile extends ConsumerWidget {
-  const EventNotificationsTile({
-    super.key,
-    required this.title,
-    this.subtitle,
-    this.dense = false,
-  });
+  const EventNotificationsTile({super.key, required this.title, this.subtitle, this.dense = false});
 
   final String title;
   final String? subtitle;

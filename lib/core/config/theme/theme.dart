@@ -7,6 +7,8 @@ class AnyStepTheme {
   static final lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    fontFamily: '.SF Pro Text',
+    fontFamilyFallback: const ['.SF Pro Display'],
     colorScheme: ColorScheme.light(
       primary: AnyStepColors.blueBright,
       onPrimaryContainer: AnyStepColors.navyDark,
@@ -36,6 +38,8 @@ class AnyStepTheme {
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    fontFamily: '.SF Pro Text',
+    fontFamilyFallback: const ['.SF Pro Display'],
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       brightness: Brightness.dark,
@@ -64,6 +68,8 @@ class AnyStepTheme {
   static final highContrastLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    fontFamily: '.SF Pro Text',
+    fontFamilyFallback: const ['.SF Pro Display'],
     colorScheme: ColorScheme.highContrastLight(
       primary: AnyStepColors.blueBright,
       onPrimaryContainer: AnyStepColors.navyDark,
@@ -93,6 +99,8 @@ class AnyStepTheme {
   static final highContrastDarkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    fontFamily: '.SF Pro Text',
+    fontFamilyFallback: const ['.SF Pro Display'],
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       contrastLevel: 1.0,

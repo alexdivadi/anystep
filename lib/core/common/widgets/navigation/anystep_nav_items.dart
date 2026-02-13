@@ -16,6 +16,7 @@ class AdminNavigation extends AnyStepNavigation {
     final loc = AppLocalizations.of(context);
     return [
       NavItem(icon: const Icon(Icons.dashboard), label: loc.dashboard),
+      NavItem(icon: const Icon(Icons.article_rounded), label: loc.blogTitle),
       NavItem(icon: const Icon(Icons.line_axis_rounded), label: loc.reportsTitle),
       NavItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
     ];
@@ -35,6 +36,7 @@ class VolunteerNavigation extends AnyStepNavigation {
     final loc = AppLocalizations.of(context);
     return [
       NavItem(icon: const Icon(Icons.event_rounded), label: loc.eventFeed),
+      NavItem(icon: const Icon(Icons.article_rounded), label: loc.blogTitle),
       NavItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
     ];
   }
@@ -53,6 +55,7 @@ class UnauthenticatedNavigation extends AnyStepNavigation {
     final loc = AppLocalizations.of(context);
     return [
       NavItem(icon: const Icon(Icons.event_rounded), label: loc.eventFeed),
+      NavItem(icon: const Icon(Icons.article_rounded), label: loc.blogTitle),
       NavItem(icon: const Icon(Icons.menu), label: loc.navSeeMore),
     ];
   }

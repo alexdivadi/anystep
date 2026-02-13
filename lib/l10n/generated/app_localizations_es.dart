@@ -98,6 +98,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventDetailTitle => 'Detalle del evento';
 
   @override
+  String get shareAction => 'Compartir';
+
+  @override
+  String get editEventAction => 'Editar evento';
+
+  @override
+  String get stopEditingAction => 'Dejar de editar';
+
+  @override
+  String get addToCalendarTitle => 'Agregar evento al calendario';
+
+  @override
+  String get addToCalendarBody =>
+      'Guarda este evento en tu Google Calendar para que no se te pase.';
+
+  @override
+  String get addToCalendarCta => 'Agregar a Google Calendar';
+
+  @override
+  String get addToCalendarDismiss => 'Ahora no';
+
+  @override
+  String get addToCalendarMenuItem => 'Agregar al calendario';
+
+  @override
   String get completed => 'Completado';
 
   @override
@@ -130,6 +155,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dashboard => 'Panel';
 
   @override
+  String get dashboardYourVolunteering => 'Tu voluntariado';
+
+  @override
+  String get dashboardVolunteerMetrics => 'Métricas de voluntariado';
+
+  @override
+  String get dashboardRecentEvents => 'Eventos recientes';
+
+  @override
+  String get dashboardUpcomingEvents => 'Próximos eventos';
+
+  @override
+  String get dashboardHoursThisMonth => 'Horas (este mes)';
+
+  @override
+  String get dashboardHoursYtd => 'Horas (año a la fecha)';
+
+  @override
+  String get dashboardEventsThisMonth => 'Eventos (este mes)';
+
+  @override
+  String get dashboardEventsYtd => 'Eventos (año a la fecha)';
+
+  @override
+  String get dashboardVolunteersThisMonth => 'Voluntarios (este mes)';
+
+  @override
+  String get dashboardVolunteersYtd => 'Voluntarios (año a la fecha)';
+
+  @override
+  String get dashboardNoMetrics =>
+      'Aún no hay métricas. ¡Sigue creando impacto!';
+
+  @override
+  String get dashboardCalendar => 'Calendario';
+
+  @override
+  String get dashboardNoEventsCalendar => 'No hay eventos para este día';
+
+  @override
   String get eventFeed => 'Eventos';
 
   @override
@@ -158,6 +223,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get navSeeMore => 'Más';
+
+  @override
+  String get blogTitle => 'Blog';
+
+  @override
+  String get blogEmptyState =>
+      'Aún no hay canales. Los administradores pueden crear el primero.';
+
+  @override
+  String get blogCreateChannel => 'Crear canal';
+
+  @override
+  String get blogChannelTitle => 'Canal';
+
+  @override
+  String blogChannelPlaceholder(int id) {
+    return 'Detalles del canal #$id próximamente.';
+  }
+
+  @override
+  String get blogCreateChannelPlaceholder =>
+      'El formulario de creación de canal estará disponible pronto.';
 
   @override
   String get navEvents => 'Eventos';

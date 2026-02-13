@@ -1,10 +1,20 @@
 import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
+import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/common/widgets/navigation/anystep_nav_items.dart';
 import 'package:anystep/core/features/screens.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+Widget _invalidRouteIdScreen(BuildContext context) {
+  final loc = AppLocalizations.of(context);
+  return AnyStepScaffold(
+    appBar: AnyStepAppBar(title: Text(loc.failedToLoad)),
+    body: const ScrollableCenteredContent(child: AnyStepErrorWidget()),
+  );
+}
 
 final routes = [
   GoRoute(
@@ -119,6 +129,15 @@ final routes = [
       StatefulShellBranch(
         routes: [
           GoRoute(
+            path: BlogChannelsScreen.path,
+            name: BlogChannelsScreen.name,
+            pageBuilder: (context, state) => NoTransitionPage(child: const BlogChannelsScreen()),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
             path: SettingsScreen.path,
             name: SettingsScreen.name,
             pageBuilder: (context, state) => NoTransitionPage(child: const SettingsScreen()),
@@ -150,6 +169,15 @@ final routes = [
       StatefulShellBranch(
         routes: [
           GoRoute(
+            path: BlogChannelsScreen.pathAdmin,
+            name: BlogChannelsScreen.nameAdmin,
+            pageBuilder: (context, state) => NoTransitionPage(child: const BlogChannelsScreen()),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
             path: ReportsScreen.pathAdmin,
             name: ReportsScreen.nameAdmin,
             pageBuilder: (context, state) => NoTransitionPage(child: const ReportsScreen()),
@@ -172,7 +200,22 @@ final routes = [
     name: EventDetailScreen.name,
     builder: (context, state) {
       final id = int.tryParse(state.pathParameters['id'] ?? '');
-      return EventDetailScreen(id: id!);
+      if (id == null) return _invalidRouteIdScreen(context);
+      return EventDetailScreen(id: id);
+    },
+  ),
+  GoRoute(
+    path: CreateChannelScreen.path,
+    name: CreateChannelScreen.name,
+    builder: (context, state) => const CreateChannelScreen(),
+  ),
+  GoRoute(
+    path: BlogChannelDetailScreen.path,
+    name: BlogChannelDetailScreen.name,
+    builder: (context, state) {
+      final id = int.tryParse(state.pathParameters['id'] ?? '');
+      if (id == null) return _invalidRouteIdScreen(context);
+      return BlogChannelDetailScreen(channelId: id);
     },
   ),
   GoRoute(

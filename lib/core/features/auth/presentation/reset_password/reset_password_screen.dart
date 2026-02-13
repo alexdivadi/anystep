@@ -50,9 +50,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                       ),
                     ),
                     const SizedBox(height: AnyStepSpacing.sm8),
-                    Text(
-                      loc.resetPasswordInstructions,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        loc.resetPasswordInstructions,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                     ),
                     const SizedBox(height: AnyStepSpacing.md16),
                     AnyStepTextField(

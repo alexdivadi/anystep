@@ -186,3 +186,19 @@ Future<PaginationResult<EventModel>> getPastEvents(
     ).future,
   );
 }
+
+@riverpod
+Future<List<EventModel>> getEventsInRange(
+  Ref ref, {
+  required DateTime start,
+  required DateTime end,
+}) async {
+  final repository = ref.watch(eventRepositoryProvider);
+  return repository.list(
+    filters: [
+      AnyStepFilter.greaterThan('start_time', start.toUtc(), inclusive: true),
+      AnyStepFilter.lessThan('start_time', end.toUtc(), inclusive: true),
+    ],
+    order: AnyStepOrder.asc('start_time'),
+  );
+}

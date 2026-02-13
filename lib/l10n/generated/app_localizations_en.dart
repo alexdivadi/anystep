@@ -65,7 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
-  String get reportsTitle => 'Volunteer Reports';
+  String get reportsTitle => 'Reports';
 
   @override
   String get exportCsv => 'Export CSV';
@@ -96,6 +96,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventDetailTitle => 'Event Detail';
+
+  @override
+  String get shareAction => 'Share';
+
+  @override
+  String get editEventAction => 'Edit event';
+
+  @override
+  String get stopEditingAction => 'Stop editing';
+
+  @override
+  String get addToCalendarTitle => 'Add Event to Calendar';
+
+  @override
+  String get addToCalendarBody =>
+      'Save this event to your Google Calendar so you don\'t miss it.';
+
+  @override
+  String get addToCalendarCta => 'Add to Google Calendar';
+
+  @override
+  String get addToCalendarDismiss => 'Not now';
+
+  @override
+  String get addToCalendarMenuItem => 'Add to Calendar';
 
   @override
   String get completed => 'Completed';
@@ -130,6 +155,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboard => 'Dashboard';
 
   @override
+  String get dashboardYourVolunteering => 'Your Volunteering';
+
+  @override
+  String get dashboardVolunteerMetrics => 'Volunteer Metrics';
+
+  @override
+  String get dashboardRecentEvents => 'Recent Events';
+
+  @override
+  String get dashboardUpcomingEvents => 'Upcoming Events';
+
+  @override
+  String get dashboardHoursThisMonth => 'Hours (This Month)';
+
+  @override
+  String get dashboardHoursYtd => 'Hours (YTD)';
+
+  @override
+  String get dashboardEventsThisMonth => 'Events (This Month)';
+
+  @override
+  String get dashboardEventsYtd => 'Events (YTD)';
+
+  @override
+  String get dashboardVolunteersThisMonth => 'Volunteers (This Month)';
+
+  @override
+  String get dashboardVolunteersYtd => 'Volunteers (YTD)';
+
+  @override
+  String get dashboardNoMetrics => 'No metrics yet. Keep building impact!';
+
+  @override
+  String get dashboardCalendar => 'Calendar';
+
+  @override
+  String get dashboardNoEventsCalendar => 'No events for this day';
+
+  @override
   String get eventFeed => 'Event Feed';
 
   @override
@@ -158,6 +222,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSeeMore => 'See More';
+
+  @override
+  String get blogTitle => 'Blog';
+
+  @override
+  String get blogEmptyState =>
+      'No channels yet. Admins can create the first channel.';
+
+  @override
+  String get blogCreateChannel => 'Create Channel';
+
+  @override
+  String get blogChannelTitle => 'Channel';
+
+  @override
+  String blogChannelPlaceholder(int id) {
+    return 'Channel #$id details coming soon.';
+  }
+
+  @override
+  String get blogCreateChannelPlaceholder =>
+      'Channel creation form coming soon.';
 
   @override
   String get navEvents => 'Events';

@@ -41,7 +41,7 @@ final class DeepLinkHandlerProvider
   }
 }
 
-String _$deepLinkHandlerHash() => r'871a60f8389b2ce24394438060ba41c98ea85332';
+String _$deepLinkHandlerHash() => r'3a60e74859e0fb70b3612a64bc95bcb2d6272ab9';
 
 abstract class _$DeepLinkHandler extends $Notifier<void> {
   void build();

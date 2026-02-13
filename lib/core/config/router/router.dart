@@ -75,6 +75,11 @@ GoRouter router(Ref ref) {
         // User is authenticated, allow access to the requested route
         // Check if user has submitted profile information
         final user = ref.read(currentUserStreamProvider);
+        if (user.hasError) {
+          Log.e('Error loading current user', user.error);
+          return EventFeedScreen.pathAnonymous;
+        }
+
         if (!user.hasValue || user.requireValue == null) {
           // User is not onboarded, redirecting to onboarding screen
           if (RouterUtils.onboardingRoutes.contains(path)) {
