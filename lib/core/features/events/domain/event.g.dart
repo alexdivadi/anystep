@@ -22,6 +22,7 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
       ? null
       : DateTime.parse(json['created_at'] as String),
   active: json['active'] as bool? ?? true,
+  isVolunteerEligible: json['is_volunteer_eligible'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
@@ -35,4 +36,5 @@ Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
       'description': instance.description,
       'image_url': instance.imageUrl,
       'active': instance.active,
+      'is_volunteer_eligible': instance.isVolunteerEligible,
     };

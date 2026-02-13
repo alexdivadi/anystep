@@ -53,6 +53,7 @@ GoRouter router(Ref ref) {
       }
 
       final path = state.matchedLocation;
+      final redirectPath = path == '/' ? EventFeedScreen.pathAnonymous : path;
       if (path == AppStartupLoadingWidget.path) return EventFeedScreen.pathAnonymous;
 
       // Replace any sequence of digits between slashes with ':id'
@@ -85,8 +86,8 @@ GoRouter router(Ref ref) {
           if (RouterUtils.onboardingRoutes.contains(path)) {
             return null;
           }
-          Log.d('Going to UserGate with redirect to $path');
-          return '${UserOnboardedGate.path}?redirect=$path';
+          Log.d('Going to UserGate with redirect to $redirectPath');
+          return '${UserOnboardedGate.path}?redirect=$redirectPath';
         }
 
         if (!user.requireValue!.hasSignedAgreement) {

@@ -428,6 +428,12 @@ abstract class AppLocalizations {
   /// **'No events for this day'**
   String get dashboardNoEventsCalendar;
 
+  /// Shown when an event does not count for volunteer hours
+  ///
+  /// In en, this message translates to:
+  /// **'Not eligible for volunteer hours'**
+  String get notEligibleVolunteerHours;
+
   /// Event feed title
   ///
   /// In en, this message translates to:

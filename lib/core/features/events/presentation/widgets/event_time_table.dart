@@ -74,16 +74,25 @@ class EventTimeTable extends StatelessWidget {
             children: [
               const SizedBox(),
               const SizedBox(), // Empty cell for alignment
-              AnyStepBadge(
-                child: Text(
-                  loc.hours(duration, duration != 1 ? 's' : ''),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSecondary,
-                  ),
-                ),
-              ),
+              event.isVolunteerEligible
+                  ? AnyStepBadge(
+                      child: Text(
+                        loc.hours(duration, duration != 1 ? 's' : ''),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(top: AnyStepSpacing.sm4),
+                      child: Text(
+                        loc.notEligibleVolunteerHours,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
             ],
           ),
       ],

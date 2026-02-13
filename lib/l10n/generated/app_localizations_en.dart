@@ -194,6 +194,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardNoEventsCalendar => 'No events for this day';
 
   @override
+  String get notEligibleVolunteerHours => 'Not eligible for volunteer hours';
+
+  @override
   String get eventFeed => 'Event Feed';
 
   @override

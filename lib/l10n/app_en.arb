@@ -143,6 +143,8 @@
   "@dashboardCalendar": {"description": "Section header for dashboard calendar"},
   "dashboardNoEventsCalendar": "No events for this day",
   "@dashboardNoEventsCalendar": {"description": "Empty state text for calendar day events"},
+  "notEligibleVolunteerHours": "Not eligible for volunteer hours",
+  "@notEligibleVolunteerHours": {"description": "Shown when an event does not count for volunteer hours"},
   "eventFeed": "Event Feed",
   "@eventFeed": {"description": "Event feed title"},
   "search": "Search",

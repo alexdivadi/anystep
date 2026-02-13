@@ -55,7 +55,7 @@ final class NotificationRepositoryProvider
 }
 
 String _$notificationRepositoryHash() =>
-    r'9c0dc2772f065d679b4574b2efa0a32c2f456345';
+    r'a7a3027713c4769dbb3ffc2d88b7ad0bb9e655fe';
 
 @ProviderFor(notificationStartup)
 const notificationStartupProvider = NotificationStartupProvider._();

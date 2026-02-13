@@ -44,106 +44,130 @@ class DashboardMetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
+    final surface = theme.colorScheme.surface;
+    final outline = theme.colorScheme.outlineVariant ?? theme.dividerColor;
+    final pillHeight = 82.0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
       child: Card(
         clipBehavior: Clip.antiAlias,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary.withAlpha(210),
-                Theme.of(context).colorScheme.secondary.withAlpha(200),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(AnyStepSpacing.md16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.w700,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AnyStepSpacing.md16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: AnyStepSpacing.sm10,
+                    height: AnyStepSpacing.sm10,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(AnyStepSpacing.sm4),
+                    ),
                   ),
+                  const SizedBox(width: AnyStepSpacing.sm8),
+                  Text(
+                    title,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: onSurface,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AnyStepSpacing.md12),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: surface,
+                  borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
+                  border: Border.all(color: outline.withAlpha(60)),
                 ),
-                const SizedBox(height: AnyStepSpacing.sm8),
-                _MetricsHeroRow(monthSummary: monthSummary, ytdSummary: ytdSummary),
-                const SizedBox(height: AnyStepSpacing.md12),
-                _MonthlyHoursChart(
-                  series: monthlySeries,
-                  label: loc.dashboardHoursYtd,
-                  foreground: Theme.of(context).colorScheme.onPrimary,
+                child: Padding(
+                  padding: const EdgeInsets.all(AnyStepSpacing.md14),
+                  child: _MetricsHeroRow(monthSummary: monthSummary, ytdSummary: ytdSummary),
                 ),
-                const SizedBox(height: AnyStepSpacing.md12),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final maxWidth = constraints.maxWidth;
-                    final spacing = AnyStepSpacing.md12;
-                    final columns = maxWidth >= 720 ? 3 : 2;
-                    final itemWidth =
-                        (maxWidth - (columns - 1) * spacing).clamp(160, double.infinity) / columns;
-                    return Wrap(
-                      spacing: spacing,
-                      runSpacing: spacing,
-                      children: [
+              ),
+              const SizedBox(height: AnyStepSpacing.md16),
+              _MonthlyHoursChart(
+                series: monthlySeries,
+                label: loc.dashboardHoursYtd,
+                foreground: onSurface,
+              ),
+              const SizedBox(height: AnyStepSpacing.md12),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final maxWidth = constraints.maxWidth;
+                  final spacing = AnyStepSpacing.md12;
+                  final columns = maxWidth >= 720 ? 3 : 2;
+                  final itemWidth =
+                      (maxWidth - (columns - 1) * spacing).clamp(160, double.infinity) / columns;
+                  return Wrap(
+                    spacing: spacing,
+                    runSpacing: spacing,
+                    children: [
+                      SizedBox(
+                        width: itemWidth,
+                        height: pillHeight,
+                        child: _MetricPill(
+                          label: loc.dashboardEventsThisMonth,
+                          value: _summaryValue(
+                            context,
+                            monthSummary,
+                            (s) => s.eventsCount.toString(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: itemWidth,
+                        height: pillHeight,
+                        child: _MetricPill(
+                          label: loc.dashboardEventsYtd,
+                          value: _summaryValue(
+                            context,
+                            ytdSummary,
+                            (s) => s.eventsCount.toString(),
+                          ),
+                        ),
+                      ),
+                      if (showVolunteers)
                         SizedBox(
                           width: itemWidth,
+                          height: pillHeight,
                           child: _MetricPill(
-                            label: loc.dashboardEventsThisMonth,
+                            label: loc.dashboardVolunteersThisMonth,
                             value: _summaryValue(
                               context,
                               monthSummary,
-                              (s) => s.eventsCount.toString(),
+                              (s) => s.uniqueVolunteers.toString(),
                             ),
                           ),
                         ),
+                      if (showVolunteers)
                         SizedBox(
                           width: itemWidth,
+                          height: pillHeight,
                           child: _MetricPill(
-                            label: loc.dashboardEventsYtd,
+                            label: loc.dashboardVolunteersYtd,
                             value: _summaryValue(
                               context,
                               ytdSummary,
-                              (s) => s.eventsCount.toString(),
+                              (s) => s.uniqueVolunteers.toString(),
                             ),
                           ),
                         ),
-                        if (showVolunteers)
-                          SizedBox(
-                            width: itemWidth,
-                            child: _MetricPill(
-                              label: loc.dashboardVolunteersThisMonth,
-                              value: _summaryValue(
-                                context,
-                                monthSummary,
-                                (s) => s.uniqueVolunteers.toString(),
-                              ),
-                            ),
-                          ),
-                        if (showVolunteers)
-                          SizedBox(
-                            width: itemWidth,
-                            child: _MetricPill(
-                              label: loc.dashboardVolunteersYtd,
-                              value: _summaryValue(
-                                context,
-                                ytdSummary,
-                                (s) => s.uniqueVolunteers.toString(),
-                              ),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -196,13 +220,15 @@ class _HeroMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPrimary = Theme.of(context).colorScheme.onPrimary;
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(AnyStepSpacing.md12),
         decoration: BoxDecoration(
-          color: Colors.white.withAlpha(18),
-          borderRadius: BorderRadius.circular(AnyStepSpacing.sm10),
+          color: theme.colorScheme.surfaceVariant.withAlpha(110),
+          borderRadius: BorderRadius.circular(AnyStepSpacing.md14),
+          border: Border.all(color: (theme.colorScheme.outlineVariant ?? theme.dividerColor).withAlpha(60)),
         ),
         child: value == null
             ? const SizedBox(
@@ -219,13 +245,13 @@ class _HeroMetric extends StatelessWidget {
                     label,
                     style: Theme.of(
                       context,
-                    ).textTheme.labelSmall?.copyWith(color: onPrimary.withAlpha(210)),
+                    ).textTheme.labelSmall?.copyWith(color: onSurface.withAlpha(190)),
                   ),
                   const SizedBox(height: AnyStepSpacing.sm4),
                   Text(
                     value!,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: onPrimary,
+                      color: onSurface,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -251,27 +277,28 @@ class _MetricPill extends StatelessWidget {
         vertical: AnyStepSpacing.sm8,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withAlpha(22),
-        borderRadius: BorderRadius.circular(AnyStepSpacing.sm10),
-        border: Border.all(color: Colors.white.withAlpha(40)),
+        color: theme.colorScheme.surfaceVariant.withAlpha(70),
+        borderRadius: BorderRadius.circular(AnyStepSpacing.md12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onPrimary.withAlpha(210),
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: AnyStepSpacing.sm4),
+          const SizedBox(height: AnyStepSpacing.sm6),
           DefaultTextStyle(
-            style:
-                theme.textTheme.titleSmall?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w700,
+            style: theme.textTheme.headlineSmall?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 22,
                 ) ??
-                const TextStyle(),
+                const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
             child: value,
           ),
         ],
@@ -289,6 +316,7 @@ class _MonthlyHoursChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return series.when(
       loading: () =>
           const SizedBox(height: 140, child: Center(child: AnyStepLoadingIndicator(size: 28))),
@@ -298,7 +326,7 @@ class _MonthlyHoursChart extends StatelessWidget {
           child: Text(
             AppLocalizations.of(context).failedToLoad,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: foreground ?? Theme.of(context).colorScheme.onPrimary,
+              color: foreground ?? theme.colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -308,15 +336,15 @@ class _MonthlyHoursChart extends StatelessWidget {
           return Container(
             height: 140,
             decoration: BoxDecoration(
-              color: Colors.white.withAlpha(12),
+              color: theme.colorScheme.surfaceVariant.withAlpha(80),
               borderRadius: BorderRadius.circular(AnyStepSpacing.md12),
-              border: Border.all(color: Colors.white.withAlpha(28)),
+              border: Border.all(color: theme.colorScheme.outlineVariant ?? theme.dividerColor),
             ),
             child: Center(
               child: Text(
                 AppLocalizations.of(context).dashboardNoMetrics,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: foreground ?? Theme.of(context).colorScheme.onPrimary,
+                  color: foreground ?? theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
@@ -334,7 +362,7 @@ class _MonthlyHoursChart extends StatelessWidget {
             Text(
               label,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: foreground ?? Theme.of(context).colorScheme.onPrimary,
+                color: foreground ?? theme.colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: AnyStepSpacing.sm8),
@@ -365,7 +393,7 @@ class _MonthlyHoursChart extends StatelessWidget {
                             child: Text(
                               month,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                color: foreground ?? Theme.of(context).colorScheme.onPrimary,
+                                color: foreground ?? theme.colorScheme.onSurfaceVariant,
                               ),
                             ),
                           );
@@ -381,13 +409,13 @@ class _MonthlyHoursChart extends StatelessWidget {
                       ],
                       isCurved: true,
                       barWidth: 2.5,
-                      color: foreground ?? Theme.of(context).colorScheme.onPrimary,
+                      color: foreground ?? theme.colorScheme.primary,
                       dotData: const FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
                         gradient: LinearGradient(
                           colors: [
-                            (foreground ?? Theme.of(context).colorScheme.onPrimary).withAlpha(120),
+                            (foreground ?? theme.colorScheme.primary).withAlpha(80),
                             Colors.transparent,
                           ],
                           begin: Alignment.topCenter,

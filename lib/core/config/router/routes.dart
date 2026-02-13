@@ -61,8 +61,10 @@ final routes = [
     path: UserOnboardedGate.path,
     name: UserOnboardedGate.name,
     pageBuilder: (context, state) {
-      final redirectParam = state.uri.queryParameters['redirect'] ?? EventFeedScreen.path;
-      return NoTransitionPage(child: UserOnboardedGate(redirect: redirectParam));
+      final redirectParam = state.uri.queryParameters['redirect'];
+      final redirectPath =
+          (redirectParam == null || redirectParam == '/') ? EventFeedScreen.pathAnonymous : redirectParam;
+      return NoTransitionPage(child: UserOnboardedGate(redirect: redirectPath));
     },
   ),
   GoRoute(

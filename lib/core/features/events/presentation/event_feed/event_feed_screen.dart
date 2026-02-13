@@ -178,9 +178,21 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                       showVolunteers: false,
                     );
                     if (isWide) {
-                      slivers.add(_gridSection(children: [metricsCard]));
+                      slivers.add(
+                        _gridSection(
+                          children: [
+                            metricsCard,
+                            const DashboardCalendarCard(),
+                          ],
+                          aspectRatio: 1.1,
+                        ),
+                      );
                     } else {
                       slivers.add(SliverToBoxAdapter(child: metricsCard));
+                      slivers.add(
+                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
+                      );
+                      slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
                     }
                   }
 
@@ -210,22 +222,6 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                     );
                     slivers.add(const RecentEventsList(maxItems: 4));
                     if (!isWide) {
-                      slivers.add(
-                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
-                      );
-                      slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
-                    }
-                  }
-
-                  if (!isAdmin) {
-                    if (isWide) {
-                      slivers.add(
-                        _gridSection(
-                          children: const [DashboardCalendarCard()],
-                          aspectRatio: 1.1,
-                        ),
-                      );
-                    } else {
                       slivers.add(
                         SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
                       );

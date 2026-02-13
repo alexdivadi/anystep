@@ -143,6 +143,8 @@
   "@dashboardCalendar": {"description": "Encabezado para el calendario del panel"},
   "dashboardNoEventsCalendar": "No hay eventos para este día",
   "@dashboardNoEventsCalendar": {"description": "Texto de estado vacío para eventos del día en el calendario"},
+  "notEligibleVolunteerHours": "No elegible para horas de voluntariado",
+  "@notEligibleVolunteerHours": {"description": "Se muestra cuando un evento no cuenta para horas de voluntariado"},
   "eventFeed": "Eventos",
   "@eventFeed": {"description": "Título del feed de eventos"},
   "search": "Buscar",

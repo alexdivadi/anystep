@@ -29,6 +29,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,
     @JsonKey(includeToJson: false, includeFromJson: false) @Default(false) bool isCachedValue,
     @JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,
+    @JsonKey(name: "fcm_token") String? fcmToken,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
