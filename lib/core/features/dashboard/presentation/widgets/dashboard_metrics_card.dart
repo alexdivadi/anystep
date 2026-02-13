@@ -55,9 +55,7 @@ class DashboardMetricsCard extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnyStepSpacing.md16)),
         child: Padding(
           padding: const EdgeInsets.all(AnyStepSpacing.md16),
           child: Column(
@@ -84,17 +82,7 @@ class DashboardMetricsCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: AnyStepSpacing.md12),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: surface,
-                  borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
-                  border: Border.all(color: outline.withAlpha(60)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(AnyStepSpacing.md14),
-                  child: _MetricsHeroRow(monthSummary: monthSummary, ytdSummary: ytdSummary),
-                ),
-              ),
+              _MetricsHeroRow(monthSummary: monthSummary, ytdSummary: ytdSummary),
               const SizedBox(height: AnyStepSpacing.md16),
               _MonthlyHoursChart(
                 series: monthlySeries,
@@ -228,7 +216,9 @@ class _HeroMetric extends StatelessWidget {
         decoration: BoxDecoration(
           color: theme.colorScheme.surfaceVariant.withAlpha(110),
           borderRadius: BorderRadius.circular(AnyStepSpacing.md14),
-          border: Border.all(color: (theme.colorScheme.outlineVariant ?? theme.dividerColor).withAlpha(60)),
+          border: Border.all(
+            color: (theme.colorScheme.outlineVariant ?? theme.dividerColor).withAlpha(60),
+          ),
         ),
         child: value == null
             ? const SizedBox(
@@ -287,13 +277,12 @@ class _MetricPill extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+            style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
           const SizedBox(height: AnyStepSpacing.sm6),
           DefaultTextStyle(
-            style: theme.textTheme.headlineSmall?.copyWith(
+            style:
+                theme.textTheme.headlineSmall?.copyWith(
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w800,
                   fontSize: 22,
@@ -336,9 +325,9 @@ class _MonthlyHoursChart extends StatelessWidget {
           return Container(
             height: 140,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceVariant.withAlpha(80),
+              color: theme.colorScheme.surfaceContainer.withAlpha(80),
               borderRadius: BorderRadius.circular(AnyStepSpacing.md12),
-              border: Border.all(color: theme.colorScheme.outlineVariant ?? theme.dividerColor),
+              border: Border.all(color: theme.colorScheme.primary.withAlpha(120)),
             ),
             child: Center(
               child: Text(
@@ -361,9 +350,9 @@ class _MonthlyHoursChart extends StatelessWidget {
           children: [
             Text(
               label,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: foreground ?? theme.colorScheme.onSurface,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(color: foreground ?? theme.colorScheme.onSurface),
             ),
             const SizedBox(height: AnyStepSpacing.sm8),
             SizedBox(
