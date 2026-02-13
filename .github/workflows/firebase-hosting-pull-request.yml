@@ -23,6 +23,7 @@ jobs:
           echo "SUPABASE_URL=${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}" >> .env
           echo "SUPABASE_API_KEY=${{ vars.SUPABASE_API_KEY || secrets.SUPABASE_API_KEY }}" >> .env
           echo "POSTHOG_API_KEY=${{ vars.POSTHOG_API_KEY || secrets.POSTHOG_API_KEY }}" >> .env
+          echo "FIREBASE_VAPID_KEY=${{ vars.FIREBASE_VAPID_KEY || secrets.FIREBASE_VAPID_KEY }}" >> .env
       - name: Install dependencies
         run: flutter pub get 
       - name: Build Flutter web app
