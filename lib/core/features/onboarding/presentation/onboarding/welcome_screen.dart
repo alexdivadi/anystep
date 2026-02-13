@@ -26,7 +26,7 @@ class WelcomeScreen extends ConsumerStatefulWidget {
 class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   final _controller = PageController();
   int _index = 0;
-  static const _pageCount = 4;
+  static const _pageCount = 3;
 
   @override
   void dispose() {
