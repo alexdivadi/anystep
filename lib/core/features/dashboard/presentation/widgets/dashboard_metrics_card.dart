@@ -23,11 +23,6 @@ class DashboardMetricsCard extends StatelessWidget {
   final AsyncValue<List<MonthlyHoursPoint>> monthlySeries;
   final bool showVolunteers;
 
-  String _formatHours(double hours) {
-    final hasDecimal = hours % 1 != 0;
-    return hours.toStringAsFixed(hasDecimal ? 1 : 0);
-  }
-
   Widget _summaryValue(
     BuildContext context,
     AsyncValue<VolunteerHoursSummary> summary,
@@ -46,8 +41,6 @@ class DashboardMetricsCard extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
-    final surface = theme.colorScheme.surface;
-    final outline = theme.colorScheme.outlineVariant ?? theme.dividerColor;
     final pillHeight = 82.0;
 
     return Padding(
@@ -214,11 +207,9 @@ class _HeroMetric extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AnyStepSpacing.md12),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceVariant.withAlpha(110),
+          color: theme.colorScheme.surfaceContainerHighest.withAlpha(110),
           borderRadius: BorderRadius.circular(AnyStepSpacing.md14),
-          border: Border.all(
-            color: (theme.colorScheme.outlineVariant ?? theme.dividerColor).withAlpha(60),
-          ),
+          border: Border.all(color: (theme.colorScheme.outlineVariant).withAlpha(60)),
         ),
         child: value == null
             ? const SizedBox(
@@ -267,7 +258,7 @@ class _MetricPill extends StatelessWidget {
         vertical: AnyStepSpacing.sm8,
       ),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant.withAlpha(70),
+        color: theme.colorScheme.surfaceContainerHighest.withAlpha(70),
         borderRadius: BorderRadius.circular(AnyStepSpacing.md12),
       ),
       child: Column(
@@ -325,7 +316,7 @@ class _MonthlyHoursChart extends StatelessWidget {
           return Container(
             height: 140,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainer.withAlpha(80),
+              color: theme.colorScheme.surfaceContainerHighest.withAlpha(80),
               borderRadius: BorderRadius.circular(AnyStepSpacing.md12),
               border: Border.all(color: theme.colorScheme.primary.withAlpha(120)),
             ),
