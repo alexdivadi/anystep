@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
@@ -17,6 +18,7 @@ Future<List<UserEventModel>> userEventsInRange(
   required DateTime start,
   required DateTime end,
   bool attendedOnly = true,
+  String? userId,
 }) async {
   // NOTE: user_event records reference events; we need to filter by event date.
   // Backend filtering on joined tables may not be supported directly; fetch pages until done.
@@ -26,7 +28,9 @@ Future<List<UserEventModel>> userEventsInRange(
     filters: [
       AnyStepFilter.greaterThan('event_model.start_time', start, inclusive: true),
       AnyStepFilter.lessThan('event_model.end_time', end, inclusive: true),
+      AnyStepFilter.equals('event_model.is_volunteer_eligible', true),
       if (attendedOnly) AnyStepFilter.equals('attended', true),
+      if (userId != null) AnyStepFilter.equals('user', userId),
     ],
     withEvents: true,
     withUsers: true,
@@ -98,4 +102,129 @@ class _Accumulator {
   double totalHours = 0;
   int eventsCount = 0;
   final Map<String, double> hoursPerMonth = {};
+}
+
+class VolunteerHoursSummary {
+  const VolunteerHoursSummary({
+    required this.totalHours,
+    required this.eventsCount,
+    required this.uniqueVolunteers,
+  });
+
+  final double totalHours;
+  final int eventsCount;
+  final int uniqueVolunteers;
+
+  static const zero = VolunteerHoursSummary(totalHours: 0, eventsCount: 0, uniqueVolunteers: 0);
+}
+
+class MonthlyHoursPoint {
+  const MonthlyHoursPoint({required this.month, required this.hours});
+
+  final DateTime month;
+  final double hours;
+}
+
+VolunteerHoursSummary _summaryFromReports(List<VolunteerHoursReport> reports) {
+  final totalHours = reports.fold<double>(0, (sum, r) => sum + r.totalHours);
+  final totalEvents = reports.fold<int>(0, (sum, r) => sum + r.eventsCount);
+  return VolunteerHoursSummary(
+    totalHours: double.parse(totalHours.toStringAsFixed(2)),
+    eventsCount: totalEvents,
+    uniqueVolunteers: reports.length,
+  );
+}
+
+DateTime? _parseYearMonth(String ym) {
+  final parts = ym.split('-');
+  if (parts.length != 2) return null;
+  final year = int.tryParse(parts[0]);
+  final month = int.tryParse(parts[1]);
+  if (year == null || month == null) return null;
+  return DateTime(year, month);
+}
+
+List<MonthlyHoursPoint> _aggregateMonthlyHours(List<VolunteerHoursReport> reports) {
+  final Map<String, double> totals = {};
+  for (final report in reports) {
+    report.hoursPerMonth.forEach((ym, hours) {
+      totals.update(ym, (value) => value + hours, ifAbsent: () => hours);
+    });
+  }
+
+  final points = <MonthlyHoursPoint>[];
+  totals.forEach((ym, hours) {
+    final dt = _parseYearMonth(ym);
+    if (dt != null) {
+      points.add(MonthlyHoursPoint(month: dt, hours: double.parse(hours.toStringAsFixed(2))));
+    }
+  });
+  points.sort((a, b) => a.month.compareTo(b.month));
+  return points;
+}
+
+List<MonthlyHoursPoint> _takeLastMonths(List<MonthlyHoursPoint> points, {int maxMonths = 6}) {
+  if (points.length <= maxMonths) return points;
+  return points.sublist(points.length - maxMonths);
+}
+
+@riverpod
+Future<VolunteerHoursSummary> volunteerHoursSummaryThisMonth(Ref ref) async {
+  final reports = await ref.watch(volunteerHoursThisMonthProvider.future);
+  return _summaryFromReports(reports);
+}
+
+@riverpod
+Future<VolunteerHoursSummary> volunteerHoursSummaryYtd(Ref ref) async {
+  final reports = await ref.watch(volunteerHoursYtdProvider.future);
+  return _summaryFromReports(reports);
+}
+
+@riverpod
+Future<List<MonthlyHoursPoint>> volunteerMonthlyHoursYtd(Ref ref) async {
+  final reports = await ref.watch(volunteerHoursYtdProvider.future);
+  return _takeLastMonths(_aggregateMonthlyHours(reports));
+}
+
+@riverpod
+Future<VolunteerHoursSummary> currentUserHoursSummaryThisMonth(Ref ref) async {
+  final authState = await ref.watch(authStateStreamProvider.future);
+  if (authState == null) return VolunteerHoursSummary.zero;
+  final reports = await ref.watch(volunteerHoursThisMonthProvider.future);
+  final match = reports.where((r) => r.user.id == authState.uid).toList();
+  if (match.isEmpty) return VolunteerHoursSummary.zero;
+  final totalHours = match.fold<double>(0, (sum, r) => sum + r.totalHours);
+  final totalEvents = match.fold<int>(0, (sum, r) => sum + r.eventsCount);
+  return VolunteerHoursSummary(
+    totalHours: double.parse(totalHours.toStringAsFixed(2)),
+    eventsCount: totalEvents,
+    uniqueVolunteers: 1,
+  );
+}
+
+@riverpod
+Future<VolunteerHoursSummary> currentUserHoursSummaryYtd(Ref ref) async {
+  final authState = await ref.watch(authStateStreamProvider.future);
+  if (authState == null) return VolunteerHoursSummary.zero;
+  final reports = await ref.watch(volunteerHoursYtdProvider.future);
+  final match = reports.where((r) => r.user.id == authState.uid).toList();
+  if (match.isEmpty) return VolunteerHoursSummary.zero;
+  final totalHours = match.fold<double>(0, (sum, r) => sum + r.totalHours);
+  final totalEvents = match.fold<int>(0, (sum, r) => sum + r.eventsCount);
+  return VolunteerHoursSummary(
+    totalHours: double.parse(totalHours.toStringAsFixed(2)),
+    eventsCount: totalEvents,
+    uniqueVolunteers: 1,
+  );
+}
+
+@riverpod
+Future<List<MonthlyHoursPoint>> currentUserMonthlyHoursYtd(Ref ref) async {
+  final authState = await ref.watch(authStateStreamProvider.future);
+  if (authState == null) return const [];
+  final reports = await ref.watch(volunteerHoursYtdProvider.future);
+  final match = reports.where((r) => r.user.id == authState.uid).toList();
+  if (match.isEmpty) return const [];
+  final points = _aggregateMonthlyHours(match);
+  return _takeLastMonths(points);
 }

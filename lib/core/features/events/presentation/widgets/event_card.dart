@@ -37,7 +37,14 @@ class EventCard extends StatelessWidget {
             : const _ImagePlaceholder(),
         title: Row(
           children: [
-            Text(event.name, style: Theme.of(context).textTheme.titleMedium),
+            Expanded(
+              child: Text(
+                event.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
             const SizedBox(width: AnyStepSpacing.sm8),
             isPast
                 ? DidAttendIndicator(eventId: event.id!)

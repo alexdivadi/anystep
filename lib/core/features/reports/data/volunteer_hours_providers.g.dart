@@ -31,7 +31,8 @@ final class UserEventsInRangeProvider
   /// We request both user and event models from repository.
   const UserEventsInRangeProvider._({
     required UserEventsInRangeFamily super.from,
-    required ({DateTime start, DateTime end, bool attendedOnly}) super.argument,
+    required ({DateTime start, DateTime end, bool attendedOnly, String? userId})
+    super.argument,
   }) : super(
          retry: null,
          name: r'userEventsInRangeProvider',
@@ -59,12 +60,19 @@ final class UserEventsInRangeProvider
   @override
   FutureOr<List<UserEventModel>> create(Ref ref) {
     final argument =
-        this.argument as ({DateTime start, DateTime end, bool attendedOnly});
+        this.argument
+            as ({
+              DateTime start,
+              DateTime end,
+              bool attendedOnly,
+              String? userId,
+            });
     return userEventsInRange(
       ref,
       start: argument.start,
       end: argument.end,
       attendedOnly: argument.attendedOnly,
+      userId: argument.userId,
     );
   }
 
@@ -79,7 +87,7 @@ final class UserEventsInRangeProvider
   }
 }
 
-String _$userEventsInRangeHash() => r'ee760e47a276d34bb7406434588037548c9a92fa';
+String _$userEventsInRangeHash() => r'cf99a0ed79ba208b576282cfdb14b4a4d5451acd';
 
 /// Raw list of user events (with embedded event & user) for a date range.
 /// We request both user and event models from repository.
@@ -88,7 +96,7 @@ final class UserEventsInRangeFamily extends $Family
     with
         $FunctionalFamilyOverride<
           FutureOr<List<UserEventModel>>,
-          ({DateTime start, DateTime end, bool attendedOnly})
+          ({DateTime start, DateTime end, bool attendedOnly, String? userId})
         > {
   const UserEventsInRangeFamily._()
     : super(
@@ -106,8 +114,14 @@ final class UserEventsInRangeFamily extends $Family
     required DateTime start,
     required DateTime end,
     bool attendedOnly = true,
+    String? userId,
   }) => UserEventsInRangeProvider._(
-    argument: (start: start, end: end, attendedOnly: attendedOnly),
+    argument: (
+      start: start,
+      end: end,
+      attendedOnly: attendedOnly,
+      userId: userId,
+    ),
     from: this,
   );
 
@@ -308,3 +322,259 @@ final class VolunteerHoursThisMonthProvider
 
 String _$volunteerHoursThisMonthHash() =>
     r'b7c49894b18d3bd439e2963d26c60d33e2a9a539';
+
+@ProviderFor(volunteerHoursSummaryThisMonth)
+const volunteerHoursSummaryThisMonthProvider =
+    VolunteerHoursSummaryThisMonthProvider._();
+
+final class VolunteerHoursSummaryThisMonthProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VolunteerHoursSummary>,
+          VolunteerHoursSummary,
+          FutureOr<VolunteerHoursSummary>
+        >
+    with
+        $FutureModifier<VolunteerHoursSummary>,
+        $FutureProvider<VolunteerHoursSummary> {
+  const VolunteerHoursSummaryThisMonthProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volunteerHoursSummaryThisMonthProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volunteerHoursSummaryThisMonthHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<VolunteerHoursSummary> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VolunteerHoursSummary> create(Ref ref) {
+    return volunteerHoursSummaryThisMonth(ref);
+  }
+}
+
+String _$volunteerHoursSummaryThisMonthHash() =>
+    r'3f7c791c6f7c14ddd41e2334c50fd22b25ee121b';
+
+@ProviderFor(volunteerHoursSummaryYtd)
+const volunteerHoursSummaryYtdProvider = VolunteerHoursSummaryYtdProvider._();
+
+final class VolunteerHoursSummaryYtdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VolunteerHoursSummary>,
+          VolunteerHoursSummary,
+          FutureOr<VolunteerHoursSummary>
+        >
+    with
+        $FutureModifier<VolunteerHoursSummary>,
+        $FutureProvider<VolunteerHoursSummary> {
+  const VolunteerHoursSummaryYtdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volunteerHoursSummaryYtdProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volunteerHoursSummaryYtdHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<VolunteerHoursSummary> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VolunteerHoursSummary> create(Ref ref) {
+    return volunteerHoursSummaryYtd(ref);
+  }
+}
+
+String _$volunteerHoursSummaryYtdHash() =>
+    r'147c87aabc1785684595157dab26dabe9a4f81a9';
+
+@ProviderFor(volunteerMonthlyHoursYtd)
+const volunteerMonthlyHoursYtdProvider = VolunteerMonthlyHoursYtdProvider._();
+
+final class VolunteerMonthlyHoursYtdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<MonthlyHoursPoint>>,
+          List<MonthlyHoursPoint>,
+          FutureOr<List<MonthlyHoursPoint>>
+        >
+    with
+        $FutureModifier<List<MonthlyHoursPoint>>,
+        $FutureProvider<List<MonthlyHoursPoint>> {
+  const VolunteerMonthlyHoursYtdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volunteerMonthlyHoursYtdProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volunteerMonthlyHoursYtdHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<MonthlyHoursPoint>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<MonthlyHoursPoint>> create(Ref ref) {
+    return volunteerMonthlyHoursYtd(ref);
+  }
+}
+
+String _$volunteerMonthlyHoursYtdHash() =>
+    r'49703bc217d317de105a9ce44936d83194b0a5f7';
+
+@ProviderFor(currentUserHoursSummaryThisMonth)
+const currentUserHoursSummaryThisMonthProvider =
+    CurrentUserHoursSummaryThisMonthProvider._();
+
+final class CurrentUserHoursSummaryThisMonthProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VolunteerHoursSummary>,
+          VolunteerHoursSummary,
+          FutureOr<VolunteerHoursSummary>
+        >
+    with
+        $FutureModifier<VolunteerHoursSummary>,
+        $FutureProvider<VolunteerHoursSummary> {
+  const CurrentUserHoursSummaryThisMonthProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentUserHoursSummaryThisMonthProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentUserHoursSummaryThisMonthHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<VolunteerHoursSummary> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VolunteerHoursSummary> create(Ref ref) {
+    return currentUserHoursSummaryThisMonth(ref);
+  }
+}
+
+String _$currentUserHoursSummaryThisMonthHash() =>
+    r'f8ddc9d7df031e72ff50b5926b78f2712177a381';
+
+@ProviderFor(currentUserHoursSummaryYtd)
+const currentUserHoursSummaryYtdProvider =
+    CurrentUserHoursSummaryYtdProvider._();
+
+final class CurrentUserHoursSummaryYtdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<VolunteerHoursSummary>,
+          VolunteerHoursSummary,
+          FutureOr<VolunteerHoursSummary>
+        >
+    with
+        $FutureModifier<VolunteerHoursSummary>,
+        $FutureProvider<VolunteerHoursSummary> {
+  const CurrentUserHoursSummaryYtdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentUserHoursSummaryYtdProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentUserHoursSummaryYtdHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<VolunteerHoursSummary> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<VolunteerHoursSummary> create(Ref ref) {
+    return currentUserHoursSummaryYtd(ref);
+  }
+}
+
+String _$currentUserHoursSummaryYtdHash() =>
+    r'6d39d3a9b52e50926fd0dd39ddfc720ba4020224';
+
+@ProviderFor(currentUserMonthlyHoursYtd)
+const currentUserMonthlyHoursYtdProvider =
+    CurrentUserMonthlyHoursYtdProvider._();
+
+final class CurrentUserMonthlyHoursYtdProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<MonthlyHoursPoint>>,
+          List<MonthlyHoursPoint>,
+          FutureOr<List<MonthlyHoursPoint>>
+        >
+    with
+        $FutureModifier<List<MonthlyHoursPoint>>,
+        $FutureProvider<List<MonthlyHoursPoint>> {
+  const CurrentUserMonthlyHoursYtdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentUserMonthlyHoursYtdProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentUserMonthlyHoursYtdHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<MonthlyHoursPoint>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<MonthlyHoursPoint>> create(Ref ref) {
+    return currentUserMonthlyHoursYtd(ref);
+  }
+}
+
+String _$currentUserMonthlyHoursYtdHash() =>
+    r'2622c1d4dcc1a5891ec2f1e6c4df2be4c048b78c';

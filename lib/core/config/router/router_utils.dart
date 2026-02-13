@@ -16,7 +16,10 @@ class RouterUtils {
   static const anyRoutes = {
     LoginScreen.path,
     SignUpScreen.path,
+    ForgotPasswordScreen.path,
+    ResetPasswordScreen.path,
     ConfirmEmailScreen.path,
+    EmailConfirmedScreen.path,
     WelcomeScreen.path,
     AppStartupLoadingWidget.path,
     UserOnboardedGate.path,

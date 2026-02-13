@@ -1,6 +1,7 @@
 // Removed unused dart:ui import after refactor.
 
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
@@ -9,15 +10,19 @@ import 'package:anystep/core/features/events/presentation/event_detail/event_det
 import 'package:anystep/core/features/events/presentation/widgets/attendance_list.dart';
 import 'package:anystep/core/features/events/presentation/widgets/share_event_button.dart';
 import 'package:anystep/core/features/events/presentation/widgets/sign_up_list.dart';
+import 'package:anystep/core/features/events/utils/launch_calendar.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/features/user_events/presentation/attendee_search_form.dart';
 import 'package:anystep/core/features/user_events/presentation/sign_up_button.dart';
+import 'package:anystep/core/common/widgets/share_button.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+enum _EventDetailMenuAction { share, addToCalendar, edit }
 
 class EventDetailScreen extends ConsumerStatefulWidget {
   const EventDetailScreen({super.key, required this.id});
@@ -74,20 +79,45 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
       ),
       data: (event) {
         final isPast = event.endTime.isBefore(DateTime.now().toUtc());
-        // Build actions list based on user role
+        final canEdit = userAsync.value?.role.canEditEvent == true;
         final actions = <Widget>[
-          ShareEventButton(event: event),
-          userAsync.maybeWhen(
-            data: (u) {
-              if (u?.role.canEditEvent == true) {
-                return IconButton(
-                  icon: Icon(isEditing ? Icons.edit_off : Icons.edit),
-                  onPressed: _toggleEdit,
-                );
+          PopupMenuButton<_EventDetailMenuAction>(
+            onSelected: (action) async {
+              switch (action) {
+                case _EventDetailMenuAction.share:
+                  await shareContent(
+                    title: ShareEventButton.buildShareTitle(),
+                    content: ShareEventButton.buildShareText(event),
+                  );
+                  break;
+                case _EventDetailMenuAction.addToCalendar:
+                  try {
+                    await openGoogleCalendar(event);
+                  } catch (e, st) {
+                    Log.e('Error opening calendar', e, st);
+                  }
+                  break;
+                case _EventDetailMenuAction.edit:
+                  _toggleEdit();
+                  break;
               }
-              return const SizedBox.shrink();
             },
-            orElse: () => const SizedBox.shrink(),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _EventDetailMenuAction.share,
+                child: Text(loc.shareAction),
+              ),
+              if (!isPast)
+                PopupMenuItem(
+                  value: _EventDetailMenuAction.addToCalendar,
+                  child: Text(loc.addToCalendarMenuItem),
+                ),
+              if (canEdit)
+                PopupMenuItem(
+                  value: _EventDetailMenuAction.edit,
+                  child: Text(isEditing ? loc.stopEditingAction : loc.editEventAction),
+                ),
+            ],
           ),
         ];
 
@@ -115,7 +145,7 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                       ),
                       if (!isPast && userAsync.hasValue && userAsync.value != null && !isEditing)
                         SliverToBoxAdapter(
-                          child: Center(child: SignUpButton(eventId: widget.id)),
+                          child: Center(child: SignUpButton(event: event)),
                         ),
                       if (userAsync.hasValue && !isEditing)
                         isPast

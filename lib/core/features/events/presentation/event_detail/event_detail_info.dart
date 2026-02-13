@@ -15,6 +15,27 @@ class EventDetailInfo extends StatelessWidget {
 
   final EventModel event;
 
+  void _showImagePreview(BuildContext context, String imageUrl) {
+    showDialog<void>(
+      context: context,
+      barrierColor: Colors.black87,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Dialog(
+            insetPadding: const EdgeInsets.all(AnyStepSpacing.md16),
+            backgroundColor: Colors.transparent,
+            child: InteractiveViewer(
+              minScale: 0.8,
+              maxScale: 4,
+              child: Image.network(imageUrl, fit: BoxFit.contain),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isPast = event.endTime.isBefore(DateTime.now());
@@ -25,14 +46,17 @@ class EventDetailInfo extends StatelessWidget {
         child: Column(
           children: [
             event.imageUrl != null
-                ? Image.network(
-                    event.imageUrl!,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const SizedBox.shrink();
-                    },
+                ? InkWell(
+                    onTap: () => _showImagePreview(context, event.imageUrl!),
+                    child: Image.network(
+                      event.imageUrl!,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const SizedBox.shrink();
+                      },
+                    ),
                   )
                 : const SizedBox.shrink(),
             Container(
@@ -43,13 +67,16 @@ class EventDetailInfo extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        event.name,
-                        style: Theme.of(context).textTheme.displayLarge,
-                        softWrap: true,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Text(
+                          event.name,
+                          style: Theme.of(context).textTheme.displayLarge,
+                          softWrap: true,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       if (isPast && event.id != null)
                         Padding(

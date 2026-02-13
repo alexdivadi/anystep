@@ -24,6 +24,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   agreementSignedOn: json['agreement_signed_on'] == null
       ? null
       : DateTime.parse(json['agreement_signed_on'] as String),
+  fcmToken: json['fcm_token'] as String?,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -37,6 +38,7 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'role': _$UserRoleEnumMap[instance.role]!,
       'phone_number': instance.phoneNumber,
       'agreement_signed_on': instance.agreementSignedOn?.toIso8601String(),
+      'fcm_token': instance.fcmToken,
     };
 
 const _$UserRoleEnumMap = {

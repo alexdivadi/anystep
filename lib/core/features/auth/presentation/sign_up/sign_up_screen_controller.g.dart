@@ -42,7 +42,7 @@ final class SignUpScreenControllerProvider
 }
 
 String _$signUpScreenControllerHash() =>
-    r'85c197ff6bab73b6cd37d5928144cc8e8b8d612e';
+    r'2719909f07950dd0e5681d2a0c248f4d2f3eb766';
 
 abstract class _$SignUpScreenController extends $Notifier<SignUpScreenState> {
   SignUpScreenState build();

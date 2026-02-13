@@ -8,6 +8,7 @@ environment:
   sdk: ^3.10.0
 
 dependencies:
+  app_links: ^6.3.2
   crypto: ^3.0.6
   cupertino_icons: ^1.0.8
   dart_geohash: ^2.1.0
@@ -22,6 +23,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^3.0.0
+  fl_chart: ^0.68.0
+  table_calendar: ^3.1.2
   form_builder_validators: ^11.1.2
   freezed_annotation: ^3.0.0
   go_router: ^15.1.2
@@ -55,6 +58,27 @@ flutter:
 
   assets:
     - assets/images/
+  fonts:
+    - family: RobotoSlab
+      fonts:
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Light.ttf
+          weight: 300
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/RobotoSlab/RobotoSlab-Black.ttf
+          weight: 900
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

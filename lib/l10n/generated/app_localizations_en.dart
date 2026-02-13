@@ -65,7 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
-  String get reportsTitle => 'Volunteer Reports';
+  String get reportsTitle => 'Reports';
 
   @override
   String get exportCsv => 'Export CSV';
@@ -96,6 +96,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventDetailTitle => 'Event Detail';
+
+  @override
+  String get shareAction => 'Share';
+
+  @override
+  String get editEventAction => 'Edit event';
+
+  @override
+  String get stopEditingAction => 'Stop editing';
+
+  @override
+  String get addToCalendarTitle => 'Add Event to Calendar';
+
+  @override
+  String get addToCalendarBody =>
+      'Save this event to your Google Calendar so you don\'t miss it.';
+
+  @override
+  String get addToCalendarCta => 'Add to Google Calendar';
+
+  @override
+  String get addToCalendarDismiss => 'Not now';
+
+  @override
+  String get addToCalendarMenuItem => 'Add to Calendar';
 
   @override
   String get completed => 'Completed';
@@ -130,6 +155,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboard => 'Dashboard';
 
   @override
+  String get dashboardYourVolunteering => 'Your Volunteering';
+
+  @override
+  String get dashboardVolunteerMetrics => 'Volunteer Metrics';
+
+  @override
+  String get dashboardRecentEvents => 'Recent Events';
+
+  @override
+  String get dashboardUpcomingEvents => 'Upcoming Events';
+
+  @override
+  String get dashboardHoursThisMonth => 'Hours (This Month)';
+
+  @override
+  String get dashboardHoursYtd => 'Hours (YTD)';
+
+  @override
+  String get dashboardEventsThisMonth => 'Events (This Month)';
+
+  @override
+  String get dashboardEventsYtd => 'Events (YTD)';
+
+  @override
+  String get dashboardVolunteersThisMonth => 'Volunteers (This Month)';
+
+  @override
+  String get dashboardVolunteersYtd => 'Volunteers (YTD)';
+
+  @override
+  String get dashboardNoMetrics => 'No metrics yet. Keep building impact!';
+
+  @override
+  String get dashboardCalendar => 'Calendar';
+
+  @override
+  String get dashboardNoEventsCalendar => 'No events for this day';
+
+  @override
+  String get notEligibleVolunteerHours => 'Not eligible for volunteer hours';
+
+  @override
   String get eventFeed => 'Event Feed';
 
   @override
@@ -158,6 +225,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSeeMore => 'See More';
+
+  @override
+  String get blogTitle => 'Blog';
+
+  @override
+  String get blogEmptyState =>
+      'No channels yet. Admins can create the first channel.';
+
+  @override
+  String get blogCreateChannel => 'Create Channel';
+
+  @override
+  String get blogChannelTitle => 'Channel';
+
+  @override
+  String blogChannelPlaceholder(int id) {
+    return 'Channel #$id details coming soon.';
+  }
+
+  @override
+  String get blogCreateChannelPlaceholder =>
+      'Channel creation form coming soon.';
 
   @override
   String get navEvents => 'Events';
@@ -194,6 +283,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dontHaveAccount => 'Don\'t have an account? Sign Up';
+
+  @override
+  String get forgotPassword => 'Forgot your password?';
+
+  @override
+  String get forgotPasswordTitle => 'Reset your password';
+
+  @override
+  String get forgotPasswordInstructions =>
+      'Enter the email for your account and we\'ll send a reset link.';
+
+  @override
+  String get sendResetEmail => 'Send reset email';
+
+  @override
+  String get passwordResetEmailSent =>
+      'Password reset email sent. Check your inbox.';
+
+  @override
+  String get resetPasswordTitle => 'Reset password';
+
+  @override
+  String get resetPasswordInstructions =>
+      'Choose a new password for your account.';
+
+  @override
+  String get updatePassword => 'Update password';
+
+  @override
+  String get passwordUpdatedSuccess => 'Your password has been updated.';
+
+  @override
+  String get resetPasswordConfirmRequired => 'Please confirm your password';
+
+  @override
+  String get resetPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get emailConfirmedTitle => 'Email confirmed';
+
+  @override
+  String get emailConfirmedMessage =>
+      'Your email has been verified. You can now log in.';
 
   @override
   String get confirmEmailMessage => 'Confirm your email to continue.';
@@ -316,6 +448,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Track and discover volunteer events easily.';
 
   @override
+  String get onboardingNotificationsTitle => 'Stay in the Loop';
+
+  @override
+  String get onboardingNotificationsDesc =>
+      'Get a heads-up when new events are added.';
+
+  @override
   String get onboardingFindEventsTitle => 'Find Events';
 
   @override
@@ -328,6 +467,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingImpactDesc =>
       'Join events and measure the difference you make.';
+
+  @override
+  String get eventNotificationsTitle => 'Event notifications';
+
+  @override
+  String get eventNotificationsDescription =>
+      'Notify me when a new event is added.';
 
   @override
   String get onboardingCompleteTitle => 'Onboarding Complete!';

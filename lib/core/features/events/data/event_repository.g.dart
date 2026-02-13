@@ -464,3 +464,87 @@ final class GetPastEventsFamily extends $Family
   @override
   String toString() => r'getPastEventsProvider';
 }
+
+@ProviderFor(getEventsInRange)
+const getEventsInRangeProvider = GetEventsInRangeFamily._();
+
+final class GetEventsInRangeProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<EventModel>>,
+          List<EventModel>,
+          FutureOr<List<EventModel>>
+        >
+    with $FutureModifier<List<EventModel>>, $FutureProvider<List<EventModel>> {
+  const GetEventsInRangeProvider._({
+    required GetEventsInRangeFamily super.from,
+    required ({DateTime start, DateTime end}) super.argument,
+  }) : super(
+         retry: null,
+         name: r'getEventsInRangeProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$getEventsInRangeHash();
+
+  @override
+  String toString() {
+    return r'getEventsInRangeProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<EventModel>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<EventModel>> create(Ref ref) {
+    final argument = this.argument as ({DateTime start, DateTime end});
+    return getEventsInRange(ref, start: argument.start, end: argument.end);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetEventsInRangeProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$getEventsInRangeHash() => r'32b9467cad533671a634dbf1daa34e0d9a182fe0';
+
+final class GetEventsInRangeFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<EventModel>>,
+          ({DateTime start, DateTime end})
+        > {
+  const GetEventsInRangeFamily._()
+    : super(
+        retry: null,
+        name: r'getEventsInRangeProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetEventsInRangeProvider call({
+    required DateTime start,
+    required DateTime end,
+  }) => GetEventsInRangeProvider._(
+    argument: (start: start, end: end),
+    from: this,
+  );
+
+  @override
+  String toString() => r'getEventsInRangeProvider';
+}

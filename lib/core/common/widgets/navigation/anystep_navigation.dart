@@ -1,3 +1,4 @@
+import 'package:anystep/core/common/constants/breakpoints.dart';
 import 'package:anystep/core/common/widgets/navigation/nav_bar_scaffold.dart';
 import 'package:anystep/core/common/widgets/navigation/nav_item.dart';
 import 'package:anystep/core/common/widgets/navigation/nav_rail_scaffold.dart';
@@ -22,8 +23,7 @@ abstract class AnyStepNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // layout breakpoint: tweak as needed
-        if (constraints.maxWidth < 550) {
+        if (constraints.maxWidth < kNavRailBreakpoint) {
           return NavBarScaffold(
             body: navigationShell,
             selectedIndex: currentIndex,
@@ -38,7 +38,12 @@ abstract class AnyStepNavigation extends StatelessWidget {
             selectedIndex: currentIndex,
             onDestinationSelected: onTap,
             destinations: items(context)
-                .map((item) => NavigationRailDestination(icon: item.icon, label: Text(item.label)))
+                .map(
+                  (item) => NavigationRailDestination(
+                    icon: item.icon,
+                    label: Text(item.label, textAlign: TextAlign.center),
+                  ),
+                )
                 .toList(),
           );
         }

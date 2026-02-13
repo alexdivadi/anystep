@@ -23,7 +23,7 @@ class NavRailScaffold extends StatelessWidget {
           NavigationRail(
             selectedIndex: selectedIndex,
             onDestinationSelected: onDestinationSelected,
-            labelType: NavigationRailLabelType.all,
+            extended: true,
             destinations: destinations,
           ),
           const VerticalDivider(thickness: 0.5, width: 1),

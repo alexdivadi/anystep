@@ -1,6 +1,7 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/notifications/presentation/event_notifications_tile.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/features/settings/presentation/theme_mode_setting.dart';
 import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
@@ -33,6 +34,10 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               const ThemeModeSetting(),
               const LocaleSetting(),
+              EventNotificationsTile(
+                title: loc.eventNotificationsTitle,
+                subtitle: loc.eventNotificationsDescription,
+              ),
               if (isAuth != null) ...[
                 ListTile(
                   leading: const Icon(Icons.account_circle),

@@ -90,7 +90,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        loc.enterYourAddress,
+                        loc.enterYourDetails,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),

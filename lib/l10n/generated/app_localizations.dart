@@ -188,10 +188,10 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
-  /// App bar title for reports screen
+  /// App bar title for reports screen and navigation label
   ///
   /// In en, this message translates to:
-  /// **'Volunteer Reports'**
+  /// **'Reports'**
   String get reportsTitle;
 
   /// Tooltip for export CSV action
@@ -241,6 +241,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event Detail'**
   String get eventDetailTitle;
+
+  /// Action label for sharing content
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareAction;
+
+  /// Action label to edit an event
+  ///
+  /// In en, this message translates to:
+  /// **'Edit event'**
+  String get editEventAction;
+
+  /// Action label to stop editing an event
+  ///
+  /// In en, this message translates to:
+  /// **'Stop editing'**
+  String get stopEditingAction;
+
+  /// Title for add to calendar prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Add Event to Calendar'**
+  String get addToCalendarTitle;
+
+  /// Body text for add to calendar prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Save this event to your Google Calendar so you don\'t miss it.'**
+  String get addToCalendarBody;
+
+  /// Primary button label for add to calendar
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Google Calendar'**
+  String get addToCalendarCta;
+
+  /// Dismiss button label for add to calendar prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get addToCalendarDismiss;
+
+  /// Menu item label for add to calendar action
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Calendar'**
+  String get addToCalendarMenuItem;
 
   /// Badge indicating the event is completed
   ///
@@ -302,6 +350,90 @@ abstract class AppLocalizations {
   /// **'Dashboard'**
   String get dashboard;
 
+  /// Section header for volunteer dashboard stats
+  ///
+  /// In en, this message translates to:
+  /// **'Your Volunteering'**
+  String get dashboardYourVolunteering;
+
+  /// Section header for admin dashboard metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteer Metrics'**
+  String get dashboardVolunteerMetrics;
+
+  /// Section header for recent events on dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Events'**
+  String get dashboardRecentEvents;
+
+  /// Section header for upcoming events on dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Events'**
+  String get dashboardUpcomingEvents;
+
+  /// Metric label for hours this month
+  ///
+  /// In en, this message translates to:
+  /// **'Hours (This Month)'**
+  String get dashboardHoursThisMonth;
+
+  /// Metric label for year-to-date hours
+  ///
+  /// In en, this message translates to:
+  /// **'Hours (YTD)'**
+  String get dashboardHoursYtd;
+
+  /// Metric label for events this month
+  ///
+  /// In en, this message translates to:
+  /// **'Events (This Month)'**
+  String get dashboardEventsThisMonth;
+
+  /// Metric label for year-to-date events
+  ///
+  /// In en, this message translates to:
+  /// **'Events (YTD)'**
+  String get dashboardEventsYtd;
+
+  /// Metric label for unique volunteers this month
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteers (This Month)'**
+  String get dashboardVolunteersThisMonth;
+
+  /// Metric label for unique volunteers year-to-date
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteers (YTD)'**
+  String get dashboardVolunteersYtd;
+
+  /// Empty state message for metrics chart
+  ///
+  /// In en, this message translates to:
+  /// **'No metrics yet. Keep building impact!'**
+  String get dashboardNoMetrics;
+
+  /// Section header for dashboard calendar
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get dashboardCalendar;
+
+  /// Empty state text for calendar day events
+  ///
+  /// In en, this message translates to:
+  /// **'No events for this day'**
+  String get dashboardNoEventsCalendar;
+
+  /// Shown when an event does not count for volunteer hours
+  ///
+  /// In en, this message translates to:
+  /// **'Not eligible for volunteer hours'**
+  String get notEligibleVolunteerHours;
+
   /// Event feed title
   ///
   /// In en, this message translates to:
@@ -361,6 +493,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See More'**
   String get navSeeMore;
+
+  /// Blog tab title and screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Blog'**
+  String get blogTitle;
+
+  /// Empty state message for blog channels screen
+  ///
+  /// In en, this message translates to:
+  /// **'No channels yet. Admins can create the first channel.'**
+  String get blogEmptyState;
+
+  /// Button label to create a new blog channel
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get blogCreateChannel;
+
+  /// App bar title for blog channel detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get blogChannelTitle;
+
+  /// Placeholder text for blog channel detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Channel #{id} details coming soon.'**
+  String blogChannelPlaceholder(int id);
+
+  /// Placeholder text for create channel screen
+  ///
+  /// In en, this message translates to:
+  /// **'Channel creation form coming soon.'**
+  String get blogCreateChannelPlaceholder;
 
   /// Bottom nav label for Events
   ///
@@ -433,6 +601,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t have an account? Sign Up'**
   String get dontHaveAccount;
+
+  /// Text button label to start password reset
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get forgotPassword;
+
+  /// Title for the forgot password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reset your password'**
+  String get forgotPasswordTitle;
+
+  /// Instructions for the forgot password form
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the email for your account and we\'ll send a reset link.'**
+  String get forgotPasswordInstructions;
+
+  /// Button label to send password reset email
+  ///
+  /// In en, this message translates to:
+  /// **'Send reset email'**
+  String get sendResetEmail;
+
+  /// Confirmation message after sending password reset email
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent. Check your inbox.'**
+  String get passwordResetEmailSent;
+
+  /// Title for the reset password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get resetPasswordTitle;
+
+  /// Instructions for the reset password form
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password for your account.'**
+  String get resetPasswordInstructions;
+
+  /// Button label for updating the password
+  ///
+  /// In en, this message translates to:
+  /// **'Update password'**
+  String get updatePassword;
+
+  /// Confirmation message after updating password
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been updated.'**
+  String get passwordUpdatedSuccess;
+
+  /// Validation error when confirm password is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get resetPasswordConfirmRequired;
+
+  /// Validation error when passwords do not match
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get resetPasswordMismatch;
+
+  /// Title shown after email confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Email confirmed'**
+  String get emailConfirmedTitle;
+
+  /// Body message after email confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your email has been verified. You can now log in.'**
+  String get emailConfirmedMessage;
 
   /// Message instructing user to confirm email
   ///
@@ -668,6 +914,18 @@ abstract class AppLocalizations {
   /// **'Track and discover volunteer events easily.'**
   String get onboardingWelcomeDesc;
 
+  /// Title for onboarding notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Stay in the Loop'**
+  String get onboardingNotificationsTitle;
+
+  /// Description for onboarding notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Get a heads-up when new events are added.'**
+  String get onboardingNotificationsDesc;
+
   /// Title for onboarding find events page
   ///
   /// In en, this message translates to:
@@ -691,6 +949,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join events and measure the difference you make.'**
   String get onboardingImpactDesc;
+
+  /// Settings label for event notification toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Event notifications'**
+  String get eventNotificationsTitle;
+
+  /// Settings helper text for event notification toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me when a new event is added.'**
+  String get eventNotificationsDescription;
 
   /// Success text shown when user is already onboarded
   ///

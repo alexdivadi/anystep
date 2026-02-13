@@ -2,6 +2,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
 import 'package:anystep/core/common/widgets/any_step_scaffold.dart';
 import 'package:anystep/core/features/events/presentation/screens.dart';
+import 'package:anystep/core/features/notifications/presentation/event_notifications_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anystep/core/features/onboarding/presentation/onboarding/welcome_screen_controller.dart';
@@ -10,7 +11,7 @@ import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
 
 /// Multi-page onboarding / welcome flow.
-/// Shows 3 pages in a PageView with a dot indicator. The final page displays
+/// Shows 4 pages in a PageView with a dot indicator. The final page displays
 /// a "Get Started" button which completes onboarding.
 class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({super.key});
@@ -25,7 +26,7 @@ class WelcomeScreen extends ConsumerStatefulWidget {
 class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   final _controller = PageController();
   int _index = 0;
-  static const _pageCount = 3;
+  static const _pageCount = 4;
 
   @override
   void dispose() {
@@ -97,6 +98,15 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     description: loc.onboardingWelcomeDesc,
                   ),
                   _OnboardingPage(title: loc.changeLanguage, extra: const LocaleSetting()),
+                  _OnboardingPage(
+                    title: loc.onboardingNotificationsTitle,
+                    description: loc.onboardingNotificationsDesc,
+                    extra: EventNotificationsTile(
+                      title: loc.eventNotificationsTitle,
+                      subtitle: loc.eventNotificationsDescription,
+                      dense: true,
+                    ),
+                  ),
                   _OnboardingPage(
                     title: loc.onboardingImpactTitle,
                     description: loc.onboardingImpactDesc,

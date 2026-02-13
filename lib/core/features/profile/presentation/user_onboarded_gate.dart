@@ -2,7 +2,7 @@ import 'package:anystep/core/app_startup/app_startup_loading_widget.dart';
 import 'package:anystep/core/app_startup/app_startup_widget.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
-import 'package:anystep/core/features/profile/presentation/onboarding/onboarding_screen.dart';
+import 'package:anystep/core/features/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +16,7 @@ class UserOnboardedGate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final safeRedirect = redirect == '/' ? EventFeedScreen.pathAnonymous : redirect;
     ref.listen(currentUserStreamProvider, (previous, userAsync) {
       final goRouter = GoRouter.of(context);
       final currentLocation = goRouter.state.path ?? '';
@@ -26,10 +27,10 @@ class UserOnboardedGate extends ConsumerWidget {
               Log.d('User not logged in, redirecting to onboarding screen');
               context.go(OnboardingScreen.path);
             }
-          } else if (user != null && currentLocation != redirect) {
+          } else if (user != null && currentLocation != safeRedirect) {
             if (context.mounted) {
               Log.d('User is logged in, checking onboarding status');
-              context.go(redirect);
+              context.go(safeRedirect);
             }
           }
         },
