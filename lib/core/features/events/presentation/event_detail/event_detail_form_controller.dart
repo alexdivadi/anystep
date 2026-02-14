@@ -18,6 +18,16 @@ class EventDetailFormController extends _$EventDetailFormController {
   Future<bool> createOrUpdateEvent(Map<String, dynamic> values, {XFile? image}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
+      final maxVolunteersRaw = values['maxVolunteers'];
+      final maxVolunteers = (maxVolunteersRaw == null || maxVolunteersRaw.toString().trim().isEmpty)
+          ? null
+          : int.tryParse(maxVolunteersRaw.toString());
+      final externalLinkRaw = values['externalLink'];
+      final externalLink =
+          (externalLinkRaw == null || externalLinkRaw.toString().trim().isEmpty)
+              ? null
+              : externalLinkRaw.toString();
+
       final event = EventModel(
         id: state.eventId,
         name: values['name']!,
@@ -34,6 +44,10 @@ class EventDetailFormController extends _$EventDetailFormController {
           isUserAddress: false,
         ),
         description: values['description'],
+        isVolunteerEligible: values['isVolunteerEligible'] ?? true,
+        maxVolunteers: maxVolunteers,
+        registrationDeadline: (values['registrationDeadline'] as DateTime?)?.toUtc(),
+        externalLink: externalLink,
       );
 
       String? imageUrl;

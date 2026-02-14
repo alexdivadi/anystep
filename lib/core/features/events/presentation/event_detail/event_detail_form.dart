@@ -23,6 +23,7 @@ class EventDetailForm extends ConsumerStatefulWidget {
 class _EventDetailFormState extends ConsumerState<EventDetailForm> {
   final formKey = GlobalKey<FormBuilderState>();
   XFile? _imageFile;
+  DateTime? _startTime;
 
   void _onSubmit() async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
@@ -44,6 +45,7 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
     final now = DateTime.now().toLocal();
     final tomorrow = DateTime(now.year, now.month, now.day + 1, 0, 0);
     final loc = AppLocalizations.of(context);
+    _startTime ??= widget.event?.startTime.toLocal();
     return PopScope(
       canPop: !state.isLoading,
       child: Padding(
@@ -80,6 +82,13 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                       expandedLines: 10,
                       initialValue: widget.event?.description,
                     ),
+                    AnyStepSwitchInput(
+                      name: 'isVolunteerEligible',
+                      label: loc.volunteerEventLabel,
+                      helpText: loc.volunteerEventHelp,
+                      initialValue: widget.event?.isVolunteerEligible ?? true,
+                    ),
+                    const SizedBox(height: AnyStepSpacing.sm4),
                     Row(
                       children: [
                         Flexible(
@@ -89,15 +98,16 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                             initialValue:
                                 widget.event?.startTime.toLocal() ??
                                 DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 8, 0),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(),
-                              (val) {
-                                if (val != null && (val.toLocal().isBefore(now))) {
-                                  return 'Start time has passed';
-                                }
-                                return null;
-                              },
-                            ]),
+                            onChanged: (val) {
+                              setState(() => _startTime = val);
+                              final endField = formKey.currentState?.fields['endTime'];
+                              if (val != null &&
+                                  endField?.value != null &&
+                                  (endField!.value as DateTime).isBefore(val)) {
+                                endField.didChange(val.add(const Duration(hours: 1)));
+                              }
+                            },
+                            validator: FormBuilderValidators.required(),
                           ),
                         ),
                         const SizedBox(width: AnyStepSpacing.sm2),
@@ -108,12 +118,13 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                             initialValue:
                                 widget.event?.endTime.toLocal() ??
                                 DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 9, 0),
+                            firstDate: _startTime,
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(),
                               (val) {
                                 if (val != null &&
-                                    widget.event != null &&
-                                    val.isBefore(widget.event!.startTime)) {
+                                    _startTime != null &&
+                                    val.isBefore(_startTime!)) {
                                   return 'End time must be after start time';
                                 }
                                 return null;
@@ -123,6 +134,8 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                         ),
                       ],
                     ),
+
+                    const SizedBox(height: AnyStepSpacing.sm4),
                     AnyStepTextField(
                       name: 'street',
                       initialValue: widget.event?.address?.street,
@@ -167,6 +180,58 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                           ),
                         ),
                       ],
+                    ),
+                    Theme(
+                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                      child: ExpansionTile(
+                        tilePadding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
+                        childrenPadding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
+                        title: Text(loc.advancedOptions),
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                flex: 2,
+                                child: AnyStepTextField(
+                                  name: 'maxVolunteers',
+                                  initialValue: widget.event?.maxVolunteers?.toString(),
+                                  labelText: loc.maxVolunteersOptional,
+                                  keyboardType: TextInputType.number,
+                                  validator: FormBuilderValidators.integer(checkNullOrEmpty: false),
+                                ),
+                              ),
+                              const SizedBox(width: AnyStepSpacing.sm2),
+                              Flexible(
+                                flex: 3,
+                                child: AnyStepDateTimePicker(
+                                  name: 'registrationDeadline',
+                                  labelText: loc.registrationDeadlineOptional,
+                                  initialValue: widget.event?.registrationDeadline?.toLocal(),
+                                  useDefaultInitialValue: false,
+                                  lastDate: _startTime,
+                                  validator: FormBuilderValidators.compose([
+                                    (val) {
+                                      if (val != null &&
+                                          _startTime != null &&
+                                          val.isAfter(_startTime!)) {
+                                        return 'Deadline must be before event start time';
+                                      }
+                                      return null;
+                                    },
+                                  ]),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnyStepTextField(
+                            name: 'externalLink',
+                            initialValue: widget.event?.externalLink,
+                            labelText: loc.externalLinkOptional,
+                            keyboardType: TextInputType.url,
+                            validator: FormBuilderValidators.url(checkNullOrEmpty: false),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

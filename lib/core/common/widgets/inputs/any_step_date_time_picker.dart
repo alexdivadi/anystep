@@ -14,6 +14,9 @@ class AnyStepDateTimePicker extends StatelessWidget {
     this.hintText,
     this.validator,
     this.format,
+    this.useDefaultInitialValue = true,
+    this.firstDate,
+    this.lastDate,
   });
 
   final String name;
@@ -24,10 +27,15 @@ class AnyStepDateTimePicker extends StatelessWidget {
   final String? hintText;
   final FormFieldValidator<DateTime?>? validator;
   final DateFormat? format;
+  final bool useDefaultInitialValue;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
 
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final labelColor = Theme.of(context).colorScheme.onSurface.withAlpha(153);
+    final hintColor = Theme.of(context).colorScheme.onSurface.withAlpha(128);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
       child: FormBuilderDateTimePicker(
@@ -37,6 +45,9 @@ class AnyStepDateTimePicker extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
+          labelStyle: TextStyle(color: labelColor),
+          floatingLabelStyle: TextStyle(color: labelColor),
+          hintStyle: TextStyle(color: hintColor),
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
           ),
@@ -49,7 +60,11 @@ class AnyStepDateTimePicker extends StatelessWidget {
             borderSide: BorderSide(color: primary, width: 2),
           ),
         ),
-        initialValue: initialValue ?? DateTime.now().add(const Duration(hours: 1)),
+        initialValue:
+            initialValue ??
+            (useDefaultInitialValue ? DateTime.now().add(const Duration(hours: 1)) : null),
+        firstDate: firstDate,
+        lastDate: lastDate,
         inputType: InputType.both,
         format: format ?? DateFormat('MM/dd/yy, hh:mm a'),
         locale: Localizations.localeOf(context),

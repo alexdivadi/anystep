@@ -77,7 +77,7 @@ final class SignUpStatusProvider
   }
 }
 
-String _$signUpStatusHash() => r'02390b445a29c931ca1f4496e9aec8182ad00f3f';
+String _$signUpStatusHash() => r'980fa0832857e9be9a571999b03a4ab28905580b';
 
 /// Fetches the sign-up status for a specific event.
 /// It checks if the user can sign up, if they have already signed up,

@@ -34,7 +34,7 @@ final class SignUpButtonControllerProvider
 }
 
 String _$signUpButtonControllerHash() =>
-    r'25882fa0bfe82a6884c8811691ee8e5c894b11d2';
+    r'30c99a52816b8e666fe817352989f9dab9044f1b';
 
 abstract class _$SignUpButtonController extends $AsyncNotifier<void> {
   FutureOr<void> build();

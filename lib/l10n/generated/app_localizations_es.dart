@@ -473,6 +473,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Únete a eventos y mide la diferencia que generas.';
 
   @override
+  String get notificationSettingsTitle => 'Configuración de notificaciones';
+
+  @override
   String get eventNotificationsTitle => 'Notificaciones de eventos';
 
   @override
@@ -539,4 +542,30 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get enterSearchTerm =>
       'Ingresa un término de búsqueda para encontrar eventos.';
+
+  @override
+  String get volunteerEventLabel => 'Evento de voluntariado';
+
+  @override
+  String get volunteerEventHelp =>
+      'Este evento es elegible para horas de voluntariado';
+
+  @override
+  String get advancedOptions => 'Opciones avanzadas';
+
+  @override
+  String get maxVolunteersOptional => 'Máximo de voluntarios (opcional)';
+
+  @override
+  String get registrationDeadlineOptional =>
+      'Fecha límite de registro (opcional)';
+
+  @override
+  String get externalLinkOptional => 'Enlace externo (opcional)';
+
+  @override
+  String get externalLink => 'Enlace externo';
+
+  @override
+  String get registrationClosed => 'Registro cerrado';
 }

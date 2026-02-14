@@ -21,6 +21,9 @@ class SignUpButton extends ConsumerWidget {
     final signUpStatusAsync = ref.watch(signUpStatusProvider(eventId));
     final state = ref.watch(signUpButtonControllerProvider);
     final loc = AppLocalizations.of(context);
+    final now = DateTime.now().toUtc();
+    final isPastDeadline =
+        event.registrationDeadline != null && now.isAfter(event.registrationDeadline!.toUtc());
 
     return signUpStatusAsync.maybeWhen(
       data: (status) => switch (status) {
@@ -36,7 +39,7 @@ class SignUpButton extends ConsumerWidget {
                     ? AnyStepColors.white
                     : AnyStepColors.blueBright, // Text/icon color
               ),
-              onPressed: state.isLoading || !data.canSignUp
+              onPressed: state.isLoading || (!data.didSignUp && !data.canSignUp)
                   ? null
                   : data.didSignUp
                   ? () => ref
@@ -55,10 +58,12 @@ class SignUpButton extends ConsumerWidget {
               child: state.isLoading
                   ? const CircularProgressIndicator.adaptive()
                   : Text(
-                      data.canSignUp
-                          ? data.didSignUp
-                                ? loc.cancelSignUp
-                                : loc.signUp
+                      data.didSignUp
+                          ? loc.cancelSignUp
+                          : data.canSignUp
+                          ? loc.signUp
+                          : isPastDeadline
+                          ? loc.registrationClosed
                           : loc.noLongerAvailable,
                     ),
             ),

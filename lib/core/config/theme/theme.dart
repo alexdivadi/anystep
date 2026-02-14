@@ -4,11 +4,31 @@ import 'package:flutter/material.dart';
 import 'text_styles.dart';
 
 class AnyStepTheme {
+  static const double _textScaleFactor = 0.94;
+  static const double _textHeightFactor = 0.95;
+
+  static TextTheme _tightTextTheme(Color textColor) {
+    return AnyStepTextStyles.textTheme
+        .apply(
+          fontSizeFactor: _textScaleFactor,
+          heightFactor: _textHeightFactor,
+          bodyColor: textColor,
+          displayColor: textColor,
+        )
+        .copyWith(
+          displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: textColor),
+          bodyLarge: AnyStepTextStyles.bodyLarge.copyWith(color: textColor),
+          bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(color: textColor),
+        );
+  }
+
   static final lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     fontFamily: '.SF Pro Text',
     fontFamilyFallback: const ['.SF Pro Display'],
+    visualDensity: VisualDensity.compact,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.light(
       primary: AnyStepColors.blueBright,
       onPrimaryContainer: AnyStepColors.navyDark,
@@ -18,11 +38,7 @@ class AnyStepTheme {
       surface: AnyStepColors.white,
       error: AnyStepColors.error,
     ),
-    textTheme: TextTheme(
-      displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.grayDark),
-      bodyLarge: AnyStepTextStyles.bodyLarge.copyWith(color: AnyStepColors.grayDark),
-      bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(color: AnyStepColors.grayDark),
-    ),
+    textTheme: _tightTextTheme(AnyStepColors.grayDark),
     cardTheme: CardThemeData(
       elevation: AnyStepSpacing.sm2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnyStepSpacing.md12)),
@@ -40,15 +56,15 @@ class AnyStepTheme {
     brightness: Brightness.dark,
     fontFamily: '.SF Pro Text',
     fontFamilyFallback: const ['.SF Pro Display'],
+    visualDensity: VisualDensity.compact,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
       onError: AnyStepColors.white,
     ),
-    textTheme: TextTheme(
-      displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.white),
-      bodyLarge: AnyStepTextStyles.bodyLarge.copyWith(color: AnyStepColors.white),
+    textTheme: _tightTextTheme(AnyStepColors.white).copyWith(
       bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(
         color: AnyStepColors.lightTertiaryContainer,
       ),
@@ -70,6 +86,8 @@ class AnyStepTheme {
     brightness: Brightness.light,
     fontFamily: '.SF Pro Text',
     fontFamilyFallback: const ['.SF Pro Display'],
+    visualDensity: VisualDensity.compact,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.highContrastLight(
       primary: AnyStepColors.blueBright,
       onPrimaryContainer: AnyStepColors.navyDark,
@@ -79,11 +97,7 @@ class AnyStepTheme {
       surface: AnyStepColors.white,
       error: AnyStepColors.error,
     ),
-    textTheme: TextTheme(
-      displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.grayDark),
-      bodyLarge: AnyStepTextStyles.bodyLarge.copyWith(color: AnyStepColors.grayDark),
-      bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(color: AnyStepColors.grayDark),
-    ),
+    textTheme: _tightTextTheme(AnyStepColors.grayDark),
     cardTheme: CardThemeData(
       elevation: AnyStepSpacing.sm2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnyStepSpacing.md12)),
@@ -101,6 +115,8 @@ class AnyStepTheme {
     brightness: Brightness.dark,
     fontFamily: '.SF Pro Text',
     fontFamilyFallback: const ['.SF Pro Display'],
+    visualDensity: VisualDensity.compact,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       contrastLevel: 1.0,
@@ -108,9 +124,7 @@ class AnyStepTheme {
       error: AnyStepColors.errorDark,
       onError: AnyStepColors.white,
     ),
-    textTheme: TextTheme(
-      displayLarge: AnyStepTextStyles.displayLarge.copyWith(color: AnyStepColors.white),
-      bodyLarge: AnyStepTextStyles.bodyLarge.copyWith(color: AnyStepColors.white),
+    textTheme: _tightTextTheme(AnyStepColors.white).copyWith(
       bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(
         color: AnyStepColors.lightTertiaryContainer,
       ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/user_events/data/sign_up_status.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
@@ -17,6 +18,11 @@ class SignUpButtonController extends _$SignUpButtonController {
   Future<void> signUp({required int eventId}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
+      final event = await ref.read(getEventProvider(eventId).future);
+      final now = DateTime.now().toUtc();
+      if (event.registrationDeadline != null && now.isAfter(event.registrationDeadline!.toUtc())) {
+        return;
+      }
       final authState = await ref.read(authStateStreamProvider.future);
 
       final UserEventModel userEvent = UserEventModel(

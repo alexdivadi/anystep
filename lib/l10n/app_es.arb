@@ -333,6 +333,8 @@
   "@onboardingImpactTitle": {"description": "Título de la página de impacto"},
   "onboardingImpactDesc": "Únete a eventos y mide la diferencia que generas.",
   "@onboardingImpactDesc": {"description": "Descripción de la página de impacto"},
+  "notificationSettingsTitle": "Configuración de notificaciones",
+  "@notificationSettingsTitle": {"description": "Etiqueta de ajustes para la página y el interruptor de notificaciones"},
   "eventNotificationsTitle": "Notificaciones de eventos",
   "@eventNotificationsTitle": {"description": "Etiqueta de ajustes para el interruptor de notificaciones de eventos"},
   "eventNotificationsDescription": "Avísame cuando se agregue un nuevo evento.",
@@ -383,6 +385,23 @@
   "@checkBackLater": {"description": "Texto de ayuda invitando a regresar más tarde"}
   ,
   "noUsersFound": "No hay usuarios",
-  "@noUsersFound": {"description": "Estado vacío cuando no hay usuarios"}
+  "@noUsersFound": {"description": "Estado vacío cuando no hay usuarios"},
+  "volunteerEventLabel": "Evento de voluntariado",
+  "@volunteerEventLabel": {"description": "Etiqueta para el interruptor de evento elegible para voluntariado"},
+  "volunteerEventHelp": "Este evento es elegible para horas de voluntariado",
+  "@volunteerEventHelp": {"description": "Texto de ayuda para el interruptor de evento elegible para voluntariado"}
+  ,
+  "advancedOptions": "Opciones avanzadas",
+  "@advancedOptions": {"description": "Título de la sección para opciones avanzadas del evento"},
+  "maxVolunteersOptional": "Máximo de voluntarios (opcional)",
+  "@maxVolunteersOptional": {"description": "Etiqueta para el campo de máximo de voluntarios"},
+  "registrationDeadlineOptional": "Fecha límite de registro (opcional)",
+  "@registrationDeadlineOptional": {"description": "Etiqueta para el campo de fecha límite de registro"},
+  "externalLinkOptional": "Enlace externo (opcional)",
+  "@externalLinkOptional": {"description": "Etiqueta para el campo de enlace externo"},
+  "externalLink": "Enlace externo",
+  "@externalLink": {"description": "Etiqueta para la lista de enlace externo"},
+  "registrationClosed": "Registro cerrado",
+  "@registrationClosed": {"description": "Etiqueta del botón de registro cuando la fecha límite ha pasado"}
   
 }

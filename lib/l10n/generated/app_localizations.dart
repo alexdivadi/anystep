@@ -950,6 +950,12 @@ abstract class AppLocalizations {
   /// **'Join events and measure the difference you make.'**
   String get onboardingImpactDesc;
 
+  /// Settings label for notifications page and toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Settings'**
+  String get notificationSettingsTitle;
+
   /// Settings label for event notification toggle
   ///
   /// In en, this message translates to:
@@ -1081,6 +1087,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a search term to find events.'**
   String get enterSearchTerm;
+
+  /// Label for volunteer eligible event toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteer Event'**
+  String get volunteerEventLabel;
+
+  /// Help text for volunteer eligible event toggle
+  ///
+  /// In en, this message translates to:
+  /// **'This event is eligible for volunteer hours'**
+  String get volunteerEventHelp;
+
+  /// Section title for advanced event form options
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Options'**
+  String get advancedOptions;
+
+  /// Label for max volunteers field
+  ///
+  /// In en, this message translates to:
+  /// **'Max Volunteers (optional)'**
+  String get maxVolunteersOptional;
+
+  /// Label for registration deadline field
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Deadline (optional)'**
+  String get registrationDeadlineOptional;
+
+  /// Label for external link field
+  ///
+  /// In en, this message translates to:
+  /// **'External Link (optional)'**
+  String get externalLinkOptional;
+
+  /// Label for external link list tile
+  ///
+  /// In en, this message translates to:
+  /// **'External Link'**
+  String get externalLink;
+
+  /// Label for sign up button when registration deadline has passed
+  ///
+  /// In en, this message translates to:
+  /// **'Registration closed'**
+  String get registrationClosed;
 }
 
 class _AppLocalizationsDelegate

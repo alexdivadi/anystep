@@ -39,8 +39,8 @@ class AnyStepApp extends ConsumerWidget {
       highContrastDarkTheme: AnyStepTheme.highContrastDarkTheme,
       themeMode: themeMode.hasValue ? themeMode.value : ThemeMode.system,
       locale: localeAsync.hasValue ? localeAsync.value : null,
-      builder:
-          (context, child) => AppStartupWidget(onLoaded: (context) => child ?? const SizedBox()),
+      builder: (context, child) =>
+          AppStartupWidget(onLoaded: (context) => child ?? const SizedBox()),
     );
   }
 }

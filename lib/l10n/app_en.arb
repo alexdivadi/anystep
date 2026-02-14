@@ -332,6 +332,8 @@
   "@onboardingImpactTitle": {"description": "Title for onboarding impact page"},
   "onboardingImpactDesc": "Join events and measure the difference you make.",
   "@onboardingImpactDesc": {"description": "Description for onboarding impact page"},
+  "notificationSettingsTitle": "Notification Settings",
+  "@notificationSettingsTitle": {"description": "Settings label for notifications page and toggle"},
   "eventNotificationsTitle": "Event notifications",
   "@eventNotificationsTitle": {"description": "Settings label for event notification toggle"},
   "eventNotificationsDescription": "Notify me when a new event is added.",
@@ -381,5 +383,22 @@
   "@noUsersFound": {"description": "Empty state when no users are available"}
   ,
   "enterSearchTerm": "Please enter a search term to find events.",
-  "@enterSearchTerm": {"description": "Text when search field is empty"}
+  "@enterSearchTerm": {"description": "Text when search field is empty"},
+  "volunteerEventLabel": "Volunteer Event",
+  "@volunteerEventLabel": {"description": "Label for volunteer eligible event toggle"},
+  "volunteerEventHelp": "This event is eligible for volunteer hours",
+  "@volunteerEventHelp": {"description": "Help text for volunteer eligible event toggle"}
+  ,
+  "advancedOptions": "Advanced Options",
+  "@advancedOptions": {"description": "Section title for advanced event form options"},
+  "maxVolunteersOptional": "Max Volunteers (optional)",
+  "@maxVolunteersOptional": {"description": "Label for max volunteers field"},
+  "registrationDeadlineOptional": "Registration Deadline (optional)",
+  "@registrationDeadlineOptional": {"description": "Label for registration deadline field"},
+  "externalLinkOptional": "External Link (optional)",
+  "@externalLinkOptional": {"description": "Label for external link field"},
+  "externalLink": "External Link",
+  "@externalLink": {"description": "Label for external link list tile"},
+  "registrationClosed": "Registration closed",
+  "@registrationClosed": {"description": "Label for sign up button when registration deadline has passed"}
 }
