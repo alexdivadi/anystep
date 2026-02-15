@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SignUpScreenState {
 
- bool get isLoading; bool get success; String? get error;
+ bool get isLoading; bool get success; bool get needsEmailConfirmation; String? get error;
 /// Create a copy of SignUpScreenState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SignUpScreenStateCopyWith<SignUpScreenState> get copyWith => _$SignUpScreenStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignUpScreenState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.success, success) || other.success == success)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignUpScreenState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.success, success) || other.success == success)&&(identical(other.needsEmailConfirmation, needsEmailConfirmation) || other.needsEmailConfirmation == needsEmailConfirmation)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,success,error);
+int get hashCode => Object.hash(runtimeType,isLoading,success,needsEmailConfirmation,error);
 
 @override
 String toString() {
-  return 'SignUpScreenState(isLoading: $isLoading, success: $success, error: $error)';
+  return 'SignUpScreenState(isLoading: $isLoading, success: $success, needsEmailConfirmation: $needsEmailConfirmation, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SignUpScreenStateCopyWith<$Res>  {
   factory $SignUpScreenStateCopyWith(SignUpScreenState value, $Res Function(SignUpScreenState) _then) = _$SignUpScreenStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool success, String? error
+ bool isLoading, bool success, bool needsEmailConfirmation, String? error
 });
 
 
@@ -62,10 +62,11 @@ class _$SignUpScreenStateCopyWithImpl<$Res>
 
 /// Create a copy of SignUpScreenState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? success = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? success = null,Object? needsEmailConfirmation = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool,needsEmailConfirmation: null == needsEmailConfirmation ? _self.needsEmailConfirmation : needsEmailConfirmation // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool success,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool success,  bool needsEmailConfirmation,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignUpScreenState() when $default != null:
-return $default(_that.isLoading,_that.success,_that.error);case _:
+return $default(_that.isLoading,_that.success,_that.needsEmailConfirmation,_that.error);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.isLoading,_that.success,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool success,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool success,  bool needsEmailConfirmation,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _SignUpScreenState():
-return $default(_that.isLoading,_that.success,_that.error);case _:
+return $default(_that.isLoading,_that.success,_that.needsEmailConfirmation,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.isLoading,_that.success,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool success,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool success,  bool needsEmailConfirmation,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _SignUpScreenState() when $default != null:
-return $default(_that.isLoading,_that.success,_that.error);case _:
+return $default(_that.isLoading,_that.success,_that.needsEmailConfirmation,_that.error);case _:
   return null;
 
 }
@@ -208,11 +209,12 @@ return $default(_that.isLoading,_that.success,_that.error);case _:
 
 
 class _SignUpScreenState implements SignUpScreenState {
-  const _SignUpScreenState({this.isLoading = false, this.success = false, this.error});
+  const _SignUpScreenState({this.isLoading = false, this.success = false, this.needsEmailConfirmation = false, this.error});
   
 
 @override@JsonKey() final  bool isLoading;
 @override@JsonKey() final  bool success;
+@override@JsonKey() final  bool needsEmailConfirmation;
 @override final  String? error;
 
 /// Create a copy of SignUpScreenState
@@ -225,16 +227,16 @@ _$SignUpScreenStateCopyWith<_SignUpScreenState> get copyWith => __$SignUpScreenS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUpScreenState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.success, success) || other.success == success)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUpScreenState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.success, success) || other.success == success)&&(identical(other.needsEmailConfirmation, needsEmailConfirmation) || other.needsEmailConfirmation == needsEmailConfirmation)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,success,error);
+int get hashCode => Object.hash(runtimeType,isLoading,success,needsEmailConfirmation,error);
 
 @override
 String toString() {
-  return 'SignUpScreenState(isLoading: $isLoading, success: $success, error: $error)';
+  return 'SignUpScreenState(isLoading: $isLoading, success: $success, needsEmailConfirmation: $needsEmailConfirmation, error: $error)';
 }
 
 
@@ -245,7 +247,7 @@ abstract mixin class _$SignUpScreenStateCopyWith<$Res> implements $SignUpScreenS
   factory _$SignUpScreenStateCopyWith(_SignUpScreenState value, $Res Function(_SignUpScreenState) _then) = __$SignUpScreenStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool success, String? error
+ bool isLoading, bool success, bool needsEmailConfirmation, String? error
 });
 
 
@@ -262,10 +264,11 @@ class __$SignUpScreenStateCopyWithImpl<$Res>
 
 /// Create a copy of SignUpScreenState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? success = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? success = null,Object? needsEmailConfirmation = null,Object? error = freezed,}) {
   return _then(_SignUpScreenState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool,needsEmailConfirmation: null == needsEmailConfirmation ? _self.needsEmailConfirmation : needsEmailConfirmation // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

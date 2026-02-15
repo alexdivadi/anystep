@@ -65,6 +65,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
+  String get passwordMinLength => 'Password must be at least 8 characters';
+
+  @override
   String get reportsTitle => 'Reports';
 
   @override

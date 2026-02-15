@@ -41,7 +41,12 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
   }
 
   try {
-    if (authState.value == null) throw Exception('No user logged in');
+    if (authState.isLoading) {
+      final resolved = await ref.watch(authStateStreamProvider.future);
+      if (resolved == null) throw Exception('No user logged in');
+    } else if (authState.value == null) {
+      throw Exception('No user logged in');
+    }
 
     final user = await ref
         .read(userRepositoryProvider)

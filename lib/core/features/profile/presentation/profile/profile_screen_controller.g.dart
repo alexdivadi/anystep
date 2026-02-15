@@ -46,7 +46,7 @@ final class ProfileScreenControllerProvider
 }
 
 String _$profileScreenControllerHash() =>
-    r'887975828d543746adcb56c3eeac68c65888b558';
+    r'7422402bd949d49ff436f95866732a6dbca104bb';
 
 abstract class _$ProfileScreenController
     extends $Notifier<ProfileScreenControllerState> {

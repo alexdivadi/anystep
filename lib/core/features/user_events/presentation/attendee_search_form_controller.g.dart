@@ -53,7 +53,7 @@ final class AttendeeSearchFormControllerProvider
 }
 
 String _$attendeeSearchFormControllerHash() =>
-    r'2288f2afcd834d8e8d91478d3760175cb522fa2a';
+    r'9ce6c0c5c76074827c8514f42608701e26a75fe6';
 
 final class AttendeeSearchFormControllerFamily extends $Family
     with

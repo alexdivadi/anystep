@@ -42,7 +42,9 @@
   "logout": "Cerrar sesión",
   "@logout": {"description": "Etiqueta del botón de cerrar sesión"},
   "login": "Iniciar sesión",
-  "@login": {"description": "Etiqueta del botón de iniciar sesión"}
+  "@login": {"description": "Etiqueta del botón de iniciar sesión"},
+  "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+  "@passwordMinLength": {"description": "Error de validación cuando la contraseña es demasiado corta"}
   ,
   "reportsTitle": "Informes",
   "@reportsTitle": {"description": "Título de la pantalla de informes"},
