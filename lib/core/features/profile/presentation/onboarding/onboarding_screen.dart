@@ -163,46 +163,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     //   ),
                     // ),
                     const SizedBox(height: AnyStepSpacing.md16),
-                    AnyStepTextField(
-                      name: 'street',
-                      labelText: loc.streetAddress,
-                      validator: FormBuilderValidators.street(),
-                    ),
-                    AnyStepTextField(
-                      name: 'streetSecondary',
-                      labelText: loc.streetAddress2,
-                      validator: FormBuilderValidators.street(checkNullOrEmpty: false),
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: AnyStepTextField(
-                            name: 'city',
-                            labelText: loc.city,
-                            validator: FormBuilderValidators.city(),
-                          ),
-                        ),
-                        const SizedBox(width: AnyStepSpacing.sm2),
-                        Flexible(
-                          flex: 2,
-                          child: AnyStepTextField(
-                            name: 'state',
-                            labelText: loc.state,
-                            validator: FormBuilderValidators.state(),
-                          ),
-                        ),
-                        const SizedBox(width: AnyStepSpacing.sm2),
-                        Flexible(
-                          flex: 3,
-                          child: AnyStepTextField(
-                            name: 'zipCode',
-                            labelText: loc.postalCode,
-                            keyboardType: TextInputType.number,
-                            validator: FormBuilderValidators.zipCode(),
-                          ),
-                        ),
-                      ],
+                    AnyStepAddressField(
+                      formKey: _formKey,
+                      postalCodeFieldName: 'zipCode',
+                      streetSecondaryLabelText: loc.streetAddress2,
+                      isUserAddress: true,
+                      includeEventAddresses: false,
+                      includeUserAddresses: true,
                     ),
 
                     const SizedBox(height: AnyStepSpacing.md16),

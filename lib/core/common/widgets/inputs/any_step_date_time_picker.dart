@@ -17,6 +17,7 @@ class AnyStepDateTimePicker extends StatelessWidget {
     this.useDefaultInitialValue = true,
     this.firstDate,
     this.lastDate,
+    this.allowClear = false,
   });
 
   final String name;
@@ -30,6 +31,7 @@ class AnyStepDateTimePicker extends StatelessWidget {
   final bool useDefaultInitialValue;
   final DateTime? firstDate;
   final DateTime? lastDate;
+  final bool allowClear;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,17 @@ class AnyStepDateTimePicker extends StatelessWidget {
           labelStyle: TextStyle(color: labelColor),
           floatingLabelStyle: TextStyle(color: labelColor),
           hintStyle: TextStyle(color: hintColor),
+          suffixIcon: allowClear
+              ? IconButton(
+                  icon: const Icon(Icons.close),
+                  tooltip: 'Clear',
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
+                  onPressed: () {
+                    FormBuilder.of(context)?.fields[name]?.didChange(null);
+                    onChanged?.call(null);
+                  },
+                )
+              : null,
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
           ),

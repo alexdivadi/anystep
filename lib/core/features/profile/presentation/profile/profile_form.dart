@@ -79,50 +79,12 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 validator: FormBuilderValidators.required(),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
-              AnyStepTextField(
-                name: 'street',
-                initialValue: widget.user.address?.street,
-                labelText: loc.streetAddress,
-                validator: FormBuilderValidators.required(),
-              ),
-              AnyStepTextField(
-                name: 'streetSecondary',
-                initialValue: widget.user.address?.streetSecondary,
-                labelText: loc.apartmentSuiteOptional,
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 4,
-                    child: AnyStepTextField(
-                      name: 'city',
-                      initialValue: widget.user.address?.city,
-                      labelText: loc.city,
-                      validator: FormBuilderValidators.city(),
-                    ),
-                  ),
-                  const SizedBox(width: AnyStepSpacing.sm2),
-                  Flexible(
-                    flex: 2,
-                    child: AnyStepTextField(
-                      name: 'state',
-                      initialValue: widget.user.address?.state,
-                      labelText: loc.state,
-                      validator: FormBuilderValidators.state(),
-                    ),
-                  ),
-                  const SizedBox(width: AnyStepSpacing.sm2),
-                  Flexible(
-                    flex: 3,
-                    child: AnyStepTextField(
-                      name: 'postalCode',
-                      initialValue: widget.user.address?.postalCode,
-                      labelText: loc.postalCode,
-                      keyboardType: TextInputType.number,
-                      validator: FormBuilderValidators.zipCode(),
-                    ),
-                  ),
-                ],
+              AnyStepAddressField(
+                formKey: _formKey,
+                initialAddressId: widget.user.addressId ?? widget.user.address?.id,
+                isUserAddress: true,
+                includeEventAddresses: false,
+                includeUserAddresses: true,
               ),
               const SizedBox(height: AnyStepSpacing.md24),
               if (state.isLoading) const AnyStepLoadingIndicator(),

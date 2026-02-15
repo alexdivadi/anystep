@@ -83,14 +83,10 @@ class _ImagePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Image.asset(
+      'assets/images/event_placeholder_img.png',
       width: AnyStepSpacing.xl56,
       height: AnyStepSpacing.xl56,
-      decoration: BoxDecoration(
-        color: Theme.of(context).highlightColor.withAlpha(100),
-        borderRadius: BorderRadius.circular(AnyStepSpacing.sm8),
-      ),
-      child: Icon(Icons.event, color: Theme.of(context).highlightColor),
     );
   }
 }

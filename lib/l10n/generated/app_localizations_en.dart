@@ -203,6 +203,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search => 'Search';
 
   @override
+  String get searchAddress => 'Search address';
+
+  @override
+  String get startTypingAddress => 'Start typing an address';
+
+  @override
+  String get noMatchesFound => 'No matches found';
+
+  @override
   String get searchEvents => 'Search events';
 
   @override
@@ -552,6 +561,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get registrationDeadlineOptional => 'Registration Deadline (optional)';
+
+  @override
+  String get registrationDeadline => 'Registration Deadline';
 
   @override
   String get externalLinkOptional => 'External Link (optional)';

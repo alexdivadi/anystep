@@ -136,50 +136,16 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     ),
 
                     const SizedBox(height: AnyStepSpacing.sm4),
-                    AnyStepTextField(
-                      name: 'street',
-                      initialValue: widget.event?.address?.street,
-                      labelText: loc.streetAddress,
-                      validator: FormBuilderValidators.required(),
-                    ),
-                    AnyStepTextField(
-                      name: 'streetSecondary',
-                      initialValue: widget.event?.address?.streetSecondary,
-                      labelText: loc.apartmentSuiteOptional,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: AnyStepTextField(
-                            name: 'city',
-                            initialValue: widget.event?.address?.city,
-                            labelText: loc.city,
-                            validator: FormBuilderValidators.city(),
-                          ),
-                        ),
-                        const SizedBox(width: AnyStepSpacing.sm2),
-                        Flexible(
-                          flex: 2,
-                          child: AnyStepTextField(
-                            name: 'state',
-                            initialValue: widget.event?.address?.state,
-                            labelText: loc.state,
-                            validator: FormBuilderValidators.state(),
-                          ),
-                        ),
-                        const SizedBox(width: AnyStepSpacing.sm2),
-                        Flexible(
-                          flex: 3,
-                          child: AnyStepTextField(
-                            name: 'postalCode',
-                            initialValue: widget.event?.address?.postalCode,
-                            labelText: loc.postalCode,
-                            keyboardType: TextInputType.number,
-                            validator: FormBuilderValidators.zipCode(),
-                          ),
-                        ),
-                      ],
+                    AnyStepAddressField(
+                      formKey: formKey,
+                      initialAddressId: widget.event?.addressId ?? widget.event?.address?.id,
+                      isUserAddress: false,
+                      includeEventAddresses: true,
+                      includeUserAddresses: false,
+                      streetValidator: FormBuilderValidators.required(),
+                      streetSecondaryValidator: FormBuilderValidators.street(
+                        checkNullOrEmpty: false,
+                      ),
                     ),
                     Theme(
                       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -188,40 +154,28 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                         childrenPadding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
                         title: Text(loc.advancedOptions),
                         children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 2,
-                                child: AnyStepTextField(
-                                  name: 'maxVolunteers',
-                                  initialValue: widget.event?.maxVolunteers?.toString(),
-                                  labelText: loc.maxVolunteersOptional,
-                                  keyboardType: TextInputType.number,
-                                  validator: FormBuilderValidators.integer(checkNullOrEmpty: false),
-                                ),
-                              ),
-                              const SizedBox(width: AnyStepSpacing.sm2),
-                              Flexible(
-                                flex: 3,
-                                child: AnyStepDateTimePicker(
-                                  name: 'registrationDeadline',
-                                  labelText: loc.registrationDeadlineOptional,
-                                  initialValue: widget.event?.registrationDeadline?.toLocal(),
-                                  useDefaultInitialValue: false,
-                                  lastDate: _startTime,
-                                  validator: FormBuilderValidators.compose([
-                                    (val) {
-                                      if (val != null &&
-                                          _startTime != null &&
-                                          val.isAfter(_startTime!)) {
-                                        return 'Deadline must be before event start time';
-                                      }
-                                      return null;
-                                    },
-                                  ]),
-                                ),
-                              ),
-                            ],
+                          AnyStepTextField(
+                            name: 'maxVolunteers',
+                            initialValue: widget.event?.maxVolunteers?.toString(),
+                            labelText: loc.maxVolunteersOptional,
+                            keyboardType: TextInputType.number,
+                            validator: FormBuilderValidators.integer(checkNullOrEmpty: false),
+                          ),
+                          AnyStepDateTimePicker(
+                            name: 'registrationDeadline',
+                            labelText: loc.registrationDeadlineOptional,
+                            initialValue: widget.event?.registrationDeadline?.toLocal(),
+                            useDefaultInitialValue: false,
+                            lastDate: _startTime,
+                            allowClear: true,
+                            validator: FormBuilderValidators.compose([
+                              (val) {
+                                if (val != null && _startTime != null && val.isAfter(_startTime!)) {
+                                  return 'Deadline must be before event start time';
+                                }
+                                return null;
+                              },
+                            ]),
                           ),
                           AnyStepTextField(
                             name: 'externalLink',

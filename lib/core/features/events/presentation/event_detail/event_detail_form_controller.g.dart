@@ -60,7 +60,7 @@ final class EventDetailFormControllerProvider
 }
 
 String _$eventDetailFormControllerHash() =>
-    r'7a7702d263176f0b26f413df8f9c72989bf89bcd';
+    r'91d431846ae59e9bda5d897d42a0c1fca9f00a37';
 
 final class EventDetailFormControllerFamily extends $Family
     with

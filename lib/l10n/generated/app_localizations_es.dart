@@ -205,6 +205,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get search => 'Buscar';
 
   @override
+  String get searchAddress => 'Buscar dirección';
+
+  @override
+  String get startTypingAddress => 'Comienza a escribir una dirección';
+
+  @override
+  String get noMatchesFound => 'No se encontraron coincidencias';
+
+  @override
   String get searchEvents => 'Buscar eventos';
 
   @override
@@ -559,6 +568,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get registrationDeadlineOptional =>
       'Fecha límite de registro (opcional)';
+
+  @override
+  String get registrationDeadline => 'Fecha límite de registro';
 
   @override
   String get externalLinkOptional => 'Enlace externo (opcional)';

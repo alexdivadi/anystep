@@ -3,7 +3,6 @@ import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form_state.dart';
-import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/database/storage.dart'; // Added import for storage provider
 import 'package:image_picker/image_picker.dart'; // Import XFile for image upload
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +26,9 @@ class EventDetailFormController extends _$EventDetailFormController {
           (externalLinkRaw == null || externalLinkRaw.toString().trim().isEmpty)
               ? null
               : externalLinkRaw.toString();
+      final addressIdRaw = values['addressId'];
+      final addressId =
+          addressIdRaw is int ? addressIdRaw : int.tryParse(addressIdRaw?.toString() ?? '');
 
       final event = EventModel(
         id: state.eventId,
@@ -34,15 +36,7 @@ class EventDetailFormController extends _$EventDetailFormController {
         startTime: (values['startTime'] as DateTime).toUtc(),
         endTime: (values['endTime'] as DateTime).toUtc(),
         imageUrl: values['imageUrl'],
-        address: AddressModel(
-          street: values['street']!,
-          streetSecondary: values['streetSecondary'],
-          city: values['city']!,
-          state: values['state']!,
-          country: 'US',
-          postalCode: values['postalCode']!,
-          isUserAddress: false,
-        ),
+        addressId: addressId,
         description: values['description'],
         isVolunteerEligible: values['isVolunteerEligible'] ?? true,
         maxVolunteers: maxVolunteers,

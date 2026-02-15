@@ -1,4 +1,3 @@
-import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
@@ -13,43 +12,16 @@ class EventRepository implements IRepository<EventModel> {
   const EventRepository({
     required this.database,
     this.collectionId = Env.eventCollectionId,
-    this.addressCollectionId = Env.addressCollectionId,
   });
 
   final Database database;
   final String collectionId;
-  final String addressCollectionId;
 
   static const int pageSize = 25;
 
   @override
   Future<EventModel> createOrUpdate({required EventModel obj, String? documentId}) async {
     final data = obj.toJson();
-
-    final address = obj.address;
-    if (address != null) {
-      try {
-        final addressDoc = await database.list(
-          table: addressCollectionId,
-          filters: [
-            AnyStepFilter.equals('street', address.street),
-            AnyStepFilter.equals('street_secondary', address.streetSecondary),
-            AnyStepFilter.equals('city', address.city),
-            AnyStepFilter.equals('state', address.state),
-            AnyStepFilter.equals('postal_code', address.postalCode),
-            AnyStepFilter.equals('country', address.country),
-          ],
-        );
-        data['address'] = addressDoc.isNotEmpty
-            ? addressDoc.first["id"]
-            : (await database.createOrUpdate(
-                table: addressCollectionId,
-                data: address.toJson(),
-              )).first["id"];
-      } catch (e) {
-        Log.e("Error handling address", e);
-      }
-    }
     final document = await database.createOrUpdate(table: collectionId, data: data);
     return EventModel.fromJson(document.first);
   }

@@ -446,6 +446,24 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
+  /// Label for address autocomplete search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search address'**
+  String get searchAddress;
+
+  /// Hint text for address autocomplete search field
+  ///
+  /// In en, this message translates to:
+  /// **'Start typing an address'**
+  String get startTypingAddress;
+
+  /// Shown when address autocomplete returns no results
+  ///
+  /// In en, this message translates to:
+  /// **'No matches found'**
+  String get noMatchesFound;
+
   /// Search bar hint text for events
   ///
   /// In en, this message translates to:
@@ -1117,6 +1135,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Registration Deadline (optional)'**
   String get registrationDeadlineOptional;
+
+  /// Label for registration deadline display
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Deadline'**
+  String get registrationDeadline;
 
   /// Label for external link field
   ///
