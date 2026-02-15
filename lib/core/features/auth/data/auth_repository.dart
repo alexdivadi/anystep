@@ -119,11 +119,21 @@ class AuthRepository {
       await _supabase.signInWithPassword(email: email, password: password);
       return null;
     } on AuthApiException catch (e) {
-      if (e.code == "email_not_confirmed") {
-        Log.w('Email not confirmed for user: $email');
-        return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
+      switch (e.code) {
+        case "email_not_confirmed":
+          {
+            Log.w('Email not confirmed for user: $email');
+            return 'Please confirm your email address and try again. An email has been sent to you with instructions.';
+          }
+        case "over_email_send_rate_limit":
+          {
+            Log.w('Signup email rate limit exceeded for user: $email');
+            return 'Too many signup attempts. Please wait and try again later.';
+          }
+        default:
+          Log.e('Signup failed for user: $email', e);
+          return 'Signup failed. Please try again.';
       }
-      return 'Signup failed. Please try again.';
     } catch (e, st) {
       Log.e('Signup failed', e, st);
       return 'An error occurred';

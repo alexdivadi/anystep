@@ -6,8 +6,10 @@ import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 
 import 'sign_up_screen_controller.dart';
+import 'package:anystep/core/features/auth/presentation/confirm_email_screen.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -27,6 +29,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     final controller = ref.watch(signUpScreenControllerProvider.notifier);
     final state = ref.watch(signUpScreenControllerProvider);
     final loc = AppLocalizations.of(context);
+
+    ref.listen(signUpScreenControllerProvider, (previous, next) {
+      if (next.needsEmailConfirmation) {
+        context.go(ConfirmEmailScreen.path);
+      }
+    });
 
     return AnyStepScaffold(
       appBar: AnyStepAppBar(title: Text(loc.backToLogin)),
@@ -77,8 +85,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       labelText: loc.password,
                       obscureText: true,
                       validator: FormBuilderValidators.password(
+                        minLowercaseCount: 0,
+                        minUppercaseCount: 0,
+                        minNumberCount: 0,
                         minSpecialCharCount: 0,
-                        errorText: '',
+                        errorText: loc.passwordMinLength,
                       ),
                     ),
                     AnyStepTextField(

@@ -1,6 +1,6 @@
 {
-    "name": "anystep",
-    "short_name": "anystep",
+    "name": "AnyStep Community Services",
+    "short_name": "AnyStep",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

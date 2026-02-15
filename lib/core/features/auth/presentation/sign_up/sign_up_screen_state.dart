@@ -7,6 +7,7 @@ abstract class SignUpScreenState with _$SignUpScreenState {
   const factory SignUpScreenState({
     @Default(false) bool isLoading,
     @Default(false) bool success,
+    @Default(false) bool needsEmailConfirmation,
     String? error,
   }) = _SignUpScreenState;
 }

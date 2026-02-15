@@ -34,7 +34,7 @@ final class ThemeModeControllerProvider
 }
 
 String _$themeModeControllerHash() =>
-    r'44e810e340321774155818c28ed4502f837cabf3';
+    r'5d53d58db17c2969ee54cb4ac4faebb6d1c29a84';
 
 abstract class _$ThemeModeController extends $AsyncNotifier<ThemeMode> {
   FutureOr<ThemeMode> build();

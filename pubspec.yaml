@@ -18,6 +18,8 @@ dependencies:
   firebase_remote_config: ^6.1.2
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   flutter_dotenv: ^5.2.1
   flutter_form_builder: ^10.0.1
   flutter_localizations:

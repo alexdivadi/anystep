@@ -44,6 +44,9 @@
   "login": "Login",
   "@login": {"description": "Login button label"}
   ,
+  "passwordMinLength": "Password must be at least 8 characters",
+  "@passwordMinLength": {"description": "Validation error when password is too short"}
+  ,
   "reportsTitle": "Reports",
   "@reportsTitle": {"description": "App bar title for reports screen and navigation label"},
   "exportCsv": "Export CSV",

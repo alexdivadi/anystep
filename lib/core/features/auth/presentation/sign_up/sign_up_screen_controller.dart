@@ -27,10 +27,18 @@ class SignUpScreenController extends _$SignUpScreenController {
       );
       if (result == null) {
         await ref.read(eventNotificationsControllerProvider.notifier).enableOnSignup();
-        state = state.copyWith(isLoading: false, success: true);
+        state = state.copyWith(isLoading: false, success: true, needsEmailConfirmation: false);
         Log.d('Sign up successful, user created');
+      } else if (result.contains('confirm your email address')) {
+        state = state.copyWith(
+          isLoading: false,
+          success: true,
+          needsEmailConfirmation: true,
+          error: null,
+        );
       } else {
-        state = state.copyWith(isLoading: false, error: result);
+        state = state.copyWith(isLoading: false, error: result, needsEmailConfirmation: false);
+        Log.d('Sign up failed: $result');
       }
     } catch (e, st) {
       Log.e("Error signing up", e, st);

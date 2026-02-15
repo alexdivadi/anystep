@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
+  /// Validation error when password is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMinLength;
+
   /// App bar title for reports screen and navigation label
   ///
   /// In en, this message translates to:
