@@ -216,7 +216,7 @@ class _HeroMetric extends StatelessWidget {
                 height: 42,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: AnyStepLoadingIndicator(size: 22),
+                  child: CircularProgressIndicator.adaptive(),
                 ),
               )
             : Column(

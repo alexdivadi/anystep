@@ -113,7 +113,7 @@ class EventDetailInfo extends StatelessWidget {
                 ],
               ),
             ),
-            DropdownSection(
+            DropdownText(
               title: Text(loc.description, style: Theme.of(context).textTheme.titleMedium),
               content: event.description ?? loc.noDescription,
               maxLines: 2,
@@ -155,9 +155,7 @@ class EventDetailInfo extends StatelessWidget {
                 leading: const Icon(Icons.event_busy),
                 title: Text(loc.registrationDeadline),
                 subtitle: Text(
-                  DateFormat('MMM d, yyyy • h:mm a').format(
-                    event.registrationDeadline!.toLocal(),
-                  ),
+                  DateFormat('MMM d, yyyy • h:mm a').format(event.registrationDeadline!.toLocal()),
                 ),
               ),
           ],

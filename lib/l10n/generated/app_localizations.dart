@@ -974,6 +974,102 @@ abstract class AppLocalizations {
   /// **'Notification Settings'**
   String get notificationSettingsTitle;
 
+  /// Title for About page and settings link
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// Short description shown on About page
+  ///
+  /// In en, this message translates to:
+  /// **'AnyStep helps volunteers find and track community service opportunities.'**
+  String get aboutDescription;
+
+  /// Label for Instagram link
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get aboutInstagram;
+
+  /// Label for LinkedIn link
+  ///
+  /// In en, this message translates to:
+  /// **'LinkedIn'**
+  String get aboutLinkedIn;
+
+  /// Label for Facebook link
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get aboutFacebook;
+
+  /// Label for X (formerly Twitter) link
+  ///
+  /// In en, this message translates to:
+  /// **'X'**
+  String get aboutX;
+
+  /// Title for the expandable About story section
+  ///
+  /// In en, this message translates to:
+  /// **'Our Story'**
+  String get aboutStoryTitle;
+
+  /// Intro paragraph for About story
+  ///
+  /// In en, this message translates to:
+  /// **'At the heart of Any Step Community Services lies a story of personal conviction and a shared commitment to making a difference. Our founder Sydney and her husband Sherman Diggs draw their passion for alleviating food insecurity from profound personal experiences.'**
+  String get aboutStoryIntro;
+
+  /// Heading for Sydney story
+  ///
+  /// In en, this message translates to:
+  /// **'Sydney\'s Story: A Witness to Resilience'**
+  String get aboutStorySydneyTitle;
+
+  /// Body paragraph for Sydney story
+  ///
+  /// In en, this message translates to:
+  /// **'Raised in a single-parent home after her parents\' divorce, Sydney observed her mother navigate life with unwavering determination. Working tirelessly as a gerontological nurse for over thirty years, Sydney\'s mother faced the challenge of surviving on meager Social Security benefits. Witnessing her mother\'s daily struggle ignited Sydney\'s determination to make a difference. Without the support of Sydney and her husband Sherman, her mother would have faced an even more challenging journey to secure nutritious food.'**
+  String get aboutStorySydneyBody;
+
+  /// Heading for Sherman story
+  ///
+  /// In en, this message translates to:
+  /// **'Sherman\'s Journey: From Poverty to Advocacy'**
+  String get aboutStoryShermanTitle;
+
+  /// Body paragraph for Sherman story
+  ///
+  /// In en, this message translates to:
+  /// **'As the youngest of thirteen, Sherman\'s upbringing was marked by the hardships of a single-parent household after his parents separated. Personally acquainted with the realities of poverty and hunger, Sherman\'s life experiences became the driving force behind his unwavering passion for ensuring food equity for all.'**
+  String get aboutStoryShermanBody;
+
+  /// Heading for Costa Rica story
+  ///
+  /// In en, this message translates to:
+  /// **'A Turning Point: Impactful Journey to Costa Rica'**
+  String get aboutStoryCostaRicaTitle;
+
+  /// Body paragraph for Costa Rica story
+  ///
+  /// In en, this message translates to:
+  /// **'In 2016, the Diggs embarked on a transformative journey with their dear friends Michael and Seidy Trent to Costa Rica. Inspired by the experience, Sydney organized a visit to an elder facility in Heredia, Costa Rica. The couple generously donated undergarments, hygienic products, and sandals, recognizing the immense need within the community. The impact of this trip prompted Sydney to return to Costa Rica with even more donations, this time filling the local food pantry.'**
+  String get aboutStoryCostaRicaBody;
+
+  /// Heading for local focus story
+  ///
+  /// In en, this message translates to:
+  /// **'A Local Focus: Bridging the Gap for North Texas Seniors'**
+  String get aboutStoryLocalTitle;
+
+  /// Body paragraph for local focus story
+  ///
+  /// In en, this message translates to:
+  /// **'Spurred by their experiences abroad and a deep-rooted sense of responsibility, Sydney and Sherman redirected their efforts towards supporting seniors in North Texas who lacked family and resources. Acknowledging the increasing challenges faced by poor and disadvantaged seniors in accessing essential services, Sydney, with the unwavering support of Sherman, founded Any Step Community Services.'**
+  String get aboutStoryLocalBody;
+
   /// Settings label for event notification toggle
   ///
   /// In en, this message translates to:

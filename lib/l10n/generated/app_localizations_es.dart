@@ -485,6 +485,64 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationSettingsTitle => 'Configuración de notificaciones';
 
   @override
+  String get aboutTitle => 'Acerca de';
+
+  @override
+  String get aboutDescription =>
+      'AnyStep ayuda a las personas voluntarias a encontrar y registrar oportunidades de servicio comunitario.';
+
+  @override
+  String get aboutInstagram => 'Instagram';
+
+  @override
+  String get aboutLinkedIn => 'LinkedIn';
+
+  @override
+  String get aboutFacebook => 'Facebook';
+
+  @override
+  String get aboutX => 'X';
+
+  @override
+  String get aboutStoryTitle => 'Nuestra historia';
+
+  @override
+  String get aboutStoryIntro =>
+      'At the heart of Any Step Community Services lies a story of personal conviction and a shared commitment to making a difference. Our founder Sydney and her husband Sherman Diggs draw their passion for alleviating food insecurity from profound personal experiences.';
+
+  @override
+  String get aboutStorySydneyTitle =>
+      'Sydney\'s Story: A Witness to Resilience';
+
+  @override
+  String get aboutStorySydneyBody =>
+      'Raised in a single-parent home after her parents\' divorce, Sydney observed her mother navigate life with unwavering determination. Working tirelessly as a gerontological nurse for over thirty years, Sydney\'s mother faced the challenge of surviving on meager Social Security benefits. Witnessing her mother\'s daily struggle ignited Sydney\'s determination to make a difference. Without the support of Sydney and her husband Sherman, her mother would have faced an even more challenging journey to secure nutritious food.';
+
+  @override
+  String get aboutStoryShermanTitle =>
+      'Sherman\'s Journey: From Poverty to Advocacy';
+
+  @override
+  String get aboutStoryShermanBody =>
+      'As the youngest of thirteen, Sherman\'s upbringing was marked by the hardships of a single-parent household after his parents separated. Personally acquainted with the realities of poverty and hunger, Sherman\'s life experiences became the driving force behind his unwavering passion for ensuring food equity for all.';
+
+  @override
+  String get aboutStoryCostaRicaTitle =>
+      'A Turning Point: Impactful Journey to Costa Rica';
+
+  @override
+  String get aboutStoryCostaRicaBody =>
+      'In 2016, the Diggs embarked on a transformative journey with their dear friends Michael and Seidy Trent to Costa Rica. Inspired by the experience, Sydney organized a visit to an elder facility in Heredia, Costa Rica. The couple generously donated undergarments, hygienic products, and sandals, recognizing the immense need within the community. The impact of this trip prompted Sydney to return to Costa Rica with even more donations, this time filling the local food pantry.';
+
+  @override
+  String get aboutStoryLocalTitle =>
+      'A Local Focus: Bridging the Gap for North Texas Seniors';
+
+  @override
+  String get aboutStoryLocalBody =>
+      'Spurred by their experiences abroad and a deep-rooted sense of responsibility, Sydney and Sherman redirected their efforts towards supporting seniors in North Texas who lacked family and resources. Acknowledging the increasing challenges faced by poor and disadvantaged seniors in accessing essential services, Sydney, with the unwavering support of Sherman, founded Any Step Community Services.';
+
+  @override
   String get eventNotificationsTitle => 'Notificaciones de eventos';
 
   @override

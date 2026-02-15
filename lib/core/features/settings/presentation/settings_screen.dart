@@ -31,6 +31,12 @@ class SettingsScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(AnyStepSpacing.md16),
             children: [
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: Text(loc.aboutTitle),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(AboutPage.path),
+              ),
               const ThemeModeSetting(),
               const LocaleSetting(),
               ListTile(
