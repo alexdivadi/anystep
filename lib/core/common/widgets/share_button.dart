@@ -9,7 +9,7 @@ Future<bool> shareContent({required String content, String? title, List<XFile>? 
 
   PostHogManager.capture(
     'content_shared',
-    properties: {
+    properties: <String, Object>{
       if (title != null) 'title': title,
       'has_files': files != null && files.isNotEmpty,
       'status': result.status.name,

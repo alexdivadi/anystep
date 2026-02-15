@@ -1,5 +1,4 @@
 import 'package:anystep/core/common/data/irepository.dart';
-import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
 import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
@@ -16,36 +15,10 @@ class UserRepository implements IRepository<UserModel> {
 
   final Database database;
   final String collectionId;
-  final String addressCollectionId = Env.addressCollectionId;
 
   @override
   Future<UserModel> createOrUpdate({required UserModel obj, String? documentId}) async {
     final data = obj.toJson();
-
-    final address = obj.address;
-    if (address != null) {
-      try {
-        final addressDoc = await database.list(
-          table: addressCollectionId,
-          filters: [
-            AnyStepFilter.equals('street', address.street),
-            AnyStepFilter.equals('street_secondary', address.streetSecondary),
-            AnyStepFilter.equals('city', address.city),
-            AnyStepFilter.equals('state', address.state),
-            AnyStepFilter.equals('postal_code', address.postalCode),
-            AnyStepFilter.equals('country', address.country),
-          ],
-        );
-        data['address'] = addressDoc.isNotEmpty
-            ? addressDoc.first["id"]
-            : (await database.createOrUpdate(
-                table: addressCollectionId,
-                data: address.toJson(),
-              )).first["id"];
-      } catch (e) {
-        Log.e("Error handling address", e);
-      }
-    }
 
     final document = await database.createOrUpdate(table: collectionId, data: data);
     return UserModel.fromJson(document.first);

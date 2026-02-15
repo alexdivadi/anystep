@@ -22,7 +22,13 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
       ? null
       : DateTime.parse(json['created_at'] as String),
   active: json['active'] as bool? ?? true,
-  isVolunteerEligible: json['is_volunteer_eligible'] as bool? ?? false,
+  isVolunteerEligible: json['is_volunteer_eligible'] as bool? ?? true,
+  maxHours: (json['max_hours'] as num?)?.toInt(),
+  maxVolunteers: (json['max_volunteers'] as num?)?.toInt(),
+  registrationDeadline: json['registration_deadline'] == null
+      ? null
+      : DateTime.parse(json['registration_deadline'] as String),
+  externalLink: json['external_link'] as String?,
 );
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
@@ -37,4 +43,8 @@ Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
       'image_url': instance.imageUrl,
       'active': instance.active,
       'is_volunteer_eligible': instance.isVolunteerEligible,
+      'max_hours': instance.maxHours,
+      'max_volunteers': instance.maxVolunteers,
+      'registration_deadline': instance.registrationDeadline?.toIso8601String(),
+      'external_link': instance.externalLink,
     };

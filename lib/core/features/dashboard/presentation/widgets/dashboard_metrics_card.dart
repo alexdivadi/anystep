@@ -41,7 +41,7 @@ class DashboardMetricsCard extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
-    final pillHeight = 82.0;
+    final pillHeight = 72.0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
@@ -86,7 +86,7 @@ class DashboardMetricsCard extends StatelessWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   final maxWidth = constraints.maxWidth;
-                  final spacing = AnyStepSpacing.md12;
+                  final spacing = AnyStepSpacing.sm8;
                   final columns = maxWidth >= 720 ? 3 : 2;
                   final itemWidth =
                       (maxWidth - (columns - 1) * spacing).clamp(160, double.infinity) / columns;
@@ -216,7 +216,7 @@ class _HeroMetric extends StatelessWidget {
                 height: 42,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: AnyStepLoadingIndicator(size: 22),
+                  child: CircularProgressIndicator.adaptive(),
                 ),
               )
             : Column(
@@ -255,7 +255,7 @@ class _MetricPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AnyStepSpacing.md12,
-        vertical: AnyStepSpacing.sm8,
+        vertical: AnyStepSpacing.sm6,
       ),
       decoration: BoxDecoration(
         color: theme.colorScheme.surfaceContainerHighest.withAlpha(70),
@@ -270,15 +270,15 @@ class _MetricPill extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
-          const SizedBox(height: AnyStepSpacing.sm6),
+          const SizedBox(height: AnyStepSpacing.sm4),
           DefaultTextStyle(
             style:
                 theme.textTheme.headlineSmall?.copyWith(
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w800,
-                  fontSize: 22,
+                  fontSize: 20,
                 ) ??
-                const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
             child: value,
           ),
         ],

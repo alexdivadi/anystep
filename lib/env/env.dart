@@ -4,6 +4,7 @@ class Env {
 
   static const String posthogApiKey = String.fromEnvironment('POSTHOG_API_KEY');
   static const String firebaseVapidKey = String.fromEnvironment('FIREBASE_VAPID_KEY');
+  static const String placesApiKey = String.fromEnvironment('GOOGLE_PLACES_API_KEY');
 
   // Collections (don't need to be secret)
   static const String eventCollectionId = "events";

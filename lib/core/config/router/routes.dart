@@ -225,4 +225,14 @@ final routes = [
     name: ProfileScreen.name,
     builder: (context, state) => const ProfileScreen(),
   ),
+  GoRoute(
+    path: AboutPage.path,
+    name: AboutPage.name,
+    builder: (context, state) => const AboutPage(),
+  ),
+  GoRoute(
+    path: NotificationSettingsPage.path,
+    name: NotificationSettingsPage.name,
+    builder: (context, state) => const NotificationSettingsPage(),
+  ),
 ];

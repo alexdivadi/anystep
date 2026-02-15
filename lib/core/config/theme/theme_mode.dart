@@ -21,7 +21,7 @@ class ThemeModeController extends _$ThemeModeController {
   Future<void> setThemeMode(ThemeMode mode) async {
     final prefs = ref.watch(appPreferencesProvider).requireValue;
     await prefs.setThemeMode(mode.name);
-    PostHogManager.capture('theme_mode_changed', properties: {'mode': mode.name});
+    PostHogManager.capture('theme_mode_changed', properties: <String, Object>{'mode': mode.name});
     ref.invalidateSelf();
   }
 }

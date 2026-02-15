@@ -1,8 +1,8 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:flutter/material.dart';
 
-class DropdownSection extends StatefulWidget {
-  const DropdownSection({
+class DropdownText extends StatefulWidget {
+  const DropdownText({
     super.key,
     required this.title,
     required this.content,
@@ -16,10 +16,10 @@ class DropdownSection extends StatefulWidget {
   final EdgeInsetsGeometry padding;
 
   @override
-  State<DropdownSection> createState() => _DropdownSectionState();
+  State<DropdownText> createState() => _DropdownTextState();
 }
 
-class _DropdownSectionState extends State<DropdownSection> {
+class _DropdownTextState extends State<DropdownText> {
   bool _expanded = false;
 
   @override

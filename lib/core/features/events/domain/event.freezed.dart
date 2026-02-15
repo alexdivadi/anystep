@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$EventModel {
 
 @JsonKey(includeIfNull: false) int? get id; String get name;// EventTemplateModel? template,
-@JsonKey(name: "start_time") DateTime get startTime;@JsonKey(name: "end_time") DateTime get endTime;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address; List<String>? get tags; String? get description;@JsonKey(name: "image_url") String? get imageUrl;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt; bool get active;@JsonKey(name: "is_volunteer_eligible") bool get isVolunteerEligible;
+@JsonKey(name: "start_time") DateTime get startTime;@JsonKey(name: "end_time") DateTime get endTime;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address; List<String>? get tags; String? get description;@JsonKey(name: "image_url") String? get imageUrl;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt; bool get active;@JsonKey(name: "is_volunteer_eligible") bool get isVolunteerEligible;@JsonKey(name: "max_hours") int? get maxHours;@JsonKey(name: "max_volunteers") int? get maxVolunteers;@JsonKey(name: "registration_deadline") DateTime? get registrationDeadline;@JsonKey(name: "external_link") String? get externalLink;
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $EventModelCopyWith<EventModel> get copyWith => _$EventModelCopyWithImpl<EventMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.active, active) || other.active == active)&&(identical(other.isVolunteerEligible, isVolunteerEligible) || other.isVolunteerEligible == isVolunteerEligible));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.active, active) || other.active == active)&&(identical(other.isVolunteerEligible, isVolunteerEligible) || other.isVolunteerEligible == isVolunteerEligible)&&(identical(other.maxHours, maxHours) || other.maxHours == maxHours)&&(identical(other.maxVolunteers, maxVolunteers) || other.maxVolunteers == maxVolunteers)&&(identical(other.registrationDeadline, registrationDeadline) || other.registrationDeadline == registrationDeadline)&&(identical(other.externalLink, externalLink) || other.externalLink == externalLink));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(tags),description,imageUrl,createdAt,active,isVolunteerEligible);
+int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(tags),description,imageUrl,createdAt,active,isVolunteerEligible,maxHours,maxVolunteers,registrationDeadline,externalLink);
 
 @override
 String toString() {
-  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt, active: $active, isVolunteerEligible: $isVolunteerEligible)';
+  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt, active: $active, isVolunteerEligible: $isVolunteerEligible, maxHours: $maxHours, maxVolunteers: $maxVolunteers, registrationDeadline: $registrationDeadline, externalLink: $externalLink)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $EventModelCopyWith<$Res>  {
   factory $EventModelCopyWith(EventModel value, $Res Function(EventModel) _then) = _$EventModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt, bool active,@JsonKey(name: "is_volunteer_eligible") bool isVolunteerEligible
+@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt, bool active,@JsonKey(name: "is_volunteer_eligible") bool isVolunteerEligible,@JsonKey(name: "max_hours") int? maxHours,@JsonKey(name: "max_volunteers") int? maxVolunteers,@JsonKey(name: "registration_deadline") DateTime? registrationDeadline,@JsonKey(name: "external_link") String? externalLink
 });
 
 
@@ -66,7 +66,7 @@ class _$EventModelCopyWithImpl<$Res>
 
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,Object? active = null,Object? isVolunteerEligible = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,Object? active = null,Object? isVolunteerEligible = null,Object? maxHours = freezed,Object? maxVolunteers = freezed,Object? registrationDeadline = freezed,Object? externalLink = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,11 @@ as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: 
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,isVolunteerEligible: null == isVolunteerEligible ? _self.isVolunteerEligible : isVolunteerEligible // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,maxHours: freezed == maxHours ? _self.maxHours : maxHours // ignore: cast_nullable_to_non_nullable
+as int?,maxVolunteers: freezed == maxVolunteers ? _self.maxVolunteers : maxVolunteers // ignore: cast_nullable_to_non_nullable
+as int?,registrationDeadline: freezed == registrationDeadline ? _self.registrationDeadline : registrationDeadline // ignore: cast_nullable_to_non_nullable
+as DateTime?,externalLink: freezed == externalLink ? _self.externalLink : externalLink // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of EventModel
@@ -177,10 +181,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible, @JsonKey(name: "max_hours")  int? maxHours, @JsonKey(name: "max_volunteers")  int? maxVolunteers, @JsonKey(name: "registration_deadline")  DateTime? registrationDeadline, @JsonKey(name: "external_link")  String? externalLink)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EventModel() when $default != null:
-return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible);case _:
+return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible,_that.maxHours,_that.maxVolunteers,_that.registrationDeadline,_that.externalLink);case _:
   return orElse();
 
 }
@@ -198,10 +202,10 @@ return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressI
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible, @JsonKey(name: "max_hours")  int? maxHours, @JsonKey(name: "max_volunteers")  int? maxVolunteers, @JsonKey(name: "registration_deadline")  DateTime? registrationDeadline, @JsonKey(name: "external_link")  String? externalLink)  $default,) {final _that = this;
 switch (_that) {
 case _EventModel():
-return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible);case _:
+return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible,_that.maxHours,_that.maxVolunteers,_that.registrationDeadline,_that.externalLink);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +222,10 @@ return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressI
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  int? id,  String name, @JsonKey(name: "start_time")  DateTime startTime, @JsonKey(name: "end_time")  DateTime endTime, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address,  List<String>? tags,  String? description, @JsonKey(name: "image_url")  String? imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt,  bool active, @JsonKey(name: "is_volunteer_eligible")  bool isVolunteerEligible, @JsonKey(name: "max_hours")  int? maxHours, @JsonKey(name: "max_volunteers")  int? maxVolunteers, @JsonKey(name: "registration_deadline")  DateTime? registrationDeadline, @JsonKey(name: "external_link")  String? externalLink)?  $default,) {final _that = this;
 switch (_that) {
 case _EventModel() when $default != null:
-return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible);case _:
+return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressId,_that.address,_that.tags,_that.description,_that.imageUrl,_that.createdAt,_that.active,_that.isVolunteerEligible,_that.maxHours,_that.maxVolunteers,_that.registrationDeadline,_that.externalLink);case _:
   return null;
 
 }
@@ -233,7 +237,7 @@ return $default(_that.id,_that.name,_that.startTime,_that.endTime,_that.addressI
 @JsonSerializable()
 
 class _EventModel implements EventModel {
-  const _EventModel({@JsonKey(includeIfNull: false) this.id, required this.name, @JsonKey(name: "start_time") required this.startTime, @JsonKey(name: "end_time") required this.endTime, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, final  List<String>? tags, this.description, @JsonKey(name: "image_url") this.imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, this.active = true, @JsonKey(name: "is_volunteer_eligible") this.isVolunteerEligible = false}): _tags = tags;
+  const _EventModel({@JsonKey(includeIfNull: false) this.id, required this.name, @JsonKey(name: "start_time") required this.startTime, @JsonKey(name: "end_time") required this.endTime, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, final  List<String>? tags, this.description, @JsonKey(name: "image_url") this.imageUrl, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, this.active = true, @JsonKey(name: "is_volunteer_eligible") this.isVolunteerEligible = true, @JsonKey(name: "max_hours") this.maxHours, @JsonKey(name: "max_volunteers") this.maxVolunteers, @JsonKey(name: "registration_deadline") this.registrationDeadline, @JsonKey(name: "external_link") this.externalLink}): _tags = tags;
   factory _EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);
 
 @override@JsonKey(includeIfNull: false) final  int? id;
@@ -257,6 +261,10 @@ class _EventModel implements EventModel {
 @override@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") final  DateTime? createdAt;
 @override@JsonKey() final  bool active;
 @override@JsonKey(name: "is_volunteer_eligible") final  bool isVolunteerEligible;
+@override@JsonKey(name: "max_hours") final  int? maxHours;
+@override@JsonKey(name: "max_volunteers") final  int? maxVolunteers;
+@override@JsonKey(name: "registration_deadline") final  DateTime? registrationDeadline;
+@override@JsonKey(name: "external_link") final  String? externalLink;
 
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
@@ -271,16 +279,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.active, active) || other.active == active)&&(identical(other.isVolunteerEligible, isVolunteerEligible) || other.isVolunteerEligible == isVolunteerEligible));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.endTime, endTime) || other.endTime == endTime)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.active, active) || other.active == active)&&(identical(other.isVolunteerEligible, isVolunteerEligible) || other.isVolunteerEligible == isVolunteerEligible)&&(identical(other.maxHours, maxHours) || other.maxHours == maxHours)&&(identical(other.maxVolunteers, maxVolunteers) || other.maxVolunteers == maxVolunteers)&&(identical(other.registrationDeadline, registrationDeadline) || other.registrationDeadline == registrationDeadline)&&(identical(other.externalLink, externalLink) || other.externalLink == externalLink));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(_tags),description,imageUrl,createdAt,active,isVolunteerEligible);
+int get hashCode => Object.hash(runtimeType,id,name,startTime,endTime,addressId,address,const DeepCollectionEquality().hash(_tags),description,imageUrl,createdAt,active,isVolunteerEligible,maxHours,maxVolunteers,registrationDeadline,externalLink);
 
 @override
 String toString() {
-  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt, active: $active, isVolunteerEligible: $isVolunteerEligible)';
+  return 'EventModel(id: $id, name: $name, startTime: $startTime, endTime: $endTime, addressId: $addressId, address: $address, tags: $tags, description: $description, imageUrl: $imageUrl, createdAt: $createdAt, active: $active, isVolunteerEligible: $isVolunteerEligible, maxHours: $maxHours, maxVolunteers: $maxVolunteers, registrationDeadline: $registrationDeadline, externalLink: $externalLink)';
 }
 
 
@@ -291,7 +299,7 @@ abstract mixin class _$EventModelCopyWith<$Res> implements $EventModelCopyWith<$
   factory _$EventModelCopyWith(_EventModel value, $Res Function(_EventModel) _then) = __$EventModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt, bool active,@JsonKey(name: "is_volunteer_eligible") bool isVolunteerEligible
+@JsonKey(includeIfNull: false) int? id, String name,@JsonKey(name: "start_time") DateTime startTime,@JsonKey(name: "end_time") DateTime endTime,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address, List<String>? tags, String? description,@JsonKey(name: "image_url") String? imageUrl,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt, bool active,@JsonKey(name: "is_volunteer_eligible") bool isVolunteerEligible,@JsonKey(name: "max_hours") int? maxHours,@JsonKey(name: "max_volunteers") int? maxVolunteers,@JsonKey(name: "registration_deadline") DateTime? registrationDeadline,@JsonKey(name: "external_link") String? externalLink
 });
 
 
@@ -308,7 +316,7 @@ class __$EventModelCopyWithImpl<$Res>
 
 /// Create a copy of EventModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,Object? active = null,Object? isVolunteerEligible = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? startTime = null,Object? endTime = null,Object? addressId = freezed,Object? address = freezed,Object? tags = freezed,Object? description = freezed,Object? imageUrl = freezed,Object? createdAt = freezed,Object? active = null,Object? isVolunteerEligible = null,Object? maxHours = freezed,Object? maxVolunteers = freezed,Object? registrationDeadline = freezed,Object? externalLink = freezed,}) {
   return _then(_EventModel(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -322,7 +330,11 @@ as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: 
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,isVolunteerEligible: null == isVolunteerEligible ? _self.isVolunteerEligible : isVolunteerEligible // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,maxHours: freezed == maxHours ? _self.maxHours : maxHours // ignore: cast_nullable_to_non_nullable
+as int?,maxVolunteers: freezed == maxVolunteers ? _self.maxVolunteers : maxVolunteers // ignore: cast_nullable_to_non_nullable
+as int?,registrationDeadline: freezed == registrationDeadline ? _self.registrationDeadline : registrationDeadline // ignore: cast_nullable_to_non_nullable
+as DateTime?,externalLink: freezed == externalLink ? _self.externalLink : externalLink // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

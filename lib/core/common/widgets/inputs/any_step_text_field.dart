@@ -93,6 +93,8 @@ class _AnyStepTextFieldState extends State<AnyStepTextField> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final labelColor = Theme.of(context).colorScheme.onSurface.withAlpha(153);
+    final hintColor = Theme.of(context).colorScheme.onSurface.withAlpha(128);
     final showMultiLine = (widget.maxLines > 1 || widget.expandedLines > 1);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
@@ -116,6 +118,9 @@ class _AnyStepTextFieldState extends State<AnyStepTextField> with SingleTickerPr
           decoration: InputDecoration(
             labelText: widget.labelText,
             hintText: widget.hintText,
+            labelStyle: TextStyle(color: labelColor),
+            floatingLabelStyle: TextStyle(color: labelColor),
+            hintStyle: TextStyle(color: hintColor),
             alignLabelWithHint: showMultiLine,
             border: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),

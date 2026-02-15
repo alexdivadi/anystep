@@ -104,7 +104,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       );
       PostHogManager.capture(
         'report_exported',
-        properties: {
+        properties: <String, Object>{
           'dateRange': '${_dateFmt.format(_start)} → ${_dateFmt.format(_end)}',
           'custom': _custom,
           'filename': filename,
@@ -134,12 +134,11 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         title: Text(loc.reportsTitle),
         actions: [
           asyncReports.when(
-            data:
-                (reports) => IconButton(
-                  tooltip: loc.exportCsv,
-                  onPressed: reports.isEmpty ? null : () => _exportCsv(reports),
-                  icon: const Icon(Icons.download),
-                ),
+            data: (reports) => IconButton(
+              tooltip: loc.exportCsv,
+              onPressed: reports.isEmpty ? null : () => _exportCsv(reports),
+              icon: const Icon(Icons.download),
+            ),
             loading: () => IconButton(onPressed: null, icon: const Icon(Icons.download)),
             error: (e, st) => IconButton(onPressed: null, icon: const Icon(Icons.error_outline)),
           ),
@@ -211,16 +210,14 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                     ],
                   );
                 },
-                loading:
-                    () => const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 48.0),
-                      child: Center(child: AnyStepLoadingIndicator()),
-                    ),
-                error:
-                    (e, st) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 48.0),
-                      child: Center(child: Text(loc.errorLoadingReports('$e'))),
-                    ),
+                loading: () => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 48.0),
+                  child: Center(child: AnyStepLoadingIndicator()),
+                ),
+                error: (e, st) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 48.0),
+                  child: Center(child: Text(loc.errorLoadingReports('$e'))),
+                ),
               ),
             ),
             const SizedBox(height: 24),

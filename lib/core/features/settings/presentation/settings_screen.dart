@@ -1,7 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
-import 'package:anystep/core/features/notifications/presentation/event_notifications_tile.dart';
 import 'package:anystep/core/features/screens.dart';
 import 'package:anystep/core/features/settings/presentation/theme_mode_setting.dart';
 import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
@@ -32,16 +31,25 @@ class SettingsScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(AnyStepSpacing.md16),
             children: [
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: Text(loc.aboutTitle),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(AboutPage.path),
+              ),
               const ThemeModeSetting(),
               const LocaleSetting(),
-              EventNotificationsTile(
-                title: loc.eventNotificationsTitle,
-                subtitle: loc.eventNotificationsDescription,
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: Text(loc.notificationSettingsTitle),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(NotificationSettingsPage.path),
               ),
               if (isAuth != null) ...[
                 ListTile(
                   leading: const Icon(Icons.account_circle),
                   title: Text(loc.accountSettings),
+                  trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push(ProfileScreen.path),
                 ),
                 ListTile(

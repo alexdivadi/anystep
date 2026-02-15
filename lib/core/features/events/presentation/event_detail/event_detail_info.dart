@@ -5,10 +5,12 @@ import 'package:anystep/core/common/widgets/dropdown_section.dart';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
+import 'package:anystep/core/features/events/presentation/widgets/external_link_tile.dart';
 import 'package:anystep/core/features/events/presentation/widgets/event_time_table.dart';
 import 'package:anystep/core/features/location/utils/launch_map.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventDetailInfo extends StatelessWidget {
   const EventDetailInfo({super.key, required this.event});
@@ -111,7 +113,7 @@ class EventDetailInfo extends StatelessWidget {
                 ],
               ),
             ),
-            DropdownSection(
+            DropdownText(
               title: Text(loc.description, style: Theme.of(context).textTheme.titleMedium),
               content: event.description ?? loc.noDescription,
               maxLines: 2,
@@ -146,6 +148,16 @@ class EventDetailInfo extends StatelessWidget {
                     }
                   : null,
             ),
+            if (event.externalLink != null && event.externalLink!.trim().isNotEmpty)
+              ExternalLinkTile(url: event.externalLink!, label: loc.externalLink),
+            if (event.registrationDeadline != null)
+              ListTile(
+                leading: const Icon(Icons.event_busy),
+                title: Text(loc.registrationDeadline),
+                subtitle: Text(
+                  DateFormat('MMM d, yyyy • h:mm a').format(event.registrationDeadline!.toLocal()),
+                ),
+              ),
           ],
         ),
       ),

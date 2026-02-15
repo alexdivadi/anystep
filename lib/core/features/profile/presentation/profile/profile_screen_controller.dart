@@ -1,7 +1,6 @@
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
-import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_screen_controller_state.dart';
@@ -29,25 +28,21 @@ class ProfileScreenController extends _$ProfileScreenController {
       }
 
       final currentUser = ref.read(currentUserStreamProvider).requireValue!;
+      final addressIdRaw = values['addressId'];
+      final addressId = addressIdRaw is int
+          ? addressIdRaw
+          : int.tryParse(addressIdRaw?.toString() ?? '');
       final user = currentUser.copyWith(
         id: authState.uid,
         firstName: values['firstName'],
         lastName: values['lastName'],
         phoneNumber: values['phoneNumber'],
-        address: AddressModel(
-          street: values['street'],
-          streetSecondary: values['streetSecondary'],
-          city: values['city'],
-          state: values['state'],
-          country: "US",
-          postalCode: values['postalCode'],
-          isUserAddress: true,
-        ),
+        addressId: addressId,
         ageGroup: values['ageGroup'],
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
 
-      PostHogManager.capture('profile_updated', properties: {'user_id': user.id});
+      PostHogManager.capture('profile_updated', properties: <String, Object>{'user_id': user.id});
 
       state = state.copyWith(isLoading: false, error: null);
     } on AuthApiException catch (e) {

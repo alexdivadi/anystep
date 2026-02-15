@@ -18,9 +18,12 @@ Future<SignUpStatus> signUpStatus(Ref ref, int eventId) async {
       ref.watch(getCurrentUserEventsProvider(eventId: eventId).future),
       ref.watch(getEventProvider(eventId).future),
     ]);
+    final now = DateTime.now().toUtc();
+    final isPastDeadline =
+        event.registrationDeadline != null && now.isAfter(event.registrationDeadline!.toUtc());
     return SignUpStatus.data(
       didSignUp: userEvents.totalCount > 0,
-      canSignUp: event.startTime.isAfter(DateTime.now()),
+      canSignUp: event.startTime.isAfter(now) && !isPastDeadline,
       userEvent: userEvents.items.isNotEmpty ? userEvents.items.first : null,
     );
   } catch (e) {

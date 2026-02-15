@@ -4,7 +4,6 @@ import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
-import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,20 +22,11 @@ class OnboardingScreenController extends _$OnboardingScreenController {
       final authRepo = ref.read(authRepositoryProvider);
       Log.d(authRepo.userId ?? 'No session found');
       Log.d('Fetching user details for Email: ${authRepo.user?.email}');
-      final address = AddressModel.withGeohash(
-        street: values['street'],
-        streetSecondary: values['streetSecondary'],
-        city: values['city'],
-        state: values['state'],
-        country: "US", // Assuming country is always USA for simplicity
-        postalCode: values['zipCode'],
-        isUserAddress: true,
-      );
+      final addressId = values['addressId'];
       final user = UserModel(
         id: authState!.uid,
         email: authState.email,
-        addressId: address.id,
-        address: address,
+        addressId: addressId is int ? addressId : int.tryParse(addressId?.toString() ?? ''),
         firstName: values['firstName'],
         lastName: values['lastName'],
         ageGroup: values['ageGroup'],
@@ -45,7 +35,10 @@ class OnboardingScreenController extends _$OnboardingScreenController {
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
 
-      PostHogManager.capture('user_onboarding_completed', properties: {'user_id': user.id});
+      PostHogManager.capture(
+        'user_onboarding_completed',
+        properties: <String, Object>{'user_id': user.id},
+      );
     });
     ref.invalidate(currentUserStreamProvider);
   }

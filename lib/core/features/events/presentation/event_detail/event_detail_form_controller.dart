@@ -3,7 +3,6 @@ import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form_state.dart';
-import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/database/storage.dart'; // Added import for storage provider
 import 'package:image_picker/image_picker.dart'; // Import XFile for image upload
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,22 +17,31 @@ class EventDetailFormController extends _$EventDetailFormController {
   Future<bool> createOrUpdateEvent(Map<String, dynamic> values, {XFile? image}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
+      final maxVolunteersRaw = values['maxVolunteers'];
+      final maxVolunteers = (maxVolunteersRaw == null || maxVolunteersRaw.toString().trim().isEmpty)
+          ? null
+          : int.tryParse(maxVolunteersRaw.toString());
+      final externalLinkRaw = values['externalLink'];
+      final externalLink = (externalLinkRaw == null || externalLinkRaw.toString().trim().isEmpty)
+          ? null
+          : externalLinkRaw.toString();
+      final addressIdRaw = values['addressId'];
+      final addressId = addressIdRaw is int
+          ? addressIdRaw
+          : int.tryParse(addressIdRaw?.toString() ?? '');
+
       final event = EventModel(
         id: state.eventId,
         name: values['name']!,
         startTime: (values['startTime'] as DateTime).toUtc(),
         endTime: (values['endTime'] as DateTime).toUtc(),
         imageUrl: values['imageUrl'],
-        address: AddressModel(
-          street: values['street']!,
-          streetSecondary: values['streetSecondary'],
-          city: values['city']!,
-          state: values['state']!,
-          country: 'US',
-          postalCode: values['postalCode']!,
-          isUserAddress: false,
-        ),
+        addressId: addressId,
         description: values['description'],
+        isVolunteerEligible: values['isVolunteerEligible'] ?? true,
+        maxVolunteers: maxVolunteers,
+        registrationDeadline: (values['registrationDeadline'] as DateTime?)?.toUtc(),
+        externalLink: externalLink,
       );
 
       String? imageUrl;
@@ -50,7 +58,7 @@ class EventDetailFormController extends _$EventDetailFormController {
 
       PostHogManager.capture(
         state.eventId == null ? 'event_created' : 'event_updated',
-        properties: {
+        properties: <String, Object>{
           'event_id': state.eventId ?? '',
           'name': event.name,
           'start_time': event.startTime.toIso8601String(),
