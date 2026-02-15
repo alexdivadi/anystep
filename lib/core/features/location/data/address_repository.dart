@@ -29,23 +29,12 @@ class AddressRepository implements IRepository<AddressModel> {
     }
 
     final results = <String, AddressModel>{};
-    final searchColumns = [
-      'street',
-      'street_secondary',
-      'city',
-      'state',
-      'postal_code',
-      'name',
-    ];
+    final searchColumns = ['street', 'street_secondary', 'city', 'state', 'postal_code', 'name'];
     final likeValue = "%$trimmed%";
 
     for (final column in searchColumns) {
       final filters = [...baseFilters, AnyStepFilter.like(column, likeValue)];
-      final documents = await database.list(
-        table: collectionId,
-        filters: filters,
-        limit: limit,
-      );
+      final documents = await database.list(table: collectionId, filters: filters, limit: limit);
       for (final doc in documents) {
         final model = AddressModel.fromJson(doc);
         final key = model.id?.toString() ?? model.formattedAddress;
@@ -83,10 +72,10 @@ class AddressRepository implements IRepository<AddressModel> {
       matches = await database.list(
         table: collectionId,
         filters: [
-          AnyStepFilter.equals('street', normalized.street),
-          AnyStepFilter.equals('street_secondary', normalized.streetSecondary),
-          AnyStepFilter.equals('city', normalized.city),
-          AnyStepFilter.equals('state', normalized.state),
+          AnyStepFilter.like('street', normalized.street),
+          AnyStepFilter.like('street_secondary', normalized.streetSecondary),
+          AnyStepFilter.like('city', normalized.city),
+          AnyStepFilter.like('state', normalized.state),
           AnyStepFilter.equals('postal_code', normalized.postalCode),
           AnyStepFilter.equals('country', normalized.country),
           AnyStepFilter.equals('is_user_address', normalized.isUserAddress),
@@ -144,10 +133,9 @@ String _collapseWhitespace(String value) {
 
 AddressModel _normalizeAddress(AddressModel address) {
   final street = _collapseWhitespace(address.street);
-  final streetSecondary =
-      address.streetSecondary == null || address.streetSecondary!.trim().isEmpty
-          ? null
-          : _collapseWhitespace(address.streetSecondary!);
+  final streetSecondary = address.streetSecondary == null || address.streetSecondary!.trim().isEmpty
+      ? null
+      : _collapseWhitespace(address.streetSecondary!);
   final city = _collapseWhitespace(address.city);
   final state = _collapseWhitespace(address.state).toUpperCase();
   final postalCode = _collapseWhitespace(address.postalCode);

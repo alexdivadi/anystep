@@ -292,7 +292,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       final repo = ref.read(addressRepositoryProvider);
       final address = await repo.get(documentId: widget.initialAddressId.toString());
       _placeId = address.placeId;
-      _placeName = address.name ?? address.formattedAddress;
+      // TODO: add name field to form
+      _placeName = address.name;
       _latitude = address.latitude;
       _longitude = address.longitude;
       form.fields['street']?.didChange(address.street);
