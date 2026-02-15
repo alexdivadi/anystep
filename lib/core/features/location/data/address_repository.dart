@@ -61,6 +61,11 @@ class AddressRepository implements IRepository<AddressModel> {
   @override
   Future<AddressModel> createOrUpdate({required AddressModel obj, String? documentId}) async {
     final normalized = _normalizeAddress(obj);
+    if (documentId != null && documentId.toString().isNotEmpty) {
+      final data = normalized.toJson()..['id'] = documentId;
+      final updated = await database.createOrUpdate(table: collectionId, data: data);
+      return AddressModel.fromJson(updated.first);
+    }
     List<Map<String, dynamic>> matches = [];
 
     if (normalized.placeId != null && normalized.placeId!.trim().isNotEmpty) {

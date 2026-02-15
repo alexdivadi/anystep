@@ -15,6 +15,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+// TODO: Refactor this widget to separate address search and address form into separate widgets
 class AnyStepAddressField extends ConsumerStatefulWidget {
   const AnyStepAddressField({
     super.key,
@@ -28,6 +29,7 @@ class AnyStepAddressField extends ConsumerStatefulWidget {
     this.initialAddressId,
     this.addressIdFieldName = 'addressId',
     this.onAddressSaved,
+    this.showSaveButton = true,
     this.streetLabelText,
     this.streetSecondaryLabelText,
     this.cityLabelText,
@@ -56,6 +58,7 @@ class AnyStepAddressField extends ConsumerStatefulWidget {
   final int? initialAddressId;
   final String addressIdFieldName;
   final ValueChanged<int?>? onAddressSaved;
+  final bool showSaveButton;
   final String? streetLabelText;
   final String? streetSecondaryLabelText;
   final String? cityLabelText;
@@ -87,6 +90,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   bool _isLoading = false;
   bool _isSearchDisabled = false;
   bool _isApplyingSelection = false;
+  bool _isSaving = false;
   List<AddressModel> _dbResults = [];
   List<PlacesPrediction> _predictions = [];
   String? _error;
@@ -94,16 +98,15 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   String? _placeName;
   double? _latitude;
   double? _longitude;
+  int? _addressId;
 
   @override
   void initState() {
     super.initState();
     _streetController.text = widget.initialStreet ?? '';
     _streetFocusNode.addListener(_handleFocusChange);
-    _cityFocusNode.addListener(_handleFieldBlur);
-    _stateFocusNode.addListener(_handleFieldBlur);
-    _postalCodeFocusNode.addListener(_handleFieldBlur);
     _isSearchDisabled = widget.disableSearch || Env.placesApiKey.isEmpty;
+    _addressId = widget.initialAddressId;
     if (widget.initialAddressId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _loadInitialAddress());
     }
@@ -125,29 +128,19 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     _streetController.dispose();
     _streetFocusNode.removeListener(_handleFocusChange);
     _streetFocusNode.dispose();
-    _cityFocusNode.removeListener(_handleFieldBlur);
     _cityFocusNode.dispose();
-    _stateFocusNode.removeListener(_handleFieldBlur);
     _stateFocusNode.dispose();
-    _postalCodeFocusNode.removeListener(_handleFieldBlur);
     _postalCodeFocusNode.dispose();
     super.dispose();
   }
 
   void _handleFocusChange() {
     if (!_streetFocusNode.hasFocus) {
-      _maybeSaveAddress();
       setState(() {
         _dbResults = [];
         _predictions = [];
         _error = null;
       });
-    }
-  }
-
-  void _handleFieldBlur() {
-    if (!_cityFocusNode.hasFocus && !_stateFocusNode.hasFocus && !_postalCodeFocusNode.hasFocus) {
-      _maybeSaveAddress();
     }
   }
 
@@ -169,6 +162,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     _placeName = null;
     _latitude = null;
     _longitude = null;
+    _addressId = null;
     form.fields[widget.addressIdFieldName]?.didChange(null);
     widget.onAddressSaved?.call(null);
   }
@@ -235,11 +229,13 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     _placeName = address.name ?? address.formattedAddress;
     _latitude = address.latitude;
     _longitude = address.longitude;
+    _addressId = address.id;
     form.fields[widget.addressIdFieldName]?.didChange(address.id);
     widget.onAddressSaved?.call(address.id);
     _streetController.text = address.street;
-    _streetController.selection =
-        TextSelection.fromPosition(TextPosition(offset: _streetController.text.length));
+    _streetController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _streetController.text.length),
+    );
     _streetFocusNode.unfocus();
     _isApplyingSelection = false;
     setState(() {
@@ -269,11 +265,11 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       _longitude = parsed.longitude;
       _isApplyingSelection = true;
       _streetController.text = parsed.street.isNotEmpty ? parsed.street : prediction.description;
-      _streetController.selection =
-          TextSelection.fromPosition(TextPosition(offset: _streetController.text.length));
+      _streetController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _streetController.text.length),
+      );
       _streetFocusNode.unfocus();
       _isApplyingSelection = false;
-      await _saveAddressIfComplete();
       setState(() {
         _dbResults = [];
         _predictions = [];
@@ -311,11 +307,6 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     }
   }
 
-  void _maybeSaveAddress() {
-    if (_isApplyingSelection) return;
-    _saveAddressIfComplete();
-  }
-
   Future<void> _saveAddressIfComplete() async {
     final form = widget.formKey.currentState;
     if (form == null) return;
@@ -338,12 +329,16 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       name: _placeName,
     );
     try {
+      setState(() => _isSaving = true);
       final repo = ref.read(addressRepositoryProvider);
-      final saved = await repo.createOrUpdate(obj: address);
+      final saved = await repo.createOrUpdate(obj: address, documentId: _addressId?.toString());
+      _addressId = saved.id;
       form.fields[widget.addressIdFieldName]?.didChange(saved.id);
       widget.onAddressSaved?.call(saved.id);
     } catch (e, stackTrace) {
       Log.e('Error saving address', e, stackTrace);
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
     }
   }
 
@@ -372,10 +367,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
         if (_error != null && !_isSearchDisabled)
           Padding(
             padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
-            child: Text(
-              _error!,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
+            child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ),
         if (_dbResults.isEmpty &&
             _predictions.isEmpty &&
@@ -407,8 +399,9 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
                 final prediction = _predictions[index - _dbResults.length];
                 return ListTile(
                   title: Text(prediction.mainText ?? prediction.description),
-                  subtitle:
-                      prediction.secondaryText != null ? Text(prediction.secondaryText!) : null,
+                  subtitle: prediction.secondaryText != null
+                      ? Text(prediction.secondaryText!)
+                      : null,
                   onTap: () => _selectPrediction(prediction),
                 );
               },
@@ -464,6 +457,23 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
             ),
           ],
         ),
+        if (widget.showSaveButton)
+          Padding(
+            padding: const EdgeInsets.only(top: AnyStepSpacing.sm8),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                onPressed: _isSaving ? null : _saveAddressIfComplete,
+                child: _isSaving
+                    ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                      )
+                    : Text(loc.save),
+              ),
+            ),
+          ),
       ],
     );
   }

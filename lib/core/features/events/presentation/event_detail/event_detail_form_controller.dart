@@ -22,13 +22,13 @@ class EventDetailFormController extends _$EventDetailFormController {
           ? null
           : int.tryParse(maxVolunteersRaw.toString());
       final externalLinkRaw = values['externalLink'];
-      final externalLink =
-          (externalLinkRaw == null || externalLinkRaw.toString().trim().isEmpty)
-              ? null
-              : externalLinkRaw.toString();
+      final externalLink = (externalLinkRaw == null || externalLinkRaw.toString().trim().isEmpty)
+          ? null
+          : externalLinkRaw.toString();
       final addressIdRaw = values['addressId'];
-      final addressId =
-          addressIdRaw is int ? addressIdRaw : int.tryParse(addressIdRaw?.toString() ?? '');
+      final addressId = addressIdRaw is int
+          ? addressIdRaw
+          : int.tryParse(addressIdRaw?.toString() ?? '');
 
       final event = EventModel(
         id: state.eventId,
@@ -58,7 +58,7 @@ class EventDetailFormController extends _$EventDetailFormController {
 
       PostHogManager.capture(
         state.eventId == null ? 'event_created' : 'event_updated',
-        properties: {
+        properties: <String, Object>{
           'event_id': state.eventId ?? '',
           'name': event.name,
           'start_time': event.startTime.toIso8601String(),

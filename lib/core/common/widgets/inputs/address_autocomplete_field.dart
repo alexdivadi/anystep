@@ -117,6 +117,7 @@ class _AddressAutocompleteFieldState extends ConsumerState<AddressAutocompleteFi
       _controller.text = prediction.description;
       _controller.selection =
           TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+      _focusNode.unfocus();
       setState(() {
         _predictions = [];
         _isLoading = false;
