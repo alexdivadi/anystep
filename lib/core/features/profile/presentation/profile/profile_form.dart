@@ -79,6 +79,11 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 validator: FormBuilderValidators.required(),
               ),
               const SizedBox(height: AnyStepSpacing.sm8),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
+              ),
+              const SizedBox(height: AnyStepSpacing.sm4),
               AnyStepAddressField(
                 formKey: _formKey,
                 initialAddressId: widget.user.addressId ?? widget.user.address?.id,
