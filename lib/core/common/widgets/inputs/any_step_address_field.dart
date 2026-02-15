@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/common/widgets/inputs/any_step_text_field.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/location/data/address_repository.dart';
 import 'package:anystep/core/features/location/data/places_api_client.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
@@ -90,6 +91,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   bool _isLoading = false;
   bool _isSearchDisabled = false;
   bool _isApplyingSelection = false;
+  bool _isSelectingFromList = false;
+  bool _searchActive = false;
   bool _isSaving = false;
   List<AddressModel> _dbResults = [];
   List<PlacesPrediction> _predictions = [];
@@ -136,10 +139,15 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
 
   void _handleFocusChange() {
     if (!_streetFocusNode.hasFocus) {
-      setState(() {
-        _dbResults = [];
-        _predictions = [];
-        _error = null;
+      _searchActive = false;
+      if (_isSelectingFromList) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || _isSelectingFromList) return;
+        setState(() {
+          _dbResults = [];
+          _predictions = [];
+          _error = null;
+        });
       });
     }
   }
@@ -168,10 +176,12 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   }
 
   void _onStreetChanged(String? value) {
+    if (_isApplyingSelection) return;
     _clearPlaceFieldsIfManualEdit();
     _debounce?.cancel();
     final query = value?.trim() ?? '';
     if (query.isEmpty) {
+      _searchActive = false;
       setState(() {
         _dbResults = [];
         _predictions = [];
@@ -179,6 +189,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       });
       return;
     }
+    _searchActive = true;
     _debounce = Timer(const Duration(milliseconds: 300), () async {
       setState(() {
         _isLoading = true;
@@ -230,14 +241,21 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     _latitude = address.latitude;
     _longitude = address.longitude;
     _addressId = address.id;
-    form.fields[widget.addressIdFieldName]?.didChange(address.id);
-    widget.onAddressSaved?.call(address.id);
+    if (address.id != null) {
+      form.fields[widget.addressIdFieldName]?.didChange(address.id);
+      form.save();
+      widget.onAddressSaved?.call(address.id);
+    } else {
+      Log.w('Selected address missing id', address.toJson());
+    }
     _streetController.text = address.street;
     _streetController.selection = TextSelection.fromPosition(
       TextPosition(offset: _streetController.text.length),
     );
     _streetFocusNode.unfocus();
     _isApplyingSelection = false;
+    _searchActive = false;
+    _isSelectingFromList = false;
     setState(() {
       _dbResults = [];
       _predictions = [];
@@ -270,6 +288,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       );
       _streetFocusNode.unfocus();
       _isApplyingSelection = false;
+      _searchActive = false;
+      _isSelectingFromList = false;
       setState(() {
         _dbResults = [];
         _predictions = [];
@@ -349,6 +369,18 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          children: [
+            Icon(Icons.warning_amber_rounded, color: AnyStepColors.warning, size: 16),
+            Expanded(
+              child: Text(
+                "An improved address input is coming soon.",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AnyStepSpacing.sm8),
         AnyStepTextField(
           name: 'street',
           labelText: widget.streetLabelText ?? loc.streetAddress,
@@ -378,7 +410,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
             padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
             child: Text(loc.noMatchesFound),
           ),
-        if (_dbResults.isNotEmpty || (!_isSearchDisabled && _predictions.isNotEmpty))
+        if (_searchActive &&
+            (_dbResults.isNotEmpty || (!_isSearchDisabled && _predictions.isNotEmpty)))
           Card(
             margin: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
             child: ListView.separated(
@@ -391,19 +424,27 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
                   final address = _dbResults[index];
                   final title = address.name ?? address.formattedAddress;
                   final subtitle = address.name != null ? address.formattedAddress : null;
-                  return ListTile(
-                    title: Text(title),
-                    subtitle: subtitle != null ? Text(subtitle) : null,
+                  return InkWell(
+                    onTapDown: (_) => _isSelectingFromList = true,
+                    onTapCancel: () => _isSelectingFromList = false,
                     onTap: () => _selectAddress(address),
+                    child: ListTile(
+                      title: Text(title),
+                      subtitle: subtitle != null ? Text(subtitle) : null,
+                    ),
                   );
                 }
                 final prediction = _predictions[index - _dbResults.length];
-                return ListTile(
-                  title: Text(prediction.mainText ?? prediction.description),
-                  subtitle: prediction.secondaryText != null
-                      ? Text(prediction.secondaryText!)
-                      : null,
+                return InkWell(
+                  onTapDown: (_) => _isSelectingFromList = true,
+                  onTapCancel: () => _isSelectingFromList = false,
                   onTap: () => _selectPrediction(prediction),
+                  child: ListTile(
+                    title: Text(prediction.mainText ?? prediction.description),
+                    subtitle: prediction.secondaryText != null
+                        ? Text(prediction.secondaryText!)
+                        : null,
+                  ),
                 );
               },
             ),

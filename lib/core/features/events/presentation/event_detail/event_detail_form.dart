@@ -136,6 +136,11 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     ),
 
                     const SizedBox(height: AnyStepSpacing.sm4),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
+                    ),
+                    const SizedBox(height: AnyStepSpacing.sm4),
                     AnyStepAddressField(
                       formKey: formKey,
                       initialAddressId: widget.event?.addressId ?? widget.event?.address?.id,
