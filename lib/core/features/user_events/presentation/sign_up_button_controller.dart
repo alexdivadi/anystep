@@ -33,7 +33,7 @@ class SignUpButtonController extends _$SignUpButtonController {
       await ref.read(userEventRepositoryProvider).createOrUpdate(obj: userEvent);
       PostHogManager.capture(
         'user_signed_up',
-        properties: {'event_id': eventId, 'user_id': authState.uid},
+        properties: <String, Object>{'event_id': eventId, 'user_id': authState.uid},
       );
     });
     ref.invalidate(signUpStatusProvider(eventId));
@@ -46,7 +46,10 @@ class SignUpButtonController extends _$SignUpButtonController {
       await ref.read(userEventRepositoryProvider).delete(userEvent);
       PostHogManager.capture(
         'user_canceled_sign_up',
-        properties: {'event_id': userEvent.eventId ?? '', 'user_id': userEvent.userId ?? ''},
+        properties: <String, Object>{
+          'event_id': userEvent.eventId ?? '',
+          'user_id': userEvent.userId ?? '',
+        },
       );
     });
     ref.invalidate(signUpStatusProvider(userEvent.eventId!));

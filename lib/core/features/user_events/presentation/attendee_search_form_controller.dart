@@ -21,7 +21,9 @@ class AttendeeSearchFormController extends _$AttendeeSearchFormController {
       if (res.items.isEmpty) {
         await ref
             .read(userEventRepositoryProvider)
-            .createOrUpdate(obj: UserEventModel(userId: user.id, eventId: eventId, attended: true));
+            .createOrUpdate(
+              obj: UserEventModel(userId: user.id, eventId: eventId, attended: true),
+            );
       } else {
         final userEvent = res.items.first;
         await ref
@@ -34,7 +36,7 @@ class AttendeeSearchFormController extends _$AttendeeSearchFormController {
 
       PostHogManager.capture(
         'user_toggled_attendance',
-        properties: {
+        properties: <String, Object>{
           'event_id': eventId,
           'user_id': user.id,
           'attended': res.items.isEmpty || !(res.items.first.attended),

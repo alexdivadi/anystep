@@ -10,11 +10,7 @@ String _formatUtcForCalendar(DateTime dateTime) {
 Uri buildGoogleCalendarUrl(EventModel event) {
   final start = _formatUtcForCalendar(event.startTime);
   final end = _formatUtcForCalendar(event.endTime);
-  final params = <String, String>{
-    'action': 'TEMPLATE',
-    'text': event.name,
-    'dates': '$start/$end',
-  };
+  final params = <String, String>{'action': 'TEMPLATE', 'text': event.name, 'dates': '$start/$end'};
   final description = (event.description ?? '').trim();
   if (description.isNotEmpty) {
     params['details'] = description;
@@ -31,7 +27,7 @@ Future<void> openGoogleCalendar(EventModel event) async {
 
   PostHogManager.capture(
     'calendar_add_clicked',
-    properties: {
+    properties: <String, Object>{
       'event_id': event.id ?? '',
       'start_time': event.startTime.toIso8601String(),
       'end_time': event.endTime.toIso8601String(),

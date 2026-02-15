@@ -29,8 +29,9 @@ class ProfileScreenController extends _$ProfileScreenController {
 
       final currentUser = ref.read(currentUserStreamProvider).requireValue!;
       final addressIdRaw = values['addressId'];
-      final addressId =
-          addressIdRaw is int ? addressIdRaw : int.tryParse(addressIdRaw?.toString() ?? '');
+      final addressId = addressIdRaw is int
+          ? addressIdRaw
+          : int.tryParse(addressIdRaw?.toString() ?? '');
       final user = currentUser.copyWith(
         id: authState.uid,
         firstName: values['firstName'],
@@ -41,7 +42,7 @@ class ProfileScreenController extends _$ProfileScreenController {
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
 
-      PostHogManager.capture('profile_updated', properties: {'user_id': user.id});
+      PostHogManager.capture('profile_updated', properties: <String, Object>{'user_id': user.id});
 
       state = state.copyWith(isLoading: false, error: null);
     } on AuthApiException catch (e) {

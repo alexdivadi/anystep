@@ -35,7 +35,10 @@ class OnboardingScreenController extends _$OnboardingScreenController {
       );
       await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
 
-      PostHogManager.capture('user_onboarding_completed', properties: {'user_id': user.id});
+      PostHogManager.capture(
+        'user_onboarding_completed',
+        properties: <String, Object>{'user_id': user.id},
+      );
     });
     ref.invalidate(currentUserStreamProvider);
   }
