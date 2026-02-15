@@ -5,7 +5,7 @@ import 'text_styles.dart';
 
 class AnyStepTheme {
   static const double _textScaleFactor = 0.94;
-  static const double _textHeightFactor = 0.95;
+  static const double _textHeightFactor = 0.98;
 
   static TextTheme _tightTextTheme(Color textColor) {
     return AnyStepTextStyles.textTheme

@@ -43,6 +43,7 @@ class SettingsScreen extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.account_circle),
                   title: Text(loc.accountSettings),
+                  trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push(ProfileScreen.path),
                 ),
                 ListTile(
