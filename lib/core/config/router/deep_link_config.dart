@@ -12,9 +12,9 @@ class DeepLinkConfig {
       final isLocalhost = base.host == 'localhost' || base.host == '127.0.0.1';
       final port = base.hasPort ? base.port : (isLocalhost ? 3000 : null);
       return base.replace(
-        path: ResetPasswordScreen.path,
+        path: '/',
         query: '',
-        fragment: '',
+        fragment: ResetPasswordScreen.path,
         port: port,
       );
     }
@@ -28,9 +28,9 @@ class DeepLinkConfig {
       final isLocalhost = base.host == 'localhost' || base.host == '127.0.0.1';
       final port = base.hasPort ? base.port : (isLocalhost ? 3000 : null);
       return base.replace(
-        path: EmailConfirmedScreen.path,
+        path: '/',
         query: '',
-        fragment: '',
+        fragment: EmailConfirmedScreen.path,
         port: port,
       );
     }
