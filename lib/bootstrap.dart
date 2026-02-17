@@ -7,13 +7,10 @@ import 'package:anystep/core/firebase/firebase.dart';
 import 'package:anystep/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:anystep/core/config/router/url_strategy.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void bootstrap(FutureOr<Widget> Function() builder) async {
-  setPathUrlStrategy();
-
   // Ensure that Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
