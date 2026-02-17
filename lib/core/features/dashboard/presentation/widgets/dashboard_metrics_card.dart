@@ -1,5 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
+import 'package:anystep/core/common/widgets/any_step_shimmer.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -29,8 +30,7 @@ class DashboardMetricsCard extends StatelessWidget {
     String Function(VolunteerHoursSummary) builder,
   ) {
     return summary.when(
-      loading: () =>
-          const SizedBox(height: 16, width: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+      loading: () => const AnyStepShimmer(height: 18, width: 52),
       error: (e, st) => const Text('—'),
       data: (data) => Text(builder(data)),
     );
@@ -216,7 +216,7 @@ class _HeroMetric extends StatelessWidget {
                 height: 42,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: CircularProgressIndicator.adaptive(),
+                  child: AnyStepShimmer(height: 24, width: 52),
                 ),
               )
             : Column(

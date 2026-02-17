@@ -184,7 +184,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                             metricsCard,
                             const DashboardCalendarCard(),
                           ],
-                          aspectRatio: 1.1,
+                          aspectRatio: 0.9,
                         ),
                       );
                     } else {
@@ -211,7 +211,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                             metricsCard,
                             const DashboardCalendarCard(),
                           ],
-                          aspectRatio: 1.1,
+                          aspectRatio: 0.9,
                         ),
                       );
                     } else {

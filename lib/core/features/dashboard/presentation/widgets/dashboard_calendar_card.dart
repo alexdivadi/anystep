@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/widgets/any_step_shimmer.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
@@ -41,18 +42,31 @@ class _DashboardCalendarCardState extends ConsumerState<DashboardCalendarCard> {
         child: Padding(
           padding: const EdgeInsets.all(AnyStepSpacing.md16),
           child: eventsAsync.when(
-            loading: () => const SizedBox(
-              height: 280,
-              child: Center(child: CircularProgressIndicator()),
+            loading: () => SizedBox(
+              height: 380,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(height: AnyStepSpacing.md14),
+                  Center(child: AnyStepShimmer(height: 24, width: 140)),
+                  SizedBox(height: AnyStepSpacing.sm10),
+                  AnyStepShimmer(height: 280),
+                  SizedBox(height: AnyStepSpacing.md12),
+                  AnyStepShimmer(height: 16, width: 220),
+                  SizedBox(height: AnyStepSpacing.sm8),
+                  AnyStepShimmer(height: 16, width: 180),
+                ],
+              ),
             ),
-            error: (e, st) => SizedBox(
-              height: 280,
-              child: Center(child: Text(loc.failedToLoad)),
-            ),
+            error: (e, st) => SizedBox(height: 380, child: Center(child: Text(loc.failedToLoad))),
             data: (events) {
               final eventsByDay = <DateTime, List<EventModel>>{};
               for (final event in events) {
-                final dateKey = DateTime(event.startTime.year, event.startTime.month, event.startTime.day);
+                final dateKey = DateTime(
+                  event.startTime.year,
+                  event.startTime.month,
+                  event.startTime.day,
+                );
                 eventsByDay.putIfAbsent(dateKey, () => []).add(event);
               }
               final selected = _selectedDay ?? _focusedDay;
@@ -98,8 +112,14 @@ class _DashboardCalendarCardState extends ConsumerState<DashboardCalendarCard> {
                     headerStyle: HeaderStyle(
                       titleCentered: true,
                       formatButtonVisible: false,
-                      leftChevronIcon: Icon(Icons.chevron_left, color: Theme.of(context).iconTheme.color),
-                      rightChevronIcon: Icon(Icons.chevron_right, color: Theme.of(context).iconTheme.color),
+                      leftChevronIcon: Icon(
+                        Icons.chevron_left,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      rightChevronIcon: Icon(
+                        Icons.chevron_right,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                   ),
                   const SizedBox(height: AnyStepSpacing.md12),

@@ -30,7 +30,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     final loc = AppLocalizations.of(context);
 
     return AnyStepScaffold(
-      appBar: AnyStepAppBar(title: Text(loc.forgotPasswordTitle)),
+      appBar: const AnyStepAppBar(),
       body: MaxWidthContainer(
         child: Padding(
           padding: const EdgeInsets.all(AnyStepSpacing.md16),

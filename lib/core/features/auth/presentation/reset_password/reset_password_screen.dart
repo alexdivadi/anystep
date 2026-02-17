@@ -31,7 +31,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final loc = AppLocalizations.of(context);
 
     return AnyStepScaffold(
-      appBar: AnyStepAppBar(title: Text(loc.resetPasswordTitle)),
+      appBar: const AnyStepAppBar(),
       body: MaxWidthContainer(
         child: Padding(
           padding: const EdgeInsets.all(AnyStepSpacing.md16),

@@ -88,6 +88,7 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
                 formKey: _formKey,
                 initialAddressId: widget.user.addressId ?? widget.user.address?.id,
                 isUserAddress: true,
+                disableSearch: true,
                 includeEventAddresses: false,
                 includeUserAddresses: true,
               ),

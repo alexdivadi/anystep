@@ -78,6 +78,7 @@ class _SignAgreementScreenState extends ConsumerState<SignAgreementScreen> {
                         child: Scrollbar(
                           thumbVisibility: true,
                           child: SingleChildScrollView(
+                            primary: true,
                             physics: const ClampingScrollPhysics(),
                             child: Column(
                               children: [
