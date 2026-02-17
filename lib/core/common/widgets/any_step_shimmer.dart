@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AnyStepShimmer extends StatelessWidget {
-  const AnyStepShimmer({super.key, this.height, this.width});
+  const AnyStepShimmer({super.key, this.height, this.width, this.borderRadius});
 
   final double? height;
   final double? width;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,10 @@ class AnyStepShimmer extends StatelessWidget {
       child: Container(
         height: height ?? 16,
         width: width ?? double.infinity,
-        color: AnyStepColors.grayDark.withAlpha(40),
+        decoration: BoxDecoration(
+          color: AnyStepColors.grayDark.withAlpha(40),
+          borderRadius: borderRadius ?? BorderRadius.circular(8),
+        ),
       ),
     );
   }
