@@ -168,8 +168,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       postalCodeFieldName: 'zipCode',
                       streetSecondaryLabelText: loc.streetAddress2,
                       isUserAddress: true,
+                      disableSearch: true,
                       includeEventAddresses: false,
-                      includeUserAddresses: true,
+                      includeUserAddresses: false,
                     ),
 
                     const SizedBox(height: AnyStepSpacing.md16),
