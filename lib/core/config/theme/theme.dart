@@ -25,8 +25,7 @@ class AnyStepTheme {
   static final lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    fontFamily: '.SF Pro Text',
-    fontFamilyFallback: const ['.SF Pro Display'],
+    fontFamily: 'Montserrat',
     visualDensity: VisualDensity.compact,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.light(
@@ -57,19 +56,14 @@ class AnyStepTheme {
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    fontFamily: '.SF Pro Text',
-    fontFamilyFallback: const ['.SF Pro Display'],
+    fontFamily: 'Montserrat',
     visualDensity: VisualDensity.compact,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       brightness: Brightness.dark,
-      surface: AnyStepColors.black,
-      onSurface: AnyStepColors.white,
-      surfaceContainer: AnyStepColors.grayDark,
-      surfaceContainerHighest: AnyStepColors.navyDark,
       error: AnyStepColors.errorDark,
-      onError: AnyStepColors.white,
+      onError: AnyStepColors.pureWhite,
     ),
     textTheme: _tightTextTheme(AnyStepColors.pureWhite).copyWith(
       bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(
@@ -91,8 +85,7 @@ class AnyStepTheme {
   static final highContrastLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    fontFamily: '.SF Pro Text',
-    fontFamilyFallback: const ['.SF Pro Display'],
+    fontFamily: 'Montserrat',
     visualDensity: VisualDensity.compact,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.highContrastLight(
@@ -121,8 +114,7 @@ class AnyStepTheme {
   static final highContrastDarkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    fontFamily: '.SF Pro Text',
-    fontFamilyFallback: const ['.SF Pro Display'],
+    fontFamily: 'Montserrat',
     visualDensity: VisualDensity.compact,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     colorScheme: ColorScheme.fromSeed(
