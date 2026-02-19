@@ -2,9 +2,11 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_shimmer.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
+import 'package:anystep/core/features/events/presentation/event_detail/event_detail_screen.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DashboardCalendarCard extends ConsumerStatefulWidget {
@@ -164,38 +166,44 @@ class _EventRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 10,
-          height: 10,
-          margin: const EdgeInsets.only(top: 6),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            shape: BoxShape.circle,
+    final eventId = event.id;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(AnyStepSpacing.sm10),
+      onTap: eventId == null ? null : () => context.push(EventDetailScreen.getPath(eventId)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            margin: const EdgeInsets.only(top: 6),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
           ),
-        ),
-        const SizedBox(width: AnyStepSpacing.sm8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                event.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: AnyStepSpacing.sm4),
-              Text(
-                '${event.startTime.toLocal().hour.toString().padLeft(2, '0')}:${event.startTime.toLocal().minute.toString().padLeft(2, '0')} • ${event.address?.city ?? ''}',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
+          const SizedBox(width: AnyStepSpacing.sm8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  event.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: AnyStepSpacing.sm4),
+                Text(
+                  '${event.startTime.toLocal().hour.toString().padLeft(2, '0')}:${event.startTime.toLocal().minute.toString().padLeft(2, '0')} • ${event.address?.city ?? ''}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

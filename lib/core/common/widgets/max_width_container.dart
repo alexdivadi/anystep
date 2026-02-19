@@ -5,7 +5,7 @@ class MaxWidthContainer extends StatelessWidget {
   const MaxWidthContainer({
     super.key,
     required this.child,
-    this.maxWidth = 900, // tweak like Bootstrap's container
+    this.maxWidth = 720, // tweak like Bootstrap's container
     this.padding = const .symmetric(horizontal: AnyStepSpacing.md16, vertical: 0),
     this.alignment = Alignment.topCenter,
   });
