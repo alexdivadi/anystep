@@ -8,12 +8,14 @@ class DropdownText extends StatefulWidget {
     required this.content,
     this.maxLines = 2,
     this.padding = const EdgeInsets.symmetric(horizontal: AnyStepSpacing.md16),
+    this.backgroundColor,
   });
 
   final Widget title;
   final String content;
   final int maxLines;
   final EdgeInsetsGeometry padding;
+  final Color? backgroundColor;
 
   @override
   State<DropdownText> createState() => _DropdownTextState();
@@ -24,6 +26,7 @@ class _DropdownTextState extends State<DropdownText> {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = widget.backgroundColor ?? Theme.of(context).colorScheme.surfaceContainer;
     return Padding(
       padding: widget.padding,
       child: Column(
@@ -62,10 +65,7 @@ class _DropdownTextState extends State<DropdownText> {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            Theme.of(context).scaffoldBackgroundColor.withAlpha(0),
-                            Theme.of(context).scaffoldBackgroundColor,
-                          ],
+                          colors: [bgColor.withAlpha(0), bgColor],
                         ),
                       ),
                     ),

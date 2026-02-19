@@ -36,6 +36,9 @@ class AnyStepTheme {
       secondaryContainer: AnyStepColors.blueBright20,
       onSecondary: AnyStepColors.white,
       surface: AnyStepColors.white,
+      onSurface: AnyStepColors.black,
+      surfaceContainer: AnyStepColors.lightSecondaryContainer,
+      surfaceContainerHighest: AnyStepColors.lightTertiaryContainer,
       error: AnyStepColors.error,
     ),
     textTheme: _tightTextTheme(AnyStepColors.grayDark),
@@ -61,10 +64,14 @@ class AnyStepTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: AnyStepColors.blueBright,
       brightness: Brightness.dark,
+      surface: AnyStepColors.black,
+      onSurface: AnyStepColors.white,
+      surfaceContainer: AnyStepColors.grayDark,
+      surfaceContainerHighest: AnyStepColors.navyDark,
       error: AnyStepColors.errorDark,
       onError: AnyStepColors.white,
     ),
-    textTheme: _tightTextTheme(AnyStepColors.white).copyWith(
+    textTheme: _tightTextTheme(AnyStepColors.pureWhite).copyWith(
       bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(
         color: AnyStepColors.lightTertiaryContainer,
       ),
@@ -93,8 +100,9 @@ class AnyStepTheme {
       onPrimaryContainer: AnyStepColors.navyDark,
       secondary: AnyStepColors.blueDeep,
       secondaryContainer: AnyStepColors.blueBright20,
-      onSecondary: AnyStepColors.white,
-      surface: AnyStepColors.white,
+      onSecondary: AnyStepColors.pureWhite,
+      surface: AnyStepColors.pureWhite,
+      onSurface: AnyStepColors.pureBlack,
       error: AnyStepColors.error,
     ),
     textTheme: _tightTextTheme(AnyStepColors.grayDark),
@@ -122,7 +130,9 @@ class AnyStepTheme {
       contrastLevel: 1.0,
       brightness: Brightness.dark,
       error: AnyStepColors.errorDark,
-      onError: AnyStepColors.white,
+      onError: AnyStepColors.pureWhite,
+      surface: AnyStepColors.pureBlack,
+      onSurface: AnyStepColors.pureWhite,
     ),
     textTheme: _tightTextTheme(AnyStepColors.white).copyWith(
       bodyMedium: AnyStepTextStyles.bodyMedium.copyWith(
@@ -137,7 +147,7 @@ class AnyStepTheme {
       elevation: 0,
       centerTitle: true,
       backgroundColor: AnyStepColors.navyDark,
-      foregroundColor: AnyStepColors.white,
+      foregroundColor: AnyStepColors.pureWhite,
     ),
   );
 }
