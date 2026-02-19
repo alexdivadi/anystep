@@ -62,8 +62,9 @@ final routes = [
     name: UserOnboardedGate.name,
     pageBuilder: (context, state) {
       final redirectParam = state.uri.queryParameters['redirect'];
-      final redirectPath =
-          (redirectParam == null || redirectParam == '/') ? EventFeedScreen.pathAnonymous : redirectParam;
+      final redirectPath = (redirectParam == null || redirectParam == '/')
+          ? EventFeedScreen.pathAnonymous
+          : redirectParam;
       return NoTransitionPage(child: UserOnboardedGate(redirect: redirectPath));
     },
   ),
@@ -226,13 +227,13 @@ final routes = [
     builder: (context, state) => const ProfileScreen(),
   ),
   GoRoute(
-    path: AboutPage.path,
-    name: AboutPage.name,
-    builder: (context, state) => const AboutPage(),
+    path: AboutScreen.path,
+    name: AboutScreen.name,
+    builder: (context, state) => const AboutScreen(),
   ),
   GoRoute(
-    path: NotificationSettingsPage.path,
-    name: NotificationSettingsPage.name,
-    builder: (context, state) => const NotificationSettingsPage(),
+    path: NotificationSettingsScreen.path,
+    name: NotificationSettingsScreen.name,
+    builder: (context, state) => const NotificationSettingsScreen(),
   ),
 ];
