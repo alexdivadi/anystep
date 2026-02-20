@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/utils/state_utils.dart';
 import 'package:anystep/core/common/widgets/inputs/any_step_text_field.dart';
 import 'package:anystep/core/features/location/data/address_repository.dart';
@@ -15,8 +16,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class AnyStepAddressField extends ConsumerStatefulWidget {
-  const AnyStepAddressField({
+class AnyStepAddressForm extends ConsumerStatefulWidget {
+  const AnyStepAddressForm({
     super.key,
     required this.formKey,
     this.countryCode = 'US',
@@ -84,10 +85,10 @@ class AnyStepAddressField extends ConsumerStatefulWidget {
   final String? initialPostalCode;
 
   @override
-  ConsumerState<AnyStepAddressField> createState() => _AnyStepAddressFieldState();
+  ConsumerState<AnyStepAddressForm> createState() => _AnyStepAddressFormState();
 }
 
-class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
+class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
   final TextEditingController _streetController = TextEditingController();
   final FocusNode _streetFocusNode = FocusNode();
   final FocusNode _cityFocusNode = FocusNode();
@@ -123,7 +124,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   }
 
   @override
-  void didUpdateWidget(covariant AnyStepAddressField oldWidget) {
+  void didUpdateWidget(covariant AnyStepAddressForm oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.disableSearch && !_isSearchDisabled) {
       _isSearchDisabled = true;
@@ -400,8 +401,16 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       _addressId = saved.id;
       form.fields[widget.addressIdFieldName]?.didChange(saved.id);
       widget.onAddressSaved?.call(saved.id);
+      if (mounted) {
+        final loc = AppLocalizations.of(context);
+        context.showSuccessSnackbar(loc.addressSaved);
+      }
     } catch (e, stackTrace) {
       Log.e('Error saving address', e, stackTrace);
+      if (mounted) {
+        final loc = AppLocalizations.of(context);
+        context.showErrorSnackbar(loc.addressSaveFailed);
+      }
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }

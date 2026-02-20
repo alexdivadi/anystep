@@ -1,6 +1,6 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/any_step_modal.dart';
-import 'package:anystep/core/common/widgets/inputs/any_step_address_field.dart';
+import 'package:anystep/core/common/widgets/inputs/any_step_address_form.dart';
 import 'package:anystep/core/features/location/data/address_repository.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
@@ -282,7 +282,7 @@ class _AddressModalContentState extends ConsumerState<_AddressModalContent> {
                   ],
                 ),
                 const SizedBox(height: AnyStepSpacing.sm8),
-                AnyStepAddressField(
+                AnyStepAddressForm(
                   formKey: _formKey,
                   initialAddressId: widget.initialAddressId,
                   countryCode: widget.countryCode,

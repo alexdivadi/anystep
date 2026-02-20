@@ -148,6 +148,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noAddressProvided => 'No se proporcionó dirección';
 
   @override
+  String get addressSaved => 'Dirección guardada.';
+
+  @override
+  String get addressSaveFailed => 'No se pudo guardar la dirección.';
+
+  @override
+  String get notificationSettingsUpdated =>
+      'Configuración de notificaciones actualizada.';
+
+  @override
+  String get notificationSettingsUpdateFailed =>
+      'No se pudo actualizar la configuración de notificaciones.';
+
+  @override
   String get start => 'Inicio';
 
   @override

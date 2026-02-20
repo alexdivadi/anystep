@@ -338,6 +338,30 @@ abstract class AppLocalizations {
   /// **'No address provided'**
   String get noAddressProvided;
 
+  /// Toast message after saving an address
+  ///
+  /// In en, this message translates to:
+  /// **'Address saved.'**
+  String get addressSaved;
+
+  /// Toast message after failing to save an address
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save address.'**
+  String get addressSaveFailed;
+
+  /// Toast message after updating notification settings
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings updated.'**
+  String get notificationSettingsUpdated;
+
+  /// Toast message after failing to update notification settings
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update notification settings.'**
+  String get notificationSettingsUpdateFailed;
+
   /// Event start label
   ///
   /// In en, this message translates to:

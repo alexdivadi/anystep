@@ -107,6 +107,16 @@
   "@address": {"description": "Título de sección para dirección"},
   "noAddressProvided": "No se proporcionó dirección",
   "@noAddressProvided": {"description": "Texto cuando no hay dirección"},
+  "addressSaved": "Dirección guardada.",
+  "@addressSaved": {"description": "Toast message after saving an address"},
+  "addressSaveFailed": "No se pudo guardar la dirección.",
+  "@addressSaveFailed": {"description": "Toast message after failing to save an address"},
+  "notificationSettingsUpdated": "Configuración de notificaciones actualizada.",
+  "@notificationSettingsUpdated": {"description": "Toast message after updating notification settings"},
+  "notificationSettingsUpdateFailed": "No se pudo actualizar la configuración de notificaciones.",
+  "@notificationSettingsUpdateFailed": {
+    "description": "Toast message after failing to update notification settings"
+  },
   "start": "Inicio",
   "@start": {"description": "Etiqueta de inicio del evento"},
   "end": "Fin",

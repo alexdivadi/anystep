@@ -108,6 +108,16 @@
   "@address": {"description": "Section title for address"},
   "noAddressProvided": "No address provided",
   "@noAddressProvided": {"description": "Fallback when no address is provided"},
+  "addressSaved": "Address saved.",
+  "@addressSaved": {"description": "Toast message after saving an address"},
+  "addressSaveFailed": "Couldn't save address.",
+  "@addressSaveFailed": {"description": "Toast message after failing to save an address"},
+  "notificationSettingsUpdated": "Notification settings updated.",
+  "@notificationSettingsUpdated": {"description": "Toast message after updating notification settings"},
+  "notificationSettingsUpdateFailed": "Couldn't update notification settings.",
+  "@notificationSettingsUpdateFailed": {
+    "description": "Toast message after failing to update notification settings"
+  },
   "start": "Start",
   "@start": {"description": "Event start label"},
   "end": "End",

@@ -147,6 +147,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noAddressProvided => 'No address provided';
 
   @override
+  String get addressSaved => 'Address saved.';
+
+  @override
+  String get addressSaveFailed => 'Couldn\'t save address.';
+
+  @override
+  String get notificationSettingsUpdated => 'Notification settings updated.';
+
+  @override
+  String get notificationSettingsUpdateFailed =>
+      'Couldn\'t update notification settings.';
+
+  @override
   String get start => 'Start';
 
   @override
