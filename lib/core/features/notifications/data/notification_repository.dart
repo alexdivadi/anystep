@@ -133,13 +133,39 @@ class NotificationRepository {
     final user = _supabase.auth.currentUser;
     if (user == null) return;
     try {
-      await _supabase.from('users').update({'fcm_token': token}).eq('id', user.id);
-      Log.i('Synced FCM token for user ${user.id}');
+      final platform = _platformLabel();
+      await _supabase.from('user_fcm_tokens').upsert(
+        {
+          'user_id': user.id,
+          'token': token,
+          'platform': platform,
+        },
+        onConflict: 'token',
+      );
+      Log.i('Synced FCM token for user ${user.id} ($platform)');
     } catch (e, st) {
       Log.e('Failed to sync FCM token', e, st);
     }
   }
 
+}
+
+String _platformLabel() {
+  if (kIsWeb) return 'web';
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.iOS:
+      return 'ios';
+    case TargetPlatform.android:
+      return 'android';
+    case TargetPlatform.macOS:
+      return 'macos';
+    case TargetPlatform.windows:
+      return 'windows';
+    case TargetPlatform.linux:
+      return 'linux';
+    case TargetPlatform.fuchsia:
+      return 'fuchsia';
+  }
 }
 
 @Riverpod(keepAlive: true)

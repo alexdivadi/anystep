@@ -5,6 +5,7 @@ import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/utils/state_utils.dart';
 import 'package:anystep/core/common/widgets/inputs/any_step_text_field.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/features/location/data/address_repository.dart';
 import 'package:anystep/core/features/location/data/places_api_client.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
@@ -405,12 +406,25 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
         final loc = AppLocalizations.of(context);
         context.showSuccessSnackbar(loc.addressSaved);
       }
+      PostHogManager.capture(
+        'address_saved',
+        properties: <String, Object>{
+          'is_user_address': widget.isUserAddress,
+          'has_place_id': (_placeId ?? '').isNotEmpty,
+          'has_name': (nameValue ?? '').isNotEmpty || (_placeName ?? '').isNotEmpty,
+          'address_id': saved.id?.toString() ?? '',
+        },
+      );
     } catch (e, stackTrace) {
       Log.e('Error saving address', e, stackTrace);
       if (mounted) {
         final loc = AppLocalizations.of(context);
         context.showErrorSnackbar(loc.addressSaveFailed);
       }
+      PostHogManager.captureException(
+        PostHogManager.buildPostHogExceptionList(e, stackTrace),
+        eventName: 'address_save_failed',
+      );
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -422,14 +436,6 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.showNameField) ...[
-          AnyStepTextField(
-            name: widget.nameFieldName,
-            labelText: widget.nameLabelText ?? "${loc.nameLabel} (${loc.optional})",
-            validator: widget.nameValidator,
-          ),
-          const SizedBox(height: AnyStepSpacing.sm4),
-        ],
         AnyStepTextField(
           name: 'street',
           labelText: widget.streetLabelText ?? loc.streetAddress,
@@ -559,6 +565,14 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
             ),
           ],
         ),
+        if (widget.showNameField) ...[
+          const SizedBox(height: AnyStepSpacing.sm4),
+          AnyStepTextField(
+            name: widget.nameFieldName,
+            labelText: widget.nameLabelText ?? "${loc.nameLabel} (${loc.optional})",
+            validator: widget.nameValidator,
+          ),
+        ],
         if (widget.showSaveButton)
           Padding(
             padding: const EdgeInsets.only(top: AnyStepSpacing.sm8),

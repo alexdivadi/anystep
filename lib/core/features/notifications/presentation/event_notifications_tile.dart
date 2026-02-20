@@ -1,4 +1,6 @@
+import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/features/notifications/data/event_notifications_controller.dart';
+import 'package:anystep/core/config/posthog/posthog_manager.dart';
 import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,16 @@ class EventNotificationsTile extends ConsumerWidget {
             await ref.read(eventNotificationsControllerProvider.notifier).setEnabled(value);
             if (!context.mounted) return;
             context.showSuccessSnackbar(loc.notificationSettingsUpdated);
-          } catch (_) {
+            PostHogManager.capture(
+              'notification_settings_updated',
+              properties: <String, Object>{'enabled': value},
+            );
+          } catch (e, st) {
+            Log.e('Error updating notification settings', e, st);
+            PostHogManager.captureException(
+              PostHogManager.buildPostHogExceptionList(e, st),
+              eventName: 'notification_settings_update_failed',
+            );
             if (!context.mounted) return;
             context.showErrorSnackbar(loc.notificationSettingsUpdateFailed);
           }
