@@ -49,3 +49,16 @@ English (`en`) and Spanish (`es`) are enabled via `AppLocalizations.supportedLoc
 - Placeholders require an `example` string in metadata.
 - Changing ARB files requires a full restart for hot reload to pick up generated code.
 - If `lib/l10n/untranslated_messages.txt` is non-empty, add translations before release.
+
+## Supabase
+
+To download latest changes to functions:
+
+```bash 
+supabase functions download
+```
+
+To deploy local changes to functions:
+```bash
+supabase functions deploy push
+```
