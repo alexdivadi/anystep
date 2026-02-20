@@ -13,6 +13,14 @@ import 'package:flutter/foundation.dart';
 
 part 'notification_repository.g.dart';
 
+/// TODO:
+/// 1. Implement IRepository in NotificationRepository
+/// 2. Create a provider to fetch and paginate user notifications (scoped by user_id == usermodel.id aka authState sub), sorted by created at date
+/// 3. Create a listview similar to event feed. Handle showing read and unread states.
+/// 4. When the user clicks on a notification it should open a notification detail screen and automatically mark the notification as read.
+///
+/// Entrypoint: Dashboard appbar action IconButton, pushes route. Only visible for authenticated users.
+
 const String _eventIdKey = 'event_id';
 String _eventDetailPath(int id) => '/events/$id';
 
@@ -21,9 +29,9 @@ class NotificationRepository {
     required FirebaseMessaging messaging,
     required GoRouter router,
     required SupabaseClient supabase,
-  })  : _messaging = messaging,
-        _router = router,
-        _supabase = supabase;
+  }) : _messaging = messaging,
+       _router = router,
+       _supabase = supabase;
 
   final FirebaseMessaging _messaging;
   final GoRouter _router;
@@ -95,10 +103,7 @@ class NotificationRepository {
         content: Text(body.isEmpty ? title : '$title\n$body'),
         action: eventId == null
             ? null
-            : SnackBarAction(
-                label: 'Open',
-                onPressed: () => _router.go(_eventDetailPath(eventId)),
-              ),
+            : SnackBarAction(label: 'Open', onPressed: () => _router.go(_eventDetailPath(eventId))),
       ),
     );
   }
@@ -134,20 +139,16 @@ class NotificationRepository {
     if (user == null) return;
     try {
       final platform = _platformLabel();
-      await _supabase.from('user_fcm_tokens').upsert(
-        {
-          'user_id': user.id,
-          'token': token,
-          'platform': platform,
-        },
-        onConflict: 'token',
-      );
+      await _supabase.from('user_fcm_tokens').upsert({
+        'user_id': user.id,
+        'token': token,
+        'platform': platform,
+      }, onConflict: 'token');
       Log.i('Synced FCM token for user ${user.id} ($platform)');
     } catch (e, st) {
       Log.e('Failed to sync FCM token', e, st);
     }
   }
-
 }
 
 String _platformLabel() {

@@ -65,13 +65,22 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
     final userAsync = ref.watch(currentUserStreamProvider);
     final loc = AppLocalizations.of(context);
 
+    final leading = context.canPop()
+        ? null
+        : IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () {
+              context.go(EventFeedScreen.path);
+            },
+          );
+
     return eventAsync.when(
       loading: () => AnyStepScaffold(
-        appBar: AnyStepAppBar(title: Text(loc.eventDetailTitle)),
+        appBar: AnyStepAppBar(title: Text(loc.eventDetailTitle), leading: leading),
         body: const Center(child: AnyStepLoadingIndicator()),
       ),
       error: (e, st) => AnyStepScaffold(
-        appBar: AnyStepAppBar(title: Text(loc.eventDetailTitle)),
+        appBar: AnyStepAppBar(title: Text(loc.eventDetailTitle), leading: leading),
         body: RefreshIndicator(
           onRefresh: () async => ref.invalidate(getEventProvider(widget.id)),
           child: ScrollableCenteredContent(child: AnyStepErrorWidget()),
@@ -103,10 +112,7 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
               }
             },
             itemBuilder: (context) => [
-              PopupMenuItem(
-                value: _EventDetailMenuAction.share,
-                child: Text(loc.shareAction),
-              ),
+              PopupMenuItem(value: _EventDetailMenuAction.share, child: Text(loc.shareAction)),
               if (!isPast)
                 PopupMenuItem(
                   value: _EventDetailMenuAction.addToCalendar,
@@ -125,6 +131,7 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
           appBar: AnyStepAppBar(
             title: Text(loc.eventDetailTitle),
             actions: isPast ? null : actions,
+            leading: leading,
           ),
           body: MaxWidthContainer(
             child: SafeArea(
