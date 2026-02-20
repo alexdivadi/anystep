@@ -163,14 +163,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     //   ),
                     // ),
                     const SizedBox(height: AnyStepSpacing.md16),
-                    AnyStepAddressField(
+                    AnyStepAddressModalTile(
                       formKey: _formKey,
-                      postalCodeFieldName: 'zipCode',
                       streetSecondaryLabelText: loc.streetAddress2,
                       isUserAddress: true,
-                      disableSearch: true,
                       includeEventAddresses: false,
                       includeUserAddresses: false,
+                      addressIdValidator: FormBuilderValidators.required(),
                     ),
 
                     const SizedBox(height: AnyStepSpacing.md16),

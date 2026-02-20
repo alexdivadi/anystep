@@ -199,6 +199,11 @@ final routes = [
     ],
   ),
   GoRoute(
+    path: CreateEventScreen.path,
+    name: CreateEventScreen.name,
+    builder: (context, state) => const CreateEventScreen(),
+  ),
+  GoRoute(
     path: EventDetailScreen.path,
     name: EventDetailScreen.name,
     builder: (context, state) {

@@ -17,6 +17,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get welcomeMessageTitle => 'Bienvenido';
+
+  @override
+  String get welcomeMessageDismiss => 'Entendido';
+
+  @override
   String itemCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -570,6 +576,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tapToSign => 'Toca para firmar';
+
+  @override
+  String get optional => 'opcional';
 
   @override
   String get validatorRequired => 'Este campo es obligatorio';

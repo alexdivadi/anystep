@@ -11,6 +11,7 @@ class RouterUtils {
     EventFeedScreen.pathAdmin,
     SettingsScreen.pathAdmin,
     ReportsScreen.pathAdmin,
+    CreateEventScreen.path,
   };
 
   static const anyRoutes = {

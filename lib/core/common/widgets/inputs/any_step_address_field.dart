@@ -2,21 +2,19 @@ import 'dart:async';
 
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/log_utils.dart';
+import 'package:anystep/core/common/utils/state_utils.dart';
 import 'package:anystep/core/common/widgets/inputs/any_step_text_field.dart';
-import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/location/data/address_repository.dart';
 import 'package:anystep/core/features/location/data/places_api_client.dart';
 import 'package:anystep/core/features/location/domain/address_model.dart';
 import 'package:anystep/core/features/location/domain/places_models.dart';
 import 'package:anystep/core/features/location/utils/place_to_address.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
-import 'package:anystep/env/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-// TODO: Refactor this widget to separate address search and address form into separate widgets
 class AnyStepAddressField extends ConsumerStatefulWidget {
   const AnyStepAddressField({
     super.key,
@@ -31,6 +29,10 @@ class AnyStepAddressField extends ConsumerStatefulWidget {
     this.addressIdFieldName = 'addressId',
     this.onAddressSaved,
     this.showSaveButton = true,
+    this.showNameField = false,
+    this.nameFieldName = 'addressName',
+    this.nameLabelText,
+    this.nameValidator,
     this.streetLabelText,
     this.streetSecondaryLabelText,
     this.cityLabelText,
@@ -60,6 +62,10 @@ class AnyStepAddressField extends ConsumerStatefulWidget {
   final String addressIdFieldName;
   final ValueChanged<int?>? onAddressSaved;
   final bool showSaveButton;
+  final bool showNameField;
+  final String nameFieldName;
+  final String? nameLabelText;
+  final String? Function(String?)? nameValidator;
   final String? streetLabelText;
   final String? streetSecondaryLabelText;
   final String? cityLabelText;
@@ -108,7 +114,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     super.initState();
     _streetController.text = widget.initialStreet ?? '';
     _streetFocusNode.addListener(_handleFocusChange);
-    _isSearchDisabled = widget.disableSearch || Env.placesApiKey.isEmpty;
+    _isSearchDisabled = widget.disableSearch;
     _addressId = widget.initialAddressId;
     if (widget.initialAddressId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _loadInitialAddress());
@@ -119,8 +125,6 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   void didUpdateWidget(covariant AnyStepAddressField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.disableSearch && !_isSearchDisabled) {
-      _isSearchDisabled = true;
-    } else if (Env.placesApiKey.isEmpty) {
       _isSearchDisabled = true;
     }
   }
@@ -203,7 +207,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
           try {
             predictions = await ref
                 .read(placesApiClientProvider)
-                .autocomplete(query, countryCode: widget.countryCode);
+                .autocomplete(query, countryCode: widget.countryCode, limit: 5);
           } catch (e) {
             _isSearchDisabled = true;
             _error = e.toString();
@@ -227,17 +231,27 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     });
   }
 
+  String? _validateState(String? value, AppLocalizations loc) {
+    final trimmed = value?.trim() ?? '';
+    if (trimmed.isEmpty) return loc.validatorState;
+    if (!isValidUsState(trimmed)) return loc.validatorState;
+    return null;
+  }
+
   void _selectAddress(AddressModel address) {
     final form = widget.formKey.currentState;
     if (form == null) return;
     _isApplyingSelection = true;
+    if (widget.showNameField) {
+      form.fields[widget.nameFieldName]?.didChange(address.name);
+    }
     form.fields['street']?.didChange(address.street);
     form.fields['streetSecondary']?.didChange(address.streetSecondary);
     form.fields['city']?.didChange(address.city);
     form.fields['state']?.didChange(address.state);
     form.fields[widget.postalCodeFieldName]?.didChange(address.postalCode);
     _placeId = address.placeId;
-    _placeName = address.name ?? address.formattedAddress;
+    _placeName = address.name;
     _latitude = address.latitude;
     _longitude = address.longitude;
     _addressId = address.id;
@@ -268,8 +282,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       _error = null;
     });
     try {
-      final details = await ref.read(placesApiClientProvider).placeDetails(prediction.placeId);
-      final parsed = placeDetailsToAddress(details);
+      final parsed = placeDetailsToAddress(prediction.details);
       final form = widget.formKey.currentState;
       if (form == null) return;
       form.fields['street']?.didChange(parsed.street);
@@ -278,7 +291,6 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       form.fields['state']?.didChange(parsed.state);
       form.fields[widget.postalCodeFieldName]?.didChange(parsed.postalCode);
       _placeId = parsed.placeId;
-      _placeName = parsed.name ?? prediction.description;
       _latitude = parsed.latitude;
       _longitude = parsed.longitude;
       _isApplyingSelection = true;
@@ -312,8 +324,10 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       final repo = ref.read(addressRepositoryProvider);
       final address = await repo.get(documentId: widget.initialAddressId.toString());
       _placeId = address.placeId;
-      // TODO: add name field to form
       _placeName = address.name;
+      if (widget.showNameField) {
+        form.fields[widget.nameFieldName]?.didChange(address.name);
+      }
       _latitude = address.latitude;
       _longitude = address.longitude;
       form.fields['street']?.didChange(address.street);
@@ -331,9 +345,15 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   Future<void> _saveAddressIfComplete() async {
     final form = widget.formKey.currentState;
     if (form == null) return;
+    final nameValue = form.fields[widget.nameFieldName]?.value?.toString().trim();
     final street = form.fields['street']?.value?.toString().trim() ?? '';
     final city = form.fields['city']?.value?.toString().trim() ?? '';
-    final state = form.fields['state']?.value?.toString().trim() ?? '';
+    final rawState = form.fields['state']?.value?.toString().trim() ?? '';
+    final normalizedState = normalizeUsState(rawState);
+    final state = normalizedState ?? rawState;
+    if (normalizedState != null && normalizedState != rawState) {
+      form.fields['state']?.didChange(normalizedState);
+    }
     final postal = form.fields[widget.postalCodeFieldName]?.value?.toString().trim() ?? '';
     if (street.isEmpty || city.isEmpty || state.isEmpty || postal.isEmpty) return;
     final address = AddressModel.withGeohash(
@@ -347,7 +367,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       latitude: _latitude,
       longitude: _longitude,
       placeId: _placeId,
-      name: _placeName,
+      name: (nameValue != null && nameValue.isNotEmpty) ? nameValue : _placeName,
     );
     try {
       setState(() => _isSaving = true);
@@ -369,18 +389,14 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Icon(Icons.warning_amber_rounded, color: AnyStepColors.warning, size: 16),
-            Expanded(
-              child: Text(
-                "An improved address input is coming soon.",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AnyStepSpacing.sm8),
+        if (widget.showNameField) ...[
+          AnyStepTextField(
+            name: widget.nameFieldName,
+            labelText: widget.nameLabelText ?? "${loc.nameLabel} (${loc.optional})",
+            validator: widget.nameValidator,
+          ),
+          const SizedBox(height: AnyStepSpacing.sm4),
+        ],
         AnyStepTextField(
           name: 'street',
           labelText: widget.streetLabelText ?? loc.streetAddress,
@@ -481,7 +497,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
                 name: 'state',
                 initialValue: widget.initialState,
                 labelText: widget.stateLabelText ?? loc.state,
-                validator: widget.stateValidator ?? FormBuilderValidators.state(),
+                validator: widget.stateValidator ?? (value) => _validateState(value, loc),
                 focusNode: _stateFocusNode,
               ),
             ),

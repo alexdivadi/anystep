@@ -11,6 +11,10 @@
       "name": {"type": "String", "example": "Alice"}
     }
   },
+  "welcomeMessageTitle": "Welcome",
+  "@welcomeMessageTitle": {"description": "Title for the remote-config welcome message modal"},
+  "welcomeMessageDismiss": "Got it",
+  "@welcomeMessageDismiss": {"description": "Dismiss button label for the welcome message modal"},
   "itemCount": "{count, plural, =0 {No items} one {1 item} other {{count} items}}",
   "@itemCount": {
     "description": "Pluralized count of generic items.",
@@ -394,6 +398,8 @@
   "tapToSign": "Tap to sign",
   "@tapToSign": {"description": "Button label to sign agreement"}
   ,
+  "optional": "optional",
+  "@optional": {"description": "Text shown when field is optional"},
   "validatorRequired": "This field is required",
   "@validatorRequired": {"description": "Error shown when a required field is empty"},
   "validatorEmail": "Please enter a valid email address",

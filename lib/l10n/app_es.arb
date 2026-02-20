@@ -11,6 +11,10 @@
       "name": {"type": "String", "example": "Alicia"}
     }
   },
+  "welcomeMessageTitle": "Bienvenido",
+  "@welcomeMessageTitle": {"description": "Título del modal de mensaje de bienvenida remoto"},
+  "welcomeMessageDismiss": "Entendido",
+  "@welcomeMessageDismiss": {"description": "Etiqueta del botón para cerrar el mensaje de bienvenida"},
   "itemCount": "{count, plural, =0 {No hay elementos} one {1 elemento} other {{count} elementos}}",
   "@itemCount": {
     "description": "Conteo pluralizado de elementos genéricos.",
@@ -390,6 +394,8 @@
   "getStarted": "Comenzar",
   "@getStarted": {"description": "Etiqueta del botón final del onboarding"}
   ,
+  "optional": "opcional",
+  "@optional": {"description": "Cuando un campo es opcional"},
   "validatorRequired": "Este campo es obligatorio",
   "@validatorRequired": {"description": "Error cuando un campo requerido está vacío"},
   "validatorEmail": "Ingresa un correo electrónico válido",

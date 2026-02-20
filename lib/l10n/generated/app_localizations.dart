@@ -110,6 +110,18 @@ abstract class AppLocalizations {
   /// **'Welcome, {name}!'**
   String welcomeUser(String name);
 
+  /// Title for the remote-config welcome message modal
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcomeMessageTitle;
+
+  /// Dismiss button label for the welcome message modal
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get welcomeMessageDismiss;
+
   /// Pluralized count of generic items.
   ///
   /// In en, this message translates to:
@@ -1123,6 +1135,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap to sign'**
   String get tapToSign;
+
+  /// Text shown when field is optional
+  ///
+  /// In en, this message translates to:
+  /// **'optional'**
+  String get optional;
 
   /// Error shown when a required field is empty
   ///

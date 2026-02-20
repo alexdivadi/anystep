@@ -1,6 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/constants/breakpoints.dart';
-import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/dashboard/presentation/widgets/dashboard_calendar_card.dart';
 import 'package:anystep/core/features/dashboard/presentation/widgets/dashboard_metrics_card.dart';
@@ -9,12 +8,14 @@ import 'package:anystep/core/features/dashboard/presentation/widgets/recent_even
 import 'package:anystep/core/features/dashboard/presentation/widgets/upcoming_events_list.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/auth/presentation/login/login_screen.dart';
-import 'package:anystep/core/features/events/presentation/event_detail/event_detail_form.dart';
+import 'package:anystep/core/features/events/presentation/event_create/event_create_screen.dart';
 import 'package:anystep/core/features/events/presentation/event_feed/widgets/search_events_feed.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
+import 'package:anystep/core/config/remote_config/remote_config.dart';
+import 'package:anystep/core/shared_prefs/shared_prefs.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,6 +39,39 @@ class EventFeedScreen extends ConsumerStatefulWidget {
 class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
   bool isSearching = false;
   String q = '';
+  bool _welcomeChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowWelcomeMessage());
+  }
+
+  Future<void> _maybeShowWelcomeMessage() async {
+    if (_welcomeChecked) return;
+    _welcomeChecked = true;
+
+    final prefs = await ref.read(appPreferencesProvider.future);
+    if (prefs.getWelcomeMessageSeen()) return;
+
+    final remoteConfig = await ref.read(remoteConfigProvider.future);
+    final message = remoteConfig.welcomeMessage;
+    if (message.isEmpty) return;
+    if (!mounted) return;
+
+    await prefs.setWelcomeMessageSeen();
+    context.showModal(
+      _WelcomeMessageModal(
+        message: message,
+        onDismissed: () async {
+          if (context.mounted) {
+            context.pop();
+          }
+        },
+      ),
+      isScrollControlled: true,
+    );
+  }
 
   Future<void> _refreshDashboard(bool includeReports) async {
     ref.invalidate(getEventsProvider);
@@ -102,9 +136,9 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                           const SizedBox(width: 8),
                           Text(loc.login),
                         ],
-                      ),
-                    ),
-                  ),
+                ),
+              ),
+        ),
                 ]
               : null,
           bottom: PreferredSize(
@@ -244,17 +278,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
         floatingActionButton: !isSearching && isAuthenticated && user.value!.role.canCreateEvent
             ? AnyStepFab(
                 heroTag: 'create_event_fab',
-                onPressed: () => context.showModal(
-                  EventDetailForm(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    onSuccess: () {
-                      if (context.mounted) {
-                        context.showSuccessSnackbar(loc.eventCreated);
-                        context.pop();
-                      }
-                    },
-                  ),
-                ),
+                onPressed: () => context.push(CreateEventScreen.path),
                 icon: Icons.add,
                 tooltip: loc.createEvent,
               )
@@ -281,6 +305,42 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
         ),
         delegate: SliverChildListDelegate(children),
       ),
+    );
+  }
+}
+
+class _WelcomeMessageModal extends StatelessWidget {
+  const _WelcomeMessageModal({required this.message, required this.onDismissed});
+
+  final String message;
+  final VoidCallback onDismissed;
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(AnyStepSpacing.md16),
+      children: [
+        Text(
+          loc.welcomeMessageTitle,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: AnyStepSpacing.sm8),
+        Text(
+          message,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(height: AnyStepSpacing.md24),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton(
+            onPressed: onDismissed,
+            child: Text(loc.welcomeMessageDismiss),
+          ),
+        ),
+        const SizedBox(height: AnyStepSpacing.sm8),
+      ],
     );
   }
 }
