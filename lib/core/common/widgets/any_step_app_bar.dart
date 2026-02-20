@@ -5,6 +5,7 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.title,
     this.actions,
+    this.leading,
     this.showBackArrow = true,
     this.surfaceTint,
     this.bottom,
@@ -12,6 +13,7 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final Widget? title;
   final List<Widget>? actions;
+  final Widget? leading;
   final bool showBackArrow;
   final Color? surfaceTint;
   final PreferredSizeWidget? bottom;
@@ -25,7 +27,7 @@ class AnyStepAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: actions,
-      leading: null,
+      leading: leading,
       // titleTextStyle: AnyStepTextStyles.title.copyWith(
       //   color: Theme.of(context).colorScheme.onSurface,
       // ),

@@ -298,11 +298,8 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
       _debounce?.cancel();
       _addressId = null;
       form.fields[widget.addressIdFieldName]?.didChange(null);
-      if (widget.showNameField) {
-        final nameValue = parsed.name ?? prediction.mainText ?? prediction.description;
-        form.fields[widget.nameFieldName]?.didChange(nameValue);
-      }
-      form.fields['street']?.didChange(parsed.street);
+      final streetText = parsed.street.isNotEmpty ? parsed.street : prediction.mainText ?? '';
+      form.fields['street']?.didChange(streetText);
       form.fields['streetSecondary']?.didChange(parsed.streetSecondary);
       form.fields['city']?.didChange(parsed.city);
       form.fields['state']?.didChange(parsed.state);
@@ -311,7 +308,7 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
       _placeName = parsed.name;
       _latitude = parsed.latitude;
       _longitude = parsed.longitude;
-      _streetController.text = parsed.street.isNotEmpty ? parsed.street : prediction.description;
+      _streetController.text = streetText;
       _streetController.selection = TextSelection.fromPosition(
         TextPosition(offset: _streetController.text.length),
       );

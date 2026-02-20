@@ -43,90 +43,88 @@ class _DashboardCalendarCardState extends ConsumerState<DashboardCalendarCard> {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(AnyStepSpacing.md16),
-          child: eventsAsync.when(
-            loading: () => SizedBox(
-              height: 380,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(height: AnyStepSpacing.md14),
-                  Center(child: AnyStepShimmer(height: 24, width: 140)),
-                  SizedBox(height: AnyStepSpacing.sm10),
-                  AnyStepShimmer(height: 280),
-                  SizedBox(height: AnyStepSpacing.md12),
-                  AnyStepShimmer(height: 16, width: 220),
-                  SizedBox(height: AnyStepSpacing.sm8),
-                  AnyStepShimmer(height: 16, width: 180),
-                ],
-              ),
-            ),
-            error: (e, st) => SizedBox(height: 380, child: Center(child: Text(loc.failedToLoad))),
-            data: (events) {
-              final eventsByDay = <DateTime, List<EventModel>>{};
-              for (final event in events) {
-                final dateKey = DateTime(
-                  event.startTime.year,
-                  event.startTime.month,
-                  event.startTime.day,
-                );
-                eventsByDay.putIfAbsent(dateKey, () => []).add(event);
-              }
-              final selected = _selectedDay ?? _focusedDay;
-              final selectedKey = DateTime(selected.year, selected.month, selected.day);
-              final selectedEvents = eventsByDay[selectedKey] ?? const [];
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TableCalendar<EventModel>(
-                    firstDay: DateTime.now().subtract(const Duration(days: 365)),
-                    lastDay: DateTime.now().add(const Duration(days: 365)),
-                    focusedDay: _focusedDay,
-                    selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
-                    eventLoader: (day) {
-                      final key = DateTime(day.year, day.month, day.day);
-                      return eventsByDay[key] ?? const [];
-                    },
-                    onDaySelected: (selectedDay, focusedDay) {
-                      setState(() {
-                        _selectedDay = selectedDay;
-                        _focusedDay = focusedDay;
-                      });
-                    },
-                    onPageChanged: (focusedDay) {
-                      setState(() => _focusedDay = focusedDay);
-                    },
-                    calendarStyle: CalendarStyle(
-                      todayDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withAlpha(80),
-                        shape: BoxShape.circle,
-                      ),
-                      selectedDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      markerDecoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        shape: BoxShape.circle,
-                      ),
-                      markersMaxCount: 3,
-                    ),
-                    headerStyle: HeaderStyle(
-                      titleCentered: true,
-                      formatButtonVisible: false,
-                      leftChevronIcon: Icon(
-                        Icons.chevron_left,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                      rightChevronIcon: Icon(
-                        Icons.chevron_right,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                    ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TableCalendar<EventModel>(
+                firstDay: DateTime.now().subtract(const Duration(days: 365)),
+                lastDay: DateTime.now().add(const Duration(days: 365)),
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
+                eventLoader: (day) {
+                  final data = eventsAsync.value;
+                  if (data == null) return const [];
+                  final key = DateTime(day.year, day.month, day.day);
+                  return data.where((event) {
+                    return event.startTime.year == key.year &&
+                        event.startTime.month == key.month &&
+                        event.startTime.day == key.day;
+                  }).toList();
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                },
+                onPageChanged: (focusedDay) {
+                  setState(() => _focusedDay = focusedDay);
+                },
+                calendarStyle: CalendarStyle(
+                  todayDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withAlpha(80),
+                    shape: BoxShape.circle,
                   ),
-                  const SizedBox(height: AnyStepSpacing.md12),
-                  if (selectedEvents.isEmpty)
-                    Container(
+                  selectedDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  markerDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    shape: BoxShape.circle,
+                  ),
+                  markersMaxCount: 3,
+                ),
+                headerStyle: HeaderStyle(
+                  titleCentered: true,
+                  formatButtonVisible: false,
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AnyStepSpacing.md12),
+              eventsAsync.when(
+                loading: () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    AnyStepShimmer(height: 16, width: 220),
+                    SizedBox(height: AnyStepSpacing.sm8),
+                    AnyStepShimmer(height: 16, width: 180),
+                  ],
+                ),
+                error: (_, __) => Text(loc.failedToLoad),
+                data: (events) {
+                  final eventsByDay = <DateTime, List<EventModel>>{};
+                  for (final event in events) {
+                    final dateKey = DateTime(
+                      event.startTime.year,
+                      event.startTime.month,
+                      event.startTime.day,
+                    );
+                    eventsByDay.putIfAbsent(dateKey, () => []).add(event);
+                  }
+                  final selected = _selectedDay ?? _focusedDay;
+                  final selectedKey = DateTime(selected.year, selected.month, selected.day);
+                  final selectedEvents = eventsByDay[selectedKey] ?? const [];
+
+                  if (selectedEvents.isEmpty) {
+                    return Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(AnyStepSpacing.md12),
                       decoration: BoxDecoration(
@@ -137,21 +135,21 @@ class _DashboardCalendarCardState extends ConsumerState<DashboardCalendarCard> {
                         loc.dashboardNoEventsCalendar,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    )
-                  else
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (final event in selectedEvents.take(3))
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
-                            child: _EventRow(event: event),
-                          ),
-                      ],
-                    ),
-                ],
-              );
-            },
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final event in selectedEvents.take(3))
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
+                          child: _EventRow(event: event),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
