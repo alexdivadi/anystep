@@ -60,6 +60,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     if (!mounted) return;
 
     await prefs.setWelcomeMessageSeen();
+    if (!mounted) return;
     context.showModal(
       _WelcomeMessageModal(
         message: message,
@@ -97,14 +98,16 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     final isAuthenticated = !user.isLoading && user.hasValue && user.value != null;
     final isAdmin = isAuthenticated && user.value!.role == UserRole.admin;
     final loc = AppLocalizations.of(context);
-    final currentMonthSummary =
-        isAuthenticated && !isAdmin ? ref.watch(currentUserHoursSummaryThisMonthProvider) : null;
-    final currentYtdSummary =
-        isAuthenticated && !isAdmin ? ref.watch(currentUserHoursSummaryYtdProvider) : null;
-    final currentMonthlySeries =
-        isAuthenticated && !isAdmin ? ref.watch(currentUserMonthlyHoursYtdProvider) : null;
-    final adminMonthSummary =
-        isAdmin ? ref.watch(volunteerHoursSummaryThisMonthProvider) : null;
+    final currentMonthSummary = isAuthenticated && !isAdmin
+        ? ref.watch(currentUserHoursSummaryThisMonthProvider)
+        : null;
+    final currentYtdSummary = isAuthenticated && !isAdmin
+        ? ref.watch(currentUserHoursSummaryYtdProvider)
+        : null;
+    final currentMonthlySeries = isAuthenticated && !isAdmin
+        ? ref.watch(currentUserMonthlyHoursYtdProvider)
+        : null;
+    final adminMonthSummary = isAdmin ? ref.watch(volunteerHoursSummaryThisMonthProvider) : null;
     final adminYtdSummary = isAdmin ? ref.watch(volunteerHoursSummaryYtdProvider) : null;
     final adminMonthlySeries = isAdmin ? ref.watch(volunteerMonthlyHoursYtdProvider) : null;
 
@@ -136,9 +139,9 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                           const SizedBox(width: 8),
                           Text(loc.login),
                         ],
-                ),
-              ),
-        ),
+                      ),
+                    ),
+                  ),
                 ]
               : null,
           bottom: PreferredSize(
@@ -194,7 +197,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                 ),
               ],
             ),
-              ),
+          ),
         ),
         body: isSearching
             ? SearchEventsFeed(search: q)
@@ -214,17 +217,16 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                     if (isWide) {
                       slivers.add(
                         _gridSection(
-                          children: [
-                            metricsCard,
-                            const DashboardCalendarCard(),
-                          ],
+                          children: [metricsCard, const DashboardCalendarCard()],
                           aspectRatio: 0.9,
                         ),
                       );
                     } else {
                       slivers.add(SliverToBoxAdapter(child: metricsCard));
                       slivers.add(
-                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
+                        SliverToBoxAdapter(
+                          child: DashboardSectionHeader(title: loc.dashboardCalendar),
+                        ),
                       );
                       slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
                     }
@@ -241,10 +243,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                     if (isWide) {
                       slivers.add(
                         _gridSection(
-                          children: [
-                            metricsCard,
-                            const DashboardCalendarCard(),
-                          ],
+                          children: [metricsCard, const DashboardCalendarCard()],
                           aspectRatio: 0.9,
                         ),
                       );
@@ -252,19 +251,25 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                       slivers.add(SliverToBoxAdapter(child: metricsCard));
                     }
                     slivers.add(
-                      SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardRecentEvents)),
+                      SliverToBoxAdapter(
+                        child: DashboardSectionHeader(title: loc.dashboardRecentEvents),
+                      ),
                     );
                     slivers.add(const RecentEventsList(maxItems: 4));
                     if (!isWide) {
                       slivers.add(
-                        SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
+                        SliverToBoxAdapter(
+                          child: DashboardSectionHeader(title: loc.dashboardCalendar),
+                        ),
                       );
                       slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
                     }
                   }
 
                   slivers.add(
-                    SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardUpcomingEvents)),
+                    SliverToBoxAdapter(
+                      child: DashboardSectionHeader(title: loc.dashboardUpcomingEvents),
+                    ),
                   );
                   slivers.add(const UpcomingEventsList());
 
@@ -287,10 +292,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     );
   }
 
-  SliverPadding _gridSection({
-    required List<Widget> children,
-    double aspectRatio = 1.3,
-  }) {
+  SliverPadding _gridSection({required List<Widget> children, double aspectRatio = 1.3}) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(
         horizontal: AnyStepSpacing.md16,
@@ -322,22 +324,13 @@ class _WelcomeMessageModal extends StatelessWidget {
       shrinkWrap: true,
       padding: const EdgeInsets.all(AnyStepSpacing.md16),
       children: [
-        Text(
-          loc.welcomeMessageTitle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        Text(loc.welcomeMessageTitle, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: AnyStepSpacing.sm8),
-        Text(
-          message,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        Text(message, style: Theme.of(context).textTheme.bodyLarge),
         const SizedBox(height: AnyStepSpacing.md24),
         Align(
           alignment: Alignment.centerRight,
-          child: ElevatedButton(
-            onPressed: onDismissed,
-            child: Text(loc.welcomeMessageDismiss),
-          ),
+          child: ElevatedButton(onPressed: onDismissed, child: Text(loc.welcomeMessageDismiss)),
         ),
         const SizedBox(height: AnyStepSpacing.sm8),
       ],

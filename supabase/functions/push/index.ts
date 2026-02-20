@@ -47,8 +47,9 @@ Deno.serve(async (req: Request) => {
     const image = event.image_url ?? null;
 
     const { data: users, error: usersError } = await supabase
+      .schema("public")
       .from("users")
-      .select("id, fcm_token")
+      .select("id")
       .eq("new_event_notifications_enabled", true);
 
     if (usersError) {
@@ -75,6 +76,7 @@ Deno.serve(async (req: Request) => {
     }));
 
     const { data: notifData, error: notifError } = await supabase
+      .schema("public")
       .from("notifications")
       .insert(notificationsToInsert)
       .select();
@@ -92,8 +94,23 @@ Deno.serve(async (req: Request) => {
       if (row?.user_id) notificationByUserId.set(row.user_id, row);
     }
 
-    const usersWithTokens = users.filter((user) => user.fcm_token);
-    if (usersWithTokens.length === 0) {
+    const userIds = users.map((user) => user.id);
+    const { data: tokens, error: tokensError } = await supabase
+      .schema("public")
+      .from("user_fcm_tokens")
+      .select("user_id, token, platform, device_id")
+      .in("user_id", userIds);
+
+    if (tokensError) {
+      console.error("token lookup error:", tokensError);
+      return new Response(JSON.stringify({ ok: false, error: "token_lookup_failed" }), {
+        headers: { "Content-Type": "application/json" },
+        status: 500,
+      });
+    }
+
+    const tokensWithValue = (tokens ?? []).filter((row) => row.token);
+    if (tokensWithValue.length === 0) {
       return new Response(
         JSON.stringify({
           ok: true,
@@ -114,11 +131,11 @@ Deno.serve(async (req: Request) => {
 
     const results: Array<{ user_id: string; ok: boolean; error?: unknown }> = [];
 
-    for (const user of usersWithTokens) {
-      const notification = notificationByUserId.get(user.id);
+    for (const tokenRow of tokensWithValue) {
+      const notification = notificationByUserId.get(tokenRow.user_id);
       const fcmPayload = {
         message: {
-          token: user.fcm_token,
+          token: tokenRow.token,
           notification: {
             title,
             body,
@@ -129,6 +146,8 @@ Deno.serve(async (req: Request) => {
             event_id: String(event.id ?? ""),
             source: "events",
             image: image ?? "",
+            platform: tokenRow.platform ?? "",
+            device_id: tokenRow.device_id ?? "",
           },
         },
       };
@@ -147,13 +166,13 @@ Deno.serve(async (req: Request) => {
 
         if (!fcmRes.ok) {
           console.error("FCM error:", fcmRes.status, fcmResJson);
-          results.push({ user_id: user.id, ok: false, error: fcmResJson });
+          results.push({ user_id: tokenRow.user_id, ok: false, error: fcmResJson });
         } else {
-          results.push({ user_id: user.id, ok: true });
+          results.push({ user_id: tokenRow.user_id, ok: true });
         }
       } catch (err) {
         console.error("FCM send error:", err);
-        results.push({ user_id: user.id, ok: false, error: String(err) });
+        results.push({ user_id: tokenRow.user_id, ok: false, error: String(err) });
       }
     }
 

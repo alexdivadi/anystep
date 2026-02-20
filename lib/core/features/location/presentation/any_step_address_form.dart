@@ -422,14 +422,6 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.showNameField) ...[
-          AnyStepTextField(
-            name: widget.nameFieldName,
-            labelText: widget.nameLabelText ?? "${loc.nameLabel} (${loc.optional})",
-            validator: widget.nameValidator,
-          ),
-          const SizedBox(height: AnyStepSpacing.sm4),
-        ],
         AnyStepTextField(
           name: 'street',
           labelText: widget.streetLabelText ?? loc.streetAddress,
@@ -559,6 +551,14 @@ class _AnyStepAddressFormState extends ConsumerState<AnyStepAddressForm> {
             ),
           ],
         ),
+        if (widget.showNameField) ...[
+          const SizedBox(height: AnyStepSpacing.sm4),
+          AnyStepTextField(
+            name: widget.nameFieldName,
+            labelText: widget.nameLabelText ?? "${loc.nameLabel} (${loc.optional})",
+            validator: widget.nameValidator,
+          ),
+        ],
         if (widget.showSaveButton)
           Padding(
             padding: const EdgeInsets.only(top: AnyStepSpacing.sm8),
