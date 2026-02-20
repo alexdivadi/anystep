@@ -98,6 +98,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   bool _isSearchDisabled = false;
   bool _isApplyingSelection = false;
   bool _isSelectingFromList = false;
+  bool _pointerDownOnResults = false;
   bool _searchActive = false;
   bool _isSaving = false;
   List<AddressModel> _dbResults = [];
@@ -144,9 +145,11 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
   void _handleFocusChange() {
     if (!_streetFocusNode.hasFocus) {
       _searchActive = false;
-      if (_isSelectingFromList) return;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted || _isSelectingFromList) return;
+      _debounce?.cancel();
+      _isLoading = false;
+      if (_isSelectingFromList || _pointerDownOnResults) return;
+      Future.delayed(const Duration(milliseconds: 50), () {
+        if (!mounted || _isSelectingFromList || _pointerDownOnResults) return;
         setState(() {
           _dbResults = [];
           _predictions = [];
@@ -186,6 +189,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     final query = value?.trim() ?? '';
     if (query.isEmpty) {
       _searchActive = false;
+      _isLoading = false;
       setState(() {
         _dbResults = [];
         _predictions = [];
@@ -242,6 +246,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     final form = widget.formKey.currentState;
     if (form == null) return;
     _isApplyingSelection = true;
+    _debounce?.cancel();
+    _isLoading = false;
     if (widget.showNameField) {
       form.fields[widget.nameFieldName]?.didChange(address.name);
     }
@@ -273,6 +279,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     setState(() {
       _dbResults = [];
       _predictions = [];
+      _error = null;
     });
   }
 
@@ -285,15 +292,23 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       final parsed = placeDetailsToAddress(prediction.details);
       final form = widget.formKey.currentState;
       if (form == null) return;
+      _isApplyingSelection = true;
+      _debounce?.cancel();
+      _addressId = null;
+      form.fields[widget.addressIdFieldName]?.didChange(null);
+      if (widget.showNameField) {
+        final nameValue = parsed.name ?? prediction.mainText ?? prediction.description;
+        form.fields[widget.nameFieldName]?.didChange(nameValue);
+      }
       form.fields['street']?.didChange(parsed.street);
       form.fields['streetSecondary']?.didChange(parsed.streetSecondary);
       form.fields['city']?.didChange(parsed.city);
       form.fields['state']?.didChange(parsed.state);
       form.fields[widget.postalCodeFieldName]?.didChange(parsed.postalCode);
       _placeId = parsed.placeId;
+      _placeName = parsed.name;
       _latitude = parsed.latitude;
       _longitude = parsed.longitude;
-      _isApplyingSelection = true;
       _streetController.text = parsed.street.isNotEmpty ? parsed.street : prediction.description;
       _streetController.selection = TextSelection.fromPosition(
         TextPosition(offset: _streetController.text.length),
@@ -306,6 +321,7 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
         _dbResults = [];
         _predictions = [];
         _isLoading = false;
+        _error = null;
       });
     } catch (e, stackTrace) {
       Log.e('Places selection error', e, stackTrace);
@@ -321,6 +337,9 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
     final form = widget.formKey.currentState;
     if (form == null || widget.initialAddressId == null) return;
     try {
+      _isApplyingSelection = true;
+      _searchActive = false;
+      _debounce?.cancel();
       final repo = ref.read(addressRepositoryProvider);
       final address = await repo.get(documentId: widget.initialAddressId.toString());
       _placeId = address.placeId;
@@ -337,8 +356,13 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
       form.fields[widget.postalCodeFieldName]?.didChange(address.postalCode);
       form.fields[widget.addressIdFieldName]?.didChange(address.id);
       _streetController.text = address.street;
+      _streetController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _streetController.text.length),
+      );
     } catch (e, stackTrace) {
       Log.e('Error loading address', e, stackTrace);
+    } finally {
+      _isApplyingSelection = false;
     }
   }
 
@@ -418,7 +442,8 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
             padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
             child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ),
-        if (_dbResults.isEmpty &&
+        if (_searchActive &&
+            _dbResults.isEmpty &&
             _predictions.isEmpty &&
             !_isLoading &&
             _streetController.text.trim().isNotEmpty)
@@ -428,41 +453,51 @@ class _AnyStepAddressFieldState extends ConsumerState<AnyStepAddressField> {
           ),
         if (_searchActive &&
             (_dbResults.isNotEmpty || (!_isSearchDisabled && _predictions.isNotEmpty)))
-          Card(
-            margin: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _dbResults.length + _predictions.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, index) {
-                if (index < _dbResults.length) {
-                  final address = _dbResults[index];
-                  final title = address.name ?? address.formattedAddress;
-                  final subtitle = address.name != null ? address.formattedAddress : null;
+          Listener(
+            onPointerDown: (_) {
+              _pointerDownOnResults = true;
+              _isSelectingFromList = true;
+            },
+            onPointerUp: (_) {
+              _pointerDownOnResults = false;
+              _isSelectingFromList = false;
+            },
+            onPointerCancel: (_) {
+              _pointerDownOnResults = false;
+              _isSelectingFromList = false;
+            },
+            child: Card(
+              margin: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _dbResults.length + _predictions.length,
+                separatorBuilder: (_, __) => const Divider(height: 1),
+                itemBuilder: (context, index) {
+                  if (index < _dbResults.length) {
+                    final address = _dbResults[index];
+                    final title = address.name ?? address.formattedAddress;
+                    final subtitle = address.name != null ? address.formattedAddress : null;
+                    return InkWell(
+                      onTap: () => _selectAddress(address),
+                      child: ListTile(
+                        title: Text(title),
+                        subtitle: subtitle != null ? Text(subtitle) : null,
+                      ),
+                    );
+                  }
+                  final prediction = _predictions[index - _dbResults.length];
                   return InkWell(
-                    onTapDown: (_) => _isSelectingFromList = true,
-                    onTapCancel: () => _isSelectingFromList = false,
-                    onTap: () => _selectAddress(address),
+                    onTap: () => _selectPrediction(prediction),
                     child: ListTile(
-                      title: Text(title),
-                      subtitle: subtitle != null ? Text(subtitle) : null,
+                      title: Text(prediction.mainText ?? prediction.description),
+                      subtitle: prediction.secondaryText != null
+                          ? Text(prediction.secondaryText!)
+                          : null,
                     ),
                   );
-                }
-                final prediction = _predictions[index - _dbResults.length];
-                return InkWell(
-                  onTapDown: (_) => _isSelectingFromList = true,
-                  onTapCancel: () => _isSelectingFromList = false,
-                  onTap: () => _selectPrediction(prediction),
-                  child: ListTile(
-                    title: Text(prediction.mainText ?? prediction.description),
-                    subtitle: prediction.secondaryText != null
-                        ? Text(prediction.secondaryText!)
-                        : null,
-                  ),
-                );
-              },
+                },
+              ),
             ),
           ),
         FormBuilderField<int>(

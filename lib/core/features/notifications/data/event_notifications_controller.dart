@@ -1,5 +1,5 @@
-import 'package:anystep/core/features/notifications/data/notification_repository.dart';
-import 'package:anystep/core/shared_prefs/shared_prefs.dart';
+import 'package:anystep/core/features/profile/data/current_user.dart';
+import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'event_notifications_controller.g.dart';
@@ -8,25 +8,25 @@ part 'event_notifications_controller.g.dart';
 class EventNotificationsController extends _$EventNotificationsController {
   @override
   Future<bool> build() async {
-    final prefs = await ref.watch(appPreferencesProvider.future);
-    return prefs.getEventNotificationsEnabled() ?? true;
+    final user = await ref.watch(currentUserStreamProvider.future);
+    return user?.newEventNotificationsEnabled ?? true;
   }
 
-  Future<void> setEnabled(
-    bool enabled, {
-    bool requestPermission = true,
-  }) async {
+  Future<void> setEnabled(bool enabled) async {
     state = const AsyncLoading();
-    await ref.read(notificationRepositoryProvider).setEventNotificationsEnabled(
-          enabled,
-          requestPermission: requestPermission,
-        );
-    state = AsyncData(enabled);
+    state = await AsyncValue.guard(() async {
+      final user = await ref.read(currentUserStreamProvider.future);
+      if (user == null) {
+        throw StateError('No authenticated user available for notification settings.');
+      }
+      final updated = user.copyWith(newEventNotificationsEnabled: enabled);
+      await ref.read(userRepositoryProvider).createOrUpdate(obj: updated, documentId: user.id);
+      ref.invalidate(currentUserStreamProvider);
+      return enabled;
+    });
   }
 
   Future<void> enableOnSignup() async {
-    final prefs = await ref.read(appPreferencesProvider.future);
-    if (prefs.getEventNotificationsEnabled() != null) return;
-    await setEnabled(true, requestPermission: true);
+    await setEnabled(true);
   }
 }

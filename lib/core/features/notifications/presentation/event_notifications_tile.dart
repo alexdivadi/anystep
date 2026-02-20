@@ -16,9 +16,8 @@ class EventNotificationsTile extends ConsumerWidget {
     return enabledAsync.when(
       data: (enabled) => SwitchListTile(
         value: enabled,
-        onChanged: (value) => ref
-            .read(eventNotificationsControllerProvider.notifier)
-            .setEnabled(value, requestPermission: true),
+        onChanged: (value) =>
+            ref.read(eventNotificationsControllerProvider.notifier).setEnabled(value),
         title: Text(title),
         subtitle: subtitle == null ? null : Text(subtitle!),
         dense: dense,

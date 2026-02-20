@@ -25,6 +25,8 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
       ? null
       : DateTime.parse(json['agreement_signed_on'] as String),
   fcmToken: json['fcm_token'] as String?,
+  newEventNotificationsEnabled:
+      json['new_event_notifications_enabled'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -39,6 +41,7 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'phone_number': instance.phoneNumber,
       'agreement_signed_on': instance.agreementSignedOn?.toIso8601String(),
       'fcm_token': instance.fcmToken,
+      'new_event_notifications_enabled': instance.newEventNotificationsEnabled,
     };
 
 const _$UserRoleEnumMap = {
