@@ -35,32 +35,49 @@ Deno.serve(async (req: Request) => {
     }
 
     const event = payload.record;
-    if (!event || !event.user_id) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "missing event.user_id" }),
-        { headers: { "Content-Type": "application/json" }, status: 400 }
-      );
+    if (!event) {
+      return new Response(JSON.stringify({ ok: false, error: "missing event" }), {
+        headers: { "Content-Type": "application/json" },
+        status: 400,
+      });
     }
 
     const title = event.name ?? "New event";
     const body = event.description ?? "";
     const image = event.image_url ?? null;
-    const userId = event.user_id;
 
-    // Insert a notification row
+    const { data: users, error: usersError } = await supabase
+      .from("users")
+      .select("id, fcm_token")
+      .eq("new_event_notifications_enabled", true);
+
+    if (usersError) {
+      console.error("user lookup error:", usersError);
+      return new Response(JSON.stringify({ ok: false, error: "user_lookup_failed" }), {
+        headers: { "Content-Type": "application/json" },
+        status: 500,
+      });
+    }
+
+    if (!users || users.length === 0) {
+      return new Response(JSON.stringify({ ok: true, message: "no_users_enabled" }), {
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const notificationsToInsert = users.map((user) => ({
+      user_id: user.id,
+      title,
+      body,
+      image,
+      group: "new_event",
+      read: false,
+    }));
+
     const { data: notifData, error: notifError } = await supabase
       .from("notifications")
-      .insert([
-        {
-          user_id: userId,
-          title,
-          body,
-          image,
-          group: "events",
-        },
-      ])
-      .select()
-      .maybeSingle();
+      .insert(notificationsToInsert)
+      .select();
 
     if (notifError) {
       console.error("insert notification error:", notifError);
@@ -70,33 +87,23 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const notification = Array.isArray(notifData) ? notifData[0] : notifData;
-
-    // Lookup user's fcm token from users table
-    const { data: userData, error: userError } = await supabase
-      .from("users")
-      .select("fcm_token")
-      .eq("id", userId)
-      .single();
-
-    if (userError) {
-      console.error("profile lookup error:", userError);
-      return new Response(
-        JSON.stringify({ ok: false, error: "user_lookup_failed" }),
-        { headers: { "Content-Type": "application/json" }, status: 200 }
-      );
+    const notificationByUserId = new Map<string, any>();
+    for (const row of notifData ?? []) {
+      if (row?.user_id) notificationByUserId.set(row.user_id, row);
     }
 
-    const fcmToken = userData?.fcm_token as string | undefined;
-    if (!fcmToken) {
-      console.info("no fcm token for user", userId);
+    const usersWithTokens = users.filter((user) => user.fcm_token);
+    if (usersWithTokens.length === 0) {
       return new Response(
-        JSON.stringify({ ok: true, notification_id: notification?.id, message: "no_fcm_token" }),
+        JSON.stringify({
+          ok: true,
+          notification_count: notifData?.length ?? 0,
+          message: "no_fcm_tokens",
+        }),
         { headers: { "Content-Type": "application/json" } }
       );
     }
 
-    // Get access token for FCM
     const accessToken = await getAccessToken({
       clientEmail: serviceAccount.client_email,
       privateKey: serviceAccount.private_key,
@@ -105,53 +112,57 @@ Deno.serve(async (req: Request) => {
     const projectId = serviceAccount.project_id;
     const fcmUrl = `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`;
 
-    const fcmPayload = {
-      message: {
-        token: fcmToken,
-        notification: {
-          title,
-          body,
+    const results: Array<{ user_id: string; ok: boolean; error?: unknown }> = [];
+
+    for (const user of usersWithTokens) {
+      const notification = notificationByUserId.get(user.id);
+      const fcmPayload = {
+        message: {
+          token: user.fcm_token,
+          notification: {
+            title,
+            body,
+            ...(image ? { image } : {}),
+          },
+          data: {
+            notification_id: notification?.id ?? "",
+            event_id: String(event.id ?? ""),
+            source: "events",
+            image: image ?? "",
+          },
         },
-        data: {
-          notification_id: notification?.id ?? "",
-          event_id: String(event.id ?? ""),
-          source: "events",
-        },
-      },
-    };
+      };
 
-    const fcmRes = await fetch(fcmUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(fcmPayload),
-    });
+      try {
+        const fcmRes = await fetch(fcmUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(fcmPayload),
+        });
 
-    const fcmResJson = await fcmRes.json();
+        const fcmResJson = await fcmRes.json();
 
-    if (!fcmRes.ok) {
-      console.error("FCM error:", fcmRes.status, fcmResJson);
-      // update notification with failure info (best-effort)
-      await supabase
-        .from("notifications")
-        .update({ group: "events_failed", image: JSON.stringify(fcmResJson) })
-        .eq("id", notification?.id);
-      return new Response(JSON.stringify({ ok: false, fcm_error: fcmResJson }), {
-        headers: { "Content-Type": "application/json" },
-        status: 500,
-      });
+        if (!fcmRes.ok) {
+          console.error("FCM error:", fcmRes.status, fcmResJson);
+          results.push({ user_id: user.id, ok: false, error: fcmResJson });
+        } else {
+          results.push({ user_id: user.id, ok: true });
+        }
+      } catch (err) {
+        console.error("FCM send error:", err);
+        results.push({ user_id: user.id, ok: false, error: String(err) });
+      }
     }
 
-    // Optionally mark notification sent (you may add a status column if desired)
-    await supabase
-      .from("notifications")
-      .update({ group: "events_sent" })
-      .eq("id", notification?.id);
-
     return new Response(
-      JSON.stringify({ ok: true, notification_id: notification?.id, fcm_response: fcmResJson }),
+      JSON.stringify({
+        ok: true,
+        notification_count: notifData?.length ?? 0,
+        send_results: results,
+      }),
       { headers: { "Content-Type": "application/json" } }
     );
   } catch (err) {

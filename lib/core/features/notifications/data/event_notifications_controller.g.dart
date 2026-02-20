@@ -35,7 +35,7 @@ final class EventNotificationsControllerProvider
 }
 
 String _$eventNotificationsControllerHash() =>
-    r'9d861a1b60897a8b361e4e50e56c638b1f68e86a';
+    r'c6db4a7984c1bee29080daaf3a9547b067d63e6d';
 
 abstract class _$EventNotificationsController extends $AsyncNotifier<bool> {
   FutureOr<bool> build();

@@ -11,6 +11,7 @@ class RouterUtils {
     EventFeedScreen.pathAdmin,
     SettingsScreen.pathAdmin,
     ReportsScreen.pathAdmin,
+    CreateEventScreen.path,
   };
 
   static const anyRoutes = {
@@ -25,6 +26,8 @@ class RouterUtils {
     UserOnboardedGate.path,
     EventDetailScreen.path,
     SignAgreementScreen.path,
+    AboutScreen.path,
+    NotificationSettingsScreen.path,
   };
 
   static const loginRoutes = {LoginScreen.path, SignUpScreen.path, ConfirmEmailScreen.path};

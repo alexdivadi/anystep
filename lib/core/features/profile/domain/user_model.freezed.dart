@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;@JsonKey(name: "agreement_signed_on") DateTime? get agreementSignedOn;@JsonKey(name: "fcm_token") String? get fcmToken;
+ String get id; String get email;@JsonKey(name: "address") int? get addressId;@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? get address;@JsonKey(name: "first_name") String get firstName;@JsonKey(name: "last_name") String get lastName;@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup get ageGroup; UserRole get role;@JsonKey(name: "phone_number") String? get phoneNumber;@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? get createdAt;@JsonKey(includeToJson: false, includeFromJson: false) bool get isCachedValue;@JsonKey(name: "agreement_signed_on") DateTime? get agreementSignedOn;@JsonKey(name: "fcm_token") String? get fcmToken;@JsonKey(name: "new_event_notifications_enabled") bool get newEventNotificationsEnabled;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue)&&(identical(other.agreementSignedOn, agreementSignedOn) || other.agreementSignedOn == agreementSignedOn)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue)&&(identical(other.agreementSignedOn, agreementSignedOn) || other.agreementSignedOn == agreementSignedOn)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.newEventNotificationsEnabled, newEventNotificationsEnabled) || other.newEventNotificationsEnabled == newEventNotificationsEnabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email,addressId,address,firstName,lastName,ageGroup,role,phoneNumber,createdAt,isCachedValue,agreementSignedOn,fcmToken);
+int get hashCode => Object.hash(runtimeType,id,email,addressId,address,firstName,lastName,ageGroup,role,phoneNumber,createdAt,isCachedValue,agreementSignedOn,fcmToken,newEventNotificationsEnabled);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, email: $email, addressId: $addressId, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, createdAt: $createdAt, isCachedValue: $isCachedValue, agreementSignedOn: $agreementSignedOn, fcmToken: $fcmToken)';
+  return 'UserModel(id: $id, email: $email, addressId: $addressId, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, createdAt: $createdAt, isCachedValue: $isCachedValue, agreementSignedOn: $agreementSignedOn, fcmToken: $fcmToken, newEventNotificationsEnabled: $newEventNotificationsEnabled)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,@JsonKey(name: "fcm_token") String? fcmToken
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,@JsonKey(name: "fcm_token") String? fcmToken,@JsonKey(name: "new_event_notifications_enabled") bool newEventNotificationsEnabled
 });
 
 
@@ -65,7 +65,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? addressId = freezed,Object? address = freezed,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? createdAt = freezed,Object? isCachedValue = null,Object? agreementSignedOn = freezed,Object? fcmToken = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? addressId = freezed,Object? address = freezed,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? createdAt = freezed,Object? isCachedValue = null,Object? agreementSignedOn = freezed,Object? fcmToken = freezed,Object? newEventNotificationsEnabled = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,8 @@ as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // igno
 as DateTime?,isCachedValue: null == isCachedValue ? _self.isCachedValue : isCachedValue // ignore: cast_nullable_to_non_nullable
 as bool,agreementSignedOn: freezed == agreementSignedOn ? _self.agreementSignedOn : agreementSignedOn // ignore: cast_nullable_to_non_nullable
 as DateTime?,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,newEventNotificationsEnabled: null == newEventNotificationsEnabled ? _self.newEventNotificationsEnabled : newEventNotificationsEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of UserModel
@@ -177,10 +178,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken, @JsonKey(name: "new_event_notifications_enabled")  bool newEventNotificationsEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken);case _:
+return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken,_that.newEventNotificationsEnabled);case _:
   return orElse();
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken, @JsonKey(name: "new_event_notifications_enabled")  bool newEventNotificationsEnabled)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken);case _:
+return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken,_that.newEventNotificationsEnabled);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +219,10 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email, @JsonKey(name: "address")  int? addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)  AddressModel? address, @JsonKey(name: "first_name")  String firstName, @JsonKey(name: "last_name")  String lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson)  AgeGroup ageGroup,  UserRole role, @JsonKey(name: "phone_number")  String? phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at")  DateTime? createdAt, @JsonKey(includeToJson: false, includeFromJson: false)  bool isCachedValue, @JsonKey(name: "agreement_signed_on")  DateTime? agreementSignedOn, @JsonKey(name: "fcm_token")  String? fcmToken, @JsonKey(name: "new_event_notifications_enabled")  bool newEventNotificationsEnabled)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken);case _:
+return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstName,_that.lastName,_that.ageGroup,_that.role,_that.phoneNumber,_that.createdAt,_that.isCachedValue,_that.agreementSignedOn,_that.fcmToken,_that.newEventNotificationsEnabled);case _:
   return null;
 
 }
@@ -233,7 +234,7 @@ return $default(_that.id,_that.email,_that.addressId,_that.address,_that.firstNa
 @JsonSerializable()
 
 class _UserModel extends UserModel {
-  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false, @JsonKey(name: "agreement_signed_on") this.agreementSignedOn, @JsonKey(name: "fcm_token") this.fcmToken}): super._();
+  const _UserModel({required this.id, required this.email, @JsonKey(name: "address") this.addressId, @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) this.address, @JsonKey(name: "first_name") required this.firstName, @JsonKey(name: "last_name") required this.lastName, @JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) required this.ageGroup, required this.role, @JsonKey(name: "phone_number") this.phoneNumber, @JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") this.createdAt, @JsonKey(includeToJson: false, includeFromJson: false) this.isCachedValue = false, @JsonKey(name: "agreement_signed_on") this.agreementSignedOn, @JsonKey(name: "fcm_token") this.fcmToken, @JsonKey(name: "new_event_notifications_enabled") this.newEventNotificationsEnabled = true}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -249,6 +250,7 @@ class _UserModel extends UserModel {
 @override@JsonKey(includeToJson: false, includeFromJson: false) final  bool isCachedValue;
 @override@JsonKey(name: "agreement_signed_on") final  DateTime? agreementSignedOn;
 @override@JsonKey(name: "fcm_token") final  String? fcmToken;
+@override@JsonKey(name: "new_event_notifications_enabled") final  bool newEventNotificationsEnabled;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -263,16 +265,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue)&&(identical(other.agreementSignedOn, agreementSignedOn) || other.agreementSignedOn == agreementSignedOn)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.addressId, addressId) || other.addressId == addressId)&&(identical(other.address, address) || other.address == address)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.ageGroup, ageGroup) || other.ageGroup == ageGroup)&&(identical(other.role, role) || other.role == role)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isCachedValue, isCachedValue) || other.isCachedValue == isCachedValue)&&(identical(other.agreementSignedOn, agreementSignedOn) || other.agreementSignedOn == agreementSignedOn)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.newEventNotificationsEnabled, newEventNotificationsEnabled) || other.newEventNotificationsEnabled == newEventNotificationsEnabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email,addressId,address,firstName,lastName,ageGroup,role,phoneNumber,createdAt,isCachedValue,agreementSignedOn,fcmToken);
+int get hashCode => Object.hash(runtimeType,id,email,addressId,address,firstName,lastName,ageGroup,role,phoneNumber,createdAt,isCachedValue,agreementSignedOn,fcmToken,newEventNotificationsEnabled);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, email: $email, addressId: $addressId, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, createdAt: $createdAt, isCachedValue: $isCachedValue, agreementSignedOn: $agreementSignedOn, fcmToken: $fcmToken)';
+  return 'UserModel(id: $id, email: $email, addressId: $addressId, address: $address, firstName: $firstName, lastName: $lastName, ageGroup: $ageGroup, role: $role, phoneNumber: $phoneNumber, createdAt: $createdAt, isCachedValue: $isCachedValue, agreementSignedOn: $agreementSignedOn, fcmToken: $fcmToken, newEventNotificationsEnabled: $newEventNotificationsEnabled)';
 }
 
 
@@ -283,7 +285,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,@JsonKey(name: "fcm_token") String? fcmToken
+ String id, String email,@JsonKey(name: "address") int? addressId,@JsonKey(name: "address_model", includeToJson: false, includeFromJson: true) AddressModel? address,@JsonKey(name: "first_name") String firstName,@JsonKey(name: "last_name") String lastName,@JsonKey(name: "age_group", toJson: AgeGroupJson.toJsonStatic, fromJson: AgeGroupJson.fromJson) AgeGroup ageGroup, UserRole role,@JsonKey(name: "phone_number") String? phoneNumber,@JsonKey(includeToJson: false, includeFromJson: true, name: "created_at") DateTime? createdAt,@JsonKey(includeToJson: false, includeFromJson: false) bool isCachedValue,@JsonKey(name: "agreement_signed_on") DateTime? agreementSignedOn,@JsonKey(name: "fcm_token") String? fcmToken,@JsonKey(name: "new_event_notifications_enabled") bool newEventNotificationsEnabled
 });
 
 
@@ -300,7 +302,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? addressId = freezed,Object? address = freezed,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? createdAt = freezed,Object? isCachedValue = null,Object? agreementSignedOn = freezed,Object? fcmToken = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? addressId = freezed,Object? address = freezed,Object? firstName = null,Object? lastName = null,Object? ageGroup = null,Object? role = null,Object? phoneNumber = freezed,Object? createdAt = freezed,Object? isCachedValue = null,Object? agreementSignedOn = freezed,Object? fcmToken = freezed,Object? newEventNotificationsEnabled = null,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -315,7 +317,8 @@ as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // igno
 as DateTime?,isCachedValue: null == isCachedValue ? _self.isCachedValue : isCachedValue // ignore: cast_nullable_to_non_nullable
 as bool,agreementSignedOn: freezed == agreementSignedOn ? _self.agreementSignedOn : agreementSignedOn // ignore: cast_nullable_to_non_nullable
 as DateTime?,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,newEventNotificationsEnabled: null == newEventNotificationsEnabled ? _self.newEventNotificationsEnabled : newEventNotificationsEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

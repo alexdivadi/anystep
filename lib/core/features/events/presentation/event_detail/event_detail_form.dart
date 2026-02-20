@@ -10,11 +10,18 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EventDetailForm extends ConsumerStatefulWidget {
-  const EventDetailForm({super.key, this.event, this.onSuccess, this.physics});
+  const EventDetailForm({
+    super.key,
+    this.event,
+    this.onSuccess,
+    this.physics,
+    this.showAddressNameField = false,
+  });
 
   final EventModel? event;
   final VoidCallback? onSuccess;
   final ScrollPhysics? physics;
+  final bool showAddressNameField;
 
   @override
   ConsumerState<EventDetailForm> createState() => _EventDetailFormState();
@@ -136,21 +143,18 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     ),
 
                     const SizedBox(height: AnyStepSpacing.sm4),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
-                    ),
-                    const SizedBox(height: AnyStepSpacing.sm4),
-                    AnyStepAddressField(
+                    AnyStepAddressModalTile(
                       formKey: formKey,
                       initialAddressId: widget.event?.addressId ?? widget.event?.address?.id,
                       isUserAddress: false,
                       includeEventAddresses: true,
                       includeUserAddresses: false,
+                      showNameField: widget.showAddressNameField,
                       streetValidator: FormBuilderValidators.required(),
                       streetSecondaryValidator: FormBuilderValidators.street(
                         checkNullOrEmpty: false,
                       ),
+                      addressIdValidator: FormBuilderValidators.required(),
                     ),
                     Theme(
                       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),

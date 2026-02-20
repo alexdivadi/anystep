@@ -100,8 +100,7 @@ class _AddressAutocompleteFieldState extends ConsumerState<AddressAutocompleteFi
       _error = null;
     });
     try {
-      final details = await ref.read(placesApiClientProvider).placeDetails(prediction.placeId);
-      final parsed = placeDetailsToAddress(details);
+      final parsed = placeDetailsToAddress(prediction.details);
       final form = widget.formKey.currentState;
       if (form == null) return;
       form.fields['street']?.didChange(parsed.street);

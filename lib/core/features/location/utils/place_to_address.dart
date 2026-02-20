@@ -1,3 +1,4 @@
+import 'package:anystep/core/common/utils/state_utils.dart';
 import 'package:anystep/core/features/location/domain/places_models.dart';
 
 class ParsedPlaceAddress {
@@ -27,28 +28,26 @@ class ParsedPlaceAddress {
 }
 
 ParsedPlaceAddress placeDetailsToAddress(PlaceDetails details) {
-  String? componentLong(String type) {
-    final component = details.addressComponents.where((c) => c.types.contains(type)).toList();
-    return component.isNotEmpty ? component.first.longText : null;
+  String? firstValue(Iterable<String> keys) {
+    for (final key in keys) {
+      final value = details.addressDetails[key];
+      if (value != null) {
+        final trimmed = value.toString().trim();
+        if (trimmed.isNotEmpty) return trimmed;
+      }
+    }
+    return null;
   }
 
-  String? componentShort(String type) {
-    final component = details.addressComponents.where((c) => c.types.contains(type)).toList();
-    return component.isNotEmpty ? component.first.shortText : null;
-  }
-
-  final streetNumber = componentLong('street_number') ?? '';
-  final route = componentLong('route') ?? '';
+  final streetNumber = firstValue(['house_number', 'street_number']) ?? '';
+  final route = firstValue(['road', 'pedestrian', 'footway', 'street', 'residential']) ?? '';
   final street = [streetNumber, route].where((p) => p.trim().isNotEmpty).join(' ').trim();
-  final streetSecondary = componentLong('subpremise');
-  final city =
-      componentLong('locality') ??
-      componentLong('postal_town') ??
-      componentLong('administrative_area_level_2') ??
-      '';
-  final state = componentShort('administrative_area_level_1') ?? '';
-  final postalCode = componentLong('postal_code') ?? '';
-  final country = componentShort('country') ?? 'US';
+  final streetSecondary = firstValue(['unit', 'floor', 'flat', 'apartment', 'suite']);
+  final city = firstValue(['city', 'town', 'village', 'hamlet', 'municipality', 'county']) ?? '';
+  final rawState = firstValue(['state', 'region', 'state_district']) ?? '';
+  final state = normalizeUsState(rawState) ?? rawState;
+  final postalCode = firstValue(['postcode']) ?? '';
+  final country = (firstValue(['country_code']) ?? 'US').toUpperCase();
 
   return ParsedPlaceAddress(
     street: street,
@@ -58,7 +57,6 @@ ParsedPlaceAddress placeDetailsToAddress(PlaceDetails details) {
     postalCode: postalCode,
     country: country,
     placeId: details.placeId,
-    name: details.name,
     latitude: details.latitude,
     longitude: details.longitude,
   );

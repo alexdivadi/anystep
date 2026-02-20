@@ -17,6 +17,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get welcomeMessageTitle => 'Bienvenido';
+
+  @override
+  String get welcomeMessageDismiss => 'Entendido';
+
+  @override
   String itemCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -140,6 +146,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noAddressProvided => 'No se proporcionó dirección';
+
+  @override
+  String get addressSaved => 'Dirección guardada.';
+
+  @override
+  String get addressSaveFailed => 'No se pudo guardar la dirección.';
+
+  @override
+  String get notificationSettingsUpdated =>
+      'Configuración de notificaciones actualizada.';
+
+  @override
+  String get notificationSettingsUpdateFailed =>
+      'No se pudo actualizar la configuración de notificaciones.';
 
   @override
   String get start => 'Inicio';
@@ -570,6 +590,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tapToSign => 'Toca para firmar';
+
+  @override
+  String get optional => 'opcional';
 
   @override
   String get validatorRequired => 'Este campo es obligatorio';

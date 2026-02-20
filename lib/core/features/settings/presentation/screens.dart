@@ -1,3 +1,3 @@
 export 'settings_screen.dart';
-export 'notification_settings_page.dart';
-export 'about_page.dart';
+export 'notification_settings_screen.dart';
+export 'about_screen.dart';

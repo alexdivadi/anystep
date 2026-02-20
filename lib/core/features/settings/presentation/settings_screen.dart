@@ -35,7 +35,7 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.info_outline),
                 title: Text(loc.aboutTitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push(AboutPage.path),
+                onTap: () => context.push(AboutScreen.path),
               ),
               const ThemeModeSetting(),
               const LocaleSetting(),
@@ -43,7 +43,7 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.notifications),
                 title: Text(loc.notificationSettingsTitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push(NotificationSettingsPage.path),
+                onTap: () => context.push(NotificationSettingsScreen.path),
               ),
               if (isAuth != null) ...[
                 ListTile(

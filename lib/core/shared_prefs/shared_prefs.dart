@@ -14,6 +14,7 @@ class AppPreferences {
   static const String themeModeKey = 'theme_mode';
   static const String localeCodeKey = 'locale_code';
   static const String eventNotificationsKey = 'event_notifications';
+  static const String welcomeMessageSeenKey = 'welcome_message_seen';
 
   String? getAuthStateJson() => _prefs.getString(authStateKey);
   Future<void> setAuthStateJson(String token) async => await _prefs.setString(authStateKey, token);
@@ -42,6 +43,11 @@ class AppPreferences {
       await _prefs.setBool(eventNotificationsKey, enabled);
   Future<void> clearEventNotificationsEnabled() async =>
       await _prefs.remove(eventNotificationsKey);
+
+  bool getWelcomeMessageSeen() => _prefs.getBool(welcomeMessageSeenKey) ?? false;
+  Future<void> setWelcomeMessageSeen({bool seen = true}) async =>
+      await _prefs.setBool(welcomeMessageSeenKey, seen);
+  Future<void> clearWelcomeMessageSeen() async => await _prefs.remove(welcomeMessageSeenKey);
 }
 
 @Riverpod(keepAlive: true)

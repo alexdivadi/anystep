@@ -1,85 +1,65 @@
 import 'package:anystep/core/common/utils/log_utils.dart';
 import 'package:anystep/core/features/location/domain/places_models.dart';
-import 'package:anystep/env/env.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_osm_interface/flutter_osm_interface.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'places_api_client.g.dart';
 
 class PlacesApiClient {
-  PlacesApiClient({Dio? dio, String? apiKey})
-      : _dio =
-            dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: 'https://places.googleapis.com/v1/',
-                connectTimeout: const Duration(seconds: 10),
-                receiveTimeout: const Duration(seconds: 10),
-              ),
-            ),
-        _apiKey = apiKey ?? Env.placesApiKey;
+  static const _photonBaseUrl = 'https://photon.komoot.io/api/';
 
-  final Dio _dio;
-  final String _apiKey;
-  final Map<String, PlaceDetails> _detailsCache = {};
+  PlacesApiClient({Dio? dio}) : _dio = dio ?? Dio();
 
-  Future<List<PlacesPrediction>> autocomplete(String query, {String countryCode = 'US'}) async {
+  Future<List<PlacesPrediction>> autocomplete(
+    String query, {
+    String countryCode = 'US',
+    int? limit,
+  }) async {
     if (query.trim().isEmpty) return [];
-    if (_apiKey.isEmpty) {
-      Log.w('Places API key missing; set GOOGLE_PLACES_API_KEY via --dart-define.');
-      return [];
-    }
+    final normalizedQuery = countryCode.trim().isEmpty
+        ? query.trim()
+        : '${query.trim()}, ${countryCode.trim()}';
     try {
-      final response = await _dio.post<Map<String, dynamic>>(
-        'places:autocomplete',
-        data: {
-          'input': query,
-          'includedRegionCodes': [countryCode],
+      final locale = _mapLocale(countryCode);
+      final response = await _dio.get(
+        _photonBaseUrl,
+        queryParameters: {
+          'q': normalizedQuery,
+          'limit': limit ?? 10,
+          if (locale.isNotEmpty) 'lang': locale,
         },
         options: Options(
-          headers: {
-            'X-Goog-Api-Key': _apiKey,
-            'X-Goog-FieldMask':
-                'suggestions.placePrediction.placeId,'
-                'suggestions.placePrediction.text,'
-                'suggestions.placePrediction.structuredFormat',
+          headers: const {
+            // Photon demo server expects a descriptive User-Agent.
+            // Update with a contact URL/email if you have one.
+            'User-Agent': 'AnyStepApp/1.0',
           },
         ),
       );
-      final suggestions = response.data?['suggestions'] as List<dynamic>? ?? [];
-      return suggestions
-          .map((e) => PlacesPrediction.fromJson(e as Map<String, dynamic>))
-          .where((p) => p.placeId.isNotEmpty)
-          .toList();
+      final data = response.data as Map<String, dynamic>;
+      final features = (data['features'] as List?) ?? const [];
+      final results = features.map((d) => SearchInfo.fromPhotonAPI(d)).toList();
+      return results.map(PlacesPrediction.fromSearchInfo).toList();
     } catch (e, stackTrace) {
-      Log.e('Places autocomplete error', e, stackTrace);
+      Log.e('Address suggestion error', e, stackTrace);
       rethrow;
     }
   }
 
-  Future<PlaceDetails> placeDetails(String placeId) async {
-    if (_detailsCache.containsKey(placeId)) return _detailsCache[placeId]!;
-    if (_apiKey.isEmpty) {
-      throw StateError('Places API key missing; set GOOGLE_PLACES_API_KEY via --dart-define.');
-    }
-    try {
-      final response = await _dio.get<Map<String, dynamic>>(
-        'places/$placeId',
-        options: Options(
-          headers: {
-            'X-Goog-Api-Key': _apiKey,
-            'X-Goog-FieldMask': 'id,displayName,addressComponents,location',
-          },
-        ),
-      );
-      final details = PlaceDetails.fromJson(response.data ?? {});
-      _detailsCache[placeId] = details;
-      return details;
-    } catch (e, stackTrace) {
-      Log.e('Places details error', e, stackTrace);
-      rethrow;
+  String _mapLocale(String countryCode) {
+    final normalized = countryCode.trim().toLowerCase();
+    switch (normalized) {
+      case 'de':
+      case 'en':
+      case 'fr':
+        return normalized;
+      default:
+        return 'en';
     }
   }
+
+  final Dio _dio;
 }
 
 @riverpod

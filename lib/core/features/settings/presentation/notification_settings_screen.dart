@@ -4,8 +4,8 @@ import 'package:anystep/core/features/notifications/presentation/event_notificat
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class NotificationSettingsPage extends StatelessWidget {
-  const NotificationSettingsPage({super.key});
+class NotificationSettingsScreen extends StatelessWidget {
+  const NotificationSettingsScreen({super.key});
 
   static const path = '/settings/notifications';
   static const name = 'notification-settings';

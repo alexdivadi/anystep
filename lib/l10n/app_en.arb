@@ -11,6 +11,10 @@
       "name": {"type": "String", "example": "Alice"}
     }
   },
+  "welcomeMessageTitle": "Welcome",
+  "@welcomeMessageTitle": {"description": "Title for the remote-config welcome message modal"},
+  "welcomeMessageDismiss": "Got it",
+  "@welcomeMessageDismiss": {"description": "Dismiss button label for the welcome message modal"},
   "itemCount": "{count, plural, =0 {No items} one {1 item} other {{count} items}}",
   "@itemCount": {
     "description": "Pluralized count of generic items.",
@@ -104,6 +108,16 @@
   "@address": {"description": "Section title for address"},
   "noAddressProvided": "No address provided",
   "@noAddressProvided": {"description": "Fallback when no address is provided"},
+  "addressSaved": "Address saved.",
+  "@addressSaved": {"description": "Toast message after saving an address"},
+  "addressSaveFailed": "Couldn't save address.",
+  "@addressSaveFailed": {"description": "Toast message after failing to save an address"},
+  "notificationSettingsUpdated": "Notification settings updated.",
+  "@notificationSettingsUpdated": {"description": "Toast message after updating notification settings"},
+  "notificationSettingsUpdateFailed": "Couldn't update notification settings.",
+  "@notificationSettingsUpdateFailed": {
+    "description": "Toast message after failing to update notification settings"
+  },
   "start": "Start",
   "@start": {"description": "Event start label"},
   "end": "End",
@@ -394,6 +408,8 @@
   "tapToSign": "Tap to sign",
   "@tapToSign": {"description": "Button label to sign agreement"}
   ,
+  "optional": "optional",
+  "@optional": {"description": "Text shown when field is optional"},
   "validatorRequired": "This field is required",
   "@validatorRequired": {"description": "Error shown when a required field is empty"},
   "validatorEmail": "Please enter a valid email address",
