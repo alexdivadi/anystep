@@ -38,6 +38,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTitle => 'Settings';
 
   @override
+  String get online => 'Online';
+
+  @override
+  String get virtualEventLabel => 'Virtual event';
+
+  @override
+  String get privateEventLabel => 'Private event';
+
+  @override
+  String get privateEventHelp => 'If on, only admins can see this event.';
+
+  @override
   String get donate => 'Donate';
 
   @override

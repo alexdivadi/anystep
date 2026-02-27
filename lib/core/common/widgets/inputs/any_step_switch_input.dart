@@ -10,6 +10,8 @@ class AnyStepSwitchInput extends StatelessWidget {
     this.helpText,
     this.initialValue = true,
     this.onChanged,
+    this.padding,
+    this.showBorder = true,
   });
 
   final String name;
@@ -17,6 +19,8 @@ class AnyStepSwitchInput extends StatelessWidget {
   final String? helpText;
   final bool initialValue;
   final ValueChanged<bool?>? onChanged;
+  final EdgeInsetsGeometry? padding;
+  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +32,24 @@ class AnyStepSwitchInput extends StatelessWidget {
       builder: (field) {
         final value = field.value ?? initialValue;
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
+          padding: const .symmetric(vertical: AnyStepSpacing.sm4),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
-              border: Border.all(color: theme.colorScheme.primary, width: 1.5),
+              borderRadius: .circular(AnyStepSpacing.md16),
+              border: showBorder ? .all(color: theme.colorScheme.primary, width: 1.5) : null,
             ),
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
+                borderRadius: .circular(AnyStepSpacing.md16),
                 onTap: () => field.didChange(!value),
                 child: Padding(
-                  padding: const EdgeInsets.all(AnyStepSpacing.md16),
+                  padding: padding ?? const .all(AnyStepSpacing.md16),
                   child: Row(
                     children: [
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             Text(label, style: theme.textTheme.bodyLarge),
                             if (helpText?.isNotEmpty ?? false) ...[

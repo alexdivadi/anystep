@@ -1,6 +1,7 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -18,11 +19,15 @@ class EventCarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context);
     final dateStr = DateFormat('MMM d • h:mm a').format(event.startTime.toLocal());
-    final locationStr = [
-      event.address?.city,
-      event.address?.state,
-    ].where((e) => e != null && e.isNotEmpty).join(', ');
+    final locationStr =
+        event.isVirtual
+            ? loc.online
+            : [
+              event.address?.city,
+              event.address?.state,
+            ].where((e) => e != null && e.isNotEmpty).join(', ');
 
     return InkWell(
       onTap: onTap,

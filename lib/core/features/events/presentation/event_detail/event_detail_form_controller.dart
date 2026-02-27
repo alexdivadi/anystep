@@ -29,6 +29,8 @@ class EventDetailFormController extends _$EventDetailFormController {
       final addressId = addressIdRaw is int
           ? addressIdRaw
           : int.tryParse(addressIdRaw?.toString() ?? '');
+      final isPrivate = values['isPrivate'] ?? false;
+      final isVirtual = values['isVirtual'] ?? false;
 
       final event = EventModel(
         id: state.eventId,
@@ -36,12 +38,14 @@ class EventDetailFormController extends _$EventDetailFormController {
         startTime: (values['startTime'] as DateTime).toUtc(),
         endTime: (values['endTime'] as DateTime).toUtc(),
         imageUrl: values['imageUrl'],
-        addressId: addressId,
+        addressId: isVirtual ? null : addressId,
         description: values['description'],
         isVolunteerEligible: values['isVolunteerEligible'] ?? true,
         maxVolunteers: maxVolunteers,
         registrationDeadline: (values['registrationDeadline'] as DateTime?)?.toUtc(),
         externalLink: externalLink,
+        isPrivate: isPrivate,
+        isVirtual: isVirtual,
       );
 
       String? imageUrl;

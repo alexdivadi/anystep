@@ -35,7 +35,7 @@ final class OnboardingScreenControllerProvider
 }
 
 String _$onboardingScreenControllerHash() =>
-    r'4c0be2cbaa5186fe3af8959ac031677291a1eab1';
+    r'991feccc7307e17f2a83330e4da2327fb49203cb';
 
 abstract class _$OnboardingScreenController extends $AsyncNotifier<void> {
   FutureOr<void> build();
