@@ -126,7 +126,9 @@ class EventDetailInfo extends StatelessWidget {
               leading: const Icon(Icons.location_on),
               title: Text(loc.address, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
-                event.address != null
+                event.isVirtual
+                    ? loc.online
+                    : event.address != null
                     ? event.address!.street +
                           ((event.address!.streetSecondary ?? '').isNotEmpty
                               ? ' ${event.address!.streetSecondary}'
@@ -138,7 +140,7 @@ class EventDetailInfo extends StatelessWidget {
                               : '')
                     : loc.noAddressProvided,
               ),
-              onTap: event.address != null
+              onTap: (!event.isVirtual && event.address != null)
                   ? () async {
                       try {
                         await openMap(event.address!);

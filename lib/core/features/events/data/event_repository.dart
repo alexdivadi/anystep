@@ -2,6 +2,8 @@ import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/core/common/data/irepository.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
+import 'package:anystep/core/features/profile/data/current_user.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -108,6 +110,11 @@ Future<PaginationResult<EventModel>> getEvents(
   final repository = ref.watch(eventRepositoryProvider);
 
   filters ??= [];
+  final userAsync = ref.watch(currentUserStreamProvider);
+  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
+  if (!isAdmin) {
+    filters.add(AnyStepFilter.equals('is_private', false));
+  }
   if (search != null && search.isNotEmpty) {
     filters.add(AnyStepFilter.like('name', "%$search%"));
   }
@@ -128,6 +135,11 @@ Future<PaginationResult<EventModel>> getUpcomingEvents(
   AnyStepOrder? order,
 }) async {
   filters ??= [];
+  final userAsync = ref.watch(currentUserStreamProvider);
+  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
+  if (!isAdmin) {
+    filters.add(AnyStepFilter.equals('is_private', false));
+  }
   filters.add(AnyStepFilter.greaterThan('start_time', DateTime.now().toUtc()));
   return await ref.watch(
     getEventsProvider(
@@ -148,6 +160,11 @@ Future<PaginationResult<EventModel>> getPastEvents(
   AnyStepOrder? order,
 }) async {
   filters ??= [];
+  final userAsync = ref.watch(currentUserStreamProvider);
+  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
+  if (!isAdmin) {
+    filters.add(AnyStepFilter.equals('is_private', false));
+  }
   filters.add(AnyStepFilter.lessThan('start_time', DateTime.now().toUtc()));
   return await ref.watch(
     getEventsProvider(
@@ -166,10 +183,13 @@ Future<List<EventModel>> getEventsInRange(
   required DateTime end,
 }) async {
   final repository = ref.watch(eventRepositoryProvider);
+  final userAsync = ref.watch(currentUserStreamProvider);
+  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
   return repository.list(
     filters: [
       AnyStepFilter.greaterThan('start_time', start.toUtc(), inclusive: true),
       AnyStepFilter.lessThan('start_time', end.toUtc(), inclusive: true),
+      if (!isAdmin) AnyStepFilter.equals('is_private', false),
     ],
     order: AnyStepOrder.asc('start_time'),
   );

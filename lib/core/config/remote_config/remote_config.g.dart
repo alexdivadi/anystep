@@ -48,4 +48,4 @@ final class RemoteConfigProvider
   }
 }
 
-String _$remoteConfigHash() => r'12035af3a07084603213aa4e29910520e5b49f8d';
+String _$remoteConfigHash() => r'5ebebdfe2f2a08b62c777046dbeaa575215598a7';
