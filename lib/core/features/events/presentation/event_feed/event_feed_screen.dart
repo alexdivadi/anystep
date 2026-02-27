@@ -52,14 +52,14 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     _welcomeChecked = true;
 
     final prefs = await ref.read(appPreferencesProvider.future);
-    if (prefs.getWelcomeMessageSeen()) return;
 
     final remoteConfig = await ref.read(remoteConfigProvider.future);
     final message = remoteConfig.welcomeMessage;
     if (message.isEmpty) return;
+    if (prefs.getWelcomeMessageContent() == message) return;
     if (!mounted) return;
 
-    await prefs.setWelcomeMessageSeen();
+    await prefs.setWelcomeMessageContent(message);
     if (!mounted) return;
     context.showModal(
       _WelcomeMessageModal(
