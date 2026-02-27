@@ -183,7 +183,13 @@
   "eventCreated": "Event created successfully",
   "@eventCreated": {"description": "Snackbar message for event creation"},
   "createEvent": "Create Event",
-  "@createEvent": {"description": "FAB label to create an event"}
+  "@createEvent": {"description": "FAB label to create an event"},
+  "createUser": "Create User",
+  "@createUser": {"description": "Button or title for creating a user"},
+  "userCreated": "User created.",
+  "@userCreated": {"description": "Toast after creating a user"},
+  "userCreateFailed": "Couldn't create user.",
+  "@userCreateFailed": {"description": "Toast after failing to create a user"}
   ,
   "navReports": "Reports",
   "@navReports": {"description": "Bottom nav label for Reports"},

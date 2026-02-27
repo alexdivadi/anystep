@@ -182,7 +182,13 @@
   "eventCreated": "¡Evento creado exitosamente!",
   "@eventCreated": {"description": "Mensaje de snackbar al crear evento"},
   "createEvent": "Crear evento",
-  "@createEvent": {"description": "Etiqueta del botón flotante para crear evento"}
+  "@createEvent": {"description": "Etiqueta del botón flotante para crear evento"},
+  "createUser": "Crear usuario",
+  "@createUser": {"description": "Button or title for creating a user"},
+  "userCreated": "Usuario creado.",
+  "@userCreated": {"description": "Toast after creating a user"},
+  "userCreateFailed": "No se pudo crear el usuario.",
+  "@userCreateFailed": {"description": "Toast after failing to create a user"}
   ,
   "navReports": "Informes",
   "@navReports": {"description": "Etiqueta de navegación para informes"},

@@ -8,7 +8,7 @@ class RemoteConfigKeys {
   const RemoteConfigKeys._();
 
   static const String welcomeMessage = 'welcomeMessage';
-  static const String maintenanceMessage = 'maintenance_message';
+  static const String maintenanceMessage = 'maintenanceMessage';
 }
 
 class RemoteConfigService {

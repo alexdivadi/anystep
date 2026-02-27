@@ -110,10 +110,9 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
     final adminMonthSummary = isAdmin ? ref.watch(volunteerHoursSummaryThisMonthProvider) : null;
     final adminYtdSummary = isAdmin ? ref.watch(volunteerHoursSummaryYtdProvider) : null;
     final adminMonthlySeries = isAdmin ? ref.watch(volunteerMonthlyHoursYtdProvider) : null;
-    final maintenanceMessage = ref.watch(remoteConfigProvider).maybeWhen(
-          data: (config) => config.maintenanceMessage,
-          orElse: () => '',
-        );
+    final maintenanceMessage = ref
+        .watch(remoteConfigProvider)
+        .maybeWhen(data: (config) => config.maintenanceMessage, orElse: () => '');
 
     final mainContent = isSearching
         ? SearchEventsFeed(search: q)
@@ -140,9 +139,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                 } else {
                   slivers.add(SliverToBoxAdapter(child: metricsCard));
                   slivers.add(
-                    SliverToBoxAdapter(
-                      child: DashboardSectionHeader(title: loc.dashboardCalendar),
-                    ),
+                    SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
                   );
                   slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
                 }
@@ -174,9 +171,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                 slivers.add(const RecentEventsList(maxItems: 4));
                 if (!isWide) {
                   slivers.add(
-                    SliverToBoxAdapter(
-                      child: DashboardSectionHeader(title: loc.dashboardCalendar),
-                    ),
+                    SliverToBoxAdapter(child: DashboardSectionHeader(title: loc.dashboardCalendar)),
                   );
                   slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
                 }
@@ -286,8 +281,7 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
         ),
         body: Column(
           children: [
-            if (maintenanceMessage.isNotEmpty)
-              _MaintenanceBanner(message: maintenanceMessage),
+            if (maintenanceMessage.isNotEmpty) _MaintenanceBanner(message: maintenanceMessage),
             Expanded(child: mainContent),
           ],
         ),
@@ -346,10 +340,7 @@ class _MaintenanceBanner extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.warning_amber_rounded,
-                color: theme.colorScheme.onSecondaryContainer,
-              ),
+              Icon(Icons.warning_amber_rounded, color: theme.colorScheme.onSecondaryContainer),
               const SizedBox(width: AnyStepSpacing.sm8),
               Expanded(
                 child: Text(

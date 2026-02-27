@@ -227,6 +227,11 @@ final routes = [
     builder: (context, state) => const CreateChannelScreen(),
   ),
   GoRoute(
+    path: CreateUserScreen.path,
+    name: CreateUserScreen.name,
+    builder: (context, state) => const CreateUserScreen(),
+  ),
+  GoRoute(
     path: BlogChannelDetailScreen.path,
     name: BlogChannelDetailScreen.name,
     builder: (context, state) {

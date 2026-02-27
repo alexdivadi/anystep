@@ -252,6 +252,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createEvent => 'Create Event';
 
   @override
+  String get createUser => 'Create User';
+
+  @override
+  String get userCreated => 'User created.';
+
+  @override
+  String get userCreateFailed => 'Couldn\'t create user.';
+
+  @override
   String get navReports => 'Reports';
 
   @override

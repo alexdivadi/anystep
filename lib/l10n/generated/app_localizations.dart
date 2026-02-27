@@ -542,6 +542,24 @@ abstract class AppLocalizations {
   /// **'Create Event'**
   String get createEvent;
 
+  /// Button or title for creating a user
+  ///
+  /// In en, this message translates to:
+  /// **'Create User'**
+  String get createUser;
+
+  /// Toast after creating a user
+  ///
+  /// In en, this message translates to:
+  /// **'User created.'**
+  String get userCreated;
+
+  /// Toast after failing to create a user
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t create user.'**
+  String get userCreateFailed;
+
   /// Bottom nav label for Reports
   ///
   /// In en, this message translates to:
