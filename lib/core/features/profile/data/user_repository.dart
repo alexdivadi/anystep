@@ -5,7 +5,6 @@ import 'package:anystep/database/filter.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 part 'user_repository.g.dart';
 
 class UserRepository implements IRepository<UserModel> {
@@ -75,10 +74,44 @@ class UserRepository implements IRepository<UserModel> {
     );
   }
 
+  Future<UserModel?> findByAuthId({required String authId, bool withAddress = true}) async {
+    final documents = await database.list(
+      table: collectionId,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
+      filters: [AnyStepFilter.equals('auth_id', authId)],
+      limit: 1,
+    );
+    if (documents.isEmpty) return null;
+    return UserModel.fromJson(documents.first);
+  }
+
+  Future<UserModel?> findByEmail({required String email, bool withAddress = true}) async {
+    final documents = await database.list(
+      table: collectionId,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
+      filters: [AnyStepFilter.equals('email', email.toLowerCase())],
+      limit: 1,
+    );
+    if (documents.isEmpty) return null;
+    return UserModel.fromJson(documents.first);
+  }
+
+  Future<UserModel?> linkAuthUserByEmail({
+    required String authUserId,
+    required String email,
+  }) async {
+    if (authUserId.trim().isEmpty) return null;
+    if (email.trim().isEmpty) return null;
+    final existing = await findByEmail(email: email);
+    if (existing == null) return null;
+    if (existing.authId == authUserId) return existing;
+    final linked = existing.copyWith(authId: authUserId, email: email.toLowerCase());
+    return createOrUpdate(obj: linked, documentId: existing.id);
+  }
+
   @override
   Future<void> delete(UserModel obj) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    return database.delete(table: collectionId, documentId: obj.id);
   }
 }
 

@@ -302,6 +302,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noAttendees => 'No hay asistentes';
 
   @override
+  String get addAttendeeTitle => 'Agregar asistente';
+
+  @override
+  String get userLabel => 'Usuario';
+
+  @override
+  String get selectUser => 'Seleccionar usuario';
+
+  @override
+  String get attendedLabel => 'Asistió';
+
+  @override
+  String get checkInLabel => 'Entrada';
+
+  @override
+  String get checkOutLabel => 'Salida';
+
+  @override
+  String get failedToSave => 'Error al guardar';
+
+  @override
   String get profileTitle => 'Perfil';
 
   @override

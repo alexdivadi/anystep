@@ -6,3 +6,4 @@ export 'package:anystep/core/features/profile/presentation/screens.dart';
 export 'package:anystep/core/features/reports/presentation/screens.dart';
 export 'package:anystep/core/features/settings/presentation/screens.dart';
 export 'package:anystep/core/features/dashboard/presentation/screens.dart';
+export 'package:anystep/core/features/user_events/presentation/screens.dart';

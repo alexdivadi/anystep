@@ -48,9 +48,15 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
       throw Exception('No user logged in');
     }
 
-    final user = await ref
-        .read(userRepositoryProvider)
-        .get(documentId: authState.requireValue!.uid);
+    final userRepo = ref.read(userRepositoryProvider);
+    final resolvedAuth = authState.requireValue!;
+    UserModel? user = await userRepo.findByAuthId(authId: resolvedAuth.uid);
+    user ??= await userRepo.linkAuthUserByEmail(
+      authUserId: resolvedAuth.uid,
+      email: resolvedAuth.email,
+    );
+    user ??= await userRepo.findByAuthId(authId: resolvedAuth.uid);
+    user ??= await userRepo.get(documentId: resolvedAuth.uid);
     PostHogManager.identify(user.id, properties: _removeNulls(user.toJson()));
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;

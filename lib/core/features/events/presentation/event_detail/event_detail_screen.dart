@@ -14,7 +14,7 @@ import 'package:anystep/core/features/events/utils/launch_calendar.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/screens.dart';
-import 'package:anystep/core/features/user_events/presentation/attendee_search_form.dart';
+import 'package:anystep/core/features/user_events/presentation/add_attendee_screen.dart';
 import 'package:anystep/core/features/user_events/presentation/sign_up_button.dart';
 import 'package:anystep/core/common/widgets/share_button.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
@@ -159,12 +159,12 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                             ? AttendanceList(
                                 eventId: widget.id,
                                 isAdmin: userAsync.value?.role.canEditEvent == true,
-                                onAddAttendee: () => context.showModal(
-                                  AttendeeSearchForm(eventId: widget.id),
-                                  isScrollControlled: false,
-                                ),
+                                onAddAttendee: () =>
+                                    context.push(AddAttendeeScreen.getPath(widget.id)),
                               )
-                            : SliverToBoxAdapter(child: SignUpList(eventId: widget.id)),
+                            : (userAsync.value?.role.canEditEvent == true
+                                ? SliverToBoxAdapter(child: SignUpList(eventId: widget.id))
+                                : const SliverToBoxAdapter(child: SizedBox.shrink())),
                       if (userAsync.hasValue && userAsync.value == null)
                         SliverToBoxAdapter(
                           child: Padding(
