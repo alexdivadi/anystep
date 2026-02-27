@@ -177,6 +177,15 @@ class _EventFeedScreenState extends ConsumerState<EventFeedScreen> {
                 }
               }
 
+              if (!isAuthenticated) {
+                slivers.add(
+                  SliverToBoxAdapter(
+                    child: DashboardSectionHeader(title: loc.dashboardCalendar),
+                  ),
+                );
+                slivers.add(const SliverToBoxAdapter(child: DashboardCalendarCard()));
+              }
+
               slivers.add(
                 SliverToBoxAdapter(
                   child: DashboardSectionHeader(title: loc.dashboardUpcomingEvents),

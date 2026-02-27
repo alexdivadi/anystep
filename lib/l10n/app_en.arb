@@ -25,6 +25,8 @@
   ,
   "settingsTitle": "Settings",
   "@settingsTitle": {"description": "Title for the Settings screen app bar"},
+  "donate": "Donate",
+  "@donate": {"description": "Label for the donate link in settings"},
   "themeLabel": "Theme",
   "@themeLabel": {"description": "Settings tile label for theme selection"},
   "themeAuto": "Auto",

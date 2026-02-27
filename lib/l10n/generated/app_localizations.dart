@@ -134,6 +134,12 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// Label for the donate link in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Donate'**
+  String get donate;
+
   /// Settings tile label for theme selection
   ///
   /// In en, this message translates to:
