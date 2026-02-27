@@ -38,6 +38,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTitle => 'Settings';
 
   @override
+  String get donate => 'Donate';
+
+  @override
   String get themeLabel => 'Theme';
 
   @override

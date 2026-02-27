@@ -18,7 +18,6 @@ class LocaleSetting extends ConsumerWidget {
     return ListTile(
       leading: const Icon(Icons.language),
       title: Text(loc.languageLabel),
-      subtitle: Text(_labelForLocale(current, loc)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
