@@ -28,6 +28,8 @@ abstract class EventModel with _$EventModel {
     @JsonKey(name: "max_volunteers") int? maxVolunteers,
     @JsonKey(name: "registration_deadline") DateTime? registrationDeadline,
     @JsonKey(name: "external_link") String? externalLink,
+    @JsonKey(name: "is_private") @Default(false) bool isPrivate,
+    @JsonKey(name: "is_virtual") @Default(false) bool isVirtual,
   }) = _EventModel;
 
   factory EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);

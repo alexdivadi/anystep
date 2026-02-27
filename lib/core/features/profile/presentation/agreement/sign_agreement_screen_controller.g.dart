@@ -35,7 +35,7 @@ final class SignAgreementScreenControllerProvider
 }
 
 String _$signAgreementScreenControllerHash() =>
-    r'76f3b0cb9a77ddda338384028b7e334d23f77c9e';
+    r'501d79e1a6b8a12b109be3554fbd23e5fd451c76';
 
 abstract class _$SignAgreementScreenController extends $AsyncNotifier<void> {
   FutureOr<void> build();

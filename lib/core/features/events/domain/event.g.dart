@@ -29,6 +29,8 @@ _EventModel _$EventModelFromJson(Map<String, dynamic> json) => _EventModel(
       ? null
       : DateTime.parse(json['registration_deadline'] as String),
   externalLink: json['external_link'] as String?,
+  isPrivate: json['is_private'] as bool? ?? false,
+  isVirtual: json['is_virtual'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
@@ -47,4 +49,6 @@ Map<String, dynamic> _$EventModelToJson(_EventModel instance) =>
       'max_volunteers': instance.maxVolunteers,
       'registration_deadline': instance.registrationDeadline?.toIso8601String(),
       'external_link': instance.externalLink,
+      'is_private': instance.isPrivate,
+      'is_virtual': instance.isVirtual,
     };

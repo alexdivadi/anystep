@@ -2,6 +2,7 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/features/events/domain/event.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_attend_indicator.dart';
 import 'package:anystep/core/features/events/presentation/widgets/did_sign_up_indicator.dart';
+import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,9 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPast = event.endTime.isBefore(DateTime.now().toLocal());
+    final loc = AppLocalizations.of(context);
+    final locationLabel =
+        event.isVirtual ? loc.online : '${event.address?.city}, ${event.address?.state}';
     return Card(
       margin: const EdgeInsets.symmetric(
         horizontal: AnyStepSpacing.md12,
@@ -55,7 +59,7 @@ class EventCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${DateFormat('MMM dd, yyyy @ h:mm a').format(event.startTime.toLocal())} • ${event.address?.city}, ${event.address?.state}',
+              '${DateFormat('MMM dd, yyyy @ h:mm a').format(event.startTime.toLocal())} • $locationLabel',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),

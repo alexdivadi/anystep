@@ -134,6 +134,30 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// Label for online/virtual events
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get online;
+
+  /// Toggle label for virtual events
+  ///
+  /// In en, this message translates to:
+  /// **'Virtual event'**
+  String get virtualEventLabel;
+
+  /// Toggle label for private events
+  ///
+  /// In en, this message translates to:
+  /// **'Private event'**
+  String get privateEventLabel;
+
+  /// Help text for private event toggle
+  ///
+  /// In en, this message translates to:
+  /// **'If on, only admins can see this event.'**
+  String get privateEventHelp;
+
   /// Label for the donate link in settings
   ///
   /// In en, this message translates to:

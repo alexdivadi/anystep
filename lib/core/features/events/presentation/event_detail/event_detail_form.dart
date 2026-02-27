@@ -31,6 +31,13 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
   final formKey = GlobalKey<FormBuilderState>();
   XFile? _imageFile;
   DateTime? _startTime;
+  bool _isVirtual = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isVirtual = widget.event?.isVirtual ?? false;
+  }
 
   void _onSubmit() async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
@@ -143,20 +150,38 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                     ),
 
                     const SizedBox(height: AnyStepSpacing.sm4),
-                    AnyStepAddressModalTile(
-                      formKey: formKey,
-                      initialAddressId: widget.event?.addressId ?? widget.event?.address?.id,
-                      isUserAddress: false,
-                      includeEventAddresses: true,
-                      includeUserAddresses: false,
-                      showNameField:
-                          widget.showAddressNameField ||
-                          (widget.event?.addressId ?? widget.event?.address?.id) != null,
-                      streetValidator: FormBuilderValidators.required(),
-                      streetSecondaryValidator: FormBuilderValidators.street(
-                        checkNullOrEmpty: false,
+                    if (!_isVirtual)
+                      AnyStepAddressModalTile(
+                        formKey: formKey,
+                        initialAddressId: widget.event?.addressId ?? widget.event?.address?.id,
+                        isUserAddress: false,
+                        includeEventAddresses: true,
+                        includeUserAddresses: false,
+                        showNameField:
+                            widget.showAddressNameField ||
+                            (widget.event?.addressId ?? widget.event?.address?.id) != null,
+                        streetValidator: FormBuilderValidators.required(),
+                        streetSecondaryValidator: FormBuilderValidators.street(
+                          checkNullOrEmpty: false,
+                        ),
+                        addressIdValidator: FormBuilderValidators.required(),
                       ),
-                      addressIdValidator: FormBuilderValidators.required(),
+                    AnyStepSwitchInput(
+                      name: 'isVirtual',
+                      label: loc.virtualEventLabel,
+                      initialValue: widget.event?.isVirtual ?? false,
+                      padding: .symmetric(
+                        vertical: AnyStepSpacing.sm4,
+                        horizontal: AnyStepSpacing.md16,
+                      ),
+                      onChanged: (value) {
+                        final isVirtual = value ?? false;
+                        if (isVirtual == _isVirtual) return;
+                        setState(() => _isVirtual = isVirtual);
+                        if (isVirtual) {
+                          formKey.currentState?.fields['addressId']?.didChange(null);
+                        }
+                      },
                     ),
                     Theme(
                       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -165,6 +190,12 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                         childrenPadding: const EdgeInsets.only(bottom: AnyStepSpacing.sm4),
                         title: Text(loc.advancedOptions),
                         children: [
+                          AnyStepSwitchInput(
+                            name: 'isPrivate',
+                            label: loc.privateEventLabel,
+                            helpText: loc.privateEventHelp,
+                            initialValue: widget.event?.isPrivate ?? false,
+                          ),
                           AnyStepTextField(
                             name: 'maxVolunteers',
                             initialValue: widget.event?.maxVolunteers?.toString(),
