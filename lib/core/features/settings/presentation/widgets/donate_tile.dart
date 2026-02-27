@@ -6,7 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 class DonateTile extends StatelessWidget {
   const DonateTile({super.key});
 
-  static const _donateUrl = 'https://www.anystepcommunity.com/donate-1';
+  static const _donateUrl =
+      'https://www.zeffy.com/en-US/donation-form/high-five-for-seniors-step-up-give-back-move-forward';
 
   Future<void> _openLink(String url) async {
     final uri = Uri.tryParse(url);
