@@ -18,6 +18,7 @@ class AnyStepDateTimePicker extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.allowClear = false,
+    this.enabled = true,
   });
 
   final String name;
@@ -32,6 +33,7 @@ class AnyStepDateTimePicker extends StatelessWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
   final bool allowClear;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class AnyStepDateTimePicker extends StatelessWidget {
         name: name,
         focusNode: focusNode,
         onChanged: onChanged,
+        enabled: enabled,
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,

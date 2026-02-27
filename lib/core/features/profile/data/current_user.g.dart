@@ -45,4 +45,4 @@ final class CurrentUserStreamProvider
   }
 }
 
-String _$currentUserStreamHash() => r'3b994d7b1b1557281bc49402a285fc7aae8cde05';
+String _$currentUserStreamHash() => r'681e035575877f777af676385af0e8ae575d97da';

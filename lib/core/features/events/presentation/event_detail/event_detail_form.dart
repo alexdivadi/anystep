@@ -149,7 +149,9 @@ class _EventDetailFormState extends ConsumerState<EventDetailForm> {
                       isUserAddress: false,
                       includeEventAddresses: true,
                       includeUserAddresses: false,
-                      showNameField: widget.showAddressNameField,
+                      showNameField:
+                          widget.showAddressNameField ||
+                          (widget.event?.addressId ?? widget.event?.address?.id) != null,
                       streetValidator: FormBuilderValidators.required(),
                       streetSecondaryValidator: FormBuilderValidators.street(
                         checkNullOrEmpty: false,

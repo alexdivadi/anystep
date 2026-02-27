@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserEventModel {
 
-@JsonKey(includeIfNull: false) int? get id; bool get attended;@JsonKey(name: "user") String? get userId;@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? get user;@JsonKey(name: "event") int? get eventId;@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? get event;@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? get createdAt;
+@JsonKey(includeIfNull: false) int? get id; bool get attended;@JsonKey(name: "user") String? get userId;@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? get user;@JsonKey(name: "event") int? get eventId;@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? get event;@JsonKey(name: "check_in_at", includeIfNull: false) DateTime? get checkInAt;@JsonKey(name: "check_out_at", includeIfNull: false) DateTime? get checkOutAt;@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? get createdAt;
 /// Create a copy of UserEventModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserEventModelCopyWith<UserEventModel> get copyWith => _$UserEventModelCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.attended, attended) || other.attended == attended)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.user, user) || other.user == user)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.event, event) || other.event == event)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.attended, attended) || other.attended == attended)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.user, user) || other.user == user)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.event, event) || other.event == event)&&(identical(other.checkInAt, checkInAt) || other.checkInAt == checkInAt)&&(identical(other.checkOutAt, checkOutAt) || other.checkOutAt == checkOutAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,attended,userId,user,eventId,event,createdAt);
+int get hashCode => Object.hash(runtimeType,id,attended,userId,user,eventId,event,checkInAt,checkOutAt,createdAt);
 
 @override
 String toString() {
-  return 'UserEventModel(id: $id, attended: $attended, userId: $userId, user: $user, eventId: $eventId, event: $event, createdAt: $createdAt)';
+  return 'UserEventModel(id: $id, attended: $attended, userId: $userId, user: $user, eventId: $eventId, event: $event, checkInAt: $checkInAt, checkOutAt: $checkOutAt, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserEventModelCopyWith<$Res>  {
   factory $UserEventModelCopyWith(UserEventModel value, $Res Function(UserEventModel) _then) = _$UserEventModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(includeIfNull: false) int? id, bool attended,@JsonKey(name: "user") String? userId,@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? user,@JsonKey(name: "event") int? eventId,@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? event,@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? createdAt
+@JsonKey(includeIfNull: false) int? id, bool attended,@JsonKey(name: "user") String? userId,@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? user,@JsonKey(name: "event") int? eventId,@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? event,@JsonKey(name: "check_in_at", includeIfNull: false) DateTime? checkInAt,@JsonKey(name: "check_out_at", includeIfNull: false) DateTime? checkOutAt,@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$UserEventModelCopyWithImpl<$Res>
 
 /// Create a copy of UserEventModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? attended = null,Object? userId = freezed,Object? user = freezed,Object? eventId = freezed,Object? event = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? attended = null,Object? userId = freezed,Object? user = freezed,Object? eventId = freezed,Object? event = freezed,Object? checkInAt = freezed,Object? checkOutAt = freezed,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,attended: null == attended ? _self.attended : attended // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,9 @@ as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullab
 as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel?,eventId: freezed == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
 as int?,event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
-as EventModel?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as EventModel?,checkInAt: freezed == checkInAt ? _self.checkInAt : checkInAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,checkOutAt: freezed == checkOutAt ? _self.checkOutAt : checkOutAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
@@ -183,10 +185,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "check_in_at", includeIfNull: false)  DateTime? checkInAt, @JsonKey(name: "check_out_at", includeIfNull: false)  DateTime? checkOutAt, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserEventModel() when $default != null:
-return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.createdAt);case _:
+return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.checkInAt,_that.checkOutAt,_that.createdAt);case _:
   return orElse();
 
 }
@@ -204,10 +206,10 @@ return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "check_in_at", includeIfNull: false)  DateTime? checkInAt, @JsonKey(name: "check_out_at", includeIfNull: false)  DateTime? checkOutAt, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserEventModel():
-return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.createdAt);case _:
+return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.checkInAt,_that.checkOutAt,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -224,10 +226,10 @@ return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  int? id,  bool attended, @JsonKey(name: "user")  String? userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true)  UserModel? user, @JsonKey(name: "event")  int? eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true)  EventModel? event, @JsonKey(name: "check_in_at", includeIfNull: false)  DateTime? checkInAt, @JsonKey(name: "check_out_at", includeIfNull: false)  DateTime? checkOutAt, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true)  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserEventModel() when $default != null:
-return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.createdAt);case _:
+return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_that.event,_that.checkInAt,_that.checkOutAt,_that.createdAt);case _:
   return null;
 
 }
@@ -239,7 +241,7 @@ return $default(_that.id,_that.attended,_that.userId,_that.user,_that.eventId,_t
 @JsonSerializable()
 
 class _UserEventModel implements UserEventModel {
-  const _UserEventModel({@JsonKey(includeIfNull: false) this.id, required this.attended, @JsonKey(name: "user") this.userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) this.user, @JsonKey(name: "event") this.eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) this.event, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) this.createdAt});
+  const _UserEventModel({@JsonKey(includeIfNull: false) this.id, required this.attended, @JsonKey(name: "user") this.userId, @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) this.user, @JsonKey(name: "event") this.eventId, @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) this.event, @JsonKey(name: "check_in_at", includeIfNull: false) this.checkInAt, @JsonKey(name: "check_out_at", includeIfNull: false) this.checkOutAt, @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) this.createdAt});
   factory _UserEventModel.fromJson(Map<String, dynamic> json) => _$UserEventModelFromJson(json);
 
 @override@JsonKey(includeIfNull: false) final  int? id;
@@ -248,6 +250,8 @@ class _UserEventModel implements UserEventModel {
 @override@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) final  UserModel? user;
 @override@JsonKey(name: "event") final  int? eventId;
 @override@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) final  EventModel? event;
+@override@JsonKey(name: "check_in_at", includeIfNull: false) final  DateTime? checkInAt;
+@override@JsonKey(name: "check_out_at", includeIfNull: false) final  DateTime? checkOutAt;
 @override@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) final  DateTime? createdAt;
 
 /// Create a copy of UserEventModel
@@ -263,16 +267,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.attended, attended) || other.attended == attended)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.user, user) || other.user == user)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.event, event) || other.event == event)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEventModel&&(identical(other.id, id) || other.id == id)&&(identical(other.attended, attended) || other.attended == attended)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.user, user) || other.user == user)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.event, event) || other.event == event)&&(identical(other.checkInAt, checkInAt) || other.checkInAt == checkInAt)&&(identical(other.checkOutAt, checkOutAt) || other.checkOutAt == checkOutAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,attended,userId,user,eventId,event,createdAt);
+int get hashCode => Object.hash(runtimeType,id,attended,userId,user,eventId,event,checkInAt,checkOutAt,createdAt);
 
 @override
 String toString() {
-  return 'UserEventModel(id: $id, attended: $attended, userId: $userId, user: $user, eventId: $eventId, event: $event, createdAt: $createdAt)';
+  return 'UserEventModel(id: $id, attended: $attended, userId: $userId, user: $user, eventId: $eventId, event: $event, checkInAt: $checkInAt, checkOutAt: $checkOutAt, createdAt: $createdAt)';
 }
 
 
@@ -283,7 +287,7 @@ abstract mixin class _$UserEventModelCopyWith<$Res> implements $UserEventModelCo
   factory _$UserEventModelCopyWith(_UserEventModel value, $Res Function(_UserEventModel) _then) = __$UserEventModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(includeIfNull: false) int? id, bool attended,@JsonKey(name: "user") String? userId,@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? user,@JsonKey(name: "event") int? eventId,@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? event,@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? createdAt
+@JsonKey(includeIfNull: false) int? id, bool attended,@JsonKey(name: "user") String? userId,@JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? user,@JsonKey(name: "event") int? eventId,@JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? event,@JsonKey(name: "check_in_at", includeIfNull: false) DateTime? checkInAt,@JsonKey(name: "check_out_at", includeIfNull: false) DateTime? checkOutAt,@JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? createdAt
 });
 
 
@@ -300,7 +304,7 @@ class __$UserEventModelCopyWithImpl<$Res>
 
 /// Create a copy of UserEventModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? attended = null,Object? userId = freezed,Object? user = freezed,Object? eventId = freezed,Object? event = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? attended = null,Object? userId = freezed,Object? user = freezed,Object? eventId = freezed,Object? event = freezed,Object? checkInAt = freezed,Object? checkOutAt = freezed,Object? createdAt = freezed,}) {
   return _then(_UserEventModel(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,attended: null == attended ? _self.attended : attended // ignore: cast_nullable_to_non_nullable
@@ -308,7 +312,9 @@ as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullab
 as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel?,eventId: freezed == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
 as int?,event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
-as EventModel?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as EventModel?,checkInAt: freezed == checkInAt ? _self.checkInAt : checkInAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,checkOutAt: freezed == checkOutAt ? _self.checkOutAt : checkOutAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }

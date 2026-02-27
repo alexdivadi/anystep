@@ -61,13 +61,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(onboardingScreenControllerProvider);
-    final firstName = ref.watch(authRepositoryProvider).user?.userMetadata?["first_name"] ?? '';
-    final lastName = ref.watch(authRepositoryProvider).user?.userMetadata?["last_name"] ?? '';
+    final authUser = ref.watch(authRepositoryProvider).user;
+    final currentUser = ref.watch(currentUserStreamProvider).value;
+    final firstName =
+        currentUser?.firstName ??
+        authUser?.userMetadata?["first_name"] ??
+        '';
+    final lastName =
+        currentUser?.lastName ??
+        authUser?.userMetadata?["last_name"] ??
+        '';
     final loc = AppLocalizations.of(context);
 
     ref.listen(currentUserStreamProvider, (previous, next) {
-      // Navigate to event feed when user data is available
-      if (next.hasValue) {
+      // Navigate to event feed when user data is available and auth_id is set
+      if (next.hasValue && next.value?.authId != null && next.value!.authId!.isNotEmpty) {
         context.go(EventFeedScreen.path);
       }
     });
@@ -120,6 +128,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       name: 'phoneNumber',
                       labelText: loc.phoneNumber,
                       keyboardType: TextInputType.phone,
+                      initialValue: currentUser?.phoneNumber,
                       validator: FormBuilderValidators.phoneNumber(
                         regex: RegExp(r'^\+?[\d\s\-()]{7,20}'),
                       ),
@@ -129,6 +138,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     AnyStepSegmentedButtonField<AgeGroup>(
                       name: 'ageGroup',
                       labelText: loc.ageGroup,
+                      initialValue: currentUser?.ageGroup,
                       options: AgeGroup.values
                           .map(
                             (ag) => FormBuilderFieldOption(value: ag, child: Text(ag.displayName)),
@@ -169,6 +179,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       isUserAddress: true,
                       includeEventAddresses: false,
                       includeUserAddresses: false,
+                      initialAddressId: currentUser?.addressId ?? currentUser?.address?.id,
                       addressIdValidator: FormBuilderValidators.required(),
                     ),
 

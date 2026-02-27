@@ -542,6 +542,24 @@ abstract class AppLocalizations {
   /// **'Create Event'**
   String get createEvent;
 
+  /// Button or title for creating a user
+  ///
+  /// In en, this message translates to:
+  /// **'Create User'**
+  String get createUser;
+
+  /// Toast after creating a user
+  ///
+  /// In en, this message translates to:
+  /// **'User created.'**
+  String get userCreated;
+
+  /// Toast after failing to create a user
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t create user.'**
+  String get userCreateFailed;
+
   /// Bottom nav label for Reports
   ///
   /// In en, this message translates to:
@@ -625,6 +643,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No attendees'**
   String get noAttendees;
+
+  /// Title for add attendee screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add Attendee'**
+  String get addAttendeeTitle;
+
+  /// Label for user selection field
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get userLabel;
+
+  /// Placeholder for user selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select user'**
+  String get selectUser;
+
+  /// Label for attended switch
+  ///
+  /// In en, this message translates to:
+  /// **'Attended'**
+  String get attendedLabel;
+
+  /// Label for check in time
+  ///
+  /// In en, this message translates to:
+  /// **'Check In'**
+  String get checkInLabel;
+
+  /// Label for check out time
+  ///
+  /// In en, this message translates to:
+  /// **'Check Out'**
+  String get checkOutLabel;
+
+  /// Generic error message when saving fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save'**
+  String get failedToSave;
 
   /// Profile screen title
   ///

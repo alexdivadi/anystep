@@ -256,6 +256,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get createEvent => 'Crear evento';
 
   @override
+  String get createUser => 'Crear usuario';
+
+  @override
+  String get userCreated => 'Usuario creado.';
+
+  @override
+  String get userCreateFailed => 'No se pudo crear el usuario.';
+
+  @override
   String get navReports => 'Informes';
 
   @override
@@ -300,6 +309,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noAttendees => 'No hay asistentes';
+
+  @override
+  String get addAttendeeTitle => 'Agregar asistente';
+
+  @override
+  String get userLabel => 'Usuario';
+
+  @override
+  String get selectUser => 'Seleccionar usuario';
+
+  @override
+  String get attendedLabel => 'Asistió';
+
+  @override
+  String get checkInLabel => 'Entrada';
+
+  @override
+  String get checkOutLabel => 'Salida';
+
+  @override
+  String get failedToSave => 'Error al guardar';
 
   @override
   String get profileTitle => 'Perfil';

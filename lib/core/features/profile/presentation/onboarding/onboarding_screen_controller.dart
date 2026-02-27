@@ -23,21 +23,39 @@ class OnboardingScreenController extends _$OnboardingScreenController {
       Log.d(authRepo.userId ?? 'No session found');
       Log.d('Fetching user details for Email: ${authRepo.user?.email}');
       final addressId = values['addressId'];
-      final user = UserModel(
-        id: authState!.uid,
-        email: authState.email,
-        addressId: addressId is int ? addressId : int.tryParse(addressId?.toString() ?? ''),
-        firstName: values['firstName'],
-        lastName: values['lastName'],
-        ageGroup: values['ageGroup'],
-        role: UserRole.volunteer,
-        phoneNumber: values['phoneNumber'],
-      );
-      await ref.read(userRepositoryProvider).createOrUpdate(obj: user, documentId: authState.uid);
+      final userRepo = ref.read(userRepositoryProvider);
+      final existing = await userRepo.findByEmail(email: authState!.email);
+      final addressValue =
+          addressId is int ? addressId : int.tryParse(addressId?.toString() ?? '');
+      if (existing == null) {
+        final created = UserModel(
+          id: authState.uid,
+          email: authState.email,
+          authId: authState.uid,
+          addressId: addressValue,
+          firstName: values['firstName'],
+          lastName: values['lastName'],
+          ageGroup: values['ageGroup'],
+          role: UserRole.volunteer,
+          phoneNumber: values['phoneNumber'],
+        );
+        await userRepo.createOrUpdate(obj: created, documentId: authState.uid);
+      } else {
+        final updated = existing.copyWith(
+          authId: authState.uid,
+          addressId: addressValue,
+          firstName: values['firstName'],
+          lastName: values['lastName'],
+          ageGroup: values['ageGroup'],
+          role: existing.role,
+          phoneNumber: values['phoneNumber'],
+        );
+        await userRepo.createOrUpdate(obj: updated, documentId: existing.id);
+      }
 
       PostHogManager.capture(
         'user_onboarding_completed',
-        properties: <String, Object>{'user_id': user.id},
+        properties: <String, Object>{'user_id': authState.uid},
       );
     });
     ref.invalidate(currentUserStreamProvider);

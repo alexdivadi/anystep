@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'onboarding_screen_controller.dart';
+part of 'add_attendee_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,35 +9,34 @@ part of 'onboarding_screen_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(OnboardingScreenController)
-const onboardingScreenControllerProvider =
-    OnboardingScreenControllerProvider._();
+@ProviderFor(AddAttendeeController)
+const addAttendeeControllerProvider = AddAttendeeControllerProvider._();
 
-final class OnboardingScreenControllerProvider
-    extends $AsyncNotifierProvider<OnboardingScreenController, void> {
-  const OnboardingScreenControllerProvider._()
+final class AddAttendeeControllerProvider
+    extends $AsyncNotifierProvider<AddAttendeeController, void> {
+  const AddAttendeeControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'onboardingScreenControllerProvider',
+        name: r'addAttendeeControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$onboardingScreenControllerHash();
+  String debugGetCreateSourceHash() => _$addAttendeeControllerHash();
 
   @$internal
   @override
-  OnboardingScreenController create() => OnboardingScreenController();
+  AddAttendeeController create() => AddAttendeeController();
 }
 
-String _$onboardingScreenControllerHash() =>
-    r'4c0be2cbaa5186fe3af8959ac031677291a1eab1';
+String _$addAttendeeControllerHash() =>
+    r'1e18d542d468f6e018ad100545e6a8005161e1c2';
 
-abstract class _$OnboardingScreenController extends $AsyncNotifier<void> {
+abstract class _$AddAttendeeController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override

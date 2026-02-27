@@ -18,6 +18,12 @@ _UserEventModel _$UserEventModelFromJson(Map<String, dynamic> json) =>
       event: json['event_model'] == null
           ? null
           : EventModel.fromJson(json['event_model'] as Map<String, dynamic>),
+      checkInAt: json['check_in_at'] == null
+          ? null
+          : DateTime.parse(json['check_in_at'] as String),
+      checkOutAt: json['check_out_at'] == null
+          ? null
+          : DateTime.parse(json['check_out_at'] as String),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -29,4 +35,6 @@ Map<String, dynamic> _$UserEventModelToJson(_UserEventModel instance) =>
       'attended': instance.attended,
       'user': instance.userId,
       'event': instance.eventId,
+      'check_in_at': ?instance.checkInAt?.toIso8601String(),
+      'check_out_at': ?instance.checkOutAt?.toIso8601String(),
     };

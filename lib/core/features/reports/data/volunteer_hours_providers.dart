@@ -39,6 +39,7 @@ Future<List<UserEventModel>> userEventsInRange(
 }
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+/// Uses check-in/check-out when available, otherwise falls back to event start/end.
 @riverpod
 Future<List<VolunteerHoursReport>> volunteerHoursAggregate(
   Ref ref, {
@@ -51,12 +52,12 @@ Future<List<VolunteerHoursReport>> volunteerHoursAggregate(
     final user = ue.user;
     final event = ue.event;
     if (user == null || event == null) continue;
-    final durationHours = event.endTime.difference(event.startTime).inMinutes / 60.0;
+    final (durationHours, baseDate) = _hoursAndBaseDate(ue, start: start, end: end);
     // Cap per event at 8 hours (assumption: per event/day). If multi-day events exist, treat full duration, still capped at 8.
     final double capped = min(8.0, durationHours.clamp(0, double.infinity));
     final key = user.id;
     final ym =
-        "${event.startTime.year.toString().padLeft(4, '0')}-${event.startTime.month.toString().padLeft(2, '0')}";
+        "${baseDate.year.toString().padLeft(4, '0')}-${baseDate.month.toString().padLeft(2, '0')}";
     map.putIfAbsent(key, () => _Accumulator(user));
     final acc = map[key]!;
     acc.totalHours += capped;
@@ -123,6 +124,37 @@ class MonthlyHoursPoint {
 
   final DateTime month;
   final double hours;
+}
+
+/// Returns (durationHours, baseDateForMonthBucket).
+/// Duration is clamped to the report range and prefers check-in/out when available.
+(double, DateTime) _hoursAndBaseDate(
+  UserEventModel ue, {
+  required DateTime start,
+  required DateTime end,
+}) {
+  final event = ue.event!;
+  DateTime rangeStart = event.startTime;
+  DateTime rangeEnd = event.endTime;
+  DateTime baseDate = event.startTime;
+
+  if (ue.checkInAt != null && ue.checkOutAt != null) {
+    rangeStart = ue.checkInAt!;
+    rangeEnd = ue.checkOutAt!;
+    baseDate = ue.checkInAt!;
+  }
+
+  if (rangeEnd.isBefore(rangeStart)) {
+    return (0, baseDate);
+  }
+
+  final clampedStart = rangeStart.isBefore(start) ? start : rangeStart;
+  final clampedEnd = rangeEnd.isAfter(end) ? end : rangeEnd;
+  if (clampedEnd.isBefore(clampedStart)) {
+    return (0, baseDate);
+  }
+  final durationHours = clampedEnd.difference(clampedStart).inMinutes / 60.0;
+  return (durationHours, baseDate);
 }
 
 VolunteerHoursSummary _summaryFromReports(List<VolunteerHoursReport> reports) {
