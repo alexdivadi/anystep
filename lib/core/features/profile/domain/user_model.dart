@@ -17,6 +17,7 @@ abstract class UserModel with _$UserModel {
   const factory UserModel({
     required String id,
     required String email,
+    @JsonKey(name: "auth_id") String? authId,
     @JsonKey(name: "address") int? addressId,
     @JsonKey(name: "address_model", includeToJson: false, includeFromJson: true)
     AddressModel? address,

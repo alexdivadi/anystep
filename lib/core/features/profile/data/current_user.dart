@@ -31,7 +31,10 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
     Log.d('Using cached user data');
     try {
       final userMap = jsonDecode(cachedUser);
-      PostHogManager.identify(userMap['id'] as String, properties: {..._removeNulls(userMap)});
+      PostHogManager.identify(
+        userMap['id'] as String,
+        properties: <String, Object>{..._removeNulls(userMap)},
+      );
       yield UserModel.fromJson(userMap).copyWith(isCachedValue: true);
     } catch (e) {
       Log.e('Error parsing cached user data', e);
@@ -48,10 +51,12 @@ Stream<UserModel?> currentUserStream(Ref ref) async* {
       throw Exception('No user logged in');
     }
 
-    final user = await ref
-        .read(userRepositoryProvider)
-        .get(documentId: authState.requireValue!.uid);
-    PostHogManager.identify(user.id, properties: _removeNulls(user.toJson()));
+    final userRepo = ref.read(userRepositoryProvider);
+    final resolvedAuth = authState.requireValue!;
+    UserModel? user = await userRepo.findByAuthId(authId: resolvedAuth.uid);
+    user ??= await userRepo.findByEmail(email: resolvedAuth.email);
+    user ??= await userRepo.get(documentId: resolvedAuth.uid);
+    PostHogManager.identify(user.id, properties: <String, Object>{..._removeNulls(user.toJson())});
     pref.setCurrentUser(jsonEncode(user.toJson()));
     yield user;
   } on AuthApiException catch (_) {

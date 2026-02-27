@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:anystep/core/common/data/irepository.dart';
+import 'package:anystep/core/features/profile/domain/age_group.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/database/database.dart';
 import 'package:anystep/database/filter.dart';
 import 'package:anystep/database/pagination_result.dart';
 import 'package:anystep/env/env.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 part 'user_repository.g.dart';
 
 class UserRepository implements IRepository<UserModel> {
@@ -75,11 +78,81 @@ class UserRepository implements IRepository<UserModel> {
     );
   }
 
+  Future<UserModel?> findByAuthId({required String authId, bool withAddress = true}) async {
+    final documents = await database.list(
+      table: collectionId,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
+      filters: [AnyStepFilter.equals('auth_id', authId)],
+      limit: 1,
+    );
+    if (documents.isEmpty) return null;
+    return UserModel.fromJson(documents.first);
+  }
+
+  Future<UserModel?> findByEmail({required String email, bool withAddress = true}) async {
+    final documents = await database.list(
+      table: collectionId,
+      select: withAddress ? "*, address_model:addresses(*)" : null,
+      filters: [AnyStepFilter.equals('email', email.toLowerCase())],
+      limit: 1,
+    );
+    if (documents.isEmpty) return null;
+    return UserModel.fromJson(documents.first);
+  }
+
+  Future<UserModel?> linkAuthUserByEmail({
+    required String authUserId,
+    required String email,
+  }) async {
+    if (authUserId.trim().isEmpty) return null;
+    if (email.trim().isEmpty) return null;
+    final existing = await findByEmail(email: email);
+    if (existing == null) return null;
+    if (existing.authId == authUserId) return existing;
+    final linked = existing.copyWith(authId: authUserId, email: email.toLowerCase());
+    return createOrUpdate(obj: linked, documentId: existing.id);
+  }
+
+  Future<UserModel> createAdminUser({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required AgeGroup ageGroup,
+    required UserRole role,
+    int? addressId,
+    String? phoneNumber,
+  }) async {
+    final user = UserModel(
+      id: _uuidV4(),
+      email: email.toLowerCase(),
+      authId: null,
+      firstName: firstName,
+      lastName: lastName,
+      ageGroup: ageGroup,
+      role: role,
+      phoneNumber: phoneNumber,
+      addressId: addressId,
+    );
+    return createOrUpdate(obj: user, documentId: user.id);
+  }
+
   @override
   Future<void> delete(UserModel obj) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    return database.delete(table: collectionId, documentId: obj.id);
   }
+}
+
+String _uuidV4() {
+  final random = Random.secure();
+  final bytes = List<int>.generate(16, (_) => random.nextInt(256));
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  final hex = bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).toList();
+  return '${hex[0]}${hex[1]}${hex[2]}${hex[3]}-'
+      '${hex[4]}${hex[5]}-'
+      '${hex[6]}${hex[7]}-'
+      '${hex[8]}${hex[9]}-'
+      '${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}';
 }
 
 @riverpod

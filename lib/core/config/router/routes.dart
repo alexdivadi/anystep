@@ -213,9 +213,23 @@ final routes = [
     },
   ),
   GoRoute(
+    path: AddAttendeeScreen.path,
+    name: AddAttendeeScreen.name,
+    builder: (context, state) {
+      final id = int.tryParse(state.pathParameters['id'] ?? '');
+      if (id == null) return _invalidRouteIdScreen(context);
+      return AddAttendeeScreen(eventId: id);
+    },
+  ),
+  GoRoute(
     path: CreateChannelScreen.path,
     name: CreateChannelScreen.name,
     builder: (context, state) => const CreateChannelScreen(),
+  ),
+  GoRoute(
+    path: CreateUserScreen.path,
+    name: CreateUserScreen.name,
+    builder: (context, state) => const CreateUserScreen(),
   ),
   GoRoute(
     path: BlogChannelDetailScreen.path,

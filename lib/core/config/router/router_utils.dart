@@ -12,6 +12,9 @@ class RouterUtils {
     SettingsScreen.pathAdmin,
     ReportsScreen.pathAdmin,
     CreateEventScreen.path,
+    CreateChannelScreen.path,
+    AddAttendeeScreen.path,
+    CreateUserScreen.path,
   };
 
   static const anyRoutes = {

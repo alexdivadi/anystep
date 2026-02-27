@@ -17,7 +17,10 @@ class SignAgreementScreenController extends _$SignAgreementScreenController {
     state = await AsyncValue.guard(() async {
       final auth = await ref.read(authStateStreamProvider.future);
       final repo = ref.read(userRepositoryProvider);
-      final user = await repo.get(documentId: auth!.uid);
+      final user = await repo.findByAuthId(authId: auth!.uid);
+      if (user == null) {
+        throw StateError('No user found for auth_id');
+      }
       final updated = user.copyWith(agreementSignedOn: DateTime.now());
       Log.d('Signing agreement for user: ${user.id}');
       await repo.createOrUpdate(obj: updated, documentId: user.id);

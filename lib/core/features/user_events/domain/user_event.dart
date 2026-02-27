@@ -16,6 +16,8 @@ abstract class UserEventModel with _$UserEventModel {
     @JsonKey(name: "user_model", includeToJson: false, includeFromJson: true) UserModel? user,
     @JsonKey(name: "event") int? eventId,
     @JsonKey(name: "event_model", includeToJson: false, includeFromJson: true) EventModel? event,
+    @JsonKey(name: "check_in_at", includeIfNull: false) DateTime? checkInAt,
+    @JsonKey(name: "check_out_at", includeIfNull: false) DateTime? checkOutAt,
     @JsonKey(name: "created_at", includeToJson: false, includeFromJson: true) DateTime? createdAt,
   }) = _UserEventModel;
 

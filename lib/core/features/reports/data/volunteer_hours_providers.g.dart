@@ -130,11 +130,13 @@ final class UserEventsInRangeFamily extends $Family
 }
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+/// Uses check-in/check-out when available, otherwise falls back to event start/end.
 
 @ProviderFor(volunteerHoursAggregate)
 const volunteerHoursAggregateProvider = VolunteerHoursAggregateFamily._();
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+/// Uses check-in/check-out when available, otherwise falls back to event start/end.
 
 final class VolunteerHoursAggregateProvider
     extends
@@ -147,6 +149,7 @@ final class VolunteerHoursAggregateProvider
         $FutureModifier<List<VolunteerHoursReport>>,
         $FutureProvider<List<VolunteerHoursReport>> {
   /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+  /// Uses check-in/check-out when available, otherwise falls back to event start/end.
   const VolunteerHoursAggregateProvider._({
     required VolunteerHoursAggregateFamily super.from,
     required ({DateTime start, DateTime end}) super.argument,
@@ -197,9 +200,10 @@ final class VolunteerHoursAggregateProvider
 }
 
 String _$volunteerHoursAggregateHash() =>
-    r'10176eafd4c64e34bd68ffe1ee9cb4424041074e';
+    r'3234e414926116f17569d96ac2f39fd6f1a9b944';
 
 /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+/// Uses check-in/check-out when available, otherwise falls back to event start/end.
 
 final class VolunteerHoursAggregateFamily extends $Family
     with
@@ -217,6 +221,7 @@ final class VolunteerHoursAggregateFamily extends $Family
       );
 
   /// Aggregates volunteer hours per user given user events. Applies an 8 hour cap per event day.
+  /// Uses check-in/check-out when available, otherwise falls back to event start/end.
 
   VolunteerHoursAggregateProvider call({
     required DateTime start,
