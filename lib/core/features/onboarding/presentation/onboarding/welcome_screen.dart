@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anystep/core/features/onboarding/presentation/onboarding/welcome_screen_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
-import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
+import 'package:anystep/core/features/settings/presentation/widgets/locale_setting.dart';
 
 /// Multi-page onboarding / welcome flow.
 /// Shows 4 pages in a PageView with a dot indicator. The final page displays

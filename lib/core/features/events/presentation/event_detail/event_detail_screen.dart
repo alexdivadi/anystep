@@ -155,17 +155,18 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                           child: Center(child: SignUpButton(event: event)),
                         ),
                       if (userAsync.hasValue && !isEditing)
-                        isPast
-                            ? AttendanceList(
-                                eventId: widget.id,
-                                isAdmin: userAsync.value?.role.canEditEvent == true,
-                                onAddAttendee: () =>
-                                    context.push(AddAttendeeScreen.getPath(widget.id)),
-                              )
-                            : (userAsync.value?.role.canEditEvent == true
-                                ? SliverToBoxAdapter(child: SignUpList(eventId: widget.id))
-                                : const SliverToBoxAdapter(child: SizedBox.shrink())),
-                      if (userAsync.hasValue && userAsync.value == null)
+                        if (userAsync.value?.role.canEditEvent == true)
+                          isPast
+                              ? AttendanceList(
+                                  eventId: widget.id,
+                                  isAdmin: true,
+                                  onAddAttendee: () =>
+                                      context.push(AddAttendeeScreen.getPath(widget.id)),
+                                )
+                              : SliverToBoxAdapter(child: SignUpList(eventId: widget.id))
+                        else
+                          const SliverToBoxAdapter(child: SizedBox.shrink()),
+                      if (!isPast && userAsync.hasValue && userAsync.value == null)
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: .only(

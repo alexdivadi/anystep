@@ -25,6 +25,8 @@
   ,
   "settingsTitle": "Configuración",
   "@settingsTitle": {"description": "Título de la pantalla de configuración"},
+  "donate": "Donar",
+  "@donate": {"description": "Etiqueta del enlace de donación en configuración"},
   "themeLabel": "Tema",
   "@themeLabel": {"description": "Etiqueta para selección de tema"},
   "themeAuto": "Automático",

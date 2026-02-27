@@ -2,8 +2,9 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
 import 'package:anystep/core/features/screens.dart';
-import 'package:anystep/core/features/settings/presentation/theme_mode_setting.dart';
-import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
+import 'package:anystep/core/features/settings/presentation/widgets/donate_tile.dart';
+import 'package:anystep/core/features/settings/presentation/widgets/theme_mode_setting.dart';
+import 'package:anystep/core/features/settings/presentation/widgets/locale_setting.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +38,7 @@ class SettingsScreen extends ConsumerWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => context.push(AboutScreen.path),
               ),
+              const DonateTile(),
               const ThemeModeSetting(),
               const LocaleSetting(),
               ListTile(

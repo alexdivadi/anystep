@@ -38,6 +38,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsTitle => 'Configuración';
 
   @override
+  String get donate => 'Donar';
+
+  @override
   String get themeLabel => 'Tema';
 
   @override

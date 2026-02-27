@@ -1,5 +1,5 @@
 import 'package:anystep/core/config/locale/locale_controller.dart';
-import 'package:anystep/core/features/settings/presentation/locale_setting.dart';
+import 'package:anystep/core/features/settings/presentation/widgets/locale_setting.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:anystep/core/common/widgets/any_step_modal.dart';
 import 'package:flutter/material.dart';
