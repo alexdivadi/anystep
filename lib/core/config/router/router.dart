@@ -90,6 +90,14 @@ GoRouter router(Ref ref) {
           return '${UserOnboardedGate.path}?redirect=$redirectPath';
         }
 
+        if (user.requireValue!.authId == null || user.requireValue!.authId!.isEmpty) {
+          if (RouterUtils.onboardingRoutes.contains(path)) {
+            return null;
+          }
+          Log.d('User missing auth_id, redirecting to onboarding');
+          return OnboardingScreen.path;
+        }
+
         if (!user.requireValue!.hasSignedAgreement) {
           Log.d('User has not signed agreement, redirecting to sign agreement screen');
           return SignAgreementScreen.path;

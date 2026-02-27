@@ -8,6 +8,7 @@ class RemoteConfigKeys {
   const RemoteConfigKeys._();
 
   static const String welcomeMessage = 'welcomeMessage';
+  static const String maintenanceMessage = 'maintenance_message';
 }
 
 class RemoteConfigService {
@@ -16,6 +17,8 @@ class RemoteConfigService {
   final FirebaseRemoteConfig _remoteConfig;
 
   String get welcomeMessage => _remoteConfig.getString(RemoteConfigKeys.welcomeMessage).trim();
+  String get maintenanceMessage =>
+      _remoteConfig.getString(RemoteConfigKeys.maintenanceMessage).trim();
 }
 
 @Riverpod(keepAlive: true)
@@ -28,7 +31,10 @@ Future<RemoteConfigService> remoteConfig(Ref ref) async {
         minimumFetchInterval: const Duration(hours: 1),
       ),
     );
-    await remoteConfig.setDefaults({RemoteConfigKeys.welcomeMessage: ''});
+    await remoteConfig.setDefaults({
+      RemoteConfigKeys.welcomeMessage: '',
+      RemoteConfigKeys.maintenanceMessage: '',
+    });
     await remoteConfig.fetchAndActivate();
   } catch (e, st) {
     Log.w('Remote config fetch failed', e, st);
