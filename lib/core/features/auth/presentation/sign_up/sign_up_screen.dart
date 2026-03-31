@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/name_validation.dart';
 import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           child: AnyStepTextField(
                             name: 'firstName',
                             labelText: loc.firstName,
-                            validator: FormBuilderValidators.firstName(),
+                            validator: nameValidator(
+                              required: true,
+                              errorText: loc.validatorFirstName,
+                            ),
                           ),
                         ),
                         const SizedBox(width: AnyStepSpacing.sm8),
@@ -67,7 +71,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           child: AnyStepTextField(
                             name: 'lastName',
                             labelText: loc.lastName,
-                            validator: FormBuilderValidators.lastName(),
+                            validator: nameValidator(
+                              required: true,
+                              errorText: loc.validatorLastName,
+                            ),
                           ),
                         ),
                       ],
