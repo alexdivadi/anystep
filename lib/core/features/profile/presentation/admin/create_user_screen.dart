@@ -127,7 +127,6 @@ class _CreateUserScreenState extends ConsumerState<CreateUserScreen> {
                   isUserAddress: true,
                   includeEventAddresses: false,
                   includeUserAddresses: false,
-                  addressIdValidator: FormBuilderValidators.required(),
                 ),
                 const SizedBox(height: AnyStepSpacing.md16),
                 Row(
