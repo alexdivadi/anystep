@@ -103,7 +103,7 @@ PODS:
   - permission_handler_apple (9.3.0):
     - Flutter
   - Polyline (5.1.0)
-  - PostHog (3.36.0)
+  - PostHog (3.48.3)
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -211,7 +211,7 @@ SPEC CHECKSUMS:
   path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   Polyline: 2a1f29f87f8d9b7de868940f4f76deb8c678a5b1
-  PostHog: 8e04df01d59971f1fd85d0273e18ba61076fef72
+  PostHog: 38e00e9376b90f0d92de958105029e4736ffe7f9
   posthog_flutter: c7888a7df4a4eb0a6473c50da2e12520c33408c4
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
