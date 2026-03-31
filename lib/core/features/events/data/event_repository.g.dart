@@ -205,7 +205,7 @@ final class GetEventsProvider
   }
 }
 
-String _$getEventsHash() => r'dc03cdbe3fcf8bbb6b5712e7a17f2b36c8fb66f4';
+String _$getEventsHash() => r'ed9a42325a9bd35ff6e131c988437e2f6fd3286c';
 
 final class GetEventsFamily extends $Family
     with
@@ -317,7 +317,7 @@ final class GetUpcomingEventsProvider
   }
 }
 
-String _$getUpcomingEventsHash() => r'1e2c14b6f4539f53123fae1bff49efd86c67c5ee';
+String _$getUpcomingEventsHash() => r'40ad372ef24944c3dd21b94515cf1fa4be17025c';
 
 final class GetUpcomingEventsFamily extends $Family
     with
@@ -429,7 +429,7 @@ final class GetPastEventsProvider
   }
 }
 
-String _$getPastEventsHash() => r'718a943ed9d24458beeffb26a56b03ef9c39d672';
+String _$getPastEventsHash() => r'9406b5f52f2752f06222ad25928ea29e295f5370';
 
 final class GetPastEventsFamily extends $Family
     with
@@ -520,7 +520,7 @@ final class GetEventsInRangeProvider
   }
 }
 
-String _$getEventsInRangeHash() => r'72aa5adbdf2d84c62f4138ddb9b5daa969949a28';
+String _$getEventsInRangeHash() => r'4314d77fc8ad2d2ca50d7c4292b1d2a0f4ad49d7';
 
 final class GetEventsInRangeFamily extends $Family
     with

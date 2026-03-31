@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/name_validation.dart';
 import 'package:anystep/core/common/utils/snackbar_message.dart';
 import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
@@ -90,7 +91,10 @@ class _CreateUserScreenState extends ConsumerState<CreateUserScreen> {
                       child: AnyStepTextField(
                         name: 'firstName',
                         labelText: loc.firstName,
-                        validator: FormBuilderValidators.firstName(),
+                        validator: nameValidator(
+                          required: true,
+                          errorText: loc.validatorFirstName,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AnyStepSpacing.sm8),
@@ -98,7 +102,10 @@ class _CreateUserScreenState extends ConsumerState<CreateUserScreen> {
                       child: AnyStepTextField(
                         name: 'lastName',
                         labelText: loc.lastName,
-                        validator: FormBuilderValidators.required(),
+                        validator: nameValidator(
+                          required: true,
+                          errorText: loc.validatorLastName,
+                        ),
                       ),
                     ),
                   ],
