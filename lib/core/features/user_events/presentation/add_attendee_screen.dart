@@ -1,5 +1,4 @@
 import 'package:anystep/core/common/constants/spacing.dart';
-import 'package:anystep/core/common/widgets/inputs/inputs.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
@@ -129,8 +128,7 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
                                 labelText: loc.checkInLabel,
                                 initialValue: initialCheckIn,
                                 enabled: _attended,
-                                validator:
-                                    _attended ? FormBuilderValidators.required() : null,
+                                validator: _attended ? FormBuilderValidators.required() : null,
                               ),
                             ),
                             const SizedBox(width: AnyStepSpacing.sm2),
@@ -140,21 +138,22 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
                                 labelText: loc.checkOutLabel,
                                 initialValue: initialCheckOut,
                                 enabled: _attended,
-                                validator:
-                                    _attended
-                                        ? FormBuilderValidators.compose([
-                                          FormBuilderValidators.required(),
-                                          (val) {
-                                            final checkIn =
-                                                formKey.currentState?.fields['checkInAt']?.value
-                                                    as DateTime?;
-                                            if (val != null && checkIn != null && val.isBefore(checkIn)) {
-                                              return 'Check out must be after check in';
-                                            }
-                                            return null;
-                                          },
-                                        ])
-                                        : null,
+                                validator: _attended
+                                    ? FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                        (val) {
+                                          final checkIn =
+                                              formKey.currentState?.fields['checkInAt']?.value
+                                                  as DateTime?;
+                                          if (val != null &&
+                                              checkIn != null &&
+                                              val.isBefore(checkIn)) {
+                                            return 'Check out must be after check in';
+                                          }
+                                          return null;
+                                        },
+                                      ])
+                                    : null,
                               ),
                             ),
                           ],

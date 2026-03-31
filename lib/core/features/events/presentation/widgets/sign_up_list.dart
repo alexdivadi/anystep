@@ -73,8 +73,8 @@ class SignUpList extends ConsumerWidget {
                     trailing: AnyStepBadge(
                       color: switch (user.role) {
                         UserRole.admin => Theme.of(context).colorScheme.tertiary,
-                        UserRole.board => Theme.of(context).colorScheme.primary,
-                        UserRole.volunteer => Theme.of(context).colorScheme.secondary,
+                        UserRole.board => Theme.of(context).colorScheme.secondary,
+                        UserRole.volunteer => Theme.of(context).colorScheme.primary,
                       },
                       child: Text(
                         user.role.displayName,
