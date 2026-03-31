@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/name_validation.dart';
 import 'package:anystep/core/common/widgets/max_width_container.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
@@ -110,7 +111,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             name: 'firstName',
                             labelText: loc.firstName,
                             initialValue: firstName,
-                            validator: FormBuilderValidators.firstName(),
+                            validator: nameValidator(
+                              required: true,
+                              errorText: loc.validatorFirstName,
+                            ),
                           ),
                         ),
                         const SizedBox(width: AnyStepSpacing.sm8),
