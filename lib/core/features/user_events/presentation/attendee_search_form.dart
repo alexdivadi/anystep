@@ -11,11 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AttendeeSearchForm extends ConsumerStatefulWidget {
-  const AttendeeSearchForm({
-    super.key,
-    required this.eventId,
-    required this.onUserSelected,
-  });
+  const AttendeeSearchForm({super.key, required this.eventId, required this.onUserSelected});
 
   final int eventId;
   final ValueChanged<UserModel> onUserSelected;
@@ -56,7 +52,7 @@ class _AttendeeSearchFormState extends ConsumerState<AttendeeSearchForm> {
                 if (!mounted || userId == null) return;
                 final user = await ref.read(userRepositoryProvider).get(documentId: userId);
                 widget.onUserSelected(user);
-                if (mounted && context.canPop()) {
+                if (mounted && context.mounted && context.canPop()) {
                   context.pop();
                 }
               },

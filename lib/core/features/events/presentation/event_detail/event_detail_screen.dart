@@ -14,7 +14,6 @@ import 'package:anystep/core/features/events/utils/launch_calendar.dart';
 import 'package:anystep/core/features/profile/data/current_user.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/screens.dart';
-import 'package:anystep/core/features/user_events/presentation/add_attendee_screen.dart';
 import 'package:anystep/core/features/user_events/presentation/sign_up_button.dart';
 import 'package:anystep/core/common/widgets/share_button.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';

@@ -196,8 +196,29 @@ List<MonthlyHoursPoint> _aggregateMonthlyHours(List<VolunteerHoursReport> report
 }
 
 List<MonthlyHoursPoint> _takeLastMonths(List<MonthlyHoursPoint> points, {int maxMonths = 6}) {
-  if (points.length <= maxMonths) return points;
-  return points.sublist(points.length - maxMonths);
+  final now = DateTime.now();
+  final baseMonths = <DateTime>[
+    for (var i = maxMonths - 1; i >= 0; i--) DateTime(now.year, now.month - i),
+  ];
+  if (points.isEmpty) {
+    return baseMonths.map((month) => MonthlyHoursPoint(month: month, hours: 0)).toList();
+  }
+
+  final Map<String, double> byMonth = {
+    for (final p in points)
+      "${p.month.year.toString().padLeft(4, '0')}-${p.month.month.toString().padLeft(2, '0')}"
+          : p.hours,
+  };
+  return baseMonths
+      .map(
+        (month) => MonthlyHoursPoint(
+          month: month,
+          hours:
+              byMonth["${month.year.toString().padLeft(4, '0')}-${month.month.toString().padLeft(2, '0')}"] ??
+              0,
+        ),
+      )
+      .toList();
 }
 
 @riverpod

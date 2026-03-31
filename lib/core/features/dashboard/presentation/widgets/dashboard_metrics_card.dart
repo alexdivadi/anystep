@@ -335,21 +335,27 @@ class _MonthlyHoursChart extends StatelessWidget {
             .map((p) => p.hours)
             .fold<double>(0, (max, v) => v > max ? v : max)
             .clamp(1, double.infinity);
+        final minX = 0.0;
+        final maxX = (points.length - 1).toDouble().clamp(1, double.infinity);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               label,
-              style: Theme.of(
-                context,
-              ).textTheme.labelMedium?.copyWith(color: foreground ?? theme.colorScheme.onSurface),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: foreground ?? theme.colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: AnyStepSpacing.sm8),
-            SizedBox(
+            Container(
               height: 120,
+              padding: const .symmetric(horizontal: AnyStepSpacing.md16),
               child: LineChart(
                 LineChartData(
+                  minX: minX,
+                  maxX: maxX.toDouble(),
                   minY: 0,
                   maxY: maxY * 1.2,
                   gridData: const FlGridData(show: false),
@@ -388,19 +394,14 @@ class _MonthlyHoursChart extends StatelessWidget {
                           FlSpot(i.toDouble(), points[i].hours),
                       ],
                       isCurved: true,
-                      barWidth: 2.5,
-                      color: foreground ?? theme.colorScheme.primary,
+                      curveSmoothness: 0.25,
+                      preventCurveOverShooting: true,
+                      barWidth: 3,
+                      color: theme.colorScheme.primary,
                       dotData: const FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
-                        gradient: LinearGradient(
-                          colors: [
-                            (foreground ?? theme.colorScheme.primary).withAlpha(80),
-                            Colors.transparent,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                        color: theme.colorScheme.primary.withAlpha(40),
                       ),
                     ),
                   ],
