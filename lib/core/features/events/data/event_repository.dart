@@ -11,10 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'event_repository.g.dart';
 
 class EventRepository implements IRepository<EventModel> {
-  const EventRepository({
-    required this.database,
-    this.collectionId = Env.eventCollectionId,
-  });
+  const EventRepository({required this.database, this.collectionId = Env.eventCollectionId});
 
   final Database database;
   final String collectionId;
@@ -111,8 +108,8 @@ Future<PaginationResult<EventModel>> getEvents(
 
   filters ??= [];
   final userAsync = ref.watch(currentUserStreamProvider);
-  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
-  if (!isAdmin) {
+  final isBoard = userAsync.hasValue && userAsync.value?.role.canViewPrivateEvents == true;
+  if (!isBoard) {
     filters.add(AnyStepFilter.equals('is_private', false));
   }
   if (search != null && search.isNotEmpty) {
@@ -136,8 +133,8 @@ Future<PaginationResult<EventModel>> getUpcomingEvents(
 }) async {
   filters ??= [];
   final userAsync = ref.watch(currentUserStreamProvider);
-  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
-  if (!isAdmin) {
+  final isBoard = userAsync.hasValue && userAsync.value?.role.canViewPrivateEvents == true;
+  if (!isBoard) {
     filters.add(AnyStepFilter.equals('is_private', false));
   }
   filters.add(AnyStepFilter.greaterThan('start_time', DateTime.now().toUtc()));
@@ -161,8 +158,8 @@ Future<PaginationResult<EventModel>> getPastEvents(
 }) async {
   filters ??= [];
   final userAsync = ref.watch(currentUserStreamProvider);
-  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
-  if (!isAdmin) {
+  final isBoard = userAsync.hasValue && userAsync.value?.role.canViewPrivateEvents == true;
+  if (!isBoard) {
     filters.add(AnyStepFilter.equals('is_private', false));
   }
   filters.add(AnyStepFilter.lessThan('start_time', DateTime.now().toUtc()));
@@ -184,12 +181,12 @@ Future<List<EventModel>> getEventsInRange(
 }) async {
   final repository = ref.watch(eventRepositoryProvider);
   final userAsync = ref.watch(currentUserStreamProvider);
-  final isAdmin = userAsync.hasValue && userAsync.value?.role == UserRole.admin;
+  final isBoard = userAsync.hasValue && userAsync.value?.role.canViewPrivateEvents == true;
   return repository.list(
     filters: [
       AnyStepFilter.greaterThan('start_time', start.toUtc(), inclusive: true),
       AnyStepFilter.lessThan('start_time', end.toUtc(), inclusive: true),
-      if (!isAdmin) AnyStepFilter.equals('is_private', false),
+      if (!isBoard) AnyStepFilter.equals('is_private', false),
     ],
     order: AnyStepOrder.asc('start_time'),
   );

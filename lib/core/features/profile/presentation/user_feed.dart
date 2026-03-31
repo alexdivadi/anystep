@@ -23,26 +23,27 @@ class UserFeed extends StatelessWidget {
       noItemsWidget: const NoUsersWidget(),
       shimmer: const EventCardShimmer(),
       errorBuilder: (context, error) => const SizedBox.shrink(),
-      itemBuilder:
-          (context, user) => ListTile(
-            onTap: onTapUser != null ? () => onTapUser!(user) : null,
-            enabled: onTapUser != null,
-            leading:
-                leadingBuilder != null ? leadingBuilder!(user) : ProfileImage(user: user, size: 20),
-            title: Text(user.firstName),
-            trailing: AnyStepBadge(
-              color:
-                  user.role == UserRole.admin
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
-              child: Text(
-                user.role.displayName,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
-              ),
-            ),
+      itemBuilder: (context, user) => ListTile(
+        onTap: onTapUser != null ? () => onTapUser!(user) : null,
+        enabled: onTapUser != null,
+        leading: leadingBuilder != null
+            ? leadingBuilder!(user)
+            : ProfileImage(user: user, size: 20),
+        title: Text(user.firstName),
+        trailing: AnyStepBadge(
+          color: switch (user.role) {
+            UserRole.admin => Theme.of(context).colorScheme.tertiary,
+            UserRole.board => Theme.of(context).colorScheme.primary,
+            UserRole.volunteer => Theme.of(context).colorScheme.secondary,
+          },
+          child: Text(
+            user.role.displayName,
+            style: Theme.of(
+              context,
+            ).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
           ),
+        ),
+      ),
     );
   }
 }

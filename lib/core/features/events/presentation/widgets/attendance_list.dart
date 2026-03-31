@@ -150,9 +150,11 @@ class AttendanceList extends ConsumerWidget {
                     ),
                     title: Text(user.firstName),
                     trailing: AnyStepBadge(
-                      color: user.role == UserRole.admin
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
+                      color: switch (user.role) {
+                        UserRole.admin => Theme.of(context).colorScheme.tertiary,
+                        UserRole.board => Theme.of(context).colorScheme.primary,
+                        UserRole.volunteer => Theme.of(context).colorScheme.secondary,
+                      },
                       child: Text(
                         user.role.displayName,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
