@@ -9,11 +9,7 @@ FormFieldValidator<String> nameValidator({required String errorText, bool requir
     validators.add(FormBuilderValidators.required());
   }
   validators.add(
-    FormBuilderValidators.match(
-      _latinNamePattern.pattern as RegExp,
-      errorText: errorText,
-      checkNullOrEmpty: false,
-    ),
+    FormBuilderValidators.match(_latinNamePattern, errorText: errorText, checkNullOrEmpty: false),
   );
   return FormBuilderValidators.compose(validators);
 }
