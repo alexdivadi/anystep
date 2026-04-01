@@ -29,7 +29,15 @@ class UserFeed extends StatelessWidget {
         leading: leadingBuilder != null
             ? leadingBuilder!(user)
             : ProfileImage(user: user, size: 20),
-        title: Text(user.firstName),
+        title: Text(user.fullName),
+        subtitle: Text(
+          user.email,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(
+            context,
+          ).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        ),
         trailing: AnyStepBadge(
           color: switch (user.role) {
             UserRole.admin => Theme.of(context).colorScheme.tertiary,

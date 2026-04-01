@@ -6,12 +6,14 @@ import 'dart:convert';
 import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
+import 'package:anystep/core/features/reports/presentation/report_detail_screen.dart';
 import 'package:anystep/core/features/reports/presentation/volunteer_hours_report_table_cell.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:go_router/go_router.dart';
 
 class ReportsScreen extends ConsumerStatefulWidget {
   const ReportsScreen({super.key});
@@ -30,6 +32,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   late DateTime _start;
   late DateTime _end;
   bool _custom = false;
+  bool _isSearching = false;
+  String _query = '';
   final _dateFmt = DateFormat('MMM d, yyyy');
 
   @override
@@ -143,6 +147,57 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
             error: (e, st) => IconButton(onPressed: null, icon: const Icon(Icons.error_outline)),
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(AnyStepSpacing.xl56),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: AnimatedSize(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                  child: AnyStepSearchBar(
+                    hintText: loc.searchReports,
+                    initialValue: _query,
+                    onChanged: (value) => setState(() => _query = value),
+                    onFocusChanged: (focused) =>
+                        setState(() => _isSearching = focused || _query.isNotEmpty),
+                  ),
+                ),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                transitionBuilder: (child, animation) {
+                  final offsetAnim = animation.drive(
+                    Tween<Offset>(begin: const Offset(0.3, 0), end: Offset.zero).chain(
+                      CurveTween(curve: Curves.easeOut),
+                    ),
+                  );
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(position: offsetAnim, child: child),
+                  );
+                },
+                child: _isSearching
+                    ? Padding(
+                        key: const ValueKey('cancel_btn'),
+                        padding: const EdgeInsets.only(right: AnyStepSpacing.md16),
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _query = '';
+                              _isSearching = false;
+                            });
+                            FocusScope.of(context).unfocus();
+                          },
+                          child: Text(loc.cancel),
+                        ),
+                      )
+                    : const SizedBox.shrink(key: ValueKey('cancel_btn_space')),
+              ),
+            ],
+          ),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async => ref.invalidate(userEventsInRangeProvider),
@@ -189,10 +244,26 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: asyncReports.when(
                 data: (reports) {
-                  if (reports.isEmpty) {
+                  final query = _query.trim().toLowerCase();
+                  if (_isSearching && query.isEmpty) {
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: AnyStepSpacing.lg48),
-                      child: Center(child: Text(loc.noDataInRange)),
+                      child: Center(child: Text(loc.enterSearchTermReports)),
+                    );
+                  }
+                  final filtered = query.isEmpty
+                      ? reports
+                      : reports.where((r) {
+                          final name = r.user.fullName.toLowerCase();
+                          final email = r.user.email.toLowerCase();
+                          return name.contains(query) || email.contains(query);
+                        }).toList();
+                  if (filtered.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: AnyStepSpacing.lg48),
+                      child: Center(
+                        child: Text(query.isEmpty ? loc.noDataInRange : loc.noReportsFound),
+                      ),
                     );
                   }
                   // Condensed list view instead of wide horizontal DataTable
@@ -202,11 +273,18 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: AnyStepSpacing.sm8),
                         child: Text(
-                          loc.reportsCount(reports.length),
+                          loc.reportsCount(filtered.length),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      ...reports.map((r) => VolunteerHoursReportTableCell(volunteerHoursReport: r)),
+                      ...filtered.map(
+                        (r) => VolunteerHoursReportTableCell(
+                          volunteerHoursReport: r,
+                          onTap: () {
+                            context.push(ReportDetailScreen.getPath(r.user.id, _start, _end));
+                          },
+                        ),
+                      ),
                     ],
                   );
                 },

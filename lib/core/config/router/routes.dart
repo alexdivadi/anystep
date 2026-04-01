@@ -218,7 +218,8 @@ final routes = [
     builder: (context, state) {
       final id = int.tryParse(state.pathParameters['id'] ?? '');
       if (id == null) return _invalidRouteIdScreen(context);
-      return AddAttendeeScreen(eventId: id);
+      final userEventId = int.tryParse(state.uri.queryParameters['userEventId'] ?? '');
+      return AddAttendeeScreen(eventId: id, userEventId: userEventId);
     },
   ),
   GoRoute(
@@ -230,6 +231,20 @@ final routes = [
     path: CreateUserScreen.path,
     name: CreateUserScreen.name,
     builder: (context, state) => const CreateUserScreen(),
+  ),
+  GoRoute(
+    path: ReportDetailScreen.pathAdmin,
+    name: ReportDetailScreen.nameAdmin,
+    builder: (context, state) {
+      final userId = state.pathParameters['userId'];
+      if (userId == null || userId.isEmpty) return _invalidRouteIdScreen(context);
+      final startMs = int.tryParse(state.uri.queryParameters['start'] ?? '');
+      final endMs = int.tryParse(state.uri.queryParameters['end'] ?? '');
+      final now = DateTime.now();
+      final start = startMs != null ? DateTime.fromMillisecondsSinceEpoch(startMs) : DateTime(now.year, 1, 1);
+      final end = endMs != null ? DateTime.fromMillisecondsSinceEpoch(endMs) : now;
+      return ReportDetailScreen(userId: userId, start: start, end: end);
+    },
   ),
   GoRoute(
     path: BlogChannelDetailScreen.path,

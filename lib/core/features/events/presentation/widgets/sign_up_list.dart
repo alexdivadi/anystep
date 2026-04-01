@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/user_display_name.dart';
 import 'package:anystep/core/common/widgets/any_step_badge.dart';
 import 'package:anystep/core/common/widgets/any_step_loading_indicator.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
@@ -69,7 +70,15 @@ class SignUpList extends ConsumerWidget {
                   }
                   return ListTile(
                     leading: ProfileImage(user: user, size: 20),
-                    title: Text(user.firstName),
+                    title: Text(displayNameWithLastInitial(user)),
+                    subtitle: Text(
+                      user.email,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                     trailing: AnyStepBadge(
                       color: switch (user.role) {
                         UserRole.admin => Theme.of(context).colorScheme.tertiary,
