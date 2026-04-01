@@ -2,6 +2,8 @@ import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/profile/domain/user_model.dart';
+import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
+import 'package:anystep/core/features/user_events/domain/user_event.dart';
 import 'package:anystep/core/features/user_events/presentation/add_attendee_controller.dart';
 import 'package:anystep/core/features/user_events/presentation/attendee_search_form.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
@@ -12,13 +14,18 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 
 class AddAttendeeScreen extends ConsumerStatefulWidget {
-  const AddAttendeeScreen({super.key, required this.eventId});
+  const AddAttendeeScreen({super.key, required this.eventId, this.userEventId});
 
   static const path = '/events/:id/add-attendee';
-  static String getPath(int eventId) => '/events/$eventId/add-attendee';
+  static String getPath(int eventId, {int? userEventId}) {
+    final base = '/events/$eventId/add-attendee';
+    if (userEventId == null) return base;
+    return '$base?userEventId=$userEventId';
+  }
   static const name = 'add-attendee';
 
   final int eventId;
+  final int? userEventId;
 
   @override
   ConsumerState<AddAttendeeScreen> createState() => _AddAttendeeScreenState();
@@ -28,8 +35,10 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   UserModel? _selectedUser;
   bool _attended = true;
+  bool _prefilled = false;
 
   void _openUserSearch() {
+    if (widget.userEventId != null) return;
     context.showModal(
       AttendeeSearchForm(
         eventId: widget.eventId,
@@ -69,6 +78,9 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
   @override
   Widget build(BuildContext context) {
     final eventAsync = ref.watch(getEventProvider(widget.eventId));
+    final userEventAsync = widget.userEventId != null
+        ? ref.watch(getUserEventProvider(widget.userEventId!))
+        : const AsyncValue<UserEventModel?>.data(null);
     final state = ref.watch(addAttendeeControllerProvider);
     final loc = AppLocalizations.of(context);
 
@@ -84,8 +96,30 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
       data: (event) {
         final initialCheckIn = event.startTime.toLocal();
         final initialCheckOut = event.endTime.toLocal();
+        final isEditing = widget.userEventId != null;
+        if (isEditing && !_prefilled) {
+          userEventAsync.whenData((userEvent) {
+            if (userEvent == null) return;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              setState(() {
+                _prefilled = true;
+                _attended = userEvent.attended;
+                _selectedUser = userEvent.user;
+              });
+              formKey.currentState?.fields['userId']?.didChange(userEvent.userId);
+              formKey.currentState?.fields['attended']?.didChange(userEvent.attended);
+              formKey.currentState?.fields['checkInAt']?.didChange(
+                userEvent.attended ? userEvent.checkInAt?.toLocal() ?? initialCheckIn : null,
+              );
+              formKey.currentState?.fields['checkOutAt']?.didChange(
+                userEvent.attended ? userEvent.checkOutAt?.toLocal() ?? initialCheckOut : null,
+              );
+            });
+          });
+        }
         return AnyStepScaffold(
-          appBar: AnyStepAppBar(title: Text(loc.addAttendeeTitle)),
+          appBar: AnyStepAppBar(title: Text(isEditing ? loc.editAttendeeTitle : loc.addAttendeeTitle)),
           body: Padding(
             padding: const EdgeInsets.all(AnyStepSpacing.md16),
             child: FormBuilder(
@@ -101,6 +135,7 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
                           hint: loc.selectUser,
                           selectedUser: _selectedUser,
                           onTap: _openUserSearch,
+                          enabled: !isEditing,
                         ),
                         AnyStepSwitchInput(
                           name: 'attended',
@@ -189,12 +224,14 @@ class _UserSelectField extends StatelessWidget {
     required this.hint,
     required this.onTap,
     required this.selectedUser,
+    this.enabled = true,
   });
 
   final String label;
   final String hint;
   final VoidCallback onTap;
   final UserModel? selectedUser;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +252,7 @@ class _UserSelectField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
           child: InkWell(
             borderRadius: BorderRadius.circular(AnyStepSpacing.md16),
-            onTap: onTap,
+            onTap: enabled ? onTap : null,
             child: InputDecorator(
               decoration: InputDecoration(
                 labelText: label,
@@ -227,7 +264,10 @@ class _UserSelectField extends StatelessWidget {
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
-                  borderSide: BorderSide(color: primary, width: 1.5),
+                  borderSide: BorderSide(
+                    color: enabled ? primary : primary.withAlpha(80),
+                    width: 1.5,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(AnyStepSpacing.md16)),
@@ -237,7 +277,7 @@ class _UserSelectField extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(child: Text(displayText, style: displayStyle)),
-                  const Icon(Icons.search),
+                  if (enabled) const Icon(Icons.search),
                 ],
               ),
             ),

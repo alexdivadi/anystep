@@ -278,6 +278,30 @@ abstract class AppLocalizations {
   /// **'Reports ({count})'**
   String reportsCount(int count);
 
+  /// Report detail metric label for total hours
+  ///
+  /// In en, this message translates to:
+  /// **'Total Hours'**
+  String get reportTotalHours;
+
+  /// Report detail metric label for total events
+  ///
+  /// In en, this message translates to:
+  /// **'Total Events'**
+  String get reportTotalEvents;
+
+  /// Section header for events attended list
+  ///
+  /// In en, this message translates to:
+  /// **'Events Attended'**
+  String get eventsAttended;
+
+  /// Empty state for report detail events list
+  ///
+  /// In en, this message translates to:
+  /// **'No events attended in this range'**
+  String get reportNoEvents;
+
   /// Error message for reports loading
   ///
   /// In en, this message translates to:
@@ -518,6 +542,12 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
+  /// Search bar hint text for reports
+  ///
+  /// In en, this message translates to:
+  /// **'Search reports'**
+  String get searchReports;
+
   /// Label for address autocomplete search field
   ///
   /// In en, this message translates to:
@@ -679,6 +709,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Attendee'**
   String get addAttendeeTitle;
+
+  /// Title for edit attendee screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Attendee'**
+  String get editAttendeeTitle;
 
   /// Label for user selection field
   ///
@@ -1339,6 +1375,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a search term to find events.'**
   String get enterSearchTerm;
+
+  /// Text when report search field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a search term to find reports.'**
+  String get enterSearchTermReports;
+
+  /// Empty state title when no reports match search
+  ///
+  /// In en, this message translates to:
+  /// **'No reports found'**
+  String get noReportsFound;
 
   /// Label for volunteer eligible event toggle
   ///
