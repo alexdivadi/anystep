@@ -4,9 +4,14 @@ import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart
 import 'package:flutter/material.dart';
 
 class VolunteerHoursReportTableCell extends StatelessWidget {
-  const VolunteerHoursReportTableCell({super.key, required this.volunteerHoursReport});
+  const VolunteerHoursReportTableCell({
+    super.key,
+    required this.volunteerHoursReport,
+    this.onTap,
+  });
 
   final VolunteerHoursReport volunteerHoursReport;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class VolunteerHoursReportTableCell extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
       child: ListTile(
+        onTap: onTap,
         title: Row(
           children: [
             ProfileImage(user: volunteerHoursReport.user, size: AnyStepSpacing.md12),

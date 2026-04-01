@@ -114,6 +114,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportTotalHours => 'Total Hours';
+
+  @override
+  String get reportTotalEvents => 'Total Events';
+
+  @override
+  String get eventsAttended => 'Events Attended';
+
+  @override
+  String get reportNoEvents => 'No events attended in this range';
+
+  @override
   String errorLoadingReports(String error) {
     return 'Error loading reports: $error';
   }
@@ -240,6 +252,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search => 'Search';
 
   @override
+  String get searchReports => 'Search reports';
+
+  @override
   String get searchAddress => 'Search address';
 
   @override
@@ -323,6 +338,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addAttendeeTitle => 'Add Attendee';
+
+  @override
+  String get editAttendeeTitle => 'Edit Attendee';
 
   @override
   String get userLabel => 'User';
@@ -674,6 +692,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterSearchTerm => 'Please enter a search term to find events.';
+
+  @override
+  String get enterSearchTermReports =>
+      'Please enter a search term to find reports.';
+
+  @override
+  String get noReportsFound => 'No reports found';
 
   @override
   String get volunteerEventLabel => 'Volunteer Event';

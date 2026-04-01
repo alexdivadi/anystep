@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:anystep/core/features/auth/data/auth_repository.dart';
+import 'package:anystep/core/features/events/data/event_repository.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
 import 'package:anystep/core/features/user_events/domain/user_event.dart';
@@ -157,9 +158,12 @@ class MonthlyHoursPoint {
   return (durationHours, baseDate);
 }
 
-VolunteerHoursSummary _summaryFromReports(List<VolunteerHoursReport> reports) {
+VolunteerHoursSummary _summaryFromReports(
+  List<VolunteerHoursReport> reports, {
+  int? eventsCountOverride,
+}) {
   final totalHours = reports.fold<double>(0, (sum, r) => sum + r.totalHours);
-  final totalEvents = reports.fold<int>(0, (sum, r) => sum + r.eventsCount);
+  final totalEvents = eventsCountOverride ?? reports.fold<int>(0, (sum, r) => sum + r.eventsCount);
   return VolunteerHoursSummary(
     totalHours: double.parse(totalHours.toStringAsFixed(2)),
     eventsCount: totalEvents,
@@ -224,13 +228,20 @@ List<MonthlyHoursPoint> _takeLastMonths(List<MonthlyHoursPoint> points, {int max
 @riverpod
 Future<VolunteerHoursSummary> volunteerHoursSummaryThisMonth(Ref ref) async {
   final reports = await ref.watch(volunteerHoursThisMonthProvider.future);
-  return _summaryFromReports(reports);
+  final now = DateTime.now();
+  final start = DateTime(now.year, now.month, 1);
+  final end = DateTime(now.year, now.month + 1, 1);
+  final events = await ref.watch(getEventsInRangeProvider(start: start, end: end).future);
+  return _summaryFromReports(reports, eventsCountOverride: events.length);
 }
 
 @riverpod
 Future<VolunteerHoursSummary> volunteerHoursSummaryYtd(Ref ref) async {
   final reports = await ref.watch(volunteerHoursYtdProvider.future);
-  return _summaryFromReports(reports);
+  final now = DateTime.now();
+  final start = DateTime(now.year, 1, 1);
+  final events = await ref.watch(getEventsInRangeProvider(start: start, end: now).future);
+  return _summaryFromReports(reports, eventsCountOverride: events.length);
 }
 
 @riverpod

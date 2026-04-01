@@ -4,7 +4,7 @@ class AnyStepColors {
   static const Color black = Color(0xFF0C1821);
   static const Color pureBlack = Color(0xFF000000);
   static const Color gray = Color(0xFFB0B0B0);
-  static const Color grayDark = Color(0xFF26282C);
+  static const Color grayDark = Color(0xFF3A3C40);
   static const Color navyDark = Color(0xFF273043);
   static const Color blueDeep = Color(0xFF14248A);
   static const Color blueBright = Color(0xFF47A7ED);

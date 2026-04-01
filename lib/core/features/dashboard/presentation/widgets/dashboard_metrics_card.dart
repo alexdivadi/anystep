@@ -164,7 +164,7 @@ class _MetricsHeroRow extends StatelessWidget {
 
   String _formatHours(double hours) {
     final hasDecimal = hours % 1 != 0;
-    return hours.toStringAsFixed(hasDecimal ? 1 : 0);
+    return hours.toStringAsFixed(hasDecimal ? 2 : 0);
   }
 
   @override

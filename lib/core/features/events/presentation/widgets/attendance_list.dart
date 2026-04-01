@@ -1,12 +1,16 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/user_display_name.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/user_events/data/user_event_repository.dart';
+import 'package:anystep/core/features/user_events/domain/user_event.dart';
+import 'package:anystep/core/features/user_events/presentation/add_attendee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:anystep/core/config/theme/colors.dart';
+import 'package:go_router/go_router.dart';
 
 /// Sliver-based paginated attendance list (similar pattern to UpcomingEventsFeed)
 class AttendanceList extends ConsumerWidget {
@@ -38,7 +42,7 @@ class AttendanceList extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+              _TitleRow(total: 0, isAdmin: isAdmin, onAddAttendee: onAddAttendee),
               const SizedBox(height: AnyStepSpacing.sm8),
               const Center(child: AnyStepLoadingIndicator()),
             ],
@@ -54,7 +58,7 @@ class AttendanceList extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+              _TitleRow(total: 0, isAdmin: isAdmin, onAddAttendee: onAddAttendee),
               const SizedBox(height: AnyStepSpacing.sm8),
               AnyStepFade(
                 child: Text(
@@ -78,7 +82,7 @@ class AttendanceList extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+                  _TitleRow(total: total, isAdmin: isAdmin, onAddAttendee: onAddAttendee),
                   const SizedBox(height: AnyStepSpacing.sm8),
                   Builder(builder: (context) => Text(AppLocalizations.of(context).noAttendees)),
                 ],
@@ -101,7 +105,7 @@ class AttendanceList extends ConsumerWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _TitleRow(isAdmin: isAdmin, onAddAttendee: onAddAttendee),
+                    _TitleRow(total: total, isAdmin: isAdmin, onAddAttendee: onAddAttendee),
                     const SizedBox(height: AnyStepSpacing.sm8),
                   ],
                 );
@@ -122,8 +126,14 @@ class AttendanceList extends ConsumerWidget {
                   final userEvent = page.items[indexInPage];
                   final user = userEvent.user;
                   if (user == null) return const SizedBox.shrink();
+                  final hoursLabel = _hoursLabel(userEvent);
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      final id = userEvent.id;
+                      if (id == null) return;
+                      context.push(AddAttendeeScreen.getPath(eventId, userEventId: id));
+                    },
                     leading: Stack(
                       children: [
                         ProfileImage(user: user, size: 20),
@@ -148,7 +158,15 @@ class AttendanceList extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    title: Text(user.firstName),
+                    title: Text(displayNameWithLastInitial(user)),
+                    subtitle: Text(
+                      hoursLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                     trailing: AnyStepBadge(
                       color: switch (user.role) {
                         UserRole.admin => Theme.of(context).colorScheme.tertiary,
@@ -173,9 +191,22 @@ class AttendanceList extends ConsumerWidget {
   }
 }
 
-class _TitleRow extends StatelessWidget {
-  const _TitleRow({this.onAddAttendee, this.isAdmin = false});
+String _hoursLabel(UserEventModel userEvent) {
+  if (!userEvent.attended) return '0 hours';
+  DateTime? start = userEvent.checkInAt ?? userEvent.event?.startTime;
+  DateTime? end = userEvent.checkOutAt ?? userEvent.event?.endTime;
+  if (start == null || end == null) return '';
+  if (end.isBefore(start)) return '';
+  final hours = end.difference(start).inMinutes / 60.0;
+  final hasDecimal = hours % 1 != 0;
+  final formatted = hours.toStringAsFixed(hasDecimal ? 1 : 0);
+  return '$formatted hours';
+}
 
+class _TitleRow extends StatelessWidget {
+  const _TitleRow({required this.total, this.onAddAttendee, this.isAdmin = false});
+
+  final int total;
   final VoidCallback? onAddAttendee;
   final bool isAdmin;
 
@@ -184,7 +215,10 @@ class _TitleRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(AppLocalizations.of(context).attendees, style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          '${AppLocalizations.of(context).attendees} ($total)',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         if (isAdmin && onAddAttendee != null)
           IconButton(
             icon: const Icon(Icons.person_add),
