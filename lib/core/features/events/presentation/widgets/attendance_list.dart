@@ -1,4 +1,5 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/utils/format_hours.dart';
 import 'package:anystep/core/common/utils/user_display_name.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
 import 'package:anystep/core/features/profile/domain/user_role.dart';
@@ -198,8 +199,7 @@ String _hoursLabel(UserEventModel userEvent) {
   if (start == null || end == null) return '';
   if (end.isBefore(start)) return '';
   final hours = end.difference(start).inMinutes / 60.0;
-  final hasDecimal = hours % 1 != 0;
-  final formatted = hours.toStringAsFixed(hasDecimal ? 1 : 0);
+  final formatted = formatHours(hours, maxDecimals: 2);
   return '$formatted hours';
 }
 

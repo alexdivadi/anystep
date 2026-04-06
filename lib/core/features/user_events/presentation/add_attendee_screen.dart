@@ -56,8 +56,8 @@ class _AddAttendeeScreenState extends ConsumerState<AddAttendeeScreen> {
     final values = formKey.currentState!.value;
     final userId = values['userId'] as String;
     final attended = values['attended'] as bool? ?? true;
-    final checkInAt = values['checkInAt'] as DateTime?;
-    final checkOutAt = values['checkOutAt'] as DateTime?;
+    final checkInAt = (values['checkInAt'] as DateTime?)?.toLocal();
+    final checkOutAt = (values['checkOutAt'] as DateTime?)?.toLocal();
 
     final success = await ref
         .read(addAttendeeControllerProvider.notifier)

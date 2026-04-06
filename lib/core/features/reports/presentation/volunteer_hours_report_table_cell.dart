@@ -1,14 +1,14 @@
 import 'package:anystep/core/common/constants/spacing.dart';
+import 'package:anystep/core/common/widgets/any_step_badge.dart';
+import 'package:anystep/core/config/theme/colors.dart';
+import 'package:anystep/core/features/profile/domain/age_group.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:flutter/material.dart';
 
 class VolunteerHoursReportTableCell extends StatelessWidget {
-  const VolunteerHoursReportTableCell({
-    super.key,
-    required this.volunteerHoursReport,
-    this.onTap,
-  });
+  const VolunteerHoursReportTableCell({super.key, required this.volunteerHoursReport, this.onTap});
 
   final VolunteerHoursReport volunteerHoursReport;
   final VoidCallback? onTap;
@@ -18,6 +18,7 @@ class VolunteerHoursReportTableCell extends StatelessWidget {
     final theme = Theme.of(context);
     final address = volunteerHoursReport.user.address?.formattedAddress;
     final phone = volunteerHoursReport.user.phoneNumber;
+    final hasEmail = volunteerHoursReport.user.canReceiveEmail;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: AnyStepSpacing.sm4),
       child: ListTile(
@@ -26,9 +27,53 @@ class VolunteerHoursReportTableCell extends StatelessWidget {
           children: [
             ProfileImage(user: volunteerHoursReport.user, size: AnyStepSpacing.md12),
             const SizedBox(width: AnyStepSpacing.sm8),
-            Text(
-              volunteerHoursReport.user.fullName,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+            Expanded(
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: AnyStepSpacing.sm4,
+                runSpacing: AnyStepSpacing.sm2,
+                children: [
+                  Text(
+                    volunteerHoursReport.user.fullName,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  AnyStepBadge(
+                    color: switch (volunteerHoursReport.user.role) {
+                      UserRole.admin => theme.colorScheme.tertiary,
+                      UserRole.board => theme.colorScheme.secondary,
+                      UserRole.volunteer => theme.colorScheme.primary,
+                    },
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AnyStepSpacing.sm2,
+                      horizontal: AnyStepSpacing.sm6,
+                    ),
+                    borderRadius: BorderRadius.circular(AnyStepSpacing.sm6),
+                    child: Text(
+                      volunteerHoursReport.user.role.displayName,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onSecondary,
+                            fontSize: 10,
+                          ),
+                    ),
+                  ),
+                  if (volunteerHoursReport.user.ageGroup == AgeGroup.under18)
+                    AnyStepBadge(
+                      color: AnyStepColors.warning,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AnyStepSpacing.sm2,
+                        horizontal: AnyStepSpacing.sm6,
+                      ),
+                      borderRadius: BorderRadius.circular(AnyStepSpacing.sm6),
+                      child: Text(
+                        'Under 18',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: AnyStepColors.black,
+                              fontSize: 10,
+                            ),
+                      ),
+                    ),
+                ],
+              ),
             ),
           ],
         ),
@@ -48,13 +93,17 @@ class VolunteerHoursReportTableCell extends StatelessWidget {
                   Icon(
                     Icons.email,
                     size: AnyStepSpacing.sm10,
-                    color: theme.colorScheme.secondaryFixed,
+                    color: hasEmail
+                        ? theme.colorScheme.secondaryFixed
+                        : theme.colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(width: AnyStepSpacing.sm4),
                   Text(
-                    volunteerHoursReport.user.email,
+                    hasEmail ? volunteerHoursReport.user.email : 'No email on file',
                     style: TextStyle(
-                      color: theme.colorScheme.secondaryFixed,
+                      color: hasEmail
+                          ? theme.colorScheme.secondaryFixed
+                          : theme.colorScheme.onSurfaceVariant,
                       fontSize: AnyStepSpacing.sm10,
                     ),
                   ),

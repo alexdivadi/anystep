@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 extension SnackbarMessage on BuildContext {
+  static const Duration _defaultSnackBarDuration = Duration(seconds: 4);
+
   SnackBarAction _dismissAction() {
     return SnackBarAction(
-      label: '',
+      label: MaterialLocalizations.of(this).closeButtonLabel,
       onPressed: () => ScaffoldMessenger.of(this).hideCurrentSnackBar(),
     );
   }
@@ -13,6 +15,7 @@ extension SnackbarMessage on BuildContext {
       SnackBar(
         content: Text(message),
         action: _dismissAction(),
+        duration: _defaultSnackBarDuration,
       ),
     );
   }
@@ -23,6 +26,7 @@ extension SnackbarMessage on BuildContext {
         content: Text(message),
         backgroundColor: Theme.of(this).colorScheme.error,
         action: _dismissAction(),
+        duration: _defaultSnackBarDuration,
       ),
     );
   }
@@ -33,6 +37,7 @@ extension SnackbarMessage on BuildContext {
         content: Text(message),
         backgroundColor: Theme.of(this).colorScheme.primary,
         action: _dismissAction(),
+        duration: _defaultSnackBarDuration,
       ),
     );
   }
