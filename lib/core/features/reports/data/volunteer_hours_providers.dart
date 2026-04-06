@@ -21,14 +21,16 @@ Future<List<UserEventModel>> userEventsInRange(
   bool attendedOnly = true,
   String? userId,
 }) async {
+  final utcStart = start.toUtc();
+  final utcEnd = end.toUtc();
   // NOTE: user_event records reference events; we need to filter by event date.
   // Backend filtering on joined tables may not be supported directly; fetch pages until done.
   // For simplicity we fetch pages until there are no more. This could be optimized with backend support.
   final repo = ref.watch(userEventRepositoryProvider);
   return await repo.list(
     filters: [
-      AnyStepFilter.greaterThan('event_model.start_time', start, inclusive: true),
-      AnyStepFilter.lessThan('event_model.end_time', end, inclusive: true),
+      AnyStepFilter.lessThan('event_model.start_time', utcEnd, inclusive: true),
+      AnyStepFilter.greaterThan('event_model.end_time', utcStart, inclusive: true),
       AnyStepFilter.equals('event_model.is_volunteer_eligible', true),
       if (attendedOnly) AnyStepFilter.equals('attended', true),
       if (userId != null) AnyStepFilter.equals('user', userId),
@@ -55,7 +57,7 @@ Future<List<VolunteerHoursReport>> volunteerHoursAggregate(
     if (user == null || event == null) continue;
     final (durationHours, baseDate) = _hoursAndBaseDate(ue, start: start, end: end);
     // Cap per event at 8 hours (assumption: per event/day). If multi-day events exist, treat full duration, still capped at 8.
-    final double capped = min(8.0, durationHours.clamp(0, double.infinity));
+    final double capped = _capVolunteerHours(durationHours);
     final key = user.id;
     final ym =
         "${baseDate.year.toString().padLeft(4, '0')}-${baseDate.month.toString().padLeft(2, '0')}";
@@ -125,6 +127,20 @@ class MonthlyHoursPoint {
 
   final DateTime month;
   final double hours;
+}
+
+double volunteerHoursForUserEvent(
+  UserEventModel ue, {
+  required DateTime start,
+  required DateTime end,
+}) {
+  final (durationHours, _) = _hoursAndBaseDate(ue, start: start, end: end);
+  return _capVolunteerHours(durationHours);
+}
+
+double _capVolunteerHours(double hours) {
+  final clamped = hours.clamp(0, double.infinity).toDouble();
+  return min(8.0, clamped);
 }
 
 /// Returns (durationHours, baseDateForMonthBucket).

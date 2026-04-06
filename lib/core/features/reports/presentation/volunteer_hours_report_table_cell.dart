@@ -27,7 +27,7 @@ class VolunteerHoursReportTableCell extends StatelessWidget {
             ProfileImage(user: volunteerHoursReport.user, size: AnyStepSpacing.md12),
             const SizedBox(width: AnyStepSpacing.sm8),
             Text(
-              volunteerHoursReport.user.fullName,
+              '${volunteerHoursReport.user.lastName}, ${volunteerHoursReport.user.firstName}',
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ],

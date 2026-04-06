@@ -35,6 +35,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   bool _isSearching = false;
   String _query = '';
   final _dateFmt = DateFormat('MMM d, yyyy');
+  _ReportSort _sort = _ReportSort.hoursDesc;
 
   @override
   void initState() {
@@ -137,6 +138,29 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       appBar: AnyStepAppBar(
         title: Text(loc.reportsTitle),
         actions: [
+          PopupMenuButton<_ReportSort>(
+            tooltip: 'Sort',
+            icon: const Icon(Icons.sort),
+            onSelected: (value) => setState(() => _sort = value),
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: _ReportSort.hoursDesc,
+                child: Text('Hours (High → Low)'),
+              ),
+              PopupMenuItem(
+                value: _ReportSort.hoursAsc,
+                child: Text('Hours (Low → High)'),
+              ),
+              PopupMenuItem(
+                value: _ReportSort.lastNameAsc,
+                child: Text('Last name (A → Z)'),
+              ),
+              PopupMenuItem(
+                value: _ReportSort.lastNameDesc,
+                child: Text('Last name (Z → A)'),
+              ),
+            ],
+          ),
           asyncReports.when(
             data: (reports) => IconButton(
               tooltip: loc.exportCsv,
@@ -266,6 +290,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       ),
                     );
                   }
+                  final sorted = [...filtered]..sort((a, b) => _compareReports(a, b, _sort));
                   // Condensed list view instead of wide horizontal DataTable
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -277,7 +302,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      ...filtered.map(
+                      ...sorted.map(
                         (r) => VolunteerHoursReportTableCell(
                           volunteerHoursReport: r,
                           onTap: () {
@@ -303,5 +328,47 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         ),
       ),
     );
+  }
+}
+
+enum _ReportSort {
+  hoursDesc,
+  hoursAsc,
+  lastNameAsc,
+  lastNameDesc,
+}
+
+int _compareReports(
+  VolunteerHoursReport a,
+  VolunteerHoursReport b,
+  _ReportSort sort,
+) {
+  int compareName() {
+    final aLast = a.user.lastName.toLowerCase();
+    final bLast = b.user.lastName.toLowerCase();
+    final lastCompare = aLast.compareTo(bLast);
+    if (lastCompare != 0) return lastCompare;
+    final aFirst = a.user.firstName.toLowerCase();
+    final bFirst = b.user.firstName.toLowerCase();
+    return aFirst.compareTo(bFirst);
+  }
+
+  switch (sort) {
+    case _ReportSort.hoursDesc:
+      final byHours = b.totalHours.compareTo(a.totalHours);
+      if (byHours != 0) return byHours;
+      return compareName();
+    case _ReportSort.hoursAsc:
+      final byHours = a.totalHours.compareTo(b.totalHours);
+      if (byHours != 0) return byHours;
+      return compareName();
+    case _ReportSort.lastNameAsc:
+      final byName = compareName();
+      if (byName != 0) return byName;
+      return b.totalHours.compareTo(a.totalHours);
+    case _ReportSort.lastNameDesc:
+      final byName = compareName();
+      if (byName != 0) return -byName;
+      return b.totalHours.compareTo(a.totalHours);
   }
 }
