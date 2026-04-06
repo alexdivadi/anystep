@@ -43,4 +43,17 @@ abstract class UserModel with _$UserModel {
   UserAgreementType get requiredAgreementType => ageGroup == AgeGroup.under18
       ? UserAgreementType.minorAgreement
       : UserAgreementType.adultAgreement;
+
+  static const String _placeholderEmailDomain = 'temp.email';
+
+  bool get isPlaceholderEmail {
+    final normalized = email.trim().toLowerCase();
+    return normalized.endsWith('@$_placeholderEmailDomain');
+  }
+
+  bool get hasEmailOnFile => email.trim().isNotEmpty;
+
+  bool get canReceiveEmail => hasEmailOnFile && !isPlaceholderEmail;
+
+  String get emailForMailing => canReceiveEmail ? email : '';
 }

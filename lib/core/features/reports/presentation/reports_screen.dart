@@ -7,6 +7,7 @@ import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
 import 'package:anystep/core/features/reports/domain/volunteer_hours_report.dart';
 import 'package:anystep/core/features/reports/presentation/report_detail_screen.dart';
+import 'package:anystep/core/features/reports/presentation/report_sort_modal.dart';
 import 'package:anystep/core/features/reports/presentation/volunteer_hours_report_table_cell.dart';
 import 'package:anystep/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   bool _isSearching = false;
   String _query = '';
   final _dateFmt = DateFormat('MMM d, yyyy');
+  ReportSort _sort = ReportSort.hoursDesc;
 
   @override
   void initState() {
@@ -87,7 +89,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       for (final r in reports) {
         final name = r.user.fullName.replaceAll('"', '""');
         buffer.writeln(
-          '"$name","${(r.user.address?.formattedAddress ?? '').replaceAll(',', ' ')}","${r.user.email}","${r.user.phoneNumber ?? ''}",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}',
+          '"$name","${(r.user.address?.formattedAddress ?? '').replaceAll(',', ' ')}","${r.user.emailForMailing}","${r.user.phoneNumber ?? ''}",${r.eventsCount},${r.totalHours.toStringAsFixed(2)}',
         );
       }
       final csv = buffer.toString();
@@ -137,6 +139,21 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       appBar: AnyStepAppBar(
         title: Text(loc.reportsTitle),
         actions: [
+          IconButton(
+            tooltip: 'Sort',
+            icon: const Icon(Icons.sort),
+            onPressed: () {
+              context.showModal(
+                ReportSortSelectionList(
+                  current: _sort,
+                  onSelected: (value) {
+                    setState(() => _sort = value);
+                    context.pop();
+                  },
+                ),
+              );
+            },
+          ),
           asyncReports.when(
             data: (reports) => IconButton(
               tooltip: loc.exportCsv,
@@ -266,6 +283,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                       ),
                     );
                   }
+                  final sorted = [...filtered]..sort((a, b) => _compareReports(a, b, _sort));
                   // Condensed list view instead of wide horizontal DataTable
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -277,7 +295,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      ...filtered.map(
+                      ...sorted.map(
                         (r) => VolunteerHoursReportTableCell(
                           volunteerHoursReport: r,
                           onTap: () {
@@ -303,5 +321,40 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         ),
       ),
     );
+  }
+}
+
+int _compareReports(
+  VolunteerHoursReport a,
+  VolunteerHoursReport b,
+  ReportSort sort,
+) {
+  int compareName() {
+    final aLast = a.user.lastName.toLowerCase();
+    final bLast = b.user.lastName.toLowerCase();
+    final lastCompare = aLast.compareTo(bLast);
+    if (lastCompare != 0) return lastCompare;
+    final aFirst = a.user.firstName.toLowerCase();
+    final bFirst = b.user.firstName.toLowerCase();
+    return aFirst.compareTo(bFirst);
+  }
+
+  switch (sort) {
+    case ReportSort.hoursDesc:
+      final byHours = b.totalHours.compareTo(a.totalHours);
+      if (byHours != 0) return byHours;
+      return compareName();
+    case ReportSort.hoursAsc:
+      final byHours = a.totalHours.compareTo(b.totalHours);
+      if (byHours != 0) return byHours;
+      return compareName();
+    case ReportSort.lastNameAsc:
+      final byName = compareName();
+      if (byName != 0) return byName;
+      return b.totalHours.compareTo(a.totalHours);
+    case ReportSort.lastNameDesc:
+      final byName = compareName();
+      if (byName != 0) return -byName;
+      return b.totalHours.compareTo(a.totalHours);
   }
 }
