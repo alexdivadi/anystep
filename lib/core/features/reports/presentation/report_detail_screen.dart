@@ -1,8 +1,10 @@
 import 'package:anystep/core/common/constants/spacing.dart';
 import 'package:anystep/core/common/utils/format_hours.dart';
-import 'package:anystep/core/common/widgets/any_step_shimmer.dart';
 import 'package:anystep/core/common/widgets/widgets.dart';
+import 'package:anystep/core/config/theme/colors.dart';
 import 'package:anystep/core/features/events/presentation/event_detail/event_detail_screen.dart';
+import 'package:anystep/core/features/profile/domain/age_group.dart';
+import 'package:anystep/core/features/profile/domain/user_role.dart';
 import 'package:anystep/core/features/profile/data/user_repository.dart';
 import 'package:anystep/core/features/profile/presentation/profile/profile_image.dart';
 import 'package:anystep/core/features/reports/data/volunteer_hours_providers.dart';
@@ -45,6 +47,7 @@ class ReportDetailScreen extends ConsumerWidget {
     final eventsAsync = ref.watch(
       userEventsInRangeProvider(start: start, end: end, userId: userId, attendedOnly: true),
     );
+    final theme = Theme.of(context);
 
     return AnyStepScaffold(
       appBar: AnyStepAppBar(
@@ -62,9 +65,8 @@ class ReportDetailScreen extends ConsumerWidget {
             error: (_, __) => Text(loc.failedToLoad),
             data: (user) {
               final phone = user.phoneNumber;
-              final rangeLabel = DateFormat('MMM d, yyyy').format(start) +
-                  ' → ' +
-                  DateFormat('MMM d, yyyy').format(end);
+              final rangeLabel =
+                  '${DateFormat('MMM d, yyyy').format(start)} → ${DateFormat('MMM d, yyyy').format(end)}';
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,12 +79,45 @@ class ReportDetailScreen extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              user.email,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: AnyStepSpacing.sm4,
+                              runSpacing: AnyStepSpacing.sm2,
+                              children: [
+                                AnyStepBadge(
+                                  color: switch (user.role) {
+                                    UserRole.admin => theme.colorScheme.tertiary,
+                                    UserRole.board => theme.colorScheme.secondary,
+                                    UserRole.volunteer => theme.colorScheme.primary,
+                                  },
+                                  child: Text(
+                                    user.role.displayName,
+                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                          color: theme.colorScheme.onSecondary,
+                                        ),
+                                  ),
+                                ),
+                                if (user.ageGroup == AgeGroup.under18)
+                                  AnyStepBadge(
+                                    color: AnyStepColors.warning,
+                                    child: Text(
+                                      'Under 18',
+                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                            color: AnyStepColors.black,
+                                          ),
+                                    ),
+                                  ),
+                              ],
                             ),
+                            if (user.canReceiveEmail)
+                              Text(
+                                user.email,
+                                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             if (phone != null && phone.isNotEmpty)
                               Text(
                                 phone,
@@ -149,25 +184,27 @@ class ReportDetailScreen extends ConsumerWidget {
               return Column(
                 children: [
                   for (final ue in items)
-                    Builder(builder: (context) {
-                      final hours = volunteerHoursForUserEvent(ue, start: start, end: end);
-                      final hoursFormatted = formatHours(hours, maxDecimals: 2);
-                      final hoursLabel = '$hoursFormatted hr${hoursFormatted == '1' ? '' : 's'}';
-                      return Card(
-                        child: ListTile(
-                          title: Text(ue.event!.name),
-                          subtitle: Text(
-                            '${dateFmt.format(ue.event!.startTime.toLocal())} • $hoursLabel',
+                    Builder(
+                      builder: (context) {
+                        final hours = volunteerHoursForUserEvent(ue, start: start, end: end);
+                        final hoursFormatted = formatHours(hours, maxDecimals: 2);
+                        final hoursLabel = '$hoursFormatted hr${hoursFormatted == '1' ? '' : 's'}';
+                        return Card(
+                          child: ListTile(
+                            title: Text(ue.event!.name),
+                            subtitle: Text(
+                              '${dateFmt.format(ue.event!.startTime.toLocal())} • $hoursLabel',
+                            ),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              final id = ue.event!.id;
+                              if (id == null) return;
+                              context.push(EventDetailScreen.getPath(id));
+                            },
                           ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            final id = ue.event!.id;
-                            if (id == null) return;
-                            context.push(EventDetailScreen.getPath(id));
-                          },
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                 ],
               );
             },
